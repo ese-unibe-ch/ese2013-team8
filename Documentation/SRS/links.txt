@@ -1,0 +1,5 @@
+Software requirements specification:
+https://docs.google.com/document/d/1PBY_ock4B_vgvqpTdlBC2gJWpoCllrk7E82cW2HqHUg/
+
+Usecase diagram
+https://www.draw.io/?fileId=0B1A0M0zYP_XkTFpudWNrV2k1S0U
