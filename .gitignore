@@ -3,7 +3,8 @@
 *.war
 *.ear
 
-*/gen/
+Code/ShoppingList/gen/
+Code/ShoppingList/bin/
 
 # eclipse and setting files
 */eclipse
