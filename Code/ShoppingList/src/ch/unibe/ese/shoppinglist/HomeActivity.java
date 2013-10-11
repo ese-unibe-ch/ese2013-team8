@@ -5,11 +5,14 @@ import android.app.Activity;
 import android.view.Menu;
 
 public class HomeActivity extends Activity {
+	
+	private ListManager manager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
+		manager = new ListManager();
 	}
 
 	@Override
@@ -18,5 +21,4 @@ public class HomeActivity extends Activity {
 		getMenuInflater().inflate(R.menu.home, menu);
 		return true;
 	}
-
 }

@@ -3,6 +3,8 @@
 *.war
 *.ear
 
+*/gen/
+
 # eclipse and setting files
 */eclipse
 */bin
