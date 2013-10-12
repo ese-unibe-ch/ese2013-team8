@@ -1,19 +1,20 @@
 package ch.unibe.ese.shoppinglist;
 
+import ch.unibe.ese.core.JsonPersistenceManager;
 import ch.unibe.ese.core.ListManager;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 
 public class HomeActivity extends Activity {
-	
+
 	private ListManager manager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
-		manager = new ListManager();
+		manager = new ListManager(new JsonPersistenceManager());
 	}
 
 	@Override

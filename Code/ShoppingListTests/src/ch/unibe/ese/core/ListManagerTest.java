@@ -11,7 +11,7 @@ public class ListManagerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		this.manager = new ListManager();
+		this.manager = new ListManager(new NoopPersistenceManager());
 	}
 
 	@Test
@@ -37,4 +37,18 @@ public class ListManagerTest {
 		assertEquals(list2, manager.getShoppingLists().get(1));
 	}
 
+	@Test
+	public void removeShoppingList() {
+		assertTrue(manager.getShoppingLists().isEmpty());
+		ShoppingList list = new ShoppingList("list1");
+		manager.addShoppingList(list);
+		assertEquals(list, manager.getShoppingLists().get(0));
+
+		manager.removeShoppingList(list);
+		assertTrue(manager.getShoppingLists().isEmpty());
+
+		// Multiple invocations dont raise an exception
+		manager.removeShoppingList(list);
+		assertTrue(manager.getShoppingLists().isEmpty());
+	}
 }
