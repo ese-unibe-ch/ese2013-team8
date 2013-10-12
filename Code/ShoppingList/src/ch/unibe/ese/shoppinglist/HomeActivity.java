@@ -1,5 +1,6 @@
 package ch.unibe.ese.shoppinglist;
 
+import ch.unibe.ese.core.ListManager;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;

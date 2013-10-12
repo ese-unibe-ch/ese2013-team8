@@ -1,4 +1,4 @@
-package ch.unibe.ese.shoppinglist;
+package ch.unibe.ese.core;
 
 import java.util.ArrayList;
 import java.util.List;
