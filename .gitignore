@@ -5,6 +5,8 @@
 
 Code/ShoppingList/gen/
 Code/ShoppingList/bin/
+Code/ShoppingListTests/gen/
+Code/ShoppingListTests/bin/
 
 # eclipse and setting files
 */eclipse
