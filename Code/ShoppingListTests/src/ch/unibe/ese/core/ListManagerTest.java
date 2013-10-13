@@ -1,21 +1,16 @@
 package ch.unibe.ese.core;
 
-import static org.junit.Assert.*;
+import android.test.AndroidTestCase;
 
-import org.junit.Before;
-import org.junit.Test;
-
-public class ListManagerTest {
+public class ListManagerTest extends AndroidTestCase {
 
 	private ListManager manager;
 
-	@Before
 	public void setUp() throws Exception {
 		this.manager = new ListManager(new NoopPersistenceManager());
 	}
 
-	@Test
-	public void addShoppingList() {
+	public void testAaddShoppingList() {
 		assertTrue(manager.getShoppingLists().isEmpty());
 		ShoppingList list = new ShoppingList("list1");
 		manager.addShoppingList(list);
@@ -24,8 +19,7 @@ public class ListManagerTest {
 		assertEquals(list, manager.getShoppingLists().get(0));
 	}
 
-	@Test
-	public void addShoppingLists() {
+	public void testAddShoppingLists() {
 		assertTrue(manager.getShoppingLists().isEmpty());
 		ShoppingList list1 = new ShoppingList("list1");
 		ShoppingList list2 = new ShoppingList("list2");
@@ -37,8 +31,7 @@ public class ListManagerTest {
 		assertEquals(list2, manager.getShoppingLists().get(1));
 	}
 
-	@Test
-	public void removeShoppingList() {
+	public void testRemoveShoppingList() {
 		assertTrue(manager.getShoppingLists().isEmpty());
 		ShoppingList list = new ShoppingList("list1");
 		manager.addShoppingList(list);

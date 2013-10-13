@@ -14,7 +14,7 @@ public class HomeActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
-		manager = new ListManager(new JsonPersistenceManager());
+		manager = new ListManager(new JsonPersistenceManager(getApplicationContext()));
 	}
 
 	@Override
@@ -23,5 +23,11 @@ public class HomeActivity extends Activity {
 		getMenuInflater().inflate(R.menu.home, menu);
 		getMenuInflater().inflate(R.menu.home_menu, menu);
 		return true;
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		manager.persist();
 	}
 }

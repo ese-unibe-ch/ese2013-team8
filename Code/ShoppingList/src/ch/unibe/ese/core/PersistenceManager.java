@@ -1,5 +1,6 @@
 package ch.unibe.ese.core;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -19,14 +20,16 @@ public interface PersistenceManager {
 	 * Reads ShoppingLists from their persistent state.
 	 * 
 	 * @return never <code>null</code>.
+	 * @throws IOException
 	 */
-	List<ShoppingList> read();
+	List<ShoppingList> read() throws IOException;
 
 	/**
 	 * Saves ShoppingLists int their persistent state.
 	 * 
 	 * @param lists
 	 *            not <code>null</code>.
+	 * @throws IOException
 	 */
-	void save(List<ShoppingList> lists);
+	void save(List<ShoppingList> lists) throws IOException;
 }

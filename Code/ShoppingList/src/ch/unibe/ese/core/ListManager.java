@@ -1,5 +1,6 @@
 package ch.unibe.ese.core;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
@@ -14,7 +15,12 @@ public class ListManager {
 
 	public ListManager(PersistenceManager persistenceManager) {
 		this.persistenceManager = persistenceManager;
-		shoppingLists = persistenceManager.read();
+		try {
+			shoppingLists = persistenceManager.read();
+		} catch (IOException e) {
+			// TODO throw an appropriate exception
+			throw new IllegalStateException(e);
+		}
 	}
 
 	/**
@@ -43,6 +49,11 @@ public class ListManager {
 	 * Persists the ShoppingLists.
 	 */
 	public void persist() {
-		persistenceManager.save(this.shoppingLists);
+		try {
+			persistenceManager.save(this.shoppingLists);
+		} catch (IOException e) {
+			// TODO throw an appropriate exception
+			throw new IllegalStateException(e);
+		}
 	}
 }
