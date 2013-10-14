@@ -6,5 +6,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_new">New</string>
     <string name="title_activity_create_list">CreateListActivity</string>
+    <string name="action_edit">action_edit</string>
+    <string name="action_remove">action_remove</string>
 
 </resources>

@@ -1,7 +1,5 @@
 package ch.unibe.ese.shoppinglist;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import ch.unibe.ese.core.JsonPersistenceManager;
@@ -12,12 +10,16 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class HomeActivity extends Activity {
 
 	private ListManager manager;
+	private ArrayAdapter<ShoppingList> shoppingListAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,21 +27,28 @@ public class HomeActivity extends Activity {
 		setContentView(R.layout.activity_home);
 		manager = new ListManager(new JsonPersistenceManager(getApplicationContext()));
 		
-		// Test: (shouldn't be here)
-		// Add item to list
-		manager.addShoppingList(new ShoppingList("Groceries"));
-		manager.addShoppingList(new ShoppingList("Electronics"));
-		manager.addShoppingList(new ShoppingList("Stuff"));
-		// End of Test
-		
 		// Get List from manager
 		List<ShoppingList> shoppingLists = manager.getShoppingLists();
 		
-		ArrayAdapter<ShoppingList> shoppingListAdapter = new ArrayAdapter<ShoppingList>(this, 
-		        android.R.layout.simple_list_item_1, shoppingLists);
+		shoppingListAdapter = new ArrayAdapter<ShoppingList>(this, 
+		        R.layout.shopping_list_item, shoppingLists);
 		
 		ListView listView = (ListView) findViewById(R.id.ShoppingListView);
 		listView.setAdapter(shoppingListAdapter);
+		
+		// Add long click Listener
+		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				ShoppingList selectedList = shoppingListAdapter.getItem(arg2);
+				HomeActivity.this.startActionMode(
+						new ShoppingListActionMode(HomeActivity.this.manager,selectedList, HomeActivity.this.shoppingListAdapter)
+						);
+				return false;
+			}
+		});
 		
 	}
 
