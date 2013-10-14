@@ -86,4 +86,9 @@ public class ShoppingList {
 			return false;
 		return true;
 	}
+	
+	public String toString() {
+		return this.name;
+	}
+	
 }
