@@ -23,6 +23,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:onClick="saveList"
             android:text="Save" />
     </LinearLayout>
 
@@ -39,7 +40,7 @@
 
         // Title
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/textViewTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -49,23 +50,24 @@
         
         // Name
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/textViewName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/editText1"
-            android:layout_alignLeft="@+id/textView1"
+            android:layout_alignBottom="@+id/editTextName"
+            android:layout_alignLeft="@+id/textViewTitle"
             android:text="Name"
             android:textAppearance="?android:attr/textAppearanceMedium" />
         
         <EditText
-            android:id="@+id/editText1"
+            android:id="@+id/editTextName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/textView1"
+            android:layout_below="@+id/textViewTitle"
             android:layout_marginTop="14dp"
             android:layout_marginLeft="14dp"
-            android:layout_toRightOf="@+id/textView2"
+            android:layout_toRightOf="@+id/textViewName"
+            android:inputType="textCapSentences"
             android:ems="10" >
 
             <requestFocus />
@@ -73,43 +75,45 @@
         
         // Date
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/textViewDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textView2"
-            android:layout_below="@+id/textView2"
+            android:layout_alignLeft="@+id/textViewName"
+            android:layout_below="@+id/textViewName"
             android:layout_marginTop="26dp"
             android:text="Date (optional)"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/editTextDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/textView3"
-            android:layout_alignRight="@+id/editText1"
+            android:layout_alignBottom="@+id/textViewDate"
+            android:layout_alignRight="@+id/editTextName"
             android:layout_marginLeft="14dp"
-            android:layout_toRightOf="@+id/textView3"
+            android:layout_toRightOf="@+id/textViewDate"
             android:ems="10"
             android:inputType="date" />
 
+        // Shop
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/textViewShop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textView3"
-            android:layout_below="@+id/textView3"
+            android:layout_alignLeft="@+id/textViewDate"
+            android:layout_below="@+id/textViewDate"
             android:layout_marginTop="26dp"
             android:text="Shop (optional)"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText
-            android:id="@+id/editText3"
+            android:id="@+id/editTextShop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/textView4"
-            android:layout_alignLeft="@+id/editText2"
+            android:layout_alignBottom="@+id/textViewShop"
+            android:layout_alignLeft="@+id/editTextDate"
             android:layout_alignParentRight="true"
+            android:inputType="textCapSentences"
             android:ems="10" />
         
     </RelativeLayout>
