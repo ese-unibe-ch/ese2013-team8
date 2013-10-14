@@ -23,19 +23,18 @@ public class HomeActivity extends Activity {
 		setContentView(R.layout.activity_home);
 		manager = new ListManager(new JsonPersistenceManager(getApplicationContext()));
 		
-		// Insert Listview stuff
-		List<ShoppingList> shoppingLists = manager.getShoppingLists();
-		
-		// Test (I know, i shouldn't do it here)
-		List<ShoppingList> shoppingListsCopy = new ArrayList<ShoppingList>();
-		Collections.copy(shoppingListsCopy, shoppingLists);
-		shoppingListsCopy.add(new ShoppingList("Groceries"));
-		for(int i = 1; i<10; i++)
-			shoppingListsCopy.add(new ShoppingList("List " + i));
+		// Test: (shouldn't be here)
+		// Add item to list
+		manager.addShoppingList(new ShoppingList("Groceries"));
+		manager.addShoppingList(new ShoppingList("Electronics"));
+		manager.addShoppingList(new ShoppingList("Stuff"));
 		// End of Test
 		
+		// Get List from manager
+		List<ShoppingList> shoppingLists = manager.getShoppingLists();
+		
 		ArrayAdapter<ShoppingList> shoppingListAdapter = new ArrayAdapter<ShoppingList>(this, 
-		        android.R.layout.simple_list_item_1, shoppingListsCopy);
+		        android.R.layout.simple_list_item_1, shoppingLists);
 		
 		ListView listView = (ListView) findViewById(R.id.ShoppingListView);
 		listView.setAdapter(shoppingListAdapter);
