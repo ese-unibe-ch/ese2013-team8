@@ -15,11 +15,11 @@ public class ShoppingListActionMode implements Callback {
 
 	private ListManager manager;
 	private ShoppingList selectedList;
-	private ArrayAdapter shoppingListAdapter;
+	private ArrayAdapter<ShoppingList> shoppingListAdapter;
 	private Activity homeActivity;
 	private int listIndex;
 	
-	public ShoppingListActionMode(ListManager manager, ShoppingList selectedList, ArrayAdapter shoppingListAdapter, Activity homeActivity) {
+	public ShoppingListActionMode(ListManager manager, ShoppingList selectedList, ArrayAdapter<ShoppingList> shoppingListAdapter, Activity homeActivity) {
 		this.manager = manager;
 		this.selectedList = selectedList;
 		this.shoppingListAdapter = shoppingListAdapter;
@@ -69,5 +69,4 @@ public class ShoppingListActionMode implements Callback {
     public void onDestroyActionMode(ActionMode mode) {
 //        mActionMode = null;
     }
-
 }

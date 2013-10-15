@@ -8,5 +8,7 @@
     <string name="title_activity_create_list">CreateListActivity</string>
     <string name="action_edit">action_edit</string>
     <string name="action_remove">action_remove</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_done">Done</string>
 
 </resources>

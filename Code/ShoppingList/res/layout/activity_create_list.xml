@@ -38,7 +38,8 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin" >
 
-        // Title
+        <!-- Title -->
+
         <TextView
             android:id="@+id/textViewTitle"
             android:layout_width="wrap_content"
@@ -47,8 +48,9 @@
             android:layout_alignParentTop="true"
             android:text="Add new shopping list:"
             android:textAppearance="?android:attr/textAppearanceMedium" />
-        
-        // Name
+
+        <!-- Name -->
+
         <TextView
             android:id="@+id/textViewName"
             android:layout_width="wrap_content"
@@ -57,23 +59,24 @@
             android:layout_alignLeft="@+id/textViewTitle"
             android:text="Name"
             android:textAppearance="?android:attr/textAppearanceMedium" />
-        
+
         <EditText
             android:id="@+id/editTextName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/textViewTitle"
-            android:layout_marginTop="14dp"
             android:layout_marginLeft="14dp"
+            android:layout_marginTop="14dp"
             android:layout_toRightOf="@+id/textViewName"
-            android:inputType="textCapSentences"
-            android:ems="10" >
+            android:ems="10"
+            android:inputType="textCapSentences" >
 
             <requestFocus />
         </EditText>
-        
-        // Date
+
+        <!-- Date -->
+
         <TextView
             android:id="@+id/textViewDate"
             android:layout_width="wrap_content"
@@ -93,9 +96,12 @@
             android:layout_marginLeft="14dp"
             android:layout_toRightOf="@+id/textViewDate"
             android:ems="10"
-            android:inputType="date" />
+            android:focusable="false"
+            android:inputType="date"
+            android:onClick="showDatePickerDialog" />
 
-        // Shop
+        <!-- Shop -->
+
         <TextView
             android:id="@+id/textViewShop"
             android:layout_width="wrap_content"
@@ -113,9 +119,8 @@
             android:layout_alignBottom="@+id/textViewShop"
             android:layout_alignLeft="@+id/editTextDate"
             android:layout_alignParentRight="true"
-            android:inputType="textCapSentences"
-            android:ems="10" />
-        
+            android:ems="10"
+            android:inputType="textCapSentences" />
     </RelativeLayout>
-    
+
 </RelativeLayout>
