@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
+// TODO: prevent duplicated list names
+
 /**
  * The ListManager is responsible for access to all {@link ShoppingList
  * shoppinglists}.

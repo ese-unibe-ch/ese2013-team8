@@ -2,6 +2,8 @@ package ch.unibe.ese.shoppinglist;
 
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
+import android.app.Activity;
+import android.content.Intent;
 import android.view.ActionMode;
 import android.view.ActionMode.Callback;
 import android.view.Menu;
@@ -14,11 +16,14 @@ public class ShoppingListActionMode implements Callback {
 	private ListManager manager;
 	private ShoppingList selectedList;
 	private ArrayAdapter shoppingListAdapter;
+	private Activity homeActivity;
+	private int listIndex;
 	
-	public ShoppingListActionMode(ListManager manager, ShoppingList selectedList, ArrayAdapter shoppingListAdapter) {
+	public ShoppingListActionMode(ListManager manager, ShoppingList selectedList, ArrayAdapter shoppingListAdapter, Activity homeActivity) {
 		this.manager = manager;
 		this.selectedList = selectedList;
 		this.shoppingListAdapter = shoppingListAdapter;
+		this.homeActivity = homeActivity;
 	}
     // Called when the action mode is created; startActionMode() was called
     @Override
@@ -42,12 +47,17 @@ public class ShoppingListActionMode implements Callback {
         switch (item.getItemId()) {
             case R.id.action_edit:
                 shoppingListAdapter.notifyDataSetChanged();
-                mode.finish(); // Action picked, so close the CAB
+                mode.finish(); 
+                // open list edit screen
+	        	Intent intent = new Intent(homeActivity, CreateListActivity.class);
+	        	listIndex = manager.getShoppingLists().indexOf(selectedList);
+	        	intent.putExtra("selectedList", listIndex);
+	            homeActivity.startActivity(intent);
                 return true;
             case R.id.action_remove:
             	manager.removeShoppingList(selectedList);
             	shoppingListAdapter.notifyDataSetChanged();
-            	mode.finish();
+            	mode.finish(); // Action picked, so close the CAB
             	return true;
             default:
                 return false;

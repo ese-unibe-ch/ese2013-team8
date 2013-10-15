@@ -44,7 +44,7 @@ public class HomeActivity extends Activity {
 					int arg2, long arg3) {
 				ShoppingList selectedList = shoppingListAdapter.getItem(arg2);
 				HomeActivity.this.startActionMode(
-						new ShoppingListActionMode(HomeActivity.this.manager,selectedList, HomeActivity.this.shoppingListAdapter)
+						new ShoppingListActionMode(HomeActivity.this.manager,selectedList, HomeActivity.this.shoppingListAdapter, HomeActivity.this)
 						);
 				return false;
 			}
