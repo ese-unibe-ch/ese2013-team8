@@ -5,6 +5,7 @@ import java.util.List;
 import ch.unibe.ese.core.JsonPersistenceManager;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
+import ch.unibe.ese.core.sqlite.SQLitePersistenceManager;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -25,7 +26,7 @@ public class HomeActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
-		manager = new ListManager(new JsonPersistenceManager(getApplicationContext()));
+		manager = new ListManager(new SQLitePersistenceManager(getApplicationContext()));
 		
 		// Get List from manager
 		List<ShoppingList> shoppingLists = manager.getShoppingLists();
