@@ -54,7 +54,6 @@ public class JsonPersistenceManager implements PersistenceManager {
 		}
 	}
 
-	@Override
 	public void save(List<ShoppingList> lists) throws IOException {
 		FileOutputStream out = null;
 		OutputStreamWriter writer = null;
@@ -78,5 +77,17 @@ public class JsonPersistenceManager implements PersistenceManager {
 	private Type getType() {
 		return new TypeToken<List<ShoppingList>>() {
 		}.getType();
+	}
+
+	@Override
+	public void save(ShoppingList list) throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void remove(ShoppingList list) throws IOException {
+		// TODO Auto-generated method stub
+		
 	}
 }

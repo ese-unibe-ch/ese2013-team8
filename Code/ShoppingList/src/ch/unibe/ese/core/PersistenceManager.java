@@ -23,13 +23,18 @@ public interface PersistenceManager {
 	 * @throws IOException
 	 */
 	List<ShoppingList> read() throws IOException;
-
+	
 	/**
-	 * Saves ShoppingLists int their persistent state.
-	 * 
-	 * @param lists
-	 *            not <code>null</code>.
+	 * Saves a new created or editet list
+	 * @param list
 	 * @throws IOException
 	 */
-	void save(List<ShoppingList> lists) throws IOException;
+	void save(ShoppingList list) throws IOException;
+	
+	/**
+	 * Removes an already existing list
+	 * @param list
+	 * @throws IOException
+	 */
+	void remove(ShoppingList list) throws IOException;
 }

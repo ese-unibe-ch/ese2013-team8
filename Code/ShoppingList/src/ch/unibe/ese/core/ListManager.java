@@ -39,23 +39,23 @@ public class ListManager {
 	public void addShoppingList(ShoppingList list) {
 		if (list == null)
 			throw new IllegalArgumentException("null is not allowed");
-		if (!shoppingLists.contains(list))
+		if (!shoppingLists.contains(list)) {
 			shoppingLists.add(list);
+		}
+		try {
+			persistenceManager.save(list);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		}
+			
 	}
 
 	public void removeShoppingList(ShoppingList list) {
 		shoppingLists.remove(list);
-	}
-
-	/**
-	 * Persists the ShoppingLists.
-	 */
-	public void persist() {
 		try {
-			persistenceManager.save(this.shoppingLists);
+			persistenceManager.remove(list);
 		} catch (IOException e) {
-			// TODO throw an appropriate exception
-			throw new IllegalStateException(e);
+			// TODO Auto-generated catch block
 		}
 	}
 }

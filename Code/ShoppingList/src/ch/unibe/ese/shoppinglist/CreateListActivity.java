@@ -13,8 +13,10 @@ import java.util.GregorianCalendar;
 import ch.unibe.ese.core.JsonPersistenceManager;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
+import ch.unibe.ese.core.sqlite.SQLitePersistenceManager;
 import android.os.Bundle;
 import android.os.Message;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -42,7 +44,7 @@ public class CreateListActivity extends Activity {
 		setContentView(R.layout.activity_create_list);
 		// hide the action bar on this activity
 		getActionBar().hide();
-		manager = new ListManager(new JsonPersistenceManager(
+		manager = new ListManager(new SQLitePersistenceManager(
 				getApplicationContext()));
 
 		// edit shopping list
@@ -115,7 +117,6 @@ public class CreateListActivity extends Activity {
 			// save the shopping list
 			try {
 				manager.addShoppingList(list);
-				manager.persist();
 
 			} catch (IllegalStateException e) {
 				Toast.makeText(this, "Please enter a name", Toast.LENGTH_SHORT)
@@ -132,6 +133,7 @@ public class CreateListActivity extends Activity {
 		newFragment.show(getFragmentManager(), "datePicker");
 	}
 
+	@SuppressLint("ValidFragment")
 	private class DatePickerFragment extends DialogFragment {
 
 		@Override
