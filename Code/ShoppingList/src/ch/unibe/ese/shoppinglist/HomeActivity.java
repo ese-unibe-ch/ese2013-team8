@@ -2,12 +2,9 @@ package ch.unibe.ese.shoppinglist;
 
 import java.util.List;
 
-import ch.unibe.ese.core.JsonPersistenceManager;
-import ch.unibe.ese.core.ListManager;
-import ch.unibe.ese.core.ShoppingList;
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,16 +12,28 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import ch.unibe.ese.core.JsonPersistenceManager;
+import ch.unibe.ese.core.ListManager;
+import ch.unibe.ese.core.ShoppingList;
+import ch.unibe.ese.core.SlideMenu;
 
 public class HomeActivity extends Activity {
 
 	private ListManager manager;
 	private ArrayAdapter<ShoppingList> shoppingListAdapter;
+	private SlideMenu menu;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		//Put content into the slideMenu and add it to the view
+//		menu = (SlideMenu) this.getLayoutInflater().inflate(R.layout.activity_home, null);
+//		menu.setContent(findViewById(R.layout.activity_home));
+//		setContentView(menu.getFocusedChild());
+		
 		setContentView(R.layout.activity_home);
+		
 		manager = new ListManager(new JsonPersistenceManager(getApplicationContext()));
 		
 		// Get List from manager
@@ -48,7 +57,7 @@ public class HomeActivity extends Activity {
 						);
 				return false;
 			}
-		});
+		});		
 		
 	}
 
