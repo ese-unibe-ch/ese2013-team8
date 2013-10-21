@@ -24,7 +24,24 @@
         </activity>
         <activity
             android:name="ch.unibe.ese.shoppinglist.CreateListActivity"
-            android:label="@string/title_activity_create_list" >
+            android:label="@string/title_activity_create_list" 
+            android:parentActivityName="ch.unibe.ese.shoppinglist.HomeActivity" >
+        </activity>
+        <activity
+            android:name="ch.unibe.ese.shoppinglist.ViewListActivity"
+            android:label="@string/title_activity_view_list"
+            android:parentActivityName="ch.unibe.ese.shoppinglist.HomeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ch.unibe.ese.shoppinglist.HomeActivity" />
+        </activity>
+        <activity
+            android:name="ch.unibe.ese.shoppinglist.CreateItemActivity"
+            android:label="@string/title_activity_create_item"
+            android:parentActivityName="ch.unibe.ese.shoppinglist.ViewListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ch.unibe.ese.shoppinglist.ViewListActivity" />
         </activity>
     </application>
 

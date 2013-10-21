@@ -2,28 +2,24 @@ package ch.unibe.ese.shoppinglist;
 
 // TODO: Add strings to values/strings.xml (instead of hardcoded)
 
-import java.io.IOException;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-
 import ch.unibe.ese.core.JsonPersistenceManager;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
 import android.os.Bundle;
-import android.os.Message;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -33,7 +29,6 @@ public class CreateListActivity extends Activity {
 
 	private ListManager manager;
 	private ShoppingList list;
-	private int listIndex;
 	private TextView textViewTitle;
 
 	@Override
@@ -88,8 +83,9 @@ public class CreateListActivity extends Activity {
 
 	/** Called when the user touches the abort button */
 	public void goBack(View view) {
-		Intent intent = new Intent(this, HomeActivity.class);
-		this.startActivity(intent);
+		NavUtils.navigateUpFromSameTask(this);
+		//Intent intent = new Intent(this, HomeActivity.class);
+		//this.startActivity(intent);
 	}
 
 	/** Called when the user touches the save button */
