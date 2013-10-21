@@ -83,9 +83,7 @@ public class CreateListActivity extends Activity {
 
 	/** Called when the user touches the abort button */
 	public void goBack(View view) {
-		NavUtils.navigateUpFromSameTask(this);
-		//Intent intent = new Intent(this, HomeActivity.class);
-		//this.startActivity(intent);
+		finish();
 	}
 
 	/** Called when the user touches the save button */
