@@ -20,7 +20,9 @@ public class SQLitePersistenceManager implements PersistenceManager {
 	private SQLiteDatabase database;
 	private SQLiteHelper dbHelper;
 	private String[] allColumns = { SQLiteHelper.COLUMN_LIST_ID,
-			SQLiteHelper.COLUMN_LIST_NAME };
+			SQLiteHelper.COLUMN_LIST_NAME, SQLiteHelper.COLUMN_LIST_DUEDATE,
+			SQLiteHelper.COLUMN_LIST_SHOP };
+	// TODO Add support for the duedate (stupid java date...)
 
 	public void close() {
 		dbHelper.close();
@@ -51,45 +53,46 @@ public class SQLitePersistenceManager implements PersistenceManager {
 	}
 
 	private ShoppingList cursorToShoppingList(Cursor cursor) {
-		ShoppingList list = new ShoppingList(" ");
+		ShoppingList list = new ShoppingList(cursor.getString(1));
 		list.setId(cursor.getInt(0));
-		list.setName(cursor.getString(1));
+		list.setShop(cursor.getString(3));
 		return list;
 	}
 
 	@Override
 	public void save(ShoppingList list) throws IOException {
 		// Get all rows with the id of this list
-		Cursor cursor = database.query(SQLiteHelper.TABLE_LISTS,
-				allColumns, SQLiteHelper.COLUMN_LIST_ID + "="
-						+ list.getId(), null, null, null, null);
+		Cursor cursor = database.query(SQLiteHelper.TABLE_LISTS, allColumns,
+				SQLiteHelper.COLUMN_LIST_ID + "=" + list.getId(), null, null,
+				null, null);
 
 		// If this is a new list
 		System.out.println(cursor.getCount());
+		ContentValues values = new ContentValues();
+		values.put(SQLiteHelper.COLUMN_LIST_NAME, list.getName());
+		values.put(SQLiteHelper.COLUMN_LIST_SHOP, list.getShop());
 		if (cursor.getCount() == 0) {
-			ContentValues values = new ContentValues();
-			values.put(SQLiteHelper.COLUMN_LIST_NAME, list.getName());
 			database.insert(SQLiteHelper.TABLE_LISTS, null, values);
-		// Else if it is an old list
+			// Else if it is an old list
 		} else if (cursor.getCount() == 1) {
-			ContentValues values = new ContentValues();
-			values.put(SQLiteHelper.COLUMN_LIST_NAME, list.getName());
-			database.update(SQLiteHelper.TABLE_LISTS, values, SQLiteHelper.COLUMN_LIST_ID + "=" + list.getId(), null);
-		// If there is more than one list with this id
+			database.update(SQLiteHelper.TABLE_LISTS, values,
+					SQLiteHelper.COLUMN_LIST_ID + "=" + list.getId(), null);
+			// If there is more than one list with this id
 		} else {
 			throw new IOException();
 		}
 	}
-	
+
 	@Override
 	public void remove(ShoppingList list) throws IOException {
 		// Get all rows with the id of this list
-		Cursor cursor = database.query(SQLiteHelper.TABLE_LISTS,
-				allColumns, SQLiteHelper.COLUMN_LIST_ID + "="
-						+ list.getId(), null, null, null, null);
-		
+		Cursor cursor = database.query(SQLiteHelper.TABLE_LISTS, allColumns,
+				SQLiteHelper.COLUMN_LIST_ID + "=" + list.getId(), null, null,
+				null, null);
+
 		if (cursor.getCount() == 1) {
-			database.delete(SQLiteHelper.TABLE_LISTS, SQLiteHelper.COLUMN_LIST_ID + "=" + list.getId(), null);
+			database.delete(SQLiteHelper.TABLE_LISTS,
+					SQLiteHelper.COLUMN_LIST_ID + "=" + list.getId(), null);
 		} else {
 			throw new IOException();
 		}

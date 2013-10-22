@@ -45,9 +45,9 @@ public class ListManager {
 		try {
 			persistenceManager.save(list);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			throw new IllegalStateException(e);
 		}
-			
+
 	}
 
 	public void removeShoppingList(ShoppingList list) {
@@ -55,7 +55,7 @@ public class ListManager {
 		try {
 			persistenceManager.remove(list);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			throw new IllegalStateException(e);
 		}
 	}
 }
