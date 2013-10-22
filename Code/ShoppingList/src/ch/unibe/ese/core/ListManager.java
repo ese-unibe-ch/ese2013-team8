@@ -19,7 +19,7 @@ public class ListManager {
 	private PersistenceManager persistenceManager;
 	private Map<ShoppingList, List<Item>> listToItems;
 
-	public ListManager(PersistenceManager persistenceManager) {
+	ListManager(PersistenceManager persistenceManager) {
 		this.persistenceManager = persistenceManager;
 		this.listToItems = new HashMap<ShoppingList, List<Item>>();
 		try {

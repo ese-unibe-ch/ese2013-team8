@@ -2,9 +2,9 @@ package ch.unibe.ese.shoppinglist;
 
 import java.util.List;
 
+import ch.unibe.ese.core.BaseActivity;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
-import ch.unibe.ese.core.sqlite.SQLitePersistenceManager;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -16,9 +16,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
-public class HomeActivity extends Activity {
+public class HomeActivity extends BaseActivity {
 
 	private ListManager manager;
 	private ArrayAdapter<ShoppingList> shoppingListAdapter;
@@ -29,7 +28,7 @@ public class HomeActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
-		manager = new ListManager(new SQLitePersistenceManager(getApplicationContext()));
+		manager = getListManager();
 		
 		// Get List from manager
 		List<ShoppingList> shoppingLists = manager.getShoppingLists();
