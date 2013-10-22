@@ -55,7 +55,7 @@ public class ShoppingList {
 	}
 
 	private void invariant() {
-		if (this.name == null || this.name.length() == 0)
+		if (this.name == null || this.name.trim().length() == 0)
 			throw new IllegalArgumentException("name musn't be empty!");
 	}
 
