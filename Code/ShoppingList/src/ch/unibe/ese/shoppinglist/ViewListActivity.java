@@ -1,10 +1,9 @@
 package ch.unibe.ese.shoppinglist;
 
-import ch.unibe.ese.core.JsonPersistenceManager;
+import ch.unibe.ese.core.BaseActivity;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
 import android.os.Bundle;
-import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,7 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.support.v4.app.NavUtils;
 
-public class ViewListActivity extends Activity {
+public class ViewListActivity extends BaseActivity {
 
 	private ListManager manager;
 	private ShoppingList list;
@@ -24,8 +23,7 @@ public class ViewListActivity extends Activity {
 		// Show the Up button in the action bar.
 		setupActionBar();
 		
-		manager = new ListManager(new JsonPersistenceManager(
-				getApplicationContext()));
+		manager = getListManager();
 		
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {

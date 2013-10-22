@@ -15,7 +15,7 @@ public class ListManager {
 	private List<ShoppingList> shoppingLists;
 	private PersistenceManager persistenceManager;
 
-	public ListManager(PersistenceManager persistenceManager) {
+	ListManager(PersistenceManager persistenceManager) {
 		this.persistenceManager = persistenceManager;
 		try {
 			shoppingLists = persistenceManager.read();
