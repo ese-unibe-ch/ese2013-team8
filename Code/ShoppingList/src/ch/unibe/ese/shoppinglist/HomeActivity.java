@@ -77,6 +77,5 @@ public class HomeActivity extends Activity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		manager.persist();
 	}
 }
