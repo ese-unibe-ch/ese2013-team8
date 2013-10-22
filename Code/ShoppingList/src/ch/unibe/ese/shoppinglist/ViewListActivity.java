@@ -1,6 +1,9 @@
 package ch.unibe.ese.shoppinglist;
 
+import java.util.List;
+
 import ch.unibe.ese.core.BaseActivity;
+import ch.unibe.ese.core.Item;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
 import android.os.Bundle;
@@ -8,12 +11,16 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.ArrayAdapter;
 import android.support.v4.app.NavUtils;
 
 public class ViewListActivity extends BaseActivity {
 
 	private ListManager manager;
+	private ArrayAdapter<Item> itemAdapter;
 	private ShoppingList list;
 	private int listIndex;
 	
@@ -33,6 +40,20 @@ public class ViewListActivity extends BaseActivity {
 			list = manager.getShoppingLists().get(listIndex);
 			setTitle(list.getName());
 		}
+		
+		// Get list items
+		
+		// TODO: fix bug (app crash)
+		
+		/*List<Item> items = manager.getItemsFor(list);
+		
+		if (items != null) {
+			itemAdapter = new ArrayAdapter<Item>(this, 
+			        R.layout.shopping_list_item, items);
+			
+			ListView listView = (ListView) findViewById(R.id.ItemView);
+			listView.setAdapter(itemAdapter);
+		}*/
 	}
 
 	/**

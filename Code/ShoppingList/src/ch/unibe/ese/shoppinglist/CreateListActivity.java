@@ -1,6 +1,7 @@
 package ch.unibe.ese.shoppinglist;
 
 // TODO: Add strings to values/strings.xml (instead of hardcoded)
+// TODO: fix bug (app crash if list gets created without a due date)
 
 import java.text.DateFormat;
 import java.text.ParseException;
