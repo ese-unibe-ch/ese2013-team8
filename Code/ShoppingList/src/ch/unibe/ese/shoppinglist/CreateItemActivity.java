@@ -36,15 +36,13 @@ public class CreateItemActivity extends Activity {
 	
 	/** Called when the user touches the abort button */
 	public void goBack(View view) {
-		// TODO: make sure that the back button takes the user to the right list
 		finish();
-		//this.onBackPressed();
-		//NavUtils.navigateUpFromSameTask(this);
 	}
 
 	/** Called when the user touches the save button */
 	public void saveItem(View view) {
-		// TODO: save item
+		// TODO: save item	
+		// TODO: make sure that the save button takes the user to the right list
 	}
 
 }

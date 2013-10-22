@@ -116,8 +116,8 @@ public class CreateListActivity extends Activity {
 						.show();
 			}
 
-			Intent intent = new Intent(this, HomeActivity.class);
-			this.startActivity(intent);
+			// go back to home activity
+			NavUtils.navigateUpFromSameTask(this);
 		}
 	}
 
