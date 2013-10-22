@@ -21,7 +21,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 			+ "(" //
 			+ COLUMN_LIST_ID + " integer primary key autoincrement, " //
 			+ COLUMN_LIST_NAME + " text not null, " //
-			+ COLUMN_LIST_DUEDATE + " date, " //
+			+ COLUMN_LIST_DUEDATE + " integer, " //
 			+ COLUMN_LIST_SHOP + " varchar(30)" //
 			+ ");";
 

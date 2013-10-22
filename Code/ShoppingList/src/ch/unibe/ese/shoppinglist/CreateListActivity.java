@@ -3,6 +3,7 @@ package ch.unibe.ese.shoppinglist;
 // TODO: Add strings to values/strings.xml (instead of hardcoded)
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -11,11 +12,8 @@ import java.util.GregorianCalendar;
 import ch.unibe.ese.core.BaseActivity;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
-import ch.unibe.ese.core.sqlite.SQLitePersistenceManager;
 import android.os.Bundle;
-import android.os.Message;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -106,6 +104,16 @@ public class CreateListActivity extends BaseActivity {
 			EditText textShop = (EditText) findViewById(R.id.editTextShop);
 			String shop = textShop.getText().toString();
 			list.setShop(shop);
+			
+			// get due date
+			EditText textDate = (EditText)findViewById(R.id.editTextDate);
+			Date date;
+			try {
+				date = SimpleDateFormat.getDateInstance().parse(textDate.getText().toString());
+				list.setDueDate(date);
+			} catch (ParseException e) {
+				throw new IllegalStateException(e);
+			}
 
 			// save the shopping list
 			try {

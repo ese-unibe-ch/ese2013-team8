@@ -2,12 +2,12 @@ package ch.unibe.ese.core.sqlite;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 import ch.unibe.ese.core.PersistenceManager;
@@ -22,7 +22,6 @@ public class SQLitePersistenceManager implements PersistenceManager {
 	private String[] allColumns = { SQLiteHelper.COLUMN_LIST_ID,
 			SQLiteHelper.COLUMN_LIST_NAME, SQLiteHelper.COLUMN_LIST_DUEDATE,
 			SQLiteHelper.COLUMN_LIST_SHOP };
-	// TODO Add support for the duedate (stupid java date...)
 
 	public void close() {
 		dbHelper.close();
@@ -55,6 +54,9 @@ public class SQLitePersistenceManager implements PersistenceManager {
 	private ShoppingList cursorToShoppingList(Cursor cursor) {
 		ShoppingList list = new ShoppingList(cursor.getString(1));
 		list.setId(cursor.getInt(0));
+		if (cursor.getLong(2) > 0)
+			list.setDueDate(new Date(cursor.getLong(2)));
+
 		list.setShop(cursor.getString(3));
 		return list;
 	}
@@ -69,6 +71,8 @@ public class SQLitePersistenceManager implements PersistenceManager {
 		// If this is a new list
 		ContentValues values = new ContentValues();
 		values.put(SQLiteHelper.COLUMN_LIST_NAME, list.getName());
+		values.put(SQLiteHelper.COLUMN_LIST_DUEDATE,
+				list.getDueDate() != null ? list.getDueDate().getTime() : null);
 		values.put(SQLiteHelper.COLUMN_LIST_SHOP, list.getShop());
 		if (cursor.getCount() == 0) {
 			database.insert(SQLiteHelper.TABLE_LISTS, null, values);
