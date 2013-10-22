@@ -67,7 +67,6 @@ public class SQLitePersistenceManager implements PersistenceManager {
 				null, null);
 
 		// If this is a new list
-		System.out.println(cursor.getCount());
 		ContentValues values = new ContentValues();
 		values.put(SQLiteHelper.COLUMN_LIST_NAME, list.getName());
 		values.put(SQLiteHelper.COLUMN_LIST_SHOP, list.getShop());
@@ -97,5 +96,4 @@ public class SQLitePersistenceManager implements PersistenceManager {
 			throw new IOException();
 		}
 	}
-
 }

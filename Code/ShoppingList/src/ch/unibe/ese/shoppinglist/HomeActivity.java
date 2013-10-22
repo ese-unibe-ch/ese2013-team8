@@ -2,7 +2,6 @@ package ch.unibe.ese.shoppinglist;
 
 import java.util.List;
 
-import ch.unibe.ese.core.JsonPersistenceManager;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
 import ch.unibe.ese.core.sqlite.SQLitePersistenceManager;

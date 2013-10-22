@@ -7,6 +7,7 @@ public class Item {
 	private String name;
 	private BigDecimal price;
 	private Shop shop;
+	private boolean bought;
 
 	public Item(String name) {
 		this.name = name;
@@ -45,7 +46,15 @@ public class Item {
 	void setId(int id) {
 		this.id = id;
 	}
-	
+
+	public boolean isBought() {
+		return bought;
+	}
+
+	public void setBought(boolean bought) {
+		this.bought = bought;
+	}
+
 	private void invariant() {
 		if (this.name == null || this.name.trim().length() == 0)
 			throw new IllegalArgumentException("name musn't be empty!");
