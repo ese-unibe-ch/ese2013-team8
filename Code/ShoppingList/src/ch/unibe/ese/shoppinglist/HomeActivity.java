@@ -1,6 +1,7 @@
 package ch.unibe.ese.shoppinglist;
 
 import java.util.List;
+import java.util.zip.Inflater;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -28,11 +29,8 @@ public class HomeActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		//Put content into the slideMenu and add it to the view
-//		menu = (SlideMenu) this.getLayoutInflater().inflate(R.layout.activity_home, null);
-//		menu.setContent(findViewById(R.layout.activity_home));
-//		setContentView(menu.getFocusedChild());
-		
-		setContentView(R.layout.activity_home);
+		menu = new SlideMenu(getApplicationContext(), R.layout.activity_home);
+		setContentView(menu);
 		
 		manager = new ListManager(new JsonPersistenceManager(getApplicationContext()));
 		
@@ -42,7 +40,7 @@ public class HomeActivity extends Activity {
 		shoppingListAdapter = new ArrayAdapter<ShoppingList>(this, 
 		        R.layout.shopping_list_item, shoppingLists);
 		
-		ListView listView = (ListView) findViewById(R.id.ShoppingListView);
+		ListView listView = (ListView) menu.getContent().findViewById(R.id.ShoppingListView);
 		listView.setAdapter(shoppingListAdapter);
 		
 		// Add long click Listener
@@ -57,7 +55,7 @@ public class HomeActivity extends Activity {
 						);
 				return false;
 			}
-		});		
+		});	
 		
 	}
 
@@ -86,5 +84,12 @@ public class HomeActivity extends Activity {
 	protected void onPause() {
 		super.onPause();
 		manager.persist();
+	}
+	
+	public void onBackPressed() {
+		if(menu.menuOpen())
+			menu.toggleMenu();
+		else
+			super.onBackPressed();
 	}
 }

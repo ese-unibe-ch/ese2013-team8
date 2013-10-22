@@ -11,4 +11,15 @@
     <string name="btn_cancel">Cancel</string>
     <string name="btn_done">Done</string>
 
+    <string name="categories">Categories:</string>
+    
+    
+    <string name="showall">Show all</string>
+    <string name="archive">Archive</string>
+    <string name="itemlist">Item List</string>
+    <string name="sharedlist">Shared Lists</string>
+    <string name="settings">Settings</string>
+    
+    
+    
 </resources>

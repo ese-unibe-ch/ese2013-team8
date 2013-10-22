@@ -1,15 +1,19 @@
 package ch.unibe.ese.core;
 
-import ch.unibe.ese.shoppinglist.R;
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import ch.unibe.ese.Listeners.DragOnTouchListener;
+import ch.unibe.ese.shoppinglist.R;
 
-public class SlideMenu extends LinearLayout {
+public class SlideMenu extends RelativeLayout   {
 
 	private View menu;
 	private View content;
+	private int contentId;
 
+	//Layoutinformations
 	private static final int restContent = 100;
 	private static final int slide_Menu_Id = R.layout.slide_menu;
 	private int currentOffSet = 0;
@@ -22,10 +26,27 @@ public class SlideMenu extends LinearLayout {
 
 
 	public SlideMenu(Context context) {
-		super(context);
-		//listView.setOnTouchListener( new DragOnTouchListener(menu));
+		this(context, -1);
 	}
+	
+	public SlideMenu(Context context, int layout){
+		super(context);
+		
+		//Construct both views
+		menu = getMenu();
+		if(layout >= 0){
+			content = LayoutInflater.from(getContext()).inflate(layout, null);
+			contentId = layout;
+		}
+		else 
+			content = new View(getContext());
 
+		//listeners for both views
+		content.setOnTouchListener(new DragOnTouchListener(this));
+		menu.setOnTouchListener(new DragOnTouchListener(this));
+		
+		addView(content);
+	}	
 	
 	/**
 	 * Creates the view of the Windows and is called when a View is attached to
@@ -34,11 +55,12 @@ public class SlideMenu extends LinearLayout {
 	@Override
 	public void onAttachedToWindow() {
 		super.onAttachedToWindow();
-
-		//this.content = this.getChildAt(contentId);
-		
-		this.menu = this.getChildAt(slide_Menu_Id);
-		this.menu.setVisibility(View.GONE);
+	
+//		this.content = LayoutInflater.from(getContext()).inflate(contentId, null);
+	}
+	
+	private View getMenu(){
+		return LayoutInflater.from(getContext()).inflate(slide_Menu_Id, null);
 	}
 
 	/**
@@ -47,17 +69,27 @@ public class SlideMenu extends LinearLayout {
 	public void toggleMenu() {
 		switch (menuState) {
 		case CLOSED:
-			currentOffSet = this.getMenuWidth();
-			this.content.offsetLeftAndRight(currentOffSet);
-			this.menu.setVisibility(View.VISIBLE);
+			currentOffSet = getMenuWidth();
+			content.offsetLeftAndRight(2000);
+	        addView(menu);
+	        
+	 
+	     
+//			this.currentOffSet = this.getMenuWidth();
+//			this.content.offsetLeftAndRight(currentOffSet);
 			this.menuState = State.OPEN;
 			break;
+			
+			
+	           
+	      
+	           
 
 		case OPEN:
-			this.content.offsetLeftAndRight(-currentOffSet);
+			this.removeView(menu);
+//			this.content.offsetLeftAndRight(-currentOffSet);
 			this.currentOffSet = 0;
 			this.menuState = State.CLOSED;
-			this.menu.setVisibility(View.GONE);
 			break;
 		}
 		this.invalidate();
@@ -65,7 +97,7 @@ public class SlideMenu extends LinearLayout {
 	
 	public int getMenuWidth()
 	{
-		return this.menu.getLayoutParams().width;
+		return 1000;
 	}
 	
 	
@@ -98,8 +130,13 @@ public class SlideMenu extends LinearLayout {
 		return content;
 	}
 
-	public void setContent(View content) {
-		this.content = content;
+	public void setContent(int content) {
+		contentId = content;
+		this.content = LayoutInflater.from(getContext()).inflate(content, null);
 	}
-
+	
+	public boolean menuOpen(){
+		if(menuState == State.OPEN) return true;
+		return false;
+	}
 }
