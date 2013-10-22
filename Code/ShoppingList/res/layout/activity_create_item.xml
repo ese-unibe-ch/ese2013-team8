@@ -23,7 +23,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="saveList"
+            android:onClick="saveItem"
             android:text="Save" />
     </LinearLayout>
 
@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:text="Add new shopping list:"
+            android:text="Add new item:"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <!-- Name -->
@@ -78,37 +78,13 @@
             <requestFocus />
         </EditText>
 
-        <!-- Date -->
-        <TextView
-            android:id="@+id/textViewDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textViewName"
-            android:layout_below="@+id/textViewName"
-            android:layout_marginTop="26dp"
-            android:text="Date (optional)"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <EditText
-            android:id="@+id/editTextDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/textViewDate"
-            android:layout_alignRight="@+id/editTextName"
-            android:layout_marginLeft="14dp"
-            android:layout_toRightOf="@+id/textViewDate"
-            android:ems="10"
-            android:focusable="false"
-            android:inputType="date"
-            android:onClick="showDatePickerDialog" />
-
         <!-- Shop -->
         <TextView
             android:id="@+id/textViewShop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textViewDate"
-            android:layout_below="@+id/textViewDate"
+            android:layout_alignLeft="@+id/textViewName"
+            android:layout_below="@+id/textViewName"
             android:layout_marginTop="26dp"
             android:text="Shop (optional)"
             android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -118,10 +94,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/textViewShop"
-            android:layout_alignLeft="@+id/editTextDate"
-            android:layout_alignParentRight="true"
+            android:layout_alignRight="@+id/editTextName"
+            android:layout_marginLeft="14dp"
+            android:layout_toRightOf="@+id/textViewShop"
             android:ems="10"
             android:inputType="textCapSentences" />
+
+        <!-- Price -->
+        <TextView
+            android:id="@+id/textViewPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textViewShop"
+            android:layout_below="@+id/textViewShop"
+            android:layout_marginTop="26dp"
+            android:text="Price (optional)"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/editTextPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textViewPrice"
+            android:layout_alignLeft="@+id/editTextShop"
+            android:layout_alignParentRight="true"
+            android:ems="10"
+            android:inputType="number" />
     </RelativeLayout>
 
 </RelativeLayout>

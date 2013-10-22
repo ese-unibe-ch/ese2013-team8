@@ -13,14 +13,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class HomeActivity extends Activity {
 
 	private ListManager manager;
 	private ArrayAdapter<ShoppingList> shoppingListAdapter;
+	private Activity homeActivity = this;
+	private boolean longClick = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +47,26 @@ public class HomeActivity extends Activity {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
+				longClick = true; // make sure that the list doesn't open on long click
 				ShoppingList selectedList = shoppingListAdapter.getItem(arg2);
 				HomeActivity.this.startActionMode(
 						new ShoppingListActionMode(HomeActivity.this.manager,selectedList, HomeActivity.this.shoppingListAdapter, HomeActivity.this)
 						);
 				return false;
+			}
+		});
+		
+		// Add click Listener
+		listView.setOnItemClickListener(new OnItemClickListener() {
+			
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				if (!longClick) {
+					Intent intent = new Intent(homeActivity, ViewListActivity.class);
+					intent.putExtra("selectedList", position);
+					homeActivity.startActivity(intent);
+				}
+				longClick = false;
 			}
 		});
 		
