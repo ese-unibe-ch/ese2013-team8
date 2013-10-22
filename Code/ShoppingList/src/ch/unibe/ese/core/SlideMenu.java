@@ -3,11 +3,11 @@ package ch.unibe.ese.core;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import ch.unibe.ese.Listeners.DragOnTouchListener;
 import ch.unibe.ese.shoppinglist.R;
 
-public class SlideMenu extends RelativeLayout   {
+public class SlideMenu extends LinearLayout   {
 
 	private View menu;
 	private View content;
@@ -16,7 +16,7 @@ public class SlideMenu extends RelativeLayout   {
 	//Layoutinformations
 	private static final int restContent = 100;
 	private static final int slide_Menu_Id = R.layout.slide_menu;
-	private int currentOffSet = 0;
+	private int currentOffset = 0;
 
 	private enum State {
 		CLOSED, OPEN
@@ -45,7 +45,11 @@ public class SlideMenu extends RelativeLayout   {
 		content.setOnTouchListener(new DragOnTouchListener(this));
 		menu.setOnTouchListener(new DragOnTouchListener(this));
 		
+		addView(menu);
 		addView(content);
+		
+		menu.setVisibility(View.GONE);
+		
 	}	
 	
 	/**
@@ -69,26 +73,16 @@ public class SlideMenu extends RelativeLayout   {
 	public void toggleMenu() {
 		switch (menuState) {
 		case CLOSED:
-			currentOffSet = getMenuWidth();
-			content.offsetLeftAndRight(2000);
-	        addView(menu);
-	        
-	 
-	     
-//			this.currentOffSet = this.getMenuWidth();
-//			this.content.offsetLeftAndRight(currentOffSet);
+			menu.setVisibility(View.VISIBLE);
+			currentOffset = getMenuWidth();
+			content.offsetLeftAndRight(currentOffset);
 			this.menuState = State.OPEN;
 			break;
-			
-			
-	           
-	      
-	           
 
 		case OPEN:
-			this.removeView(menu);
-//			this.content.offsetLeftAndRight(-currentOffSet);
-			this.currentOffSet = 0;
+			this.menu.setVisibility(View.GONE);
+			this.content.offsetLeftAndRight(-currentOffset);
+			this.currentOffset = 0;
 			this.menuState = State.CLOSED;
 			break;
 		}
@@ -97,7 +91,7 @@ public class SlideMenu extends RelativeLayout   {
 	
 	public int getMenuWidth()
 	{
-		return 1000;
+		return menu.getRight();
 	}
 	
 	
@@ -112,7 +106,7 @@ public class SlideMenu extends RelativeLayout   {
 			this.calculateChildDimensions();
 
 		this.menu.layout(left, top, right - restContent, bottom);
-		this.content.layout(left + currentOffSet, top, right + currentOffSet,
+		this.content.layout(left + currentOffset, top, right + currentOffset,
 				bottom);
 	}
 
