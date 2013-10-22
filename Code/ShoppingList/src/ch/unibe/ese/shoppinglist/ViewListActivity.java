@@ -15,6 +15,7 @@ public class ViewListActivity extends BaseActivity {
 
 	private ListManager manager;
 	private ShoppingList list;
+	private int listIndex;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +29,7 @@ public class ViewListActivity extends BaseActivity {
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
 			// Get list
-			int listIndex = extras.getInt("selectedList");
+			listIndex = extras.getInt("selectedList");
 			list = manager.getShoppingLists().get(listIndex);
 			setTitle(list.getName());
 		}
@@ -49,6 +50,7 @@ public class ViewListActivity extends BaseActivity {
 	  	EditText textName = (EditText) findViewById(R.id.editTextName);
 		String name = textName.getText().toString();
     	intent.putExtra("Item", name);
+    	intent.putExtra("selectedList", listIndex);
         this.startActivity(intent);
 	}
 
