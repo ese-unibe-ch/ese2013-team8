@@ -41,11 +41,8 @@ public class ViewListActivity extends BaseActivity {
 			setTitle(list.getName());
 		}
 		
-		// Get list items
-		
-		// TODO: fix bug (app crash)
-		
-		/*List<Item> items = manager.getItemsFor(list);
+		// Get list items	
+		List<Item> items = manager.getItemsFor(list);
 		
 		if (items != null) {
 			itemAdapter = new ArrayAdapter<Item>(this, 
@@ -53,7 +50,7 @@ public class ViewListActivity extends BaseActivity {
 			
 			ListView listView = (ListView) findViewById(R.id.ItemView);
 			listView.setAdapter(itemAdapter);
-		}*/
+		}
 	}
 
 	/**

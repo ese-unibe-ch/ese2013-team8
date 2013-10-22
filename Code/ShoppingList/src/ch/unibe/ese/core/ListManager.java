@@ -101,6 +101,7 @@ public class ListManager {
 		List<Item> items = listToItems.get(list);
 		if (items == null) {
 			// TODO ask PersistenceManager for all items of this shopping list.
+			return null;
 		}
 		return Collections.unmodifiableList(items);
 	}
