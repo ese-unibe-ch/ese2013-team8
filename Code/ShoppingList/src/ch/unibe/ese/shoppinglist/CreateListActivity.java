@@ -57,10 +57,6 @@ public class CreateListActivity extends Activity {
 			textViewTitle.setText("Edit shopping list:");
 			editList();
 		}
-
-		else {
-			list = new ShoppingList(" ");
-		}
 	}
 
 	@Override
@@ -101,7 +97,10 @@ public class CreateListActivity extends Activity {
 		String name = textName.getText().toString();
 		boolean check = true;
 		try {
-			list.setName(name);
+			if (list == null)
+				list = new ShoppingList(name);
+			else
+				list.setName(name);
 		} catch (IllegalArgumentException e) {
 			Toast.makeText(this, "Please enter a name", Toast.LENGTH_SHORT)
 					.show();
@@ -141,7 +140,7 @@ public class CreateListActivity extends Activity {
 			// Use the current date as the default date in the picker
 
 			final Calendar c = Calendar.getInstance();
-			if(list.getDueDate()!= null)
+			if (list != null && list.getDueDate() != null)
 				c.setTime(list.getDueDate());
 			int year = c.get(Calendar.YEAR);
 			int month = c.get(Calendar.MONTH);
@@ -171,7 +170,6 @@ public class CreateListActivity extends Activity {
 			Date date = new GregorianCalendar(datePicker.getYear(),
 					datePicker.getMonth(), datePicker.getDayOfMonth())
 					.getTime();
-			list.setDueDate(date);
 			DateFormat dateFormat = SimpleDateFormat.getDateInstance();
 			EditText textDate = (EditText) findViewById(R.id.editTextDate);
 			textDate.setText(dateFormat.format(date));
