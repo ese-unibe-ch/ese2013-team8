@@ -2,12 +2,12 @@ package ch.unibe.ese.shoppinglist;
 
 import java.util.List;
 
-import ch.unibe.ese.core.JsonPersistenceManager;
-import ch.unibe.ese.core.ListManager;
-import ch.unibe.ese.core.ShoppingList;
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,7 +16,9 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
+import ch.unibe.ese.core.JsonPersistenceManager;
+import ch.unibe.ese.core.ListManager;
+import ch.unibe.ese.core.ShoppingList;
 
 public class HomeActivity extends Activity {
 
@@ -24,11 +26,41 @@ public class HomeActivity extends Activity {
 	private ArrayAdapter<ShoppingList> shoppingListAdapter;
 	private Activity homeActivity = this;
 	private boolean longClick = false;
+	private ActionBarDrawerToggle actbardrawertoggle;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
+		
+		//create Slidemenu
+//		SlideMenu menu = new SlideMenu(getApplicationContext(), R.layout.activity_home);
+//		setContentView(menu);
+		
+		//Try Slidemenu from google
+		DrawerLayout drawLayout = (DrawerLayout) findViewById(R.layout.navigation_drawer);
+//		drawLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+        drawLayout.setBackgroundColor(Color.WHITE);
+
+        
+        ActionBarDrawerToggle actbardrawertoggle= new ActionBarDrawerToggle(this, drawLayout, R.drawable., R.string.drawer_open, R.string.drawer_close)
+        {
+        	public void onDrawerClosed(View view) {
+        		super.onDrawerClosed(view);
+        	}
+        	
+        	public void onDrawerOpened(View drawerView){
+        		super.onDrawerOpened(drawerView);
+        	}
+        	
+        };
+        
+        drawLayout.setDrawerListener(actbardrawertoggle);
+
+        
+        
+        
+		
 		manager = new ListManager(new JsonPersistenceManager(getApplicationContext()));
 		
 		// Get List from manager

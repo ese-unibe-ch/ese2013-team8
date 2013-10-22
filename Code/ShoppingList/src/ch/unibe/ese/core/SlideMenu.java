@@ -3,6 +3,7 @@ package ch.unibe.ese.core;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import ch.unibe.ese.Listeners.DragOnTouchListener;
 import ch.unibe.ese.shoppinglist.R;
@@ -44,6 +45,7 @@ public class SlideMenu extends LinearLayout   {
 		//listeners for both views
 		content.setOnTouchListener(new DragOnTouchListener(this));
 		menu.setOnTouchListener(new DragOnTouchListener(this));
+		this.setOnTouchListener(new DragOnTouchListener(this));
 		
 		addView(menu);
 		addView(content);

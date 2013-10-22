@@ -10,6 +10,7 @@ import java.util.GregorianCalendar;
 import ch.unibe.ese.core.JsonPersistenceManager;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
+import ch.unibe.ese.core.SlideMenu;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -34,7 +35,12 @@ public class CreateListActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		//create Slidemenu
+//		SlideMenu menu = new SlideMenu(getApplicationContext(), R.layout.activity_create_list);
+//		setContentView(menu);
 		setContentView(R.layout.activity_create_list);
+
 		// hide the action bar on this activity
 		getActionBar().hide();
 		manager = new ListManager(new JsonPersistenceManager(

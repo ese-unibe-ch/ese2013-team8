@@ -8,14 +8,14 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".HomeActivity" >
 
-	<ListView
+    <ListView
         android:id="@+id/ShoppingListView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="10dp"
         android:layout_marginTop="5dp"
-        android:background="@android:color/white"
-        android:cacheColorHint="@android:color/white"
+        android:background="@android:color/transparent"
+        android:cacheColorHint="@android:color/transparent"
         android:divider="#CCCCCC"
         android:dividerHeight="1dp"
         android:paddingLeft="2dp" >

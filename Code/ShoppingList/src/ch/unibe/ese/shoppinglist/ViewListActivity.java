@@ -3,6 +3,7 @@ package ch.unibe.ese.shoppinglist;
 import ch.unibe.ese.core.JsonPersistenceManager;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
+import ch.unibe.ese.core.SlideMenu;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -20,7 +21,12 @@ public class ViewListActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_view_list);
+		
+		//create Slidemenu
+		SlideMenu menu = new SlideMenu(getApplicationContext(), R.layout.activity_view_list);
+		setContentView(menu);
+//		setContentView(R.layout.activity_view_list);
+		
 		// Show the Up button in the action bar.
 		setupActionBar();
 		
