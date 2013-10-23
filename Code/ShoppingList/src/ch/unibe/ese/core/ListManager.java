@@ -103,6 +103,7 @@ public class ListManager {
 			// TODO ask PersistenceManager for all items of this shopping list.
 			return null;
 		}
-		return Collections.unmodifiableList(items);
+		// TODO: add separate list for bought items
+		return items; //Collections.unmodifiableList(items);
 	}
 }

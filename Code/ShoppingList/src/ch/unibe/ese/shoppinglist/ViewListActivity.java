@@ -1,5 +1,6 @@
 package ch.unibe.ese.shoppinglist;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ch.unibe.ese.core.BaseActivity;
@@ -17,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.support.v4.app.NavUtils;
@@ -25,9 +27,13 @@ public class ViewListActivity extends BaseActivity {
 
 	private ListManager manager;
 	private ArrayAdapter<Item> itemAdapter;
+	private ArrayAdapter<Item> itemBoughtAdapter;
+	private Activity viewListActivity = this;
 	private ShoppingList list;
 	private int listIndex;
 	private boolean longClick = false;
+	List<Item> itemsBought = new ArrayList<Item>();
+	List<Item> items;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +53,7 @@ public class ViewListActivity extends BaseActivity {
 		}
 		
 		// Get list items	
-		List<Item> items = manager.getItemsFor(list);
+		items = manager.getItemsFor(list);
 		
 		if (items != null) {
 			itemAdapter = new ArrayAdapter<Item>(this, 
@@ -77,12 +83,20 @@ public class ViewListActivity extends BaseActivity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				if (!longClick) {
+					// bought items
+					itemsBought.add(items.remove(position));
+					itemBoughtAdapter = new ArrayAdapter<Item>(viewListActivity, 
+					        R.layout.shopping_list_item, itemsBought);
+					// TODO: add striketrough to bought items
+					// TODO: set scrollbar on whole activity, not on listViews
 					
+					ListView listViewBought = (ListView) findViewById(R.id.ItemBoughtView);
+					listViewBought.setAdapter(itemBoughtAdapter);
 				}
 				longClick = false;
 			}
 		});
-		
+			
 		}
 	}
 
@@ -96,7 +110,7 @@ public class ViewListActivity extends BaseActivity {
 	}
 	
 	/** Called when the user touches the add item button */
-	public void addItem(View view) {
+	public void addItemEdit(View view) {
 	  	Intent intent = new Intent(this, CreateItemActivity.class);
 	  	EditText textName = (EditText) findViewById(R.id.editTextName);
 		String name = textName.getText().toString();
@@ -104,6 +118,34 @@ public class ViewListActivity extends BaseActivity {
     	intent.putExtra("selectedList", listIndex);
         this.startActivity(intent);
 	}
+	
+	/** Called when the user touches the ok button */
+	public void addItem(View view) {
+	  	EditText textName = (EditText) findViewById(R.id.editTextName);
+		String name = textName.getText().toString();
+		if (name.trim().length() == 0) {
+			Toast.makeText(this, "Please enter a name", Toast.LENGTH_SHORT)
+				.show();
+		}
+		else {
+			try {
+				Item item = new Item(name);
+				manager.addItemToList(item, list);
+				
+				// refresh view
+				items = manager.getItemsFor(list);
+				itemAdapter = new ArrayAdapter<Item>(this, 
+				        R.layout.shopping_list_item, items);
+				ListView listView = (ListView) findViewById(R.id.ItemView);
+				listView.setAdapter(itemAdapter);
+	
+			} catch (IllegalStateException e) {
+				Toast.makeText(this, "Please enter a name", Toast.LENGTH_SHORT)
+					.show();
+			}
+		}
+	}
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
