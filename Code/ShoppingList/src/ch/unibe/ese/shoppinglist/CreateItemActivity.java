@@ -1,6 +1,10 @@
 package ch.unibe.ese.shoppinglist;
 
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import java.math.BigDecimal;
 
 import ch.unibe.ese.core.BaseActivity;
@@ -13,6 +17,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class CreateItemActivity extends BaseActivity {
@@ -21,6 +26,7 @@ public class CreateItemActivity extends BaseActivity {
 	private ShoppingList list;
 	private Item item;
 	private int listIndex;
+	private TextView textViewTitle;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +45,15 @@ public class CreateItemActivity extends BaseActivity {
 			// get list
 			listIndex = extras.getInt("selectedList");
 			list = manager.getShoppingLists().get(listIndex);
+			// edit item
+			if (extras.getBoolean("editItem")) {
+				int itemIndex = extras.getInt("selectedItem");
+				List<Item> items = manager.getItemsFor(list);
+				item = items.get(itemIndex);
+				textViewTitle = (TextView) findViewById(R.id.textViewTitle);
+				textViewTitle.setText("Edit item:");
+				editItem();
+			}
 		}
 	}
 
@@ -47,6 +62,24 @@ public class CreateItemActivity extends BaseActivity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.create_item, menu);
 		return true;
+	}
+	
+	private void editItem() {
+		// set name
+		EditText textName = (EditText) findViewById(R.id.editTextName);
+		textName.setText(item.getName());
+
+		// set shop
+		EditText textShop = (EditText) findViewById(R.id.editTextShop);
+		textShop.setText(item.getShop().toString());
+		
+		// TODO: set price
+		//EditText textDate = (EditText) findViewById(R.id.editTextDate);
+		//Date date = list.getDueDate();
+		
+		// delete existing item and add as new one
+		// TODO: fix position
+		manager.removeItemFromList(item, list);
 	}
 	
 	/** Called when the user touches the abort button */

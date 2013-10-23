@@ -7,14 +7,18 @@ import ch.unibe.ese.core.Item;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
 import android.os.Bundle;
+import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ArrayAdapter;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.support.v4.app.NavUtils;
 
 public class ViewListActivity extends BaseActivity {
@@ -23,6 +27,7 @@ public class ViewListActivity extends BaseActivity {
 	private ArrayAdapter<Item> itemAdapter;
 	private ShoppingList list;
 	private int listIndex;
+	private boolean longClick = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +55,34 @@ public class ViewListActivity extends BaseActivity {
 			
 			ListView listView = (ListView) findViewById(R.id.ItemView);
 			listView.setAdapter(itemAdapter);
+		
+		// Add long click Listener
+		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				longClick = true; // make sure that the list doesn't open on long click
+				Item selectedItem = itemAdapter.getItem(arg2);
+				ViewListActivity.this.startActionMode(
+						new ShoppingListActionMode(ViewListActivity.this.manager, selectedItem, list, ViewListActivity.this.itemAdapter, ViewListActivity.this)
+						);
+				return false;
+			}
+		});
+		
+		// Add click Listener
+		listView.setOnItemClickListener(new OnItemClickListener() {
+			
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				if (!longClick) {
+					
+				}
+				longClick = false;
+			}
+		});
+		
 		}
 	}
 

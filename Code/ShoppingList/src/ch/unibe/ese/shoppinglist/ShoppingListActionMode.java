@@ -1,5 +1,6 @@
 package ch.unibe.ese.shoppinglist;
 
+import ch.unibe.ese.core.Item;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
 import android.app.Activity;
@@ -16,14 +17,28 @@ public class ShoppingListActionMode implements Callback {
 	private ListManager manager;
 	private ShoppingList selectedList;
 	private ArrayAdapter<ShoppingList> shoppingListAdapter;
-	private Activity homeActivity;
+	private Activity activity;
+	private Item selectedItem;
+	private ArrayAdapter<Item> itemAdapter;
+	private boolean isList;
 	
 	public ShoppingListActionMode(ListManager manager, ShoppingList selectedList, ArrayAdapter<ShoppingList> shoppingListAdapter, Activity homeActivity) {
 		this.manager = manager;
 		this.selectedList = selectedList;
 		this.shoppingListAdapter = shoppingListAdapter;
-		this.homeActivity = homeActivity;
+		this.activity = homeActivity;
+		isList = true;
 	}
+	
+	public ShoppingListActionMode(ListManager manager, Item selectedItem, ShoppingList selectedList, ArrayAdapter<Item> itemAdapter, Activity activity) {
+		this.manager = manager;
+		this.selectedItem = selectedItem;
+		this.selectedList = selectedList;
+		this.itemAdapter = itemAdapter;
+		this.activity = activity;
+		isList = false;
+	}
+	
     // Called when the action mode is created; startActionMode() was called
     @Override
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
@@ -45,18 +60,37 @@ public class ShoppingListActionMode implements Callback {
     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_edit:
-                shoppingListAdapter.notifyDataSetChanged();
-                mode.finish(); 
-                // open list edit screen
-	        	Intent intent = new Intent(homeActivity, CreateListActivity.class);
-	        	int listIndex = manager.getShoppingLists().indexOf(selectedList);
-	        	intent.putExtra("selectedList", listIndex);
-	            homeActivity.startActivity(intent);
+            	if (isList) {
+	                shoppingListAdapter.notifyDataSetChanged();
+	                mode.finish(); 
+	                // open list edit screen
+		        	Intent intent = new Intent(activity, CreateListActivity.class);
+		        	int listIndex = manager.getShoppingLists().indexOf(selectedList);
+		        	intent.putExtra("selectedList", listIndex);
+		            activity.startActivity(intent);
+            	}
+            	else {
+	                itemAdapter.notifyDataSetChanged();
+	                mode.finish(); 
+	                // open item edit screen
+		        	Intent intent = new Intent(activity, CreateItemActivity.class);
+		        	int itemIndex = manager.getItemsFor(selectedList).indexOf(selectedItem);
+		        	intent.putExtra("selectedItem", itemIndex);
+		        	intent.putExtra("editItem", true);
+		            activity.startActivity(intent);
+            	}
                 return true;
             case R.id.action_remove:
-            	manager.removeShoppingList(selectedList);
-            	shoppingListAdapter.notifyDataSetChanged();
-            	mode.finish(); // Action picked, so close the CAB
+            	if (isList) {
+	            	manager.removeShoppingList(selectedList);
+	            	shoppingListAdapter.notifyDataSetChanged();
+	            	mode.finish(); // Action picked, so close the CAB
+            	}
+            	else {
+	            	manager.removeItemFromList(selectedItem, selectedList);
+	            	itemAdapter.notifyDataSetChanged();
+	            	mode.finish(); // Action picked, so close the CAB
+            	}
             	return true;
             default:
                 return false;
