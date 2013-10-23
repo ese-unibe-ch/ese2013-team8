@@ -19,12 +19,29 @@
     <string name="categories">Categories:</string>
     
     
+    		<!-- The own navigation drawer -->
+    
     <string name="showall">Show all</string>
     <string name="archive">Archive</string>
     <string name="itemlist">Item List</string>
     <string name="sharedlist">Shared Lists</string>
     <string name="settings">Settings</string>
     
+    
+    		 <!-- The google navigation drawer -->
+    		 
+    <string name="drawer_close">Navigationbar closed</string>
+    <string name="drawer_open">Navigationbar open</string>
+    <string-array name="navigation_items">
+        <item>Show all</item>
+        <item>Electronics</item>
+        <item>Food</item> </string-array>
+  
+    <string-array name="navigation_options">
+        <item>Archive</item>
+        <item>Item List</item>
+        <item>Shared List</item>
+        <item>Settings</item> </string-array>
     
     
 </resources>
