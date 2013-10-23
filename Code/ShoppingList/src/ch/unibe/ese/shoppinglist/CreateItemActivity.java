@@ -1,9 +1,5 @@
 package ch.unibe.ese.shoppinglist;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.math.BigDecimal;
 
@@ -21,6 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class CreateItemActivity extends BaseActivity {
+	
+	// TODO: maybe ItemActivity parent class and CreateItemActivity/EditItemActivity children
 	
 	private ListManager manager;
 	private ShoppingList list;
@@ -72,13 +70,15 @@ public class CreateItemActivity extends BaseActivity {
 
 		// set shop
 		if(item.getShop() != null) {
-		EditText textShop = (EditText) findViewById(R.id.editTextShop);
-		textShop.setText(item.getShop().toString());
+			EditText textShop = (EditText) findViewById(R.id.editTextShop);
+			textShop.setText(item.getShop().toString());
 		}
 		
-		// TODO: set price
-		//EditText textDate = (EditText) findViewById(R.id.editTextDate);
-		//Date date = list.getDueDate();
+		// set price
+		if(item.getPrice() != null) {
+			EditText textPrice = (EditText) findViewById(R.id.editTextPrice);
+			textPrice.setText(item.getPrice().toString());
+		}
 		
 		edit = true;
 	}
@@ -116,8 +116,11 @@ public class CreateItemActivity extends BaseActivity {
 			
 			// get price
 			EditText textPrice = (EditText)findViewById(R.id.editTextPrice);
-			// TODO: save price
-			//BigDecimal price = textPrice.getText();
+			String itemPrice = textPrice.getText().toString();
+			if (itemPrice.trim().length() != 0) {
+				BigDecimal price = new BigDecimal(itemPrice);
+				item.setPrice(price);
+			}
 
 			// save the item
 			try {

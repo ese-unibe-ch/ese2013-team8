@@ -32,8 +32,9 @@ public class ViewListActivity extends BaseActivity {
 	private ShoppingList list;
 	private int listIndex;
 	private boolean longClick = false;
-	List<Item> itemsBought = new ArrayList<Item>();
 	List<Item> items;
+	List<Item> itemsBought;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,8 @@ public class ViewListActivity extends BaseActivity {
 		setupActionBar();
 		
 		manager = getListManager();
+		items = new ArrayList<Item>();
+		itemsBought = new ArrayList<Item>();
 		
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
@@ -175,4 +178,8 @@ public class ViewListActivity extends BaseActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
+	@Override
+	protected void onPause() {
+		super.onPause();
+	}
 }

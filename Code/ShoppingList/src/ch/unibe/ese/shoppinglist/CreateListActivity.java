@@ -28,6 +28,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class CreateListActivity extends BaseActivity {
+	
+	// TODO: maybe ListActivity parent class and CreateListActivity/EditListActivity children
 
 	private ListManager manager;
 	private ShoppingList list;
