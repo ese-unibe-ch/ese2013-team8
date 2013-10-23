@@ -138,6 +138,10 @@ public class ViewListActivity extends BaseActivity {
 				        R.layout.shopping_list_item, items);
 				ListView listView = (ListView) findViewById(R.id.ItemView);
 				listView.setAdapter(itemAdapter);
+				
+				// remove text from field
+				textName = (EditText) findViewById(R.id.editTextName);
+				textName.setText("");
 	
 			} catch (IllegalStateException e) {
 				Toast.makeText(this, "Please enter a name", Toast.LENGTH_SHORT)
