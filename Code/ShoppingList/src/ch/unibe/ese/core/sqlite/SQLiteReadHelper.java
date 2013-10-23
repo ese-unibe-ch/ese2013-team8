@@ -43,7 +43,7 @@ public class SQLiteReadHelper {
 				"="+SQLiteHelper.TABLE_ITEMTOLIST+"."+SQLiteHelper.COLUMN_ITEM_ID +
 				" and "+SQLiteHelper.TABLE_ITEMTOLIST+"."+SQLiteHelper.COLUMN_LIST_ID +
 				"="+listId
-				+");";
+				+";";
 		Cursor cursor = database.rawQuery(query, null);
 		cursor.moveToFirst();
 		return cursor;
@@ -78,7 +78,7 @@ public class SQLiteReadHelper {
 	}
 	
 	public Item cursorToItem(Cursor cursor) {
-		Item item = new Item(cursor.getString(1));
+		Item item = new Item(cursor.getString(0));
 		return item;
 	}
 	

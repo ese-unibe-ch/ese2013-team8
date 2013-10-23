@@ -113,7 +113,7 @@ public class CreateListActivity extends BaseActivity {
 				date = SimpleDateFormat.getDateInstance().parse(textDate.getText().toString());
 				list.setDueDate(date);
 			} catch (ParseException e) {
-				throw new IllegalStateException(e);
+				//throw new IllegalStateException(e);
 			}
 
 			// save the shopping list
