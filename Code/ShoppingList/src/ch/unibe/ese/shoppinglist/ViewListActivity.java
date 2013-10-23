@@ -1,11 +1,10 @@
 package ch.unibe.ese.shoppinglist;
 
-import ch.unibe.ese.core.JsonPersistenceManager;
+import ch.unibe.ese.core.BaseActivity;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
 import ch.unibe.ese.core.SlideMenu;
 import android.os.Bundle;
-import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,10 +12,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.support.v4.app.NavUtils;
 
-public class ViewListActivity extends Activity {
+public class ViewListActivity extends BaseActivity {
 
 	private ListManager manager;
 	private ShoppingList list;
+	private int listIndex;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,13 +30,12 @@ public class ViewListActivity extends Activity {
 		// Show the Up button in the action bar.
 		setupActionBar();
 		
-		manager = new ListManager(new JsonPersistenceManager(
-				getApplicationContext()));
+		manager = getListManager();
 		
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
 			// Get list
-			int listIndex = extras.getInt("selectedList");
+			listIndex = extras.getInt("selectedList");
 			list = manager.getShoppingLists().get(listIndex);
 			setTitle(list.getName());
 		}
@@ -57,6 +56,7 @@ public class ViewListActivity extends Activity {
 	  	EditText textName = (EditText) findViewById(R.id.editTextName);
 		String name = textName.getText().toString();
     	intent.putExtra("Item", name);
+    	intent.putExtra("selectedList", listIndex);
         this.startActivity(intent);
 	}
 

@@ -2,6 +2,13 @@ package ch.unibe.ese.shoppinglist;
 
 import java.util.List;
 
+<<<<<<< HEAD
+=======
+import ch.unibe.ese.core.BaseActivity;
+import ch.unibe.ese.core.ListManager;
+import ch.unibe.ese.core.ShoppingList;
+import android.os.Bundle;
+>>>>>>> 234912ee7b0a6c307eef0b61feb8797ec4f92629
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -16,11 +23,14 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+<<<<<<< HEAD
 import ch.unibe.ese.core.JsonPersistenceManager;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
+=======
+>>>>>>> 234912ee7b0a6c307eef0b61feb8797ec4f92629
 
-public class HomeActivity extends Activity {
+public class HomeActivity extends BaseActivity {
 
 	private ListManager manager;
 	private ArrayAdapter<ShoppingList> shoppingListAdapter;
@@ -32,6 +42,7 @@ public class HomeActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
+<<<<<<< HEAD
 		
 		//create Slidemenu
 //		SlideMenu menu = new SlideMenu(getApplicationContext(), R.layout.activity_home);
@@ -62,6 +73,9 @@ public class HomeActivity extends Activity {
         
 		
 		manager = new ListManager(new JsonPersistenceManager(getApplicationContext()));
+=======
+		manager = getListManager();
+>>>>>>> 234912ee7b0a6c307eef0b61feb8797ec4f92629
 		
 		// Get List from manager
 		List<ShoppingList> shoppingLists = manager.getShoppingLists();

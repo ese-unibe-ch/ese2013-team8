@@ -7,17 +7,16 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import ch.unibe.ese.core.JsonPersistenceManager;
+
+import ch.unibe.ese.core.BaseActivity;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
 import ch.unibe.ese.core.SlideMenu;
 import android.os.Bundle;
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.View;
@@ -26,7 +25,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class CreateListActivity extends Activity {
+public class CreateListActivity extends BaseActivity {
 
 	private ListManager manager;
 	private ShoppingList list;
@@ -43,8 +42,7 @@ public class CreateListActivity extends Activity {
 
 		// hide the action bar on this activity
 		getActionBar().hide();
-		manager = new ListManager(new JsonPersistenceManager(
-				getApplicationContext()));
+		manager = getListManager();
 
 		// edit shopping list
 		Bundle extras = getIntent().getExtras();
@@ -139,7 +137,7 @@ public class CreateListActivity extends Activity {
 			// Use the current date as the default date in the picker
 
 			final Calendar c = Calendar.getInstance();
-			if(list.getDueDate()!= null)
+			if (list.getDueDate() != null)
 				c.setTime(list.getDueDate());
 			int year = c.get(Calendar.YEAR);
 			int month = c.get(Calendar.MONTH);
