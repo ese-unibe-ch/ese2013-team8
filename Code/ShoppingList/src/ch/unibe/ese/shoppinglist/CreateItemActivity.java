@@ -70,8 +70,10 @@ public class CreateItemActivity extends BaseActivity {
 		textName.setText(item.getName());
 
 		// set shop
+		if(item.getShop() != null) {
 		EditText textShop = (EditText) findViewById(R.id.editTextShop);
 		textShop.setText(item.getShop().toString());
+		}
 		
 		// TODO: set price
 		//EditText textDate = (EditText) findViewById(R.id.editTextDate);
