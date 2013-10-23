@@ -37,7 +37,14 @@ public class SQLiteReadHelper {
 	 */
 	public Cursor getItemCursor(ShoppingList list) {
 		int listId = getListId(list.getName());
-		Cursor cursor = getQueryCursor(SQLiteHelper.TABLE_ITEMTOLIST, SQLiteHelper.ITEMTOLIST_COLUMNS, SQLiteHelper.COLUMN_LIST_ID+"="+listId);
+		String query = "select " + SQLiteHelper.TABLE_ITEMS+"."+SQLiteHelper.COLUMN_ITEM_NAME + 
+				" from " + SQLiteHelper.TABLE_ITEMS+", "+ SQLiteHelper.TABLE_ITEMTOLIST +
+				" where " + SQLiteHelper.TABLE_ITEMS+"."+SQLiteHelper.COLUMN_ITEM_ID +
+				"="+SQLiteHelper.TABLE_ITEMTOLIST+"."+SQLiteHelper.COLUMN_ITEM_ID +
+				" and "+SQLiteHelper.TABLE_ITEMTOLIST+"."+SQLiteHelper.COLUMN_LIST_ID +
+				"="+listId
+				+");";
+		Cursor cursor = database.rawQuery(query, null);
 		cursor.moveToFirst();
 		return cursor;
 	}
