@@ -7,31 +7,80 @@ import android.util.Log;
 
 public class SQLiteHelper extends SQLiteOpenHelper {
 
+	// Table definitions
+	// Save all Shopping lists with an unique ID
 	public static final String TABLE_LISTS = "shoppinglists";
-	public static final String COLUMN_LIST_ID = "id";
-	public static final String COLUMN_LIST_NAME = "name";
+	public static final String COLUMN_LIST_ID = "listid";
+	public static final String COLUMN_LIST_NAME = "listname";
 	public static final String COLUMN_LIST_DUEDATE = "duedate";
-	public static final String COLUMN_LIST_SHOP = "shop";
+	// Save all Items with an unique name and ID
+	public static final String TABLE_ITEMS = "items";
+	public static final String COLUMN_ITEM_ID = "itemid";
+	public static final String COLUMN_ITEM_NAME = "itemname";
+	// Save all shops with an unique name and ID
+	public static final String TABLE_SHOPS = "shops";
+	public static final String COLUMN_SHOP_ID = "shopid";
+	public static final String COLUMN_SHOP_NAME = "shopname";
+	// Link items to lists
+	public static final String TABLE_ITEMTOLIST = "itemtolist";
+	public static final String COLUMN_LISTPRICE = "listprice";
 
 	private static final String DATABASE_NAME = "shoppinglist.db";
 	private static final int DATABASE_VERSION = 1;
 
 	// Database creation sql statement
-	private static final String DATABASE_CREATE = "create table " + TABLE_LISTS
-			+ "(" //
+	private static final String DATABASE_CREATE_TABLE_LISTS = 
+			// create table for lists
+			"create table " + TABLE_LISTS + "(" //
 			+ COLUMN_LIST_ID + " integer primary key autoincrement, " //
 			+ COLUMN_LIST_NAME + " text not null, " //
 			+ COLUMN_LIST_DUEDATE + " integer, " //
-			+ COLUMN_LIST_SHOP + " varchar(30)" //
+			+ COLUMN_SHOP_ID + " integer" //
 			+ ");";
+			// Create table for items
+	private static final String DATABASE_CREATE_TABLE_ITEMS = 
+			"create table " + TABLE_ITEMS + "("
+			+ COLUMN_ITEM_ID + " integer primary key autoincrement, "
+			+ COLUMN_ITEM_NAME + " varchar(30) "
+			+ ");";
+			// link items to lists
+	private static final String DATABASE_CREATE_TABLE_ITEMTOLIST =
+			"create table " + TABLE_ITEMTOLIST + "("
+			+ COLUMN_ITEM_ID + " integer, "
+			+ COLUMN_LIST_ID + " integer, "
+			+ COLUMN_LISTPRICE + " float, "
+			+ "primary key (" + COLUMN_ITEM_ID + ", " + COLUMN_LIST_ID + ")"
+			+ ");";
+			// Create table for Shops
+	private static final String DATABASE_CREATE_TABLE_SHOPS =
+			"create table " + TABLE_SHOPS + "("
+			+ COLUMN_SHOP_ID + " integer primary key autoincrement, "
+			+ COLUMN_SHOP_NAME + " varchar(30) "
+			+ ");";
+	
+	
+	public static String[] LISTS_COLUMNS = { SQLiteHelper.COLUMN_LIST_ID,
+			SQLiteHelper.COLUMN_LIST_NAME, SQLiteHelper.COLUMN_LIST_DUEDATE,
+			SQLiteHelper.COLUMN_SHOP_ID };
+	public static String[] SHOPS_COLUMNS = { SQLiteHelper.COLUMN_SHOP_ID,
+			SQLiteHelper.COLUMN_SHOP_NAME };
+	public static String[] ITEMS_COLUMNS = { SQLiteHelper.COLUMN_ITEM_ID,
+			SQLiteHelper.COLUMN_ITEM_NAME };
+	public static String[] ITEMTOLIST_COLUMNS = {
+			SQLiteHelper.COLUMN_ITEM_ID, SQLiteHelper.COLUMN_LIST_ID,
+			SQLiteHelper.COLUMN_LISTPRICE };
 
+	
 	public SQLiteHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
 
 	@Override
 	public void onCreate(SQLiteDatabase database) {
-		database.execSQL(DATABASE_CREATE);
+		database.execSQL(DATABASE_CREATE_TABLE_LISTS);
+		database.execSQL(DATABASE_CREATE_TABLE_ITEMS);
+		database.execSQL(DATABASE_CREATE_TABLE_ITEMTOLIST);
+		database.execSQL(DATABASE_CREATE_TABLE_SHOPS);
 	}
 
 	@Override

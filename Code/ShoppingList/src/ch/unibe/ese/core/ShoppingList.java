@@ -6,7 +6,6 @@ public class ShoppingList {
 	private String name;
 	private Date dueDate;
 	private String shop;
-	private int id;
 
 	/**
 	 * @param name
@@ -44,14 +43,6 @@ public class ShoppingList {
 
 	public void setShop(String shop) {
 		this.shop = shop;
-	}
-	
-	public int getId() {
-		return id;
-	}
-	
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	private void invariant() {

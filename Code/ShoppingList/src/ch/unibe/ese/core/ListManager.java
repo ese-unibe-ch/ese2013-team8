@@ -23,7 +23,7 @@ public class ListManager {
 		this.persistenceManager = persistenceManager;
 		this.listToItems = new HashMap<ShoppingList, List<Item>>();
 		try {
-			shoppingLists = persistenceManager.read();
+			shoppingLists = persistenceManager.readLists();
 		} catch (IOException e) {
 			// TODO throw an appropriate exception
 			throw new IllegalStateException(e);
@@ -73,7 +73,7 @@ public class ListManager {
 			listToItems.put(list, items);
 		}
 		items.add(item);
-		// TODO persist the item and item-list relation.
+		persistenceManager.save(item, list);
 
 	}
 
@@ -86,7 +86,11 @@ public class ListManager {
 			listToItems.put(list, items);
 		}
 		items.remove(item);
-		// TODO remove the item from the item-list relation.
+		try {
+			persistenceManager.remove(item,list);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		}
 
 	}
 
@@ -100,8 +104,7 @@ public class ListManager {
 	public List<Item> getItemsFor(ShoppingList list) {
 		List<Item> items = listToItems.get(list);
 		if (items == null) {
-			// TODO ask PersistenceManager for all items of this shopping list.
-			return null;
+			items = persistenceManager.getItems(list);
 		}
 		// TODO: add separate list for bought items
 		return items; //Collections.unmodifiableList(items);

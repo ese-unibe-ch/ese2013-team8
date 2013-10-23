@@ -10,8 +10,16 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import ch.unibe.ese.core.Item;
 import ch.unibe.ese.core.PersistenceManager;
 import ch.unibe.ese.core.ShoppingList;
+
+/**
+ * This class provides function to save
+ * all lists / items / shops to a SQLite database
+ * @author Stephan
+ *
+ */
 
 public class SQLitePersistenceManager implements PersistenceManager {
 
@@ -19,9 +27,8 @@ public class SQLitePersistenceManager implements PersistenceManager {
 	// Database fields
 	private SQLiteDatabase database;
 	private SQLiteHelper dbHelper;
-	private String[] allColumns = { SQLiteHelper.COLUMN_LIST_ID,
-			SQLiteHelper.COLUMN_LIST_NAME, SQLiteHelper.COLUMN_LIST_DUEDATE,
-			SQLiteHelper.COLUMN_LIST_SHOP };
+	private SQLiteUpdateHelper updateHelper;
+	private SQLiteReadHelper readHelper;
 
 	public void close() {
 		dbHelper.close();
@@ -33,17 +40,21 @@ public class SQLitePersistenceManager implements PersistenceManager {
 		this.context = applicationContext;
 		this.dbHelper = new SQLiteHelper(this.context);
 		this.database = dbHelper.getWritableDatabase();
+		this.readHelper = new SQLiteReadHelper(this.database);
+		this.updateHelper = new SQLiteUpdateHelper(this.database, this.readHelper);
 	}
 
+	/**
+	 * Everything for lists
+	 */
+	
 	@Override
-	public List<ShoppingList> read() throws IOException {
+	public List<ShoppingList> readLists() throws IOException {
 		List<ShoppingList> lists = new ArrayList<ShoppingList>();
 
-		Cursor cursor = database.query(SQLiteHelper.TABLE_LISTS, allColumns,
-				null, null, null, null, null);
-		cursor.moveToFirst();
+		Cursor cursor = readHelper.getListCursor();
 		while (!cursor.isAfterLast()) {
-			ShoppingList list = cursorToShoppingList(cursor);
+			ShoppingList list = readHelper.cursorToShoppingList(cursor);
 			lists.add(list);
 			cursor.moveToNext();
 		}
@@ -51,51 +62,66 @@ public class SQLitePersistenceManager implements PersistenceManager {
 		return lists;
 	}
 
-	private ShoppingList cursorToShoppingList(Cursor cursor) {
-		ShoppingList list = new ShoppingList(cursor.getString(1));
-		list.setId(cursor.getInt(0));
-		if (cursor.getLong(2) > 0)
-			list.setDueDate(new Date(cursor.getLong(2)));
-
-		list.setShop(cursor.getString(3));
-		return list;
-	}
-
 	@Override
 	public void save(ShoppingList list) throws IOException {
-		// Get all rows with the id of this list
-		Cursor cursor = database.query(SQLiteHelper.TABLE_LISTS, allColumns,
-				SQLiteHelper.COLUMN_LIST_ID + "=" + list.getId(), null, null,
-				null, null);
-
+		// Convert the list to a ContentValue
+		// Automatically creates a new shop in the database if it doesn't exist
+		ContentValues values = updateHelper.toValue(list);
 		// If this is a new list
-		ContentValues values = new ContentValues();
-		values.put(SQLiteHelper.COLUMN_LIST_NAME, list.getName());
-		values.put(SQLiteHelper.COLUMN_LIST_DUEDATE,
-				list.getDueDate() != null ? list.getDueDate().getTime() : null);
-		values.put(SQLiteHelper.COLUMN_LIST_SHOP, list.getShop());
-		if (cursor.getCount() == 0) {
+		if (readHelper.getListId(list.getName()) == -1) {
 			database.insert(SQLiteHelper.TABLE_LISTS, null, values);
-			// Else if it is an old list
-		} else if (cursor.getCount() == 1) {
+		} else { // Else if it is an old list
 			database.update(SQLiteHelper.TABLE_LISTS, values,
-					SQLiteHelper.COLUMN_LIST_ID + "=" + list.getId(), null);
-			// If there is more than one list with this id
-		} else {
-			throw new IOException();
+					SQLiteHelper.COLUMN_LIST_ID + "=" + readHelper.getListId(list.getName()), null);
 		}
 	}
 
 	@Override
 	public void remove(ShoppingList list) throws IOException {
-		// Get all rows with the id of this list
-		Cursor cursor = database.query(SQLiteHelper.TABLE_LISTS, allColumns,
-				SQLiteHelper.COLUMN_LIST_ID + "=" + list.getId(), null, null,
-				null, null);
-
-		if (cursor.getCount() == 1) {
+		if (readHelper.getListId(list.getName()) == -1) {
+			throw new IOException();
+		} else {
 			database.delete(SQLiteHelper.TABLE_LISTS,
-					SQLiteHelper.COLUMN_LIST_ID + "=" + list.getId(), null);
+					SQLiteHelper.COLUMN_LIST_ID + "=" + readHelper.getListId(list.getName()), null);
+		}
+	}
+
+	/**
+	 * Everything for Items
+	 */
+	
+	@Override
+	public List<Item> getItems(ShoppingList list) {
+		List<Item> itemList = new ArrayList<Item>();
+		Cursor cursor = readHelper.getItemCursor(list);
+		while (!cursor.isAfterLast()) {
+			Item item = readHelper.cursorToItem(cursor);
+			itemList.add(item);
+			cursor.moveToNext();
+		}
+		cursor.close();
+		return itemList;
+	}
+	
+	@Override
+	public void save(Item item, ShoppingList list) {
+		updateHelper.addItemIfNotExistent(item);
+		ContentValues values = updateHelper.toValue(item, list);
+		if(readHelper.isInList(item, list)) {
+			// The following code needs to be added if we want to add quantities
+			// It just updates the entry in the database with the newest values in "values"
+			//database.update(SQLiteHelper.TABLE_ITEMTOLIST, values, SQLiteHelper.COLUMN_ITEM_ID+"=? AND "+SQLiteHelper.COLUMN_LIST_ID+"=?", 
+			//		new String[] {""+readHelper.getItemId(item.getName()), ""+readHelper.getListId(list.getName())} );
+		} else {
+			database.insert(SQLiteHelper.TABLE_ITEMTOLIST, null, values);
+		}
+	}
+	
+	@Override
+	public void remove(Item item, ShoppingList list) throws IOException {
+		if(readHelper.isInList(item, list)) {
+			database.delete(SQLiteHelper.TABLE_ITEMTOLIST, SQLiteHelper.COLUMN_ITEM_ID+"=? AND "+SQLiteHelper.COLUMN_LIST_ID+"=?", 
+					new String[] {""+readHelper.getItemId(item.getName()), ""+readHelper.getListId(list.getName())} );
 		} else {
 			throw new IOException();
 		}

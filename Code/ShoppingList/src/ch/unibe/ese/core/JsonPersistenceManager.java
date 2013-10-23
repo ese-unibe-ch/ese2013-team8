@@ -36,7 +36,7 @@ public class JsonPersistenceManager implements PersistenceManager {
 	}
 
 	@Override
-	public List<ShoppingList> read() throws IOException {
+	public List<ShoppingList> readLists() throws IOException {
 		FileInputStream in = null;
 		InputStreamReader reader = null;
 		try {
@@ -89,5 +89,23 @@ public class JsonPersistenceManager implements PersistenceManager {
 	public void remove(ShoppingList list) throws IOException {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void save(Item item, ShoppingList list) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void remove(Item item, ShoppingList list) throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<Item> getItems(ShoppingList list) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
