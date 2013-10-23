@@ -5,7 +5,7 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,10 +15,8 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import ch.unibe.ese.core.BaseActivity;
-import ch.unibe.ese.core.JsonPersistenceManager;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
-
 
 public class HomeActivity extends BaseActivity {
 
@@ -26,14 +24,18 @@ public class HomeActivity extends BaseActivity {
 	private ArrayAdapter<ShoppingList> shoppingListAdapter;
 	private Activity homeActivity = this;
 	private boolean longClick = false;
-	private ActionBarDrawerToggle actbardrawertoggle;
+	
+	private DrawerLayout drawMenu;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
+		
+		//create slide list
+		drawMenu = NavigationDrawer.constructNavigationDrawer(drawMenu, this);
+		
 		manager = getListManager();
-
 		
 		// Get List from manager
 		List<ShoppingList> shoppingLists = manager.getShoppingLists();
@@ -99,6 +101,5 @@ public class HomeActivity extends BaseActivity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		manager.persist();
 	}
 }
