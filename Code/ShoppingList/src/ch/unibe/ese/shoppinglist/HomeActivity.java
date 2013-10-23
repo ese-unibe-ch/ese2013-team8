@@ -2,10 +2,9 @@ package ch.unibe.ese.shoppinglist;
 
 import java.util.List;
 
-import ch.unibe.ese.core.JsonPersistenceManager;
+import ch.unibe.ese.core.BaseActivity;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
-import ch.unibe.ese.core.sqlite.SQLitePersistenceManager;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -13,20 +12,23 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-public class HomeActivity extends Activity {
+public class HomeActivity extends BaseActivity {
 
 	private ListManager manager;
 	private ArrayAdapter<ShoppingList> shoppingListAdapter;
+	private Activity homeActivity = this;
+	private boolean longClick = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
-		manager = new ListManager(new SQLitePersistenceManager(getApplicationContext()));
+		manager = getListManager();
 		
 		// Get List from manager
 		List<ShoppingList> shoppingLists = manager.getShoppingLists();
@@ -43,11 +45,26 @@ public class HomeActivity extends Activity {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
+				longClick = true; // make sure that the list doesn't open on long click
 				ShoppingList selectedList = shoppingListAdapter.getItem(arg2);
 				HomeActivity.this.startActionMode(
 						new ShoppingListActionMode(HomeActivity.this.manager,selectedList, HomeActivity.this.shoppingListAdapter, HomeActivity.this)
 						);
 				return false;
+			}
+		});
+		
+		// Add click Listener
+		listView.setOnItemClickListener(new OnItemClickListener() {
+			
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				if (!longClick) {
+					Intent intent = new Intent(homeActivity, ViewListActivity.class);
+					intent.putExtra("selectedList", position);
+					homeActivity.startActivity(intent);
+				}
+				longClick = false;
 			}
 		});
 		

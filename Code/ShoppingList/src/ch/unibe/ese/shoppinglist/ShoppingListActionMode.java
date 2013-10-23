@@ -17,7 +17,6 @@ public class ShoppingListActionMode implements Callback {
 	private ShoppingList selectedList;
 	private ArrayAdapter<ShoppingList> shoppingListAdapter;
 	private Activity homeActivity;
-	private int listIndex;
 	
 	public ShoppingListActionMode(ListManager manager, ShoppingList selectedList, ArrayAdapter<ShoppingList> shoppingListAdapter, Activity homeActivity) {
 		this.manager = manager;
@@ -50,7 +49,7 @@ public class ShoppingListActionMode implements Callback {
                 mode.finish(); 
                 // open list edit screen
 	        	Intent intent = new Intent(homeActivity, CreateListActivity.class);
-	        	listIndex = manager.getShoppingLists().indexOf(selectedList);
+	        	int listIndex = manager.getShoppingLists().indexOf(selectedList);
 	        	intent.putExtra("selectedList", listIndex);
 	            homeActivity.startActivity(intent);
                 return true;

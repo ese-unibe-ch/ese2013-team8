@@ -9,16 +9,21 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
 	public static final String TABLE_LISTS = "shoppinglists";
 	public static final String COLUMN_LIST_ID = "id";
-	public static final String COLUMN_LIST_NAME = "nanme";
+	public static final String COLUMN_LIST_NAME = "name";
+	public static final String COLUMN_LIST_DUEDATE = "duedate";
+	public static final String COLUMN_LIST_SHOP = "shop";
 
 	private static final String DATABASE_NAME = "shoppinglist.db";
 	private static final int DATABASE_VERSION = 1;
 
 	// Database creation sql statement
-	private static final String DATABASE_CREATE = "create table "
-			+ TABLE_LISTS + "(" + COLUMN_LIST_ID
-			+ " integer primary key autoincrement, " + COLUMN_LIST_NAME
-			+ " text not null);";
+	private static final String DATABASE_CREATE = "create table " + TABLE_LISTS
+			+ "(" //
+			+ COLUMN_LIST_ID + " integer primary key autoincrement, " //
+			+ COLUMN_LIST_NAME + " text not null, " //
+			+ COLUMN_LIST_DUEDATE + " integer, " //
+			+ COLUMN_LIST_SHOP + " varchar(30)" //
+			+ ");";
 
 	public SQLiteHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
