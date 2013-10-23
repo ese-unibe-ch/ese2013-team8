@@ -15,23 +15,14 @@
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
     <string name="title_activity_create_item">CreateItemActivity</string>
-
-    <string name="categories">Categories:</string>
-    
-    
-    		<!-- The own navigation drawer -->
-    
-    <string name="showall">Show all</string>
-    <string name="archive">Archive</string>
-    <string name="itemlist">Item List</string>
-    <string name="sharedlist">Shared Lists</string>
-    <string name="settings">Settings</string>
+    <string name="nike_button_desc">directly add Item to list</string>
     
     
     		 <!-- The google navigation drawer -->
     		 
     <string name="drawer_close">Navigationbar closed</string>
     <string name="drawer_open">Navigationbar open</string>
+    <string name="navigation_bar_name">Navigator</string>
     <string-array name="navigation_items">
         <item>Show all</item>
         <item>Electronics</item>

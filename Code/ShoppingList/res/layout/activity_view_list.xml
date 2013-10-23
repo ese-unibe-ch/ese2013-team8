@@ -31,6 +31,7 @@
         
         <ImageButton
             android:id="@+id/imageButtonAdd"
+            android:contentDescription="@string/nike_button_desc"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

@@ -1,16 +1,15 @@
 package ch.unibe.ese.shoppinglist;
 
-import ch.unibe.ese.core.BaseActivity;
-import ch.unibe.ese.core.ListManager;
-import ch.unibe.ese.core.ShoppingList;
-import ch.unibe.ese.core.SlideMenu;
-import android.os.Bundle;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.support.v4.app.NavUtils;
+import ch.unibe.ese.core.BaseActivity;
+import ch.unibe.ese.core.ListManager;
+import ch.unibe.ese.core.ShoppingList;
 
 public class ViewListActivity extends BaseActivity {
 
@@ -22,10 +21,8 @@ public class ViewListActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		//create Slidemenu
-		SlideMenu menu = new SlideMenu(getApplicationContext(), R.layout.activity_view_list);
-		setContentView(menu);
-//		setContentView(R.layout.activity_view_list);
+
+		setContentView(R.layout.activity_view_list);
 		
 		// Show the Up button in the action bar.
 		setupActionBar();

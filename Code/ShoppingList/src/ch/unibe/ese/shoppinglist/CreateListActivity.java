@@ -8,15 +8,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import ch.unibe.ese.core.BaseActivity;
-import ch.unibe.ese.core.ListManager;
-import ch.unibe.ese.core.ShoppingList;
-import ch.unibe.ese.core.SlideMenu;
-import android.os.Bundle;
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.View;
@@ -24,6 +21,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import ch.unibe.ese.core.BaseActivity;
+import ch.unibe.ese.core.ListManager;
+import ch.unibe.ese.core.ShoppingList;
 
 public class CreateListActivity extends BaseActivity {
 
@@ -130,6 +130,7 @@ public class CreateListActivity extends BaseActivity {
 		newFragment.show(getFragmentManager(), "datePicker");
 	}
 
+	@SuppressLint("ValidFragment")
 	private class DatePickerFragment extends DialogFragment {
 
 		@Override
