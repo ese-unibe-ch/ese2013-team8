@@ -100,10 +100,6 @@ public class HomeActivity extends BaseActivity {
 	
 	@Override
 	protected void onPause() {
-<<<<<<< HEAD
 		super.onPause();
-=======
-		super.onPause();
->>>>>>> sqlite
 	}
 }

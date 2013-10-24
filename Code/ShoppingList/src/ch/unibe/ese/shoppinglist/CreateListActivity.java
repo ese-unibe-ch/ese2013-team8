@@ -10,13 +10,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-<<<<<<< HEAD
-=======
-import ch.unibe.ese.core.BaseActivity;
-import ch.unibe.ese.core.ListManager;
-import ch.unibe.ese.core.ShoppingList;
-import android.os.Bundle;
->>>>>>> sqlite
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;

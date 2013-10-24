@@ -1,7 +1,5 @@
 package ch.unibe.ese.shoppinglist;
 
-<<<<<<< HEAD
-=======
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,28 +9,19 @@ import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
 import android.os.Bundle;
 import android.app.Activity;
->>>>>>> sqlite
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-<<<<<<< HEAD
-import ch.unibe.ese.core.BaseActivity;
-import ch.unibe.ese.core.ListManager;
-import ch.unibe.ese.core.ShoppingList;
-=======
 import android.widget.ListView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.support.v4.app.NavUtils;
->>>>>>> sqlite
 
 public class ViewListActivity extends BaseActivity {
 
@@ -50,10 +39,7 @@ public class ViewListActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-
 		setContentView(R.layout.activity_view_list);
-		
 		// Show the Up button in the action bar.
 		setupActionBar();
 		
