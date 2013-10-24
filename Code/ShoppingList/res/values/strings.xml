@@ -33,6 +33,10 @@
         <item>Item List</item>
         <item>Shared List</item>
         <item>Settings</item> </string-array>
+        
+        <string-array name="navigation_sections">
+        <item>Categories</item>
+        <item>Menu</item> </string-array>
     
     
 </resources>

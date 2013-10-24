@@ -1,18 +1,7 @@
 package ch.unibe.ese.activities;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.math.BigDecimal;
 
-import ch.unibe.ese.core.BaseActivity;
-import ch.unibe.ese.core.Item;
-import ch.unibe.ese.core.ListManager;
-import ch.unibe.ese.core.Shop;
-import ch.unibe.ese.core.ShoppingList;
-import ch.unibe.ese.shoppinglist.R;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -20,6 +9,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import ch.unibe.ese.core.BaseActivity;
+import ch.unibe.ese.core.Item;
+import ch.unibe.ese.core.ListManager;
+import ch.unibe.ese.core.Shop;
+import ch.unibe.ese.core.ShoppingList;
+import ch.unibe.ese.shoppinglist.R;
 
 public class CreateItemActivity extends BaseActivity {
 	

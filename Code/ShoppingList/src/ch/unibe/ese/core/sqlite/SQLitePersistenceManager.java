@@ -8,7 +8,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
 import ch.unibe.ese.core.Item;
 import ch.unibe.ese.core.PersistenceManager;
 import ch.unibe.ese.core.ShoppingList;

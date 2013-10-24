@@ -4,6 +4,8 @@ import ch.unibe.ese.core.Item;
 import ch.unibe.ese.core.ShoppingList;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
+import ch.unibe.ese.core.Item;
+import ch.unibe.ese.core.ShoppingList;
 
 /**
  * This class provides useful functions for updating the database

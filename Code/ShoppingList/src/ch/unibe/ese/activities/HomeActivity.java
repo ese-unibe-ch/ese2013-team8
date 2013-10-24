@@ -35,7 +35,8 @@ public class HomeActivity extends BaseActivity {
 		setContentView(R.layout.activity_home);
 		
 		//create slide list
-		drawMenu = NavigationDrawer.constructNavigationDrawer(drawMenu, this);
+		NavigationDrawer nDrawer = new NavigationDrawer();
+		drawMenu = nDrawer.constructNavigationDrawer(drawMenu, this);
 		
 		manager = getListManager();
 		

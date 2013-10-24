@@ -12,19 +12,24 @@ import ch.unibe.ese.shoppinglist.R;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
-import android.support.v4.app.NavUtils;
+import ch.unibe.ese.core.BaseActivity;
+import ch.unibe.ese.core.Item;
+import ch.unibe.ese.core.ListManager;
+import ch.unibe.ese.core.ShoppingList;
+import ch.unibe.ese.shoppinglist.R;
 
 public class ViewListActivity extends BaseActivity {
 
