@@ -1,8 +1,9 @@
-package ch.unibe.ese.shoppinglist;
+package ch.unibe.ese.activities;
 
 import ch.unibe.ese.core.Item;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
+import ch.unibe.ese.shoppinglist.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.ActionMode;

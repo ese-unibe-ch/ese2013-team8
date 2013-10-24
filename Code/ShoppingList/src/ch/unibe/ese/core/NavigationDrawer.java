@@ -1,4 +1,4 @@
-package ch.unibe.ese.shoppinglist;
+package ch.unibe.ese.core;
 
 import android.app.Activity;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -6,8 +6,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import ch.unibe.ese.core.ListManager;
-import ch.unibe.ese.core.ShoppingList;
+import ch.unibe.ese.shoppinglist.R;
+import ch.unibe.ese.shoppinglist.R.array;
+import ch.unibe.ese.shoppinglist.R.drawable;
+import ch.unibe.ese.shoppinglist.R.id;
+import ch.unibe.ese.shoppinglist.R.layout;
+import ch.unibe.ese.shoppinglist.R.string;
 
 public class NavigationDrawer {
 

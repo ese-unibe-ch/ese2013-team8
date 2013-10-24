@@ -1,4 +1,4 @@
-package ch.unibe.ese.shoppinglist;
+package ch.unibe.ese.activities;
 
 import java.util.List;
 
@@ -16,7 +16,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import ch.unibe.ese.core.BaseActivity;
 import ch.unibe.ese.core.ListManager;
+import ch.unibe.ese.core.NavigationDrawer;
 import ch.unibe.ese.core.ShoppingList;
+import ch.unibe.ese.shoppinglist.R;
 
 public class HomeActivity extends BaseActivity {
 

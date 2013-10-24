@@ -1,4 +1,4 @@
-package ch.unibe.ese.shoppinglist;
+package ch.unibe.ese.activities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +7,7 @@ import ch.unibe.ese.core.BaseActivity;
 import ch.unibe.ese.core.Item;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
+import ch.unibe.ese.shoppinglist.R;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;

@@ -1,4 +1,4 @@
-package ch.unibe.ese.shoppinglist;
+package ch.unibe.ese.activities;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -12,6 +12,7 @@ import ch.unibe.ese.core.Item;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.Shop;
 import ch.unibe.ese.core.ShoppingList;
+import ch.unibe.ese.shoppinglist.R;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;

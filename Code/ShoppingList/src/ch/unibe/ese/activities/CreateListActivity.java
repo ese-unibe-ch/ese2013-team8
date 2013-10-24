@@ -1,4 +1,4 @@
-package ch.unibe.ese.shoppinglist;
+package ch.unibe.ese.activities;
 
 // TODO: Add strings to values/strings.xml (instead of hardcoded)
 // TODO: fix bug (app crash if list gets created without a due date)
@@ -26,6 +26,7 @@ import android.widget.Toast;
 import ch.unibe.ese.core.BaseActivity;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
+import ch.unibe.ese.shoppinglist.R;
 
 public class CreateListActivity extends BaseActivity {
 	
