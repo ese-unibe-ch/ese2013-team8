@@ -1,13 +1,22 @@
 package ch.unibe.ese.shoppinglist;
 
 // TODO: Add strings to values/strings.xml (instead of hardcoded)
+// TODO: fix bug (app crash if list gets created without a due date)
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+<<<<<<< HEAD
+=======
+import ch.unibe.ese.core.BaseActivity;
+import ch.unibe.ese.core.ListManager;
+import ch.unibe.ese.core.ShoppingList;
+import android.os.Bundle;
+>>>>>>> sqlite
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -26,6 +35,8 @@ import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
 
 public class CreateListActivity extends BaseActivity {
+	
+	// TODO: maybe ListActivity parent class and CreateListActivity/EditListActivity children
 
 	private ListManager manager;
 	private ShoppingList list;
@@ -53,10 +64,6 @@ public class CreateListActivity extends BaseActivity {
 			textViewTitle = (TextView) findViewById(R.id.textViewTitle);
 			textViewTitle.setText("Edit shopping list:");
 			editList();
-		}
-
-		else {
-			list = new ShoppingList(" ");
 		}
 	}
 
@@ -97,7 +104,10 @@ public class CreateListActivity extends BaseActivity {
 		String name = textName.getText().toString();
 		boolean check = true;
 		try {
-			list.setName(name);
+			if (list == null)
+				list = new ShoppingList(name);
+			else
+				list.setName(name);
 		} catch (IllegalArgumentException e) {
 			Toast.makeText(this, "Please enter a name", Toast.LENGTH_SHORT)
 					.show();
@@ -109,11 +119,20 @@ public class CreateListActivity extends BaseActivity {
 			EditText textShop = (EditText) findViewById(R.id.editTextShop);
 			String shop = textShop.getText().toString();
 			list.setShop(shop);
+			
+			// get due date
+			EditText textDate = (EditText)findViewById(R.id.editTextDate);
+			Date date;
+			try {
+				date = SimpleDateFormat.getDateInstance().parse(textDate.getText().toString());
+				list.setDueDate(date);
+			} catch (ParseException e) {
+				//throw new IllegalStateException(e);
+			}
 
 			// save the shopping list
 			try {
 				manager.addShoppingList(list);
-				manager.persist();
 
 			} catch (IllegalStateException e) {
 				Toast.makeText(this, "Please enter a name", Toast.LENGTH_SHORT)
@@ -138,7 +157,7 @@ public class CreateListActivity extends BaseActivity {
 			// Use the current date as the default date in the picker
 
 			final Calendar c = Calendar.getInstance();
-			if (list.getDueDate() != null)
+			if (list != null && list.getDueDate() != null)
 				c.setTime(list.getDueDate());
 			int year = c.get(Calendar.YEAR);
 			int month = c.get(Calendar.MONTH);
@@ -168,7 +187,6 @@ public class CreateListActivity extends BaseActivity {
 			Date date = new GregorianCalendar(datePicker.getYear(),
 					datePicker.getMonth(), datePicker.getDayOfMonth())
 					.getTime();
-			list.setDueDate(date);
 			DateFormat dateFormat = SimpleDateFormat.getDateInstance();
 			EditText textDate = (EditText) findViewById(R.id.editTextDate);
 			textDate.setText(dateFormat.format(date));

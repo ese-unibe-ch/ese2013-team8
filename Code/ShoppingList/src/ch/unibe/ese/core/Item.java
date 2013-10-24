@@ -1,17 +1,15 @@
 package ch.unibe.ese.core;
 
-import java.util.Date;
+import java.math.BigDecimal;
 
-public class ShoppingList {
+public class Item {
+	private int id;
 	private String name;
-	private Date dueDate;
-	private String shop;
+	private BigDecimal price;
+	private Shop shop;
+	private boolean bought;
 
-	/**
-	 * @param name
-	 *            not <code>null</code>
-	 */
-	public ShoppingList(String name) {
+	public Item(String name) {
 		this.name = name;
 		invariant();
 	}
@@ -20,29 +18,41 @@ public class ShoppingList {
 		return name;
 	}
 
-	/**
-	 * @param name
-	 *            not <code>null</code>
-	 */
 	public void setName(String name) {
 		this.name = name;
 		invariant();
 	}
 
-	public Date getDueDate() {
-		return dueDate;
+	public BigDecimal getPrice() {
+		return price;
 	}
 
-	public void setDueDate(Date dueDate) {
-		this.dueDate = dueDate;
+	public void setPrice(BigDecimal price) {
+		this.price = price;
 	}
 
-	public String getShop() {
+	public Shop getShop() {
 		return shop;
 	}
 
-	public void setShop(String shop) {
+	public void setShop(Shop shop) {
 		this.shop = shop;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	void setId(int id) {
+		this.id = id;
+	}
+
+	public boolean isBought() {
+		return bought;
+	}
+
+	public void setBought(boolean bought) {
+		this.bought = bought;
 	}
 
 	private void invariant() {
@@ -54,8 +64,10 @@ public class ShoppingList {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((dueDate == null) ? 0 : dueDate.hashCode());
+		result = prime * result + (bought ? 1231 : 1237);
+		result = prime * result + id;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((price == null) ? 0 : price.hashCode());
 		result = prime * result + ((shop == null) ? 0 : shop.hashCode());
 		return result;
 	}
@@ -68,16 +80,20 @@ public class ShoppingList {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ShoppingList other = (ShoppingList) obj;
-		if (dueDate == null) {
-			if (other.dueDate != null)
-				return false;
-		} else if (!dueDate.equals(other.dueDate))
+		Item other = (Item) obj;
+		if (bought != other.bought)
+			return false;
+		if (id != other.id)
 			return false;
 		if (name == null) {
 			if (other.name != null)
 				return false;
 		} else if (!name.equals(other.name))
+			return false;
+		if (price == null) {
+			if (other.price != null)
+				return false;
+		} else if (!price.equals(other.price))
 			return false;
 		if (shop == null) {
 			if (other.shop != null)
@@ -90,5 +106,4 @@ public class ShoppingList {
 	public String toString() {
 		return this.name;
 	}
-	
 }

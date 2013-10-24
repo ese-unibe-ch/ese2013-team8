@@ -24,10 +24,19 @@
         	android:cacheColorHint="@android:color/white"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.85" 
+            android:layout_weight="0.70" 
             android:inputType="textCapSentences" >
             <requestFocus />
         </EditText>
+        
+         <ImageButton
+            android:id="@+id/imageButtonCreate"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.15"
+            android:onClick="addItemEdit"
+            android:src="@drawable/ic_action_new" />
         
         <ImageButton
             android:id="@+id/imageButtonAdd"
@@ -44,10 +53,25 @@
     
     <ListView
         android:id="@+id/ItemView"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/addItem"
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="15dp"
+        android:background="@android:color/white"
+        android:cacheColorHint="@android:color/white"
+        android:divider="#CCCCCC"
+        android:dividerHeight="1dp"
+        android:paddingLeft="2dp" >
+    </ListView>
+    
+    <ListView
+        android:id="@+id/ItemBoughtView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ItemView"
         android:layout_marginBottom="5dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="15dp"
         android:background="@android:color/white"
         android:cacheColorHint="@android:color/white"
         android:divider="#CCCCCC"

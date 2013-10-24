@@ -27,7 +27,7 @@
             android:text="Save" />
     </LinearLayout>
 
-    <RelativeLayout
+   <RelativeLayout
         android:id="@+id/relativeLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -74,9 +74,8 @@
             android:layout_marginTop="14dp"
             android:layout_toRightOf="@+id/textViewName"
             android:ems="10"
-            android:inputType="textCapSentences" >
-            <requestFocus />
-        </EditText>
+            android:inputType="textCapSentences" />
+
 
         <!-- Shop -->
         <TextView
@@ -98,7 +97,9 @@
             android:layout_marginLeft="14dp"
             android:layout_toRightOf="@+id/textViewShop"
             android:ems="10"
-            android:inputType="textCapSentences" />
+            android:inputType="textCapSentences" >
+            <requestFocus />
+        </EditText>
 
         <!-- Price -->
         <TextView
@@ -119,7 +120,7 @@
             android:layout_alignLeft="@+id/editTextShop"
             android:layout_alignParentRight="true"
             android:ems="10"
-            android:inputType="number" />
+            android:inputType="numberDecimal" />
     </RelativeLayout>
 
 </RelativeLayout>
