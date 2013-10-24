@@ -1,12 +1,9 @@
 package ch.unibe.ese.core.sqlite;
 
-import java.util.Date;
-
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import ch.unibe.ese.core.Item;
 import ch.unibe.ese.core.ShoppingList;
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 
 /**
  * This class provides useful functions for updating the database
