@@ -2,7 +2,6 @@ package ch.unibe.ese.core.sqlite;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import android.content.ContentValues;

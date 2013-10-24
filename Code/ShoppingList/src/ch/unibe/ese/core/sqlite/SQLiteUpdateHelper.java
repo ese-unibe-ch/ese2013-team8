@@ -1,11 +1,8 @@
 package ch.unibe.ese.core.sqlite;
 
-import java.util.Date;
-
 import ch.unibe.ese.core.Item;
 import ch.unibe.ese.core.ShoppingList;
 import android.content.ContentValues;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 /**

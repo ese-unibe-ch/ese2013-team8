@@ -7,6 +7,7 @@ import ch.unibe.ese.core.BaseActivity;
 import ch.unibe.ese.core.Item;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
+import ch.unibe.ese.core.sqlite.SQLiteItemAdapter;
 import ch.unibe.ese.shoppinglist.R;
 import android.os.Bundle;
 import android.app.Activity;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ArrayAdapter;
@@ -102,6 +104,12 @@ public class ViewListActivity extends BaseActivity {
 		});
 			
 		}
+		
+		// Autocompletion
+		AutoCompleteTextView textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
+		SQLiteItemAdapter sqliteAdapter = new SQLiteItemAdapter(this, android.R.layout.simple_list_item_1);
+		textName.setAdapter(sqliteAdapter);
+		
 	}
 
 	/**
@@ -125,7 +133,8 @@ public class ViewListActivity extends BaseActivity {
 	
 	/** Called when the user touches the ok button */
 	public void addItem(View view) {
-	  	EditText textName = (EditText) findViewById(R.id.editTextName);
+	  	
+		EditText textName = (EditText) findViewById(R.id.editTextName);
 		String name = textName.getText().toString();
 		if (name.trim().length() == 0) {
 			Toast.makeText(this, "Please enter a name", Toast.LENGTH_SHORT)
@@ -144,7 +153,7 @@ public class ViewListActivity extends BaseActivity {
 				listView.setAdapter(itemAdapter);
 				
 				// remove text from field
-				textName = (EditText) findViewById(R.id.editTextName);
+				textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
 				textName.setText("");
 	
 			} catch (IllegalStateException e) {
