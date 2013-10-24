@@ -7,6 +7,8 @@ import android.util.Log;
 
 public class SQLiteHelper extends SQLiteOpenHelper {
 
+	
+	public static SQLiteHelper instance;
 	// Table definitions
 	// Save all Shopping lists with an unique ID
 	public static final String TABLE_LISTS = "shoppinglists";
@@ -73,6 +75,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	
 	public SQLiteHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
+		SQLiteHelper.instance = this;
 	}
 
 	@Override
