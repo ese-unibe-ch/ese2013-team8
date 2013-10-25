@@ -1,4 +1,4 @@
-package ch.unibe.ese.core;
+package sidelist;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -62,9 +62,15 @@ public class NavigationDrawer {
         
         drawLayout.setDrawerListener(actbardrawertoggle);
         
+        //TODO: set listeners
+        menuListView.setOnItemClickListener(new DrawerItemClickListener(activity, R.id.left_drawer));
+        optionsListView.setOnItemClickListener(new DrawerItemClickListener(activity, R.id.left_drawer_options));
+        
         return drawLayout;
 
 	}
+	
+
 	
 	
 	private class HeaderListAdapter extends BaseAdapter
@@ -131,10 +137,7 @@ public class NavigationDrawer {
                  }
              return null;
 		}
-		
-		
-		
-		
+				
 	}
 	
 	

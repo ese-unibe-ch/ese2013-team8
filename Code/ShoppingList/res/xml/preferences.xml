@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+     <PreferenceCategory 
+        android:title="@string/general_settings"
+        android:key="common_settings">
+        
+		<ListPreference
+	        android:key="language"
+	        android:title="@string/language"
+	        android:dialogTitle="@string/language_dialog"
+	        android:entries="@array/choosable_languages"
+	        android:entryValues="@array/choosable_languages"
+	        android:defaultValue="@string/english" />
+	
+		<ListPreference
+	        android:key="theme"
+	        android:title="@string/theme"
+	        android:dialogTitle="@string/theme_dialog"
+	        android:entries="@array/choosable_themes"
+	        android:entryValues="@array/choosable_themes"
+	        android:defaultValue="@string/standard" />
+	    
+	</PreferenceCategory>
+		
+    
+    
+</PreferenceScreen>

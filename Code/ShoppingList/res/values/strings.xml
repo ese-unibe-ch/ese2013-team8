@@ -16,27 +16,50 @@
     <string name="title_section3">Section 3</string>
     <string name="title_activity_create_item">CreateItemActivity</string>
     <string name="nike_button_desc">directly add Item to list</string>
-    
-    
-    		 <!-- The google navigation drawer -->
-    		 
+
+    <!-- The google navigation drawer -->
+
     <string name="drawer_close">Navigationbar closed</string>
     <string name="drawer_open">Navigationbar open</string>
     <string name="navigation_bar_name">Navigator</string>
+
     <string-array name="navigation_items">
         <item>Show all</item>
         <item>Electronics</item>
-        <item>Food</item> </string-array>
-  
+        <item>Food</item>
+    </string-array>
     <string-array name="navigation_options">
         <item>Archive</item>
         <item>Item List</item>
         <item>Shared List</item>
-        <item>Settings</item> </string-array>
-        
-        <string-array name="navigation_sections">
+        <item>Settings</item>
+    </string-array>
+    <string-array name="navigation_sections">
         <item>Categories</item>
-        <item>Menu</item> </string-array>
+        <item>Menu</item>
+    </string-array>
     
+     <!-- Options Menu -->
+	<string name="title_activity_options">Settings Menu</string>
+
+    <string name="general_settings">General Settings</string>
+    <string name="english">English</string>
+    <string name="german">German</string>
     
+    <string name="language">language</string>	
+    <string name="language_dialog">Change the language of the program</string>
+    <string-array name="choosable_languages">
+        <item>english</item>
+        <item>german</item>
+    </string-array>
+    
+    <string name="theme">Theme</string>
+    <string name="theme_dialog">Change the colors of the interface</string>
+    <string name="standard">standard</string>
+    <string-array name="choosable_themes">
+        <item>default</item>
+        <item>sexy</item>
+    </string-array>
+    
+
 </resources>

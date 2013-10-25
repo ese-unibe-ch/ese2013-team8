@@ -2,6 +2,8 @@ package ch.unibe.ese.activities;
 
 import java.util.List;
 
+import sidelist.NavigationDrawer;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,7 +18,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import ch.unibe.ese.core.BaseActivity;
 import ch.unibe.ese.core.ListManager;
-import ch.unibe.ese.core.NavigationDrawer;
 import ch.unibe.ese.core.ShoppingList;
 import ch.unibe.ese.shoppinglist.R;
 
@@ -52,6 +53,7 @@ public class HomeActivity extends BaseActivity {
 		// Add long click Listener
 		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
 
+		//TODO: Merge those 2 Listeners together, because we dont need two seperate listeners...
 			@Override
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
