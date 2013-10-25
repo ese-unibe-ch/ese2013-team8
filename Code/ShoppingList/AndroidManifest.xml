@@ -48,6 +48,10 @@
             android:name="ch.unibe.ese.activities.OptionsActivity"
             android:label="@string/title_activity_options" >
         </activity>
+        <activity
+            android:name="ch.unibe.ese.activities.ManageFriendsActivity"
+            android:label="@string/title_activity_manage_friends" >
+        </activity>
     </application>
 
 </manifest>

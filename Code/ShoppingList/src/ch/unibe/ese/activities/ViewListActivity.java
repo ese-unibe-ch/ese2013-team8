@@ -3,13 +3,6 @@ package ch.unibe.ese.activities;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.unibe.ese.core.BaseActivity;
-import ch.unibe.ese.core.Item;
-import ch.unibe.ese.core.ListManager;
-import ch.unibe.ese.core.ShoppingList;
-import ch.unibe.ese.core.sqlite.SQLiteItemAdapter;
-import ch.unibe.ese.shoppinglist.R;
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,6 +22,7 @@ import ch.unibe.ese.core.BaseActivity;
 import ch.unibe.ese.core.Item;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
+import ch.unibe.ese.core.sqlite.SQLiteItemAdapter;
 import ch.unibe.ese.shoppinglist.R;
 
 public class ViewListActivity extends BaseActivity {
@@ -147,6 +141,7 @@ public class ViewListActivity extends BaseActivity {
 		}
 		else {
 			try {
+				//TODO: gibt es keine schoenere Variante zum updaten der Liste?
 				Item item = new Item(name);
 				manager.addItemToList(item, list);
 				
