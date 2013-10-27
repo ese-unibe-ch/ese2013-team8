@@ -24,7 +24,6 @@ public class CreateItemActivity extends BaseActivity {
 	private Item item;
 	private int listIndex;
 	private TextView textViewTitle;
-	private boolean edit = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -77,8 +76,6 @@ public class CreateItemActivity extends BaseActivity {
 			EditText textPrice = (EditText) findViewById(R.id.editTextPrice);
 			textPrice.setText(item.getPrice().toString());
 		}
-
-		edit = true;
 	}
 
 	/** Called when the user touches the abort button */
@@ -122,11 +119,6 @@ public class CreateItemActivity extends BaseActivity {
 
 			// save the item
 			try {
-				if (edit) {
-					// delete existing item and add as new one
-					// TODO: fix position
-					manager.removeItemFromList(item, list);
-				}
 				manager.addItemToList(item, list);
 
 			} catch (IllegalStateException e) {

@@ -26,6 +26,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	// Link items to lists
 	public static final String TABLE_ITEMTOLIST = "itemtolist";
 	public static final String COLUMN_LISTPRICE = "listprice";
+	public static final String COLUMN_ITEMBOUGHT = "itembought";
 
 	private static final String DATABASE_NAME = "shoppinglist.db";
 	private static final int DATABASE_VERSION = 1;
@@ -51,6 +52,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 			+ COLUMN_ITEM_ID + " integer, "
 			+ COLUMN_LIST_ID + " integer, "
 			+ COLUMN_LISTPRICE + " float, "
+			+ COLUMN_ITEMBOUGHT + " integer, "
 			+ "primary key (" + COLUMN_ITEM_ID + ", " + COLUMN_LIST_ID + ")"
 			+ ");";
 			// Create table for Shops

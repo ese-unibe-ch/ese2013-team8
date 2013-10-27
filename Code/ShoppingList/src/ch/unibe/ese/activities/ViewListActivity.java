@@ -33,22 +33,16 @@ public class ViewListActivity extends BaseActivity {
 	private Activity viewListActivity = this;
 	private ShoppingList list;
 	private int listIndex;
-	private boolean longClick = false;
-	List<Item> items;
-	List<Item> itemsBought;
-	
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_list);
 		// Show the Up button in the action bar.
 		setupActionBar();
-		
+
 		manager = getListManager();
-		items = new ArrayList<Item>();
-		itemsBought = new ArrayList<Item>();
-		
+
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
 			// Get list
@@ -56,113 +50,109 @@ public class ViewListActivity extends BaseActivity {
 			list = manager.getShoppingLists().get(listIndex);
 			setTitle(list.getName());
 		}
+
+		// Get list items
+		List<Item> items = manager.getItemsFor(list);
+
+		itemAdapter = new ArrayAdapter<Item>(this, R.layout.shopping_list_item,
+				new ArrayList<Item>());
+		itemBoughtAdapter = new ArrayAdapter<Item>(viewListActivity,
+				R.layout.shopping_list_item, new ArrayList<Item>());
 		
-		// Get list items	
-		items = manager.getItemsFor(list);
+
+		ListView listView = (ListView) findViewById(R.id.ItemView);
+		listView.setAdapter(itemAdapter);
 		
-		if (items != null) {
-			itemAdapter = new ArrayAdapter<Item>(this, 
-			        R.layout.shopping_list_item, items);
-			
-			ListView listView = (ListView) findViewById(R.id.ItemView);
-			listView.setAdapter(itemAdapter);
-		
+		ListView listViewBought = (ListView) findViewById(R.id.ItemBoughtView);
+		listViewBought.setAdapter(itemBoughtAdapter);
+
+		for (Item item : items) {
+			if (item.isBought())
+				itemBoughtAdapter.add(item);
+			else
+				itemAdapter.add(item);
+		}
+
 		// Add long click Listener
 		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
 
 			@Override
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
-				longClick = true; // make sure that the list doesn't open on long click
 				Item selectedItem = itemAdapter.getItem(arg2);
-				ViewListActivity.this.startActionMode(
-						new ShoppingListActionMode(ViewListActivity.this.manager, selectedItem, list, ViewListActivity.this.itemAdapter, ViewListActivity.this)
-						);
-				return false;
+				ViewListActivity.this
+						.startActionMode(new ShoppingListActionMode(
+								ViewListActivity.this.manager, selectedItem,
+								list, ViewListActivity.this.itemAdapter,
+								ViewListActivity.this));
+				return true;
 			}
 		});
-		
+
 		// Add click Listener
 		listView.setOnItemClickListener(new OnItemClickListener() {
-			
+
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				if (!longClick) {
-					// bought items
-					itemsBought.add(items.remove(position));
-					itemBoughtAdapter = new ArrayAdapter<Item>(viewListActivity, 
-					        R.layout.shopping_list_item, itemsBought);
-					// TODO: add striketrough to bought items
-					// TODO: set scrollbar on whole activity, not on listViews
-					
-					ListView listViewBought = (ListView) findViewById(R.id.ItemBoughtView);
-					listViewBought.setAdapter(itemBoughtAdapter);
-				}
-				longClick = false;
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// bought items
+				Item item = itemAdapter.getItem(position);
+				item.setBought(true);
+				manager.addItemToList(item, list);
+				itemAdapter.remove(item);
+				
+				itemBoughtAdapter.add(item);
+				// TODO: add striketrough to bought items
+				// TODO: set scrollbar on whole activity, not on
+
 			}
 		});
-			
-		}
-		
+
 		// Autocompletion
 		AutoCompleteTextView textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
-		SQLiteItemAdapter sqliteAdapter = new SQLiteItemAdapter(this, android.R.layout.simple_list_item_1);
+		SQLiteItemAdapter sqliteAdapter = new SQLiteItemAdapter(this,
+				android.R.layout.simple_list_item_1);
 		textName.setAdapter(sqliteAdapter);
-		
+
 	}
 
 	/**
 	 * Set up the {@link android.app.ActionBar}.
 	 */
 	private void setupActionBar() {
-
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-
 	}
-	
+
 	/** Called when the user touches the add item button */
 	public void addItemEdit(View view) {
-	  	Intent intent = new Intent(this, CreateItemActivity.class);
-	  	EditText textName = (EditText) findViewById(R.id.editTextName);
+		Intent intent = new Intent(this, CreateItemActivity.class);
+		EditText textName = (EditText) findViewById(R.id.editTextName);
 		String name = textName.getText().toString();
-    	intent.putExtra("Item", name);
-    	intent.putExtra("selectedList", listIndex);
-        this.startActivity(intent);
+		intent.putExtra("Item", name);
+		intent.putExtra("selectedList", listIndex);
+		this.startActivity(intent);
 	}
-	
+
 	/** Called when the user touches the ok button */
 	public void addItem(View view) {
-	  	
 		EditText textName = (EditText) findViewById(R.id.editTextName);
 		String name = textName.getText().toString();
 		if (name.trim().length() == 0) {
 			Toast.makeText(this, "Please enter a name", Toast.LENGTH_SHORT)
-				.show();
-		}
-		else {
-			try {
-				//TODO: gibt es keine schoenere Variante zum updaten der Liste?
-				Item item = new Item(name);
-				manager.addItemToList(item, list);
-				
-				// refresh view
-				items = manager.getItemsFor(list);
-				itemAdapter = new ArrayAdapter<Item>(this, 
-				        R.layout.shopping_list_item, items);
-				ListView listView = (ListView) findViewById(R.id.ItemView);
-				listView.setAdapter(itemAdapter);
-				
-				// remove text from field
-				textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
-				textName.setText("");
-	
-			} catch (IllegalStateException e) {
-				Toast.makeText(this, "Please enter a name", Toast.LENGTH_SHORT)
 					.show();
-			}
+		} else {
+			Item item = new Item(name);
+			manager.addItemToList(item, list);
+
+			// refresh view
+			itemAdapter.add(item);
+
+			// remove text from field
+			textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
+			textName.setText("");
+
 		}
 	}
-	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -186,10 +176,5 @@ public class ViewListActivity extends BaseActivity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
 	}
 }

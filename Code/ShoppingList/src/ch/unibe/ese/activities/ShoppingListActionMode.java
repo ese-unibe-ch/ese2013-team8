@@ -75,6 +75,7 @@ public class ShoppingListActionMode implements Callback {
 	                mode.finish(); 
 	                // open item edit screen
 		        	Intent intent = new Intent(activity, CreateItemActivity.class);
+		        	// TODO identify item by ID, not its index
 		        	int itemIndex = manager.getItemsFor(selectedList).indexOf(selectedItem);
 		        	intent.putExtra("selectedItem", itemIndex);
 		        	intent.putExtra("editItem", true);
@@ -98,9 +99,8 @@ public class ShoppingListActionMode implements Callback {
         }
     }
 
-    // Called when the user exits the action mode
-    @Override
-    public void onDestroyActionMode(ActionMode mode) {
-//        mActionMode = null;
-    }
+	@Override
+	public void onDestroyActionMode(ActionMode mode) {
+		// nothing to do
+	}
 }

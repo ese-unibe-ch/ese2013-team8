@@ -26,60 +26,58 @@ public class HomeActivity extends BaseActivity {
 	private ListManager manager;
 	private ArrayAdapter<ShoppingList> shoppingListAdapter;
 	private Activity homeActivity = this;
-	private boolean longClick = false;
-	
+
 	private DrawerLayout drawMenu;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
-		
-		//create slide list
+
+		// create slide list
 		NavigationDrawer nDrawer = new NavigationDrawer();
 		drawMenu = nDrawer.constructNavigationDrawer(drawMenu, this);
-		
+
 		manager = getListManager();
-		
+
 		// Get List from manager
 		List<ShoppingList> shoppingLists = manager.getShoppingLists();
-		
-		shoppingListAdapter = new ArrayAdapter<ShoppingList>(this, 
-		        R.layout.shopping_list_item, shoppingLists);
-		
+
+		shoppingListAdapter = new ArrayAdapter<ShoppingList>(this,
+				R.layout.shopping_list_item, shoppingLists);
+
 		ListView listView = (ListView) findViewById(R.id.ShoppingListView);
 		listView.setAdapter(shoppingListAdapter);
-		
+
 		// Add long click Listener
 		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
 
-		//TODO: Merge those 2 Listeners together, because we dont need two seperate listeners...
+			// TODO: Merge those 2 Listeners together, because we dont need two
+			// seperate listeners...
 			@Override
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
-				longClick = true; // make sure that the list doesn't open on long click
 				ShoppingList selectedList = shoppingListAdapter.getItem(arg2);
-				HomeActivity.this.startActionMode(
-						new ShoppingListActionMode(HomeActivity.this.manager,selectedList, HomeActivity.this.shoppingListAdapter, HomeActivity.this)
-						);
-				return false;
+				HomeActivity.this.startActionMode(new ShoppingListActionMode(
+						HomeActivity.this.manager, selectedList,
+						HomeActivity.this.shoppingListAdapter,
+						HomeActivity.this));
+				return true;
 			}
 		});
-		
+
 		// Add click Listener
 		listView.setOnItemClickListener(new OnItemClickListener() {
-			
+
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				if (!longClick) {
-					Intent intent = new Intent(homeActivity, ViewListActivity.class);
-					intent.putExtra("selectedList", position);
-					homeActivity.startActivity(intent);
-				}
-				longClick = false;
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Intent intent = new Intent(homeActivity, ViewListActivity.class);
+				intent.putExtra("selectedList", position);
+				homeActivity.startActivity(intent);
 			}
 		});
-		
+
 	}
 
 	@Override
@@ -89,20 +87,20 @@ public class HomeActivity extends BaseActivity {
 		getMenuInflater().inflate(R.menu.home_menu, menu);
 		return true;
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    // Handle presses on the action bar items
-	    switch (item.getItemId()) {
-	        case R.id.action_new:
-	        	Intent intent = new Intent(this, CreateListActivity.class);
-	            this.startActivity(intent);
-	            return true;
-	        default:
-	            return super.onOptionsItemSelected(item);
-	    }
+		// Handle presses on the action bar items
+		switch (item.getItemId()) {
+		case R.id.action_new:
+			Intent intent = new Intent(this, CreateListActivity.class);
+			this.startActivity(intent);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
-	
+
 	@Override
 	protected void onPause() {
 		super.onPause();

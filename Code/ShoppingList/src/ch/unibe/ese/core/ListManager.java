@@ -15,9 +15,9 @@ import java.util.Map;
  */
 public class ListManager {
 
-	private List<ShoppingList> shoppingLists;
-	private PersistenceManager persistenceManager;
-	private Map<ShoppingList, List<Item>> listToItems;
+	private final List<ShoppingList> shoppingLists;
+	private final PersistenceManager persistenceManager;
+	private final Map<ShoppingList, List<Item>> listToItems;
 
 	public ListManager(PersistenceManager persistenceManager) {
 		this.persistenceManager = persistenceManager;
@@ -72,9 +72,9 @@ public class ListManager {
 			items = new ArrayList<Item>();
 			listToItems.put(list, items);
 		}
-		items.add(item);
+		if (!items.contains(item))
+			items.add(item);
 		persistenceManager.save(item, list);
-
 	}
 
 	public void removeItemFromList(Item item, ShoppingList list) {
@@ -87,9 +87,10 @@ public class ListManager {
 		}
 		items.remove(item);
 		try {
-			persistenceManager.remove(item,list);
+			persistenceManager.remove(item, list);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			// TODO do something more clever
+			throw new IllegalStateException(e);
 		}
 
 	}
@@ -105,8 +106,8 @@ public class ListManager {
 		List<Item> items = listToItems.get(list);
 		if (items == null) {
 			items = persistenceManager.getItems(list);
+			listToItems.put(list, items);
 		}
-		// TODO: add separate list for bought items
-		return items; //Collections.unmodifiableList(items);
+		return Collections.unmodifiableList(items);
 	}
 }

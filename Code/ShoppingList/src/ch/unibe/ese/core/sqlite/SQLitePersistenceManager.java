@@ -106,10 +106,10 @@ public class SQLitePersistenceManager implements PersistenceManager {
 		updateHelper.addItemIfNotExistent(item);
 		ContentValues values = updateHelper.toValue(item, list);
 		if(readHelper.isInList(item, list)) {
-			// The following code needs to be added if we want to add quantities
-			// It just updates the entry in the database with the newest values in "values"
-			//database.update(SQLiteHelper.TABLE_ITEMTOLIST, values, SQLiteHelper.COLUMN_ITEM_ID+"=? AND "+SQLiteHelper.COLUMN_LIST_ID+"=?", 
-			//		new String[] {""+readHelper.getItemId(item.getName()), ""+readHelper.getListId(list.getName())} );
+			database.update(SQLiteHelper.TABLE_ITEMTOLIST, values,
+					SQLiteHelper.COLUMN_ITEM_ID + "= ? AND "
+							+ SQLiteHelper.COLUMN_LIST_ID + "=?", new String[] {
+							"" + readHelper.getItemId(item.getName()), ""+readHelper.getListId(list.getName())} );
 		} else {
 			database.insert(SQLiteHelper.TABLE_ITEMTOLIST, null, values);
 		}
