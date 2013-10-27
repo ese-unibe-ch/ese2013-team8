@@ -1,5 +1,6 @@
 package ch.unibe.ese.activities;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import android.content.Intent;
@@ -17,7 +18,7 @@ import ch.unibe.ese.core.ShoppingList;
 import ch.unibe.ese.shoppinglist.R;
 
 public class CreateItemActivity extends BaseActivity {
-	
+
 	private ListManager manager;
 	private ShoppingList list;
 	private Item item;
@@ -32,7 +33,7 @@ public class CreateItemActivity extends BaseActivity {
 		// Show the Up button in the action bar.
 		getActionBar().hide();
 		manager = getListManager();
-		
+
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
 			// get item name
@@ -60,25 +61,26 @@ public class CreateItemActivity extends BaseActivity {
 		getMenuInflater().inflate(R.menu.create_item, menu);
 		return true;
 	}
-	
+
 	private void editItem() {
 		// set name
 		EditText textName = (EditText) findViewById(R.id.editTextName);
 		textName.setText(item.getName());
 
 		// set shop
-		if(item.getShop() != null) {
-		EditText textShop = (EditText) findViewById(R.id.editTextShop);
-		textShop.setText(item.getShop().toString());
+		if (item.getShop() != null) {
+			EditText textShop = (EditText) findViewById(R.id.editTextShop);
+			textShop.setText(item.getShop().toString());
 		}
-		
-		// TODO: set price
-		//EditText textDate = (EditText) findViewById(R.id.editTextDate);
-		//Date date = list.getDueDate();
-		
+
+		if (item.getPrice() != null) {
+			EditText textPrice = (EditText) findViewById(R.id.editTextPrice);
+			textPrice.setText(item.getPrice().toString());
+		}
+
 		edit = true;
 	}
-	
+
 	/** Called when the user touches the abort button */
 	public void goBack(View view) {
 		finish();
@@ -109,11 +111,14 @@ public class CreateItemActivity extends BaseActivity {
 				Shop shop = new Shop(shopName);
 				item.setShop(shop);
 			}
-			
+
 			// get price
-			EditText textPrice = (EditText)findViewById(R.id.editTextPrice);
-			// TODO: save price
-			//BigDecimal price = textPrice.getText();
+			EditText textPrice = (EditText) findViewById(R.id.editTextPrice);
+			String priceString = textPrice.getText().toString();
+			if (priceString != null && !priceString.isEmpty()) {
+				BigDecimal price = new BigDecimal(priceString);
+				item.setPrice(price);
+			}
 
 			// save the item
 			try {
@@ -122,17 +127,17 @@ public class CreateItemActivity extends BaseActivity {
 					// TODO: fix position
 					manager.removeItemFromList(item, list);
 				}
-					manager.addItemToList(item, list);
+				manager.addItemToList(item, list);
 
 			} catch (IllegalStateException e) {
 				Toast.makeText(this, "Please enter a name", Toast.LENGTH_SHORT)
 						.show();
-			}	
-		
-		// go back to the list
-		Intent intent = new Intent(this, ViewListActivity.class);
-		intent.putExtra("selectedList", listIndex);
-		this.startActivity(intent);
+			}
+
+			// go back to the list
+			Intent intent = new Intent(this, ViewListActivity.class);
+			intent.putExtra("selectedList", listIndex);
+			this.startActivity(intent);
 		}
 	}
 }

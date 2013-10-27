@@ -29,8 +29,9 @@ import ch.unibe.ese.core.ShoppingList;
 import ch.unibe.ese.shoppinglist.R;
 
 public class CreateListActivity extends BaseActivity {
-	
-	// TODO: maybe ListActivity parent class and CreateListActivity/EditListActivity children
+
+	// TODO: maybe ListActivity parent class and
+	// CreateListActivity/EditListActivity children
 
 	private ListManager manager;
 	private ShoppingList list;
@@ -39,10 +40,11 @@ public class CreateListActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		//create Slidemenu
-//		SlideMenu menu = new SlideMenu(getApplicationContext(), R.layout.activity_create_list);
-//		setContentView(menu);
+
+		// create Slidemenu
+		// SlideMenu menu = new SlideMenu(getApplicationContext(),
+		// R.layout.activity_create_list);
+		// setContentView(menu);
 		setContentView(R.layout.activity_create_list);
 
 		// hide the action bar on this activity
@@ -57,7 +59,7 @@ public class CreateListActivity extends BaseActivity {
 			list = manager.getShoppingLists().get(listIndex);
 			textViewTitle = (TextView) findViewById(R.id.textViewTitle);
 			textViewTitle.setText("Edit shopping list:");
-			editList();
+			setList();
 		}
 	}
 
@@ -68,7 +70,7 @@ public class CreateListActivity extends BaseActivity {
 		return true;
 	}
 
-	private void editList() {
+	private void setList() {
 		// set name
 		EditText textName = (EditText) findViewById(R.id.editTextName);
 		textName.setText(list.getName());
@@ -113,31 +115,29 @@ public class CreateListActivity extends BaseActivity {
 			EditText textShop = (EditText) findViewById(R.id.editTextShop);
 			String shop = textShop.getText().toString();
 			list.setShop(shop);
-			
+
 			// get due date
-			EditText textDate = (EditText)findViewById(R.id.editTextDate);
+			EditText textDate = (EditText) findViewById(R.id.editTextDate);
 			Date date;
 			try {
-				date = SimpleDateFormat.getDateInstance().parse(textDate.getText().toString());
+				date = SimpleDateFormat.getDateInstance().parse(
+						textDate.getText().toString());
 				list.setDueDate(date);
 			} catch (ParseException e) {
-				//throw new IllegalStateException(e);
+				// throw new IllegalStateException(e);
 			}
 
 			// save the shopping list
-			try {
-				manager.addShoppingList(list);
-
-			} catch (IllegalStateException e) {
-				Toast.makeText(this, "Please enter a name", Toast.LENGTH_SHORT)
-						.show();
-			}
+			manager.addShoppingList(list);
 
 			// go back to home activity
 			NavUtils.navigateUpFromSameTask(this);
 		}
 	}
 
+	/**
+	 * Called when the user touches the duedate-field.
+	 */
 	public void showDatePickerDialog(View view) {
 		DialogFragment newFragment = new DatePickerFragment();
 		newFragment.show(getFragmentManager(), "datePicker");

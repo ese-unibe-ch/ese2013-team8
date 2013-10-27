@@ -10,7 +10,8 @@ public class Item {
 	private boolean bought;
 
 	public Item(String name) {
-		this.name = name;
+		if (name != null)
+			this.name = name.trim();
 		invariant();
 	}
 
@@ -102,7 +103,7 @@ public class Item {
 			return false;
 		return true;
 	}
-	
+
 	public String toString() {
 		return this.name;
 	}
