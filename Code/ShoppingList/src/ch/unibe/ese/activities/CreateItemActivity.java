@@ -1,5 +1,6 @@
 package ch.unibe.ese.activities;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import android.content.Intent;
@@ -68,13 +69,15 @@ public class CreateItemActivity extends BaseActivity {
 
 		// set shop
 		if(item.getShop() != null) {
-		EditText textShop = (EditText) findViewById(R.id.editTextShop);
-		textShop.setText(item.getShop().toString());
+			EditText textShop = (EditText) findViewById(R.id.editTextShop);
+			textShop.setText(item.getShop().toString());
 		}
 		
-		// TODO: set price
-		//EditText textDate = (EditText) findViewById(R.id.editTextDate);
-		//Date date = list.getDueDate();
+		// set price
+		if(item.getPrice() != null) {
+			EditText textPrice = (EditText) findViewById(R.id.editTextPrice);
+			textPrice.setText(item.getPrice().toString());
+		}
 		
 		edit = true;
 	}
@@ -112,8 +115,11 @@ public class CreateItemActivity extends BaseActivity {
 			
 			// get price
 			EditText textPrice = (EditText)findViewById(R.id.editTextPrice);
-			// TODO: save price
-			//BigDecimal price = textPrice.getText();
+			String itemPrice = textPrice.getText().toString();
+			if (itemPrice.trim().length() != 0) {
+				BigDecimal price = new BigDecimal(itemPrice);
+				item.setPrice(price);
+			}
 
 			// save the item
 			try {
