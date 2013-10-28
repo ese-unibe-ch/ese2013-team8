@@ -163,6 +163,8 @@ public class ViewListActivity extends BaseActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+    	int listIndex = manager.getShoppingLists().indexOf(list);
+    	
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			// This ID represents the Home or Up button. In the case of this
@@ -176,23 +178,17 @@ public class ViewListActivity extends BaseActivity {
 			return true;
 			
 		// Handle presses on the action bar items
-		case R.id.action_refresh:
-			// TODO: add synchronize function
-			Toast.makeText(this, "Not working yet", Toast.LENGTH_SHORT)
-				.show();
-			return true;
 		case R.id.action_share:
-			// TODO: add share screen
-			Toast.makeText(this, "Not working yet", Toast.LENGTH_SHORT)
-				.show();
+			Intent intentShare = new Intent(this, ShareListActivity.class);
+        	intentShare.putExtra("selectedList", listIndex);
+            this.startActivity(intentShare);
 			return true;
 		
 		// Handle presses on overflow menu items
 		case R.id.action_edit_list:
-        	Intent intent = new Intent(this, CreateListActivity.class);
-        	int listIndex = manager.getShoppingLists().indexOf(list);
-        	intent.putExtra("selectedList", listIndex);
-            this.startActivity(intent);
+        	Intent intentEdit = new Intent(this, CreateListActivity.class);
+        	intentEdit.putExtra("selectedList", listIndex);
+            this.startActivity(intentEdit);
 			return true;
 		case R.id.action_archive:
 			// TODO: add archive function
@@ -202,6 +198,11 @@ public class ViewListActivity extends BaseActivity {
 		case R.id.action_delete:
 			manager.removeShoppingList(list);
 			NavUtils.navigateUpFromSameTask(this);
+			return true;
+		case R.id.action_refresh:
+			// TODO: add synchronize function
+			Toast.makeText(this, "Not working yet", Toast.LENGTH_SHORT)
+				.show();
 			return true;
 		case R.id.action_settings:
 			Intent optionsIntent = new Intent(this, OptionsActivity.class);

@@ -52,6 +52,14 @@
             android:name="ch.unibe.ese.activities.ManageFriendsActivity"
             android:label="@string/title_activity_manage_friends" >
         </activity>
+        <activity
+            android:name="ch.unibe.ese.activities.ShareListActivity"
+            android:label="@string/title_activity_share_list"
+            android:parentActivityName="ch.unibe.ese.activities.ViewListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ch.unibe.ese.activities.ViewListActivity" />
+        </activity>
     </application>
 
 </manifest>

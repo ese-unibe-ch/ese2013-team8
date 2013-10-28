@@ -69,5 +69,6 @@
     <string name="action_edit_list">Edit List</string>
     <string name="action_archive">Archive</string>
     <string name="action_delete">Delete</string>
+    <string name="title_activity_share_list">ShareListActivity</string>
 
 </resources>
