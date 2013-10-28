@@ -2,7 +2,6 @@ package ch.unibe.ese.activities;
 
 import java.util.List;
 
-import sidelist.NavigationDrawer;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -20,6 +19,7 @@ import ch.unibe.ese.core.BaseActivity;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
 import ch.unibe.ese.shoppinglist.R;
+import ch.unibe.ese.sidelist.NavigationDrawer;
 
 public class HomeActivity extends BaseActivity {
 

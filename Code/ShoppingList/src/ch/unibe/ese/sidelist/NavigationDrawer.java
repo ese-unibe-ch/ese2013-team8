@@ -1,4 +1,4 @@
-package sidelist;
+package ch.unibe.ese.sidelist;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

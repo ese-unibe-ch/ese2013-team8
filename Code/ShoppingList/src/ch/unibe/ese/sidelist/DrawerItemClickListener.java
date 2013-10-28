@@ -1,4 +1,4 @@
-package sidelist;
+package ch.unibe.ese.sidelist;
 
 import android.app.Activity;
 import android.content.Intent;
