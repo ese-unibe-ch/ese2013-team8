@@ -34,7 +34,6 @@ public class CreateListActivity extends BaseActivity {
 	private ListManager manager;
 	private ShoppingList list;
 	private TextView textViewTitle;
-	private boolean edit = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +53,6 @@ public class CreateListActivity extends BaseActivity {
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
 			// Get list
-			edit = true;
 			int listIndex = extras.getInt("selectedList");
 			list = manager.getShoppingLists().get(listIndex);
 			textViewTitle = (TextView) findViewById(R.id.textViewTitle);
@@ -129,16 +127,14 @@ public class CreateListActivity extends BaseActivity {
 		manager.addShoppingList(list);
 		
 		// TODO: maybe allow user to choose in settings if new list should open after creating
-		if (edit)
-			// go back to home activity after editing the list
-			NavUtils.navigateUpFromSameTask(this);
-		else {
-			// open the created list
-			Intent intent = new Intent(this, ViewListActivity.class);
-			int position = manager.getShoppingLists().indexOf(list);
-			intent.putExtra("selectedList", position);
-			this.startActivity(intent);
-		}
+		// go back to home activity after editing the list
+		//NavUtils.navigateUpFromSameTask(this);
+		
+		// open the created list
+		Intent intent = new Intent(this, ViewListActivity.class);
+		int position = manager.getShoppingLists().indexOf(list);
+		intent.putExtra("selectedList", position);
+		this.startActivity(intent);
 	}
 
 	/**

@@ -15,6 +15,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 import ch.unibe.ese.core.BaseActivity;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
@@ -91,6 +92,11 @@ public class HomeActivity extends BaseActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle presses on the action bar items
 		switch (item.getItemId()) {
+		case R.id.action_refresh:
+			// TODO: add synchronize function
+			Toast.makeText(this, "Not working yet", Toast.LENGTH_SHORT)
+				.show();
+			return true;
 		case R.id.action_new:
 			Intent intent = new Intent(this, CreateListActivity.class);
 			this.startActivity(intent);
