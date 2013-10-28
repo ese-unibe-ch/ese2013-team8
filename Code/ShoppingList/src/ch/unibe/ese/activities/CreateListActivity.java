@@ -30,9 +30,6 @@ import ch.unibe.ese.shoppinglist.R;
 
 public class CreateListActivity extends BaseActivity {
 
-	// TODO: maybe ListActivity parent class and
-	// CreateListActivity/EditListActivity children
-
 	private ListManager manager;
 	private ShoppingList list;
 	private TextView textViewTitle;
@@ -98,41 +95,38 @@ public class CreateListActivity extends BaseActivity {
 		// get name
 		EditText textName = (EditText) findViewById(R.id.editTextName);
 		String name = textName.getText().toString();
-		boolean check = true;
-		try {
-			if (list == null)
-				list = new ShoppingList(name);
-			else
-				list.setName(name);
-		} catch (IllegalArgumentException e) {
+		if (name == null || name.trim().isEmpty()) {
 			Toast.makeText(this, "Please enter a name", Toast.LENGTH_SHORT)
 					.show();
-			check = false;
+			return;
+		}
+		
+		if (list == null)
+			list = new ShoppingList(name);
+		else
+			list.setName(name);
+
+		// get shop
+		EditText textShop = (EditText) findViewById(R.id.editTextShop);
+		String shop = textShop.getText().toString();
+		list.setShop(shop);
+
+		// get due date
+		EditText textDate = (EditText) findViewById(R.id.editTextDate);
+		Date date;
+		try {
+			date = SimpleDateFormat.getDateInstance().parse(
+					textDate.getText().toString());
+			list.setDueDate(date);
+		} catch (ParseException e) {
+			// throw new IllegalStateException(e);
 		}
 
-		if (check) {
-			// get shop
-			EditText textShop = (EditText) findViewById(R.id.editTextShop);
-			String shop = textShop.getText().toString();
-			list.setShop(shop);
+		// save the shopping list
+		manager.addShoppingList(list);
 
-			// get due date
-			EditText textDate = (EditText) findViewById(R.id.editTextDate);
-			Date date;
-			try {
-				date = SimpleDateFormat.getDateInstance().parse(
-						textDate.getText().toString());
-				list.setDueDate(date);
-			} catch (ParseException e) {
-				// throw new IllegalStateException(e);
-			}
-
-			// save the shopping list
-			manager.addShoppingList(list);
-
-			// go back to home activity
-			NavUtils.navigateUpFromSameTask(this);
-		}
+		// go back to home activity
+		NavUtils.navigateUpFromSameTask(this);
 	}
 
 	/**
