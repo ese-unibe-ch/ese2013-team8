@@ -52,7 +52,7 @@ public class CreateListActivity extends BaseActivity {
 			int listIndex = extras.getInt("selectedList");
 			list = manager.getShoppingLists().get(listIndex);
 			textViewTitle = (TextView) findViewById(R.id.textViewTitle);
-			textViewTitle.setText("@string/edit_list_title");
+			textViewTitle.setText(this.getString(R.string.edit_list_title));
 			setList();
 		}
 	}

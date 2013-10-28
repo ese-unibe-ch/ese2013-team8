@@ -51,7 +51,7 @@ public class CreateItemActivity extends BaseActivity {
 					}
 				}
 				textViewTitle = (TextView) findViewById(R.id.textViewTitle);
-				textViewTitle.setText("@string/edit_item_title");
+				textViewTitle.setText(this.getString(R.string.edit_item_title));
 				setItem();
 			}
 		}
