@@ -1,6 +1,5 @@
 package ch.unibe.ese.core;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -22,12 +21,7 @@ public class ListManager {
 	public ListManager(PersistenceManager persistenceManager) {
 		this.persistenceManager = persistenceManager;
 		this.listToItems = new HashMap<ShoppingList, List<Item>>();
-		try {
-			shoppingLists = persistenceManager.readLists();
-		} catch (IOException e) {
-			// TODO throw an appropriate exception
-			throw new IllegalStateException(e);
-		}
+		shoppingLists = persistenceManager.readLists();
 	}
 
 	/**
@@ -47,21 +41,12 @@ public class ListManager {
 		if (!shoppingLists.contains(list)) {
 			shoppingLists.add(list);
 		}
-		try {
-			persistenceManager.save(list);
-		} catch (IOException e) {
-			throw new IllegalStateException(e);
-		}
-
+		persistenceManager.save(list);
 	}
 
 	public void removeShoppingList(ShoppingList list) {
 		shoppingLists.remove(list);
-		try {
-			persistenceManager.remove(list);
-		} catch (IOException e) {
-			throw new IllegalStateException(e);
-		}
+		persistenceManager.remove(list);
 	}
 
 	public void addItemToList(Item item, ShoppingList list) {
@@ -86,12 +71,7 @@ public class ListManager {
 			listToItems.put(list, items);
 		}
 		items.remove(item);
-		try {
-			persistenceManager.remove(item, list);
-		} catch (IOException e) {
-			// TODO do something more clever
-			throw new IllegalStateException(e);
-		}
+		persistenceManager.remove(item, list);
 
 	}
 

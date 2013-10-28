@@ -1,5 +1,6 @@
 package ch.unibe.ese.core;
 
+import java.io.Closeable;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -36,7 +37,7 @@ public class JsonPersistenceManager implements PersistenceManager {
 	}
 
 	@Override
-	public List<ShoppingList> readLists() throws IOException {
+	public List<ShoppingList> readLists() {
 		FileInputStream in = null;
 		InputStreamReader reader = null;
 		try {
@@ -47,10 +48,8 @@ public class JsonPersistenceManager implements PersistenceManager {
 		} catch (FileNotFoundException e) {
 			return new ArrayList<ShoppingList>();
 		} finally {
-			if (reader != null)
-				reader.close();
-			if (in != null)
-				in.close();
+			closeIgnoringException(in);
+			closeIgnoringException(reader);
 		}
 	}
 
@@ -80,27 +79,27 @@ public class JsonPersistenceManager implements PersistenceManager {
 	}
 
 	@Override
-	public void save(ShoppingList list) throws IOException {
+	public void save(ShoppingList list) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public void remove(ShoppingList list) throws IOException {
+	public void remove(ShoppingList list) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void save(Item item, ShoppingList list) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public void remove(Item item, ShoppingList list) throws IOException {
+	public void remove(Item item, ShoppingList list) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -108,4 +107,16 @@ public class JsonPersistenceManager implements PersistenceManager {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	private void closeIgnoringException(Closeable c) {
+		if (c != null) {
+			try {
+				c.close();
+			} catch (IOException e) {
+				// nothing we can do.
+				e.printStackTrace();
+			}
+		}
+	}
+
 }
