@@ -15,6 +15,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
@@ -29,9 +30,6 @@ import ch.unibe.ese.core.ShoppingList;
 import ch.unibe.ese.shoppinglist.R;
 
 public class CreateListActivity extends BaseActivity {
-
-	// TODO: maybe ListActivity parent class and
-	// CreateListActivity/EditListActivity children
 
 	private ListManager manager;
 	private ShoppingList list;
@@ -98,41 +96,45 @@ public class CreateListActivity extends BaseActivity {
 		// get name
 		EditText textName = (EditText) findViewById(R.id.editTextName);
 		String name = textName.getText().toString();
-		boolean check = true;
-		try {
-			if (list == null)
-				list = new ShoppingList(name);
-			else
-				list.setName(name);
-		} catch (IllegalArgumentException e) {
+		if (name == null || name.trim().isEmpty()) {
 			Toast.makeText(this, "Please enter a name", Toast.LENGTH_SHORT)
 					.show();
-			check = false;
+			return;
 		}
+		
+		if (list == null)
+			list = new ShoppingList(name);
+		else
+			list.setName(name);
 
-		if (check) {
-			// get shop
-			EditText textShop = (EditText) findViewById(R.id.editTextShop);
-			String shop = textShop.getText().toString();
-			list.setShop(shop);
+		// get shop
+		EditText textShop = (EditText) findViewById(R.id.editTextShop);
+		String shop = textShop.getText().toString();
+		list.setShop(shop);
 
-			// get due date
-			EditText textDate = (EditText) findViewById(R.id.editTextDate);
-			Date date;
-			try {
-				date = SimpleDateFormat.getDateInstance().parse(
-						textDate.getText().toString());
-				list.setDueDate(date);
-			} catch (ParseException e) {
-				// throw new IllegalStateException(e);
-			}
-
-			// save the shopping list
-			manager.addShoppingList(list);
-
-			// go back to home activity
-			NavUtils.navigateUpFromSameTask(this);
+		// get due date
+		EditText textDate = (EditText) findViewById(R.id.editTextDate);
+		Date date;
+		try {
+			date = SimpleDateFormat.getDateInstance().parse(
+					textDate.getText().toString());
+			list.setDueDate(date);
+		} catch (ParseException e) {
+			// throw new IllegalStateException(e);
 		}
+		
+		// save the shopping list
+		manager.addShoppingList(list);
+		
+		// TODO: maybe allow user to choose in settings if new list should open after creating
+		// go back to home activity after editing the list
+		//NavUtils.navigateUpFromSameTask(this);
+		
+		// open the created list
+		Intent intent = new Intent(this, ViewListActivity.class);
+		int position = manager.getShoppingLists().indexOf(list);
+		intent.putExtra("selectedList", position);
+		this.startActivity(intent);
 	}
 
 	/**

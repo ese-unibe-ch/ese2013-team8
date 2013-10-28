@@ -8,8 +8,4 @@
           android:icon="@drawable/ic_action_remove"
           android:title="@string/action_remove"
           android:showAsAction="ifRoom"  />
-        <item android:id="@+id/action_sync"
-          android:icon="@drawable/ic_sync"
-          android:title="@string/action_sync"
-          android:showAsAction="ifRoom"  />
 </menu>

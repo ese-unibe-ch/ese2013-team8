@@ -1,5 +1,6 @@
 package ch.unibe.ese.core.sqlite;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import ch.unibe.ese.core.Item;
@@ -111,7 +112,9 @@ public class SQLiteReadHelper {
 		Item item = new Item(cursor.getString(1));
 		item.setId(cursor.getInt(0));
 		item.setBought(cursor.getInt(2) == 1);
-		// TODO set price and id.
+		String price = cursor.getString(3);
+		if (price != null && !price.isEmpty())
+			item.setPrice(new BigDecimal(price));
 		return item;
 	}
 

@@ -1,6 +1,5 @@
 package ch.unibe.ese.core.sqlite;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +48,7 @@ public class SQLitePersistenceManager implements PersistenceManager {
 	 */
 
 	@Override
-	public List<ShoppingList> readLists() throws IOException {
+	public List<ShoppingList> readLists() {
 		List<ShoppingList> lists = new ArrayList<ShoppingList>();
 
 		Cursor cursor = readHelper.getListCursor();
@@ -63,7 +62,7 @@ public class SQLitePersistenceManager implements PersistenceManager {
 	}
 
 	@Override
-	public void save(ShoppingList list) throws IOException {
+	public void save(ShoppingList list) {
 		// Convert the list to a ContentValue
 		// Automatically creates a new shop in the database if it doesn't exist
 		ContentValues values = updateHelper.toValue(list);
@@ -80,10 +79,8 @@ public class SQLitePersistenceManager implements PersistenceManager {
 	}
 
 	@Override
-	public void remove(ShoppingList list) throws IOException {
-		if (readHelper.getListId(list.getName()) == -1) {
-			throw new IOException();
-		} else {
+	public void remove(ShoppingList list) {
+		if (readHelper.getListId(list.getName()) != -1) {
 			database.delete(
 					SQLiteHelper.TABLE_LISTS,
 					SQLiteHelper.COLUMN_LIST_ID + "="
@@ -126,7 +123,7 @@ public class SQLitePersistenceManager implements PersistenceManager {
 	}
 
 	@Override
-	public void remove(Item item, ShoppingList list) throws IOException {
+	public void remove(Item item, ShoppingList list) {
 		if (readHelper.isInList(item, list)) {
 			database.delete(
 					SQLiteHelper.TABLE_ITEMTOLIST,
@@ -134,8 +131,6 @@ public class SQLitePersistenceManager implements PersistenceManager {
 							+ SQLiteHelper.COLUMN_LIST_ID + "=?",
 					new String[] { "" + item.getId(),
 							"" + readHelper.getListId(list.getName()) });
-		} else {
-			throw new IOException();
 		}
 	}
 }

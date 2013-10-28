@@ -3,7 +3,7 @@ package ch.unibe.ese.activities;
 import ch.unibe.ese.core.Item;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
-import ch.unibe.ese.share.FriendRequest;
+import ch.unibe.ese.share.RegisterRequest;
 import ch.unibe.ese.share.Request;
 import ch.unibe.ese.share.RequestSender;
 import ch.unibe.ese.shoppinglist.R;
@@ -94,13 +94,7 @@ public class ShoppingListActionMode implements Callback {
 	            	itemAdapter.notifyDataSetChanged();
 	            	mode.finish(); // Action picked, so close the CAB
             	}
-            	return true;
-            case R.id.action_sync:
-            	Request request = new FriendRequest("1234");
-            	RequestSender sender = new RequestSender(request);
-            	sender.send();
-            	return true;
-            	
+            	return true;	
             default:
                 return false;
         }

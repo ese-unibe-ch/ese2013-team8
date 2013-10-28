@@ -51,7 +51,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 			"create table " + TABLE_ITEMTOLIST + "("
 			+ COLUMN_ITEM_ID + " integer NOT NULL, "
 			+ COLUMN_LIST_ID + " integer NOT NULL, "
-			+ COLUMN_LISTPRICE + " float, "
+			+ COLUMN_LISTPRICE + " NUMERIC, "
 			+ COLUMN_ITEMBOUGHT + " integer, "
 			+ "primary key (" + COLUMN_ITEM_ID + ", " + COLUMN_LIST_ID + ")"
 			+ ");";

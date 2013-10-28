@@ -174,7 +174,42 @@ public class ViewListActivity extends BaseActivity {
 			//
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
+			
+		// Handle presses on the action bar items
+		case R.id.action_refresh:
+			// TODO: add synchronize function
+			Toast.makeText(this, "Not working yet", Toast.LENGTH_SHORT)
+				.show();
+			return true;
+		case R.id.action_share:
+			// TODO: add share screen
+			Toast.makeText(this, "Not working yet", Toast.LENGTH_SHORT)
+				.show();
+			return true;
+		
+		// Handle presses on overflow menu items
+		case R.id.action_edit_list:
+        	Intent intent = new Intent(this, CreateListActivity.class);
+        	int listIndex = manager.getShoppingLists().indexOf(list);
+        	intent.putExtra("selectedList", listIndex);
+            this.startActivity(intent);
+			return true;
+		case R.id.action_archive:
+			// TODO: add archive function
+			Toast.makeText(this, "Not working yet", Toast.LENGTH_SHORT)
+				.show();
+			return true;
+		case R.id.action_delete:
+			manager.removeShoppingList(list);
+			NavUtils.navigateUpFromSameTask(this);
+			return true;
+		case R.id.action_settings:
+			Intent optionsIntent = new Intent(this, OptionsActivity.class);
+			this.startActivity(optionsIntent);
+			return true;
 		}
+		
+		
 		return super.onOptionsItemSelected(item);
 	}
 }

@@ -2,12 +2,13 @@ package ch.unibe.ese.activities;
 
 import java.util.List;
 
-import sidelist.NavigationDrawer;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,10 +17,15 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 import ch.unibe.ese.core.BaseActivity;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
+import ch.unibe.ese.share.RegisterRequest;
+import ch.unibe.ese.share.Request;
+import ch.unibe.ese.share.RequestSender;
 import ch.unibe.ese.shoppinglist.R;
+import ch.unibe.ese.sidelist.NavigationDrawer;
 
 public class HomeActivity extends BaseActivity {
 
@@ -84,7 +90,6 @@ public class HomeActivity extends BaseActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.home, menu);
-		getMenuInflater().inflate(R.menu.home_menu, menu);
 		return true;
 	}
 
@@ -92,6 +97,15 @@ public class HomeActivity extends BaseActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle presses on the action bar items
 		switch (item.getItemId()) {
+		case R.id.action_refresh:
+			TelephonyManager tMgr =(TelephonyManager)getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
+			String phoneNumber = tMgr.getLine1Number();
+			Request request = new RegisterRequest(phoneNumber);
+			RequestSender sender = new RequestSender();
+			sender.execute(request);
+			Toast.makeText(this, "Sent your phone Number to the server, muhahahaha...", Toast.LENGTH_SHORT)
+			.show();
+			return true;
 		case R.id.action_new:
 			Intent intent = new Intent(this, CreateListActivity.class);
 			this.startActivity(intent);
