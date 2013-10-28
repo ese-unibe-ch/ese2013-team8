@@ -49,8 +49,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 			// link items to lists
 	private static final String DATABASE_CREATE_TABLE_ITEMTOLIST =
 			"create table " + TABLE_ITEMTOLIST + "("
-			+ COLUMN_ITEM_ID + " integer, "
-			+ COLUMN_LIST_ID + " integer, "
+			+ COLUMN_ITEM_ID + " integer NOT NULL, "
+			+ COLUMN_LIST_ID + " integer NOT NULL, "
 			+ COLUMN_LISTPRICE + " float, "
 			+ COLUMN_ITEMBOUGHT + " integer, "
 			+ "primary key (" + COLUMN_ITEM_ID + ", " + COLUMN_LIST_ID + ")"

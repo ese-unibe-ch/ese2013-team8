@@ -61,8 +61,7 @@ public class SQLiteUpdateHelper {
 	 */
 	public ContentValues toValue(Item item, ShoppingList list) {
 		ContentValues values = new ContentValues();
-		values.put(SQLiteHelper.COLUMN_ITEM_ID,
-				readHelper.getItemId(item.getName()));
+		values.put(SQLiteHelper.COLUMN_ITEM_ID, item.getId());
 		values.put(SQLiteHelper.COLUMN_LIST_ID,
 				readHelper.getListId(list.getName()));
 		values.put(SQLiteHelper.COLUMN_ITEMBOUGHT, item.isBought() ? 1 : 0);
@@ -88,9 +87,12 @@ public class SQLiteUpdateHelper {
 	 * @param item
 	 */
 	public void addItemIfNotExistent(Item item) {
-		if (readHelper.getItemId(item.getName()) == -1) {
+		long id = readHelper.getItemId(item.getName());
+		if (id == -1) {
 			ContentValues values = this.toValue(item);
-			database.insert(SQLiteHelper.TABLE_ITEMS, null, values);
+			id = database.insert(SQLiteHelper.TABLE_ITEMS, null, values);
 		}
+		if (item.getId() == null)
+			item.setId(id);
 	}
 }

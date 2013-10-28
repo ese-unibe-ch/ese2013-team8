@@ -13,10 +13,11 @@ import ch.unibe.ese.core.PersistenceManager;
 import ch.unibe.ese.core.ShoppingList;
 
 /**
- * This class provides function to save
- * all lists / items / shops to a SQLite database
+ * This class provides function to save all lists / items / shops to a SQLite
+ * database
+ * 
  * @author Stephan
- *
+ * 
  */
 
 public class SQLitePersistenceManager implements PersistenceManager {
@@ -39,13 +40,14 @@ public class SQLitePersistenceManager implements PersistenceManager {
 		this.dbHelper = new SQLiteHelper(this.context);
 		this.database = dbHelper.getWritableDatabase();
 		this.readHelper = new SQLiteReadHelper(this.database);
-		this.updateHelper = new SQLiteUpdateHelper(this.database, this.readHelper);
+		this.updateHelper = new SQLiteUpdateHelper(this.database,
+				this.readHelper);
 	}
 
 	/**
 	 * Everything for lists
 	 */
-	
+
 	@Override
 	public List<ShoppingList> readLists() throws IOException {
 		List<ShoppingList> lists = new ArrayList<ShoppingList>();
@@ -69,8 +71,11 @@ public class SQLitePersistenceManager implements PersistenceManager {
 		if (readHelper.getListId(list.getName()) == -1) {
 			database.insert(SQLiteHelper.TABLE_LISTS, null, values);
 		} else { // Else if it is an old list
-			database.update(SQLiteHelper.TABLE_LISTS, values,
-					SQLiteHelper.COLUMN_LIST_ID + "=" + readHelper.getListId(list.getName()), null);
+			database.update(
+					SQLiteHelper.TABLE_LISTS,
+					values,
+					SQLiteHelper.COLUMN_LIST_ID + "="
+							+ readHelper.getListId(list.getName()), null);
 		}
 	}
 
@@ -79,15 +84,17 @@ public class SQLitePersistenceManager implements PersistenceManager {
 		if (readHelper.getListId(list.getName()) == -1) {
 			throw new IOException();
 		} else {
-			database.delete(SQLiteHelper.TABLE_LISTS,
-					SQLiteHelper.COLUMN_LIST_ID + "=" + readHelper.getListId(list.getName()), null);
+			database.delete(
+					SQLiteHelper.TABLE_LISTS,
+					SQLiteHelper.COLUMN_LIST_ID + "="
+							+ readHelper.getListId(list.getName()), null);
 		}
 	}
 
 	/**
 	 * Everything for Items
 	 */
-	
+
 	@Override
 	public List<Item> getItems(ShoppingList list) {
 		List<Item> itemList = new ArrayList<Item>();
@@ -100,26 +107,33 @@ public class SQLitePersistenceManager implements PersistenceManager {
 		cursor.close();
 		return itemList;
 	}
-	
+
 	@Override
 	public void save(Item item, ShoppingList list) {
 		updateHelper.addItemIfNotExistent(item);
 		ContentValues values = updateHelper.toValue(item, list);
-		if(readHelper.isInList(item, list)) {
-			database.update(SQLiteHelper.TABLE_ITEMTOLIST, values,
+		if (readHelper.isInList(item, list)) {
+			database.update(
+					SQLiteHelper.TABLE_ITEMTOLIST,
+					values,
 					SQLiteHelper.COLUMN_ITEM_ID + "= ? AND "
-							+ SQLiteHelper.COLUMN_LIST_ID + "=?", new String[] {
-							"" + readHelper.getItemId(item.getName()), ""+readHelper.getListId(list.getName())} );
+							+ SQLiteHelper.COLUMN_LIST_ID + "=?",
+					new String[] { "" + item.getId(),
+							"" + readHelper.getListId(list.getName()) });
 		} else {
 			database.insert(SQLiteHelper.TABLE_ITEMTOLIST, null, values);
 		}
 	}
-	
+
 	@Override
 	public void remove(Item item, ShoppingList list) throws IOException {
-		if(readHelper.isInList(item, list)) {
-			database.delete(SQLiteHelper.TABLE_ITEMTOLIST, SQLiteHelper.COLUMN_ITEM_ID+"=? AND "+SQLiteHelper.COLUMN_LIST_ID+"=?", 
-					new String[] {""+readHelper.getItemId(item.getName()), ""+readHelper.getListId(list.getName())} );
+		if (readHelper.isInList(item, list)) {
+			database.delete(
+					SQLiteHelper.TABLE_ITEMTOLIST,
+					SQLiteHelper.COLUMN_ITEM_ID + "=? AND "
+							+ SQLiteHelper.COLUMN_LIST_ID + "=?",
+					new String[] { "" + item.getId(),
+							"" + readHelper.getListId(list.getName()) });
 		} else {
 			throw new IOException();
 		}

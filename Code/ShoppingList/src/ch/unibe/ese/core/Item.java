@@ -3,7 +3,7 @@ package ch.unibe.ese.core;
 import java.math.BigDecimal;
 
 public class Item {
-	private Integer id;
+	private Long id;
 	private String name;
 	private BigDecimal price;
 	private Shop shop;
@@ -40,11 +40,14 @@ public class Item {
 		this.shop = shop;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	void setId(int id) {
+	public void setId(long id) {
+		if (this.id != null)
+			throw new IllegalArgumentException(
+					"it's not allowed to set the ID of an item twice");
 		this.id = id;
 	}
 

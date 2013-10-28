@@ -44,9 +44,13 @@ public class CreateItemActivity extends BaseActivity {
 			list = manager.getShoppingLists().get(listIndex);
 			// edit item
 			if (extras.getBoolean("editItem")) {
-				int itemIndex = extras.getInt("selectedItem");
-				List<Item> items = manager.getItemsFor(list);
-				item = items.get(itemIndex);
+				long itemId = extras.getLong("selectedItem");
+				for (Item it : manager.getItemsFor(list)) {
+					if (it.getId() == itemId) {
+						item = it;
+						break;
+					}
+				}
 				textViewTitle = (TextView) findViewById(R.id.textViewTitle);
 				textViewTitle.setText("Edit item:");
 				editItem();

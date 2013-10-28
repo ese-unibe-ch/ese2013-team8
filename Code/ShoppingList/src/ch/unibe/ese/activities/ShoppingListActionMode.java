@@ -75,9 +75,7 @@ public class ShoppingListActionMode implements Callback {
 	                mode.finish(); 
 	                // open item edit screen
 		        	Intent intent = new Intent(activity, CreateItemActivity.class);
-		        	// TODO identify item by ID, not its index
-		        	int itemIndex = manager.getItemsFor(selectedList).indexOf(selectedItem);
-		        	intent.putExtra("selectedItem", itemIndex);
+		        	intent.putExtra("selectedItem",selectedItem.getId());
 		        	intent.putExtra("editItem", true);
 		            activity.startActivity(intent);
             	}

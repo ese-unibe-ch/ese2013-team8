@@ -109,6 +109,7 @@ public class SQLiteReadHelper {
 
 	public Item cursorToItem(Cursor cursor) {
 		Item item = new Item(cursor.getString(1));
+		item.setId(cursor.getInt(0));
 		item.setBought(cursor.getInt(2) == 1);
 		// TODO set price and id.
 		return item;
@@ -212,14 +213,14 @@ public class SQLiteReadHelper {
 	 * @param itemName
 	 * @return
 	 */
-	public int getItemId(String itemName) {
+	public long getItemId(String itemName) {
 		Cursor cursor = database.query(SQLiteHelper.TABLE_ITEMS,
 				SQLiteHelper.ITEMS_COLUMNS, SQLiteHelper.COLUMN_ITEM_NAME
 						+ "=?", new String[] { itemName }, null, null, null,
 				null);
 		if (cursor.getCount() == 1) {
 			cursor.moveToFirst();
-			return cursor.getInt(0);
+			return cursor.getLong(0);
 		} else {
 			return -1;
 		}
@@ -233,7 +234,7 @@ public class SQLiteReadHelper {
 	 * @return true if item is in list
 	 */
 	public boolean isInList(Item item, ShoppingList list) {
-		int itemId = getItemId(item.getName());
+		long itemId = item.getId() == null ? -1 : item.getId();
 		int listId = getListId(list.getName());
 		Cursor cursor = database.query(SQLiteHelper.TABLE_ITEMTOLIST,
 				SQLiteHelper.ITEMTOLIST_COLUMNS, SQLiteHelper.COLUMN_ITEM_ID
@@ -242,5 +243,4 @@ public class SQLiteReadHelper {
 				null);
 		return (cursor.getCount() >= 1);
 	}
-
 }

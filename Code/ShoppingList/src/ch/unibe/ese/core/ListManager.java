@@ -72,9 +72,9 @@ public class ListManager {
 			items = new ArrayList<Item>();
 			listToItems.put(list, items);
 		}
+		persistenceManager.save(item, list);
 		if (!items.contains(item))
 			items.add(item);
-		persistenceManager.save(item, list);
 	}
 
 	public void removeItemFromList(Item item, ShoppingList list) {
