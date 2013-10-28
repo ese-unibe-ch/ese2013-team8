@@ -64,5 +64,6 @@
     <string name="title_activity_manage_friends">Friends</string>
     <string name="name">Name</string>
     <string name="phone_nr">Phone Nr:</string>
+    <string name="action_sync">Synchronisation</string>
 
 </resources>
