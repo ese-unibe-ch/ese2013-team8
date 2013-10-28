@@ -48,8 +48,7 @@ public class ManageFriendsActivity extends BaseActivity {
 		int nr = Integer.parseInt(friendNr.getText().toString());
 
 		if (!friendsManager.addFriend(nr, name))
-			Toast.makeText(this, "Error occured, friend not found",
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, this.getString(R.string.error_friend), Toast.LENGTH_SHORT).show();
 
 		friendName.setText("");
 		friendNr.setText("");

@@ -18,7 +18,7 @@
     <item android:id="@+id/action_delete"
 		  android:orderInCategory="3"
 		  android:showAsAction="never"
-		  android:title="@string/action_delete"/>
+		  android:title="@string/action_remove"/>
     
     <item android:id="@+id/action_refresh"
           android:orderInCategory="4"

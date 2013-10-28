@@ -94,8 +94,7 @@ public class HomeActivity extends BaseActivity {
 		switch (item.getItemId()) {
 		case R.id.action_refresh:
 			// TODO: add synchronize function
-			Toast.makeText(this, "Not working yet", Toast.LENGTH_SHORT)
-				.show();
+			Toast.makeText(this, this.getString(R.string.error_missing), Toast.LENGTH_SHORT).show();
 			return true;
 		case R.id.action_new:
 			Intent intent = new Intent(this, CreateListActivity.class);

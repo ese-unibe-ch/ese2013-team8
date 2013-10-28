@@ -4,13 +4,9 @@ import ch.unibe.ese.core.BaseActivity;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
 import ch.unibe.ese.shoppinglist.R;
-import ch.unibe.ese.shoppinglist.R.layout;
-import ch.unibe.ese.shoppinglist.R.menu;
 import android.os.Bundle;
-import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.v4.app.NavUtils;
 
 public class ShareListActivity extends BaseActivity {
 
@@ -32,7 +28,7 @@ public class ShareListActivity extends BaseActivity {
 			// Get list
 			listIndex = extras.getInt("selectedList");
 			list = manager.getShoppingLists().get(listIndex);
-			setTitle("Share " + list.getName());
+			setTitle(this.getString(R.string.share_list_title) + " " + list.getName());
 		}
 	}
 

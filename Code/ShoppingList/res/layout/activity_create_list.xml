@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="goBack"
-            android:text="Abort" />
+            android:text="@string/button_back" />
 
         <Button
             android:id="@+id/button2"
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="saveList"
-            android:text="Save" />
+            android:text="@string/button_save" />
     </LinearLayout>
 
     <RelativeLayout
@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:text="Add new shopping list:"
+            android:text="@string/create_list_title"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <!-- Name -->
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/editTextName"
             android:layout_alignLeft="@+id/textViewTitle"
-            android:text="Name"
+            android:text="@string/create_list_name"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText
@@ -86,7 +86,7 @@
             android:layout_alignLeft="@+id/textViewName"
             android:layout_below="@+id/textViewName"
             android:layout_marginTop="26dp"
-            android:text="Date (optional)"
+            android:text="@string/create_list_date"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText
@@ -110,7 +110,7 @@
             android:layout_alignLeft="@+id/textViewDate"
             android:layout_below="@+id/textViewDate"
             android:layout_marginTop="26dp"
-            android:text="Shop (optional)"
+            android:text="@string/create_list_shop"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText

@@ -1,8 +1,5 @@
 package ch.unibe.ese.activities;
 
-// TODO: Add strings to values/strings.xml (instead of hardcoded)
-// TODO: fix bug (app crash if list gets created without a due date)
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,7 +14,6 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.View;
 import android.widget.DatePicker;
@@ -56,7 +52,7 @@ public class CreateListActivity extends BaseActivity {
 			int listIndex = extras.getInt("selectedList");
 			list = manager.getShoppingLists().get(listIndex);
 			textViewTitle = (TextView) findViewById(R.id.textViewTitle);
-			textViewTitle.setText("Edit shopping list:");
+			textViewTitle.setText("@string/edit_list_title");
 			setList();
 		}
 	}
@@ -97,8 +93,7 @@ public class CreateListActivity extends BaseActivity {
 		EditText textName = (EditText) findViewById(R.id.editTextName);
 		String name = textName.getText().toString();
 		if (name == null || name.trim().isEmpty()) {
-			Toast.makeText(this, "Please enter a name", Toast.LENGTH_SHORT)
-					.show();
+			Toast.makeText(this, this.getString(R.string.error_name), Toast.LENGTH_SHORT).show();
 			return;
 		}
 		

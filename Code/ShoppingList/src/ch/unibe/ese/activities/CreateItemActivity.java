@@ -51,7 +51,7 @@ public class CreateItemActivity extends BaseActivity {
 					}
 				}
 				textViewTitle = (TextView) findViewById(R.id.textViewTitle);
-				textViewTitle.setText("Edit item:");
+				textViewTitle.setText("@string/edit_item_title");
 				setItem();
 			}
 		}
@@ -92,8 +92,7 @@ public class CreateItemActivity extends BaseActivity {
 		EditText textName = (EditText) findViewById(R.id.editTextName);
 		String name = textName.getText().toString();
 		if (name == null || name.trim().isEmpty()) {
-			Toast.makeText(this, "Please enter a name", Toast.LENGTH_SHORT)
-					.show();
+			Toast.makeText(this, this.getString(R.string.error_name), Toast.LENGTH_SHORT).show();
 			return;
 		}
 

@@ -138,8 +138,7 @@ public class ViewListActivity extends BaseActivity {
 		EditText textName = (EditText) findViewById(R.id.editTextName);
 		String name = textName.getText().toString();
 		if (name.trim().length() == 0) {
-			Toast.makeText(this, "Please enter a name", Toast.LENGTH_SHORT)
-					.show();
+			Toast.makeText(this, this.getString(R.string.error_name), Toast.LENGTH_SHORT).show();
 		} else {
 			Item item = new Item(name);
 			manager.addItemToList(item, list);
@@ -192,8 +191,7 @@ public class ViewListActivity extends BaseActivity {
 			return true;
 		case R.id.action_archive:
 			// TODO: add archive function
-			Toast.makeText(this, "Not working yet", Toast.LENGTH_SHORT)
-				.show();
+			Toast.makeText(this, this.getString(R.string.error_missing), Toast.LENGTH_SHORT).show();
 			return true;
 		case R.id.action_delete:
 			manager.removeShoppingList(list);
@@ -201,8 +199,7 @@ public class ViewListActivity extends BaseActivity {
 			return true;
 		case R.id.action_refresh:
 			// TODO: add synchronize function
-			Toast.makeText(this, "Not working yet", Toast.LENGTH_SHORT)
-				.show();
+			Toast.makeText(this, this.getString(R.string.error_missing), Toast.LENGTH_SHORT).show();
 			return true;
 		case R.id.action_settings:
 			Intent optionsIntent = new Intent(this, OptionsActivity.class);

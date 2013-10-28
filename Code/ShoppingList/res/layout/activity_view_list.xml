@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.70" 
 			android:inputType="textCapSentences"
-			android:hint="Add Item"    
+			android:hint="@string/view_list_hint"    
             android:ems="10" >
         <requestFocus />
         </AutoCompleteTextView>
@@ -42,7 +42,7 @@
         
         <ImageButton
             android:id="@+id/imageButtonAdd"
-            android:contentDescription="@string/nike_button_desc"
+            android:contentDescription="@string/action_ok"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
