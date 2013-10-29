@@ -1,9 +1,4 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-
-    <item android:id="@+id/action_refresh"
-          android:icon="@drawable/ic_action_refresh"
-          android:title="@string/action_refresh"
-          android:showAsAction="ifRoom"  />
     
     <item android:id="@+id/action_share"
           android:icon="@drawable/ic_action_share"
@@ -23,7 +18,13 @@
     <item android:id="@+id/action_delete"
 		  android:orderInCategory="3"
 		  android:showAsAction="never"
-		  android:title="@string/action_delete"/>
+		  android:title="@string/action_remove"/>
+    
+    <item android:id="@+id/action_refresh"
+          android:orderInCategory="4"
+          android:icon="@drawable/ic_action_refresh"
+          android:title="@string/action_refresh"
+          android:showAsAction="never"  />
             
     <item android:id="@+id/action_settings"
 		  android:orderInCategory="100"

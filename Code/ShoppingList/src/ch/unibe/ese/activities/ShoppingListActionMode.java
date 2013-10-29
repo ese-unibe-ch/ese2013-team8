@@ -62,6 +62,8 @@ public class ShoppingListActionMode implements Callback {
     // Called when the user selects a contextual menu item
     @Override
     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+    	int listIndex = manager.getShoppingLists().indexOf(selectedList);
+    	
         switch (item.getItemId()) {
             case R.id.action_edit:
             	if (isList) {
@@ -69,7 +71,6 @@ public class ShoppingListActionMode implements Callback {
 	                mode.finish(); 
 	                // open list edit screen
 		        	Intent intent = new Intent(activity, CreateListActivity.class);
-		        	int listIndex = manager.getShoppingLists().indexOf(selectedList);
 		        	intent.putExtra("selectedList", listIndex);
 		            activity.startActivity(intent);
             	}
@@ -95,6 +96,7 @@ public class ShoppingListActionMode implements Callback {
 	            	mode.finish(); // Action picked, so close the CAB
             	}
             	return true;	
+
             default:
                 return false;
         }
