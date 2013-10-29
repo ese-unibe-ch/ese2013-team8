@@ -1,6 +1,7 @@
 package ch.unibe.ese.activities;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 
 import android.app.Activity;
@@ -23,6 +24,7 @@ import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
 import ch.unibe.ese.share.RegisterRequest;
 import ch.unibe.ese.share.Request;
+import ch.unibe.ese.share.RequestListener;
 import ch.unibe.ese.share.RequestSender;
 import ch.unibe.ese.shoppinglist.R;
 import ch.unibe.ese.sidelist.NavigationDrawer;
@@ -98,13 +100,32 @@ public class HomeActivity extends BaseActivity {
 		// Handle presses on the action bar items
 		switch (item.getItemId()) {
 		case R.id.action_refresh:
+			
+			// needs to be replaced by something more general (reading the request queue, packing it into array, and bla)... 
+			// from here ->
 			TelephonyManager tMgr =(TelephonyManager)getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
 			String phoneNumber = tMgr.getLine1Number();
 			Request request = new RegisterRequest(phoneNumber);
-			RequestSender sender = new RequestSender();
-			sender.execute(request);
-			Toast.makeText(this, "Sent your phone Number to the server, muhahahaha...", Toast.LENGTH_SHORT)
-			.show();
+			// runs in an asynchronous task
+			RequestListener listener = new RequestListener();
+			RequestSender sender = new RequestSender(listener);
+			try {
+				// NEVER DO THIS!!!
+				// This is now just for demonstration purposes
+				// NEVER use .get() on an asynchronous task, because it waits for it (where's the sense, if it should be asynchronous)
+				if(sender.execute(request).get())
+					Toast.makeText(this, "Created new Account for you", Toast.LENGTH_SHORT).show();
+				else
+					Toast.makeText(this, "You already have an account", Toast.LENGTH_SHORT).show();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			// <- to down here
 			return true;
 		case R.id.action_new:
 			Intent intent = new Intent(this, CreateListActivity.class);

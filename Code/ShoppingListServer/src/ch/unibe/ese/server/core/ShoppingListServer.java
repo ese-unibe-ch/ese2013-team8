@@ -6,9 +6,15 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import ch.unibe.ese.server.RequestHandler;
 import ch.unibe.ese.share.Request;
 
+/**
+ * Driver for the shopping list server
+ * It just waits for connections and refers them to new ClientThreads which can be handled in parallel
+ * Note: conflicts can occur if you do it in parallel
+ * @author Stephan
+ *
+ */
 public class ShoppingListServer {
 
 	private ServerSocket serverSocket;
@@ -23,38 +29,21 @@ public class ShoppingListServer {
 	
 	private void waitForConnection() {
 		do {
-			Request[] request = accept();
-			System.out.println(request[0]);
-			requestHandler.handle(request);
+			accept();
 		} while (true);
 	}
 
 
-	private Request[] accept() {
-		ObjectInputStream in;
-		Request[] request = null;
+	private void accept() {
 		try {
 			// Get socket from client
 			Socket socket = serverSocket.accept();
-			// Open inputstream from socket
-			in = new ObjectInputStream(socket.getInputStream());
-			// Get the request
-			request = (Request[]) in.readObject();
-			// Set the request handled
-			request[0].setHandled();
-			// Open outputstream from socket
-			ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-			// Send answer to client
-			out.writeObject(request);
-			out.flush();
+			// Start new thread to handle client request
+			new ClientThread(socket,requestHandler).start();
 		} catch (IOException e) {
 			System.err.println("IOException in accept()");
 			e.printStackTrace(System.err);
-		} catch (ClassNotFoundException e) {
-			System.err.println("ClassNotFoundException in accept()");
-			e.printStackTrace(System.err);
 		}
-		return request;
 	}
 
 	private void initServerSocket() {
@@ -66,7 +55,7 @@ public class ShoppingListServer {
 	}
 	
 	public static void main(String[] args) {
-		ShoppingListServer server = new ShoppingListServer();
+		new ShoppingListServer();
 	}
 	
 }

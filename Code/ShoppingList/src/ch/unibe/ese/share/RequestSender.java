@@ -10,33 +10,55 @@ import java.net.UnknownHostException;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-public class RequestSender extends AsyncTask<Request, Object, Request>{
-
+/**
+ * Is responsible to establish a connection socket to the server (hardcoded IP at the moment)
+ * Every request is followed by an answer from the server. It passes the same object back with flags 'isHandled' and 'wasSuccessful' set
+ * @author Stephan
+ *
+ */
+public class RequestSender extends AsyncTask<Request, Object, Boolean>{
+	
 	private Socket socket;
 	private ObjectOutputStream out;
 	private ObjectInputStream in;
+	private RequestListener listener;
 	
-	public RequestSender() {}
+	public RequestSender(RequestListener listener) {
+		this.listener = listener;
+	}
 	
-	
+	/**
+	 * This method gets started as asynchronous task when you call .run()
+	 */
 	@Override
-	protected Request doInBackground(Request... request) {
+	protected Boolean doInBackground(Request... request) {
 		this.initSocket();
 		this.send(request);
 		this.waitForAnswer();
-		return null;
+		return listener.wasSuccessful();
 	}
 	
+	@Override
+	protected void onPostExecute(Boolean result) {
+		//TODO
+	}
+	
+	/**
+	 * Waits for the answer from the server and reports the result in the listener
+	 */
 	private void waitForAnswer() {
 		try {
+			// Get the answer from the server
 			this.in = new ObjectInputStream(socket.getInputStream());
-			long start = System.nanoTime();  
-			while(System.nanoTime() - start < 10000) {
-				//wait
-			}
 			Request[] answer = (Request[]) in.readObject();
-			System.err.println("Received Answer and it is " + answer[0].isHandled());
-			
+			// Set listener values for further use in Activity or stuff
+			if(answer[0].isHandled())
+				listener.setHandled();
+			if(answer[0].wasSuccessful())
+				listener.setSuccessful();
+			System.err.println("Received Answer; handled: " + answer[0].isHandled() + " successfull: " + answer[0].wasSuccessful());
+			// Close the socket
+			socket.close();
 		} catch (StreamCorruptedException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -51,11 +73,11 @@ public class RequestSender extends AsyncTask<Request, Object, Request>{
 
 
 	/**
-	 * Tries to open a socket on the android device
+	 * Tries to open a socket on the android device to a specified Host
 	 */
 	private void initSocket() {
 		try {
-			this.socket = new Socket("10.0.0.2", 1337);
+			this.socket = new Socket("matter2.nine.ch", 1337);
 		} catch (UnknownHostException e) {
 			System.err.println("Unknown Host in initSocket()");
 		} catch (IOException e) {
