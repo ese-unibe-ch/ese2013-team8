@@ -31,34 +31,38 @@
 
 </RelativeLayout>
     
-<LinearLayout
+<RelativeLayout
         android:id="@+id/drawer_Linearlayout"
         android:layout_width="240dp"
         android:layout_height="match_parent"
         android:background="#F3F3F4"
-        android:layout_gravity="start"
-        android:orientation="vertical" >
+        android:layout_gravity="start">
 
         <!-- The navigation drawer -->
   <ListView
         android:id="@+id/left_drawer"
-        android:layout_width="240dp"
-        android:layout_height="300dp"
-        android:layout_gravity="top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"
         android:dividerHeight="1dp" ></ListView>
     
-    <ListView
-        android:id="@+id/left_drawer_options"
-        android:layout_width="240dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="bottom"
-        android:choiceMode="singleChoice"
-        android:divider="@android:color/transparent"
-		android:dividerHeight="1dp" ></ListView>
-
- </LinearLayout>
+   <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" >
+  
+	    <ListView
+	        android:id="@+id/left_drawer_options"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:choiceMode="singleChoice"
+	        android:divider="@android:color/transparent"
+			android:dividerHeight="1dp" ></ListView>
+    </RelativeLayout>
+	    
+	    
+ </RelativeLayout>
     
 
 </android.support.v4.widget.DrawerLayout>

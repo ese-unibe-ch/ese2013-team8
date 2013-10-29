@@ -31,7 +31,7 @@ public class NavigationDrawer {
 
 		//create Adapters for items and add them
 		HeaderListAdapter itemsAdapter = new HeaderListAdapter(activity);
-		ArrayAdapter<String> menuItemsAdapter = new ArrayAdapter<String>(activity, R.layout.shopping_list_item, navigation_items);
+		ArrayAdapter<String> menuItemsAdapter = new ArrayAdapter<String>(activity, R.layout.drawer_menuitem, navigation_items);
 
 		itemsAdapter.addSection(navigation_section[0], menuItemsAdapter);        
 
@@ -40,7 +40,7 @@ public class NavigationDrawer {
 		
 		//create Adapters for options and add them
 		HeaderListAdapter optionsAdapter = new HeaderListAdapter(activity);
-		ArrayAdapter<String> optionItemsAdapter = new ArrayAdapter<String>(activity, R.layout.shopping_list_item, navigation_options);
+		ArrayAdapter<String> optionItemsAdapter = new ArrayAdapter<String>(activity, R.layout.drawer_menuitem, navigation_options);
 		
 		optionsAdapter.addSection(navigation_section[1], optionItemsAdapter);
 		
@@ -96,6 +96,7 @@ public class NavigationDrawer {
               total += adapter.getCount() + 1;
           return total;
 		}
+
 
 		@Override
 		public Object getItem(int position) {
