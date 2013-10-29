@@ -77,7 +77,7 @@ public class RequestSender extends AsyncTask<Request, Object, Boolean>{
 	 */
 	private void initSocket() {
 		try {
-			this.socket = new Socket("matter2.nine.ch", 1337);
+			this.socket = new Socket("10.0.0.2", 1337);
 		} catch (UnknownHostException e) {
 			System.err.println("Unknown Host in initSocket()");
 		} catch (IOException e) {

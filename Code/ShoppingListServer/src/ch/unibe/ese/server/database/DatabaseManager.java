@@ -2,6 +2,8 @@ package ch.unibe.ese.server.database;
 
 import java.sql.*;
 
+import ch.unibe.ese.share.FriendRequest;
+import ch.unibe.ese.share.RegisterRequest;
 import ch.unibe.ese.share.Request;
 
 /**
@@ -55,16 +57,39 @@ public class DatabaseManager {
 		Statement stmt;
 		try {
 			stmt = this.c.createStatement();
-			String selectUserifExists = "select * from " + TABLE_USERS + " where " + COLUMN_USERS_PHONENUMBER + "=" + phoneNumber + ";";
+			String selectUserifExists = "select * from " + TABLE_USERS + " where " + COLUMN_USERS_PHONENUMBER + "=\"" + phoneNumber + "\";";
 			ResultSet rs = stmt.executeQuery(selectUserifExists);
 			if(!rs.next()) {
-				String insertUser = "insert into " + TABLE_USERS + " (" + COLUMN_USERS_PHONENUMBER + ") values (" + phoneNumber + ");";			
+				String insertUser = "insert into " + TABLE_USERS + " (" + COLUMN_USERS_PHONENUMBER + ") values (\"" + phoneNumber + "\");";			
 				stmt.executeUpdate(insertUser);
 				rs = stmt.executeQuery(selectUserifExists);
 				System.out.println("Added user: " + rs.getString(COLUMN_USERS_PHONENUMBER));
 				request.setSuccessful();
 			} else {
 				System.out.println("User " + rs.getString(COLUMN_USERS_PHONENUMBER) + " already existed");
+			}
+			request.setHandled();
+		} catch (SQLException e) {
+			e.printStackTrace(System.err);
+		}
+	}
+
+	/**
+	 * Sets successful, if the requested friend is in database
+	 * @param request
+	 */
+	public void searchUser(FriendRequest request) {
+		String friendNumber = request.getFriendNumber();
+		Statement stmt;
+		try {
+			stmt = this.c.createStatement();
+			String selectUserifExists = "select * from " + TABLE_USERS + " where " + COLUMN_USERS_PHONENUMBER + "=\"" + friendNumber + "\";";
+			ResultSet rs = stmt.executeQuery(selectUserifExists);
+			if(rs.next()) {
+				System.out.println("User " + rs.getString(COLUMN_USERS_PHONENUMBER) + " is in Database");
+				request.setSuccessful();
+			} else {
+				System.out.println("User is not in databse: " + rs.getString(COLUMN_USERS_PHONENUMBER));
 			}
 			request.setHandled();
 		} catch (SQLException e) {
