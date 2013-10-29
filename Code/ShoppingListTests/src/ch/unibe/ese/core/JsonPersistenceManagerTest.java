@@ -37,7 +37,7 @@ public class JsonPersistenceManagerTest extends ProviderTestCase2<FileProvider> 
 	public void testSave() throws IOException {
 		List<ShoppingList> list = new ArrayList<ShoppingList>();
 		list.add(new ShoppingList("list1"));
-		manager.save(list);
+		manager.addEntryToList(list);
 
 		String[] files = getContext().fileList();
 		assertEquals(1, files.length);
@@ -47,7 +47,7 @@ public class JsonPersistenceManagerTest extends ProviderTestCase2<FileProvider> 
 	public void testSaveAndRead() throws IOException {
 		List<ShoppingList> list = new ArrayList<ShoppingList>();
 		list.add(new ShoppingList("list1"));
-		manager.save(list);
+		manager.addEntryToList(list);
 
 		List<ShoppingList> readList = manager.read();
 
@@ -65,7 +65,7 @@ public class JsonPersistenceManagerTest extends ProviderTestCase2<FileProvider> 
 			list.setShop("Shop " + i);
 			lists.add(list);
 		}
-		manager.save(lists);
+		manager.addEntryToList(lists);
 
 		List<ShoppingList> readList = manager.read();
 		assertEquals(lists, readList);

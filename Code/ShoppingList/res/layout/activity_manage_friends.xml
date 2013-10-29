@@ -8,67 +8,11 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ManageFriendsActivity" >
 
-    <TextView
-        android:id="@+id/friends_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="16dp"
-        android:text="@string/friend_name"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/friends_nr"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/friends_name"
-        android:layout_below="@+id/friends_name"
-        android:layout_marginTop="14dp"
-        android:text="@string/friend_phone_number"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <EditText
-        android:id="@+id/friends_name_edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/friends_name"
-        android:layout_toLeftOf="@+id/button1"
-        android:layout_toRightOf="@+id/friends_name"
-        android:ems="10"
-        android:inputType="textPersonName" >
-
-        <requestFocus />
-    </EditText>
-
-    <EditText
-        android:id="@+id/friends_nr_edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/friends_nr"
-        android:layout_alignRight="@+id/friends_name_edit"
-        android:layout_toRightOf="@+id/friends_nr"
-        android:ems="10"
-        android:inputType="phone" />
-
     <ListView
         android:id="@+id/friends_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/friends_nr"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="24dp" >
-
+        android:layout_centerHorizontal="true" >
     </ListView>
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/friends_name"
-        android:layout_alignRight="@+id/friends_list"
-        android:onClick="save"
-        android:text="@string/button_save" />
 
 </RelativeLayout>
