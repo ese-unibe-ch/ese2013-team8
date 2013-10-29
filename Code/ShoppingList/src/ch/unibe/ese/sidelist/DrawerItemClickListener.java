@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import ch.unibe.ese.activities.ItemListActivity;
 import ch.unibe.ese.activities.ManageFriendsActivity;
 import ch.unibe.ese.activities.OptionsActivity;
 import ch.unibe.ese.shoppinglist.R;
@@ -43,6 +44,9 @@ public class DrawerItemClickListener implements OnItemClickListener {
 		case 1: 
 			break;
 		case 2: 
+			//start itemList
+			Intent itemListIntent = new Intent(activity, ItemListActivity.class);
+			activity.startActivity(itemListIntent);
 			break;
 		case 3:
 			//start Friendscreen
