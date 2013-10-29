@@ -183,7 +183,6 @@ public class SQLiteReadHelper {
 		Cursor cursor = database.query(SQLiteHelper.TABLE_LISTS,
 				SQLiteHelper.LISTS_COLUMNS, SQLiteHelper.COLUMN_LIST_NAME
 						+ "=?", new String[] { listName }, null, null, null);
-		System.out.println(cursor.getCount());
 		if (cursor.getCount() == 1) {
 			cursor.moveToFirst();
 			return cursor.getInt(0);

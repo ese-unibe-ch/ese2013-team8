@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -23,6 +24,8 @@ import android.widget.Toast;
 import ch.unibe.ese.core.BaseActivity;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
+import ch.unibe.ese.core.sqlite.SQLiteItemAdapter;
+import ch.unibe.ese.core.sqlite.SQLiteShopAdapter;
 import ch.unibe.ese.shoppinglist.R;
 
 public class CreateListActivity extends BaseActivity {
@@ -77,8 +80,11 @@ public class CreateListActivity extends BaseActivity {
 			textDate.setText(dateFormat.format(date));
 		}
 
-		// set shop
-		EditText textShop = (EditText) findViewById(R.id.editTextShop);
+		// set autocompletion and former shop name
+		AutoCompleteTextView textShop = (AutoCompleteTextView) findViewById(R.id.editTextShop);
+		SQLiteShopAdapter sqliteAdapter = new SQLiteShopAdapter(this,
+				android.R.layout.simple_list_item_1);
+		textShop.setAdapter(sqliteAdapter);
 		textShop.setText(list.getShop());
 	}
 

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,6 +15,8 @@ import ch.unibe.ese.core.Item;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.Shop;
 import ch.unibe.ese.core.ShoppingList;
+import ch.unibe.ese.core.sqlite.SQLiteItemAdapter;
+import ch.unibe.ese.core.sqlite.SQLiteShopAdapter;
 import ch.unibe.ese.shoppinglist.R;
 
 public class CreateItemActivity extends BaseActivity {
@@ -36,11 +39,22 @@ public class CreateItemActivity extends BaseActivity {
 		if (extras != null) {
 			// get item name
 			String name = extras.getString("Item");
-			EditText textName = (EditText) findViewById(R.id.editTextName);
+			
+			AutoCompleteTextView textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
+			SQLiteItemAdapter sqliteItemAdapter = new SQLiteItemAdapter(this,
+					android.R.layout.simple_list_item_1);
+			textName.setAdapter(sqliteItemAdapter);
 			textName.setText(name);
 			// get list
 			listIndex = extras.getInt("selectedList");
 			list = manager.getShoppingLists().get(listIndex);
+			
+			// Set autocompletion adapter
+			AutoCompleteTextView textShop = (AutoCompleteTextView) findViewById(R.id.editTextShop);
+			SQLiteShopAdapter sqliteShopAdapter = new SQLiteShopAdapter(this,
+					android.R.layout.simple_list_item_1);
+			textShop.setAdapter(sqliteShopAdapter);
+			
 			// edit item
 			if (extras.getBoolean("editItem")) {
 				long itemId = extras.getLong("selectedItem");
@@ -54,6 +68,7 @@ public class CreateItemActivity extends BaseActivity {
 				textViewTitle.setText(this.getString(R.string.edit_item_title));
 				setItem();
 			}
+
 		}
 	}
 
@@ -69,9 +84,20 @@ public class CreateItemActivity extends BaseActivity {
 		EditText textName = (EditText) findViewById(R.id.editTextName);
 		textName.setText(item.getName());
 
-		// set shop
+		// set shop (the one from the list has higher priority
+		// Fail with commented code:
+		// I Add shop to one list
+		// I Add Milk to this list
+		// I create new list with other shop
+		// I Add Milk to this list too
+		// Milk gets assigned the shop of the older list => THERE'S SOMETHING WRONG (maybe the wrong list was passed to the CreateItemActivity?)
+//		if (list.getShop() != null) {
+//			TextView textShop = (TextView) findViewById(R.id.editTextShop);
+//			textShop.setText(list.getShop().toString());
+//			textShop.setEnabled(false);
+//		} else 
 		if (item.getShop() != null) {
-			EditText textShop = (EditText) findViewById(R.id.editTextShop);
+			TextView textShop = (TextView) findViewById(R.id.editTextShop);
 			textShop.setText(item.getShop().toString());
 		}
 

@@ -107,7 +107,9 @@ public class SQLitePersistenceManager implements PersistenceManager {
 
 	@Override
 	public void save(Item item, ShoppingList list) {
+		// Add the item to the Items Table
 		updateHelper.addItemIfNotExistent(item);
+		// Add the item to the ItemtoList Table
 		ContentValues values = updateHelper.toValue(item, list);
 		if (readHelper.isInList(item, list)) {
 			database.update(
@@ -120,6 +122,7 @@ public class SQLitePersistenceManager implements PersistenceManager {
 		} else {
 			database.insert(SQLiteHelper.TABLE_ITEMTOLIST, null, values);
 		}
+		
 	}
 
 	@Override

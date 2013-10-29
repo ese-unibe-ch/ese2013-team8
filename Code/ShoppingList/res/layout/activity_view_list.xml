@@ -26,6 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.70" 
 			android:inputType="textCapSentences"
+			android:completionThreshold="1"
 			android:hint="@string/view_list_hint"    
             android:ems="10" >
         <requestFocus />

@@ -112,8 +112,8 @@
             android:layout_marginTop="26dp"
             android:text="@string/create_list_shop"
             android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <EditText
+        
+        <AutoCompleteTextView
             android:id="@+id/editTextShop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -121,7 +121,9 @@
             android:layout_alignLeft="@+id/editTextDate"
             android:layout_alignParentRight="true"
             android:ems="10"
-            android:inputType="textCapSentences" />
+            android:inputType="textCapSentences"
+            android:completionThreshold="1" />
+
     </RelativeLayout>
 
 </RelativeLayout>
