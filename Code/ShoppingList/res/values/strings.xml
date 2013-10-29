@@ -40,19 +40,12 @@
     <!-- ShareListActivity -->
     <string name="share_list_title">Share</string>
     <string name="share_list_hint">Add Friend</string>
-
-    <!-- ManageFriendsActivity -->
-<<<<<<< HEAD
-    <string name="friend_name">Name:</string>
-    <string name="friend_phone_number">Phone Number:</string>
-=======
-
     
      <!-- CreateFriendsActivity -->
     <string name="add_friend">Add a friend:</string>
     <string name="friend_name">Name:</string>
     <string name="friend_phone_number">Phone Nr:</string>
->>>>>>> sqlite-for-friends
+
 
     <!-- Buttons / Menu items -->
     <string name="button_back">Abort</string>
@@ -70,11 +63,8 @@
     <string name="error_name">Please enter a name</string>
     <string name="error_missing">Not implemented yet</string>
     <string name="error_friend">Error, friend not found</string>
-<<<<<<< HEAD
-=======
     <string name="error_friend_already">Error, friend already added</string>
     <string name="error_enter">Error, please enter correct data</string>
->>>>>>> sqlite-for-friends
 
     <!-- The navigation drawer -->
     <string name="drawer_close">Navigationbar closed</string>
@@ -119,10 +109,7 @@
         <item>sexy</item>
     </string-array>
 
-<<<<<<< HEAD
     <string name="title_activity_item_list">ItemListActivity</string>
-=======
     <string name="title_activity_create_friends">CreateFriendsActivity</string>
->>>>>>> sqlite-for-friends
 
 </resources>

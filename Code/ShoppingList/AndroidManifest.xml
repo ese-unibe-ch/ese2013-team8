@@ -65,17 +65,8 @@
                 android:value="ch.unibe.ese.activities.ViewListActivity" />
         </activity>
         <activity
-<<<<<<< HEAD
-            android:name="ch.unibe.ese.activities.ItemListActivity"
-            android:label="@string/title_activity_item_list"
-            android:parentActivityName="ch.unibe.ese.activities.HomeActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="ch.unibe.ese.activities.HomeActivity" />
-=======
             android:name="ch.unibe.ese.activities.CreateFriendsActivity"
             android:label="@string/title_activity_create_friends" >
->>>>>>> sqlite-for-friends
         </activity>
     </application>
 

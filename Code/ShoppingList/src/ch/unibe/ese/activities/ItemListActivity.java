@@ -1,14 +1,11 @@
 package ch.unibe.ese.activities;
 
-import ch.unibe.ese.core.BaseActivity;
-import ch.unibe.ese.shoppinglist.R;
-import ch.unibe.ese.shoppinglist.R.layout;
-import ch.unibe.ese.shoppinglist.R.menu;
 import android.os.Bundle;
-import android.app.Activity;
+import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.v4.app.NavUtils;
+import ch.unibe.ese.core.BaseActivity;
+import ch.unibe.ese.shoppinglist.R;
 
 public class ItemListActivity extends BaseActivity {
 
