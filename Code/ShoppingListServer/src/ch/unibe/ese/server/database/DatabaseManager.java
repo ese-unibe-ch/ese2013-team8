@@ -5,6 +5,7 @@ import java.sql.*;
 import ch.unibe.ese.share.FriendRequest;
 import ch.unibe.ese.share.RegisterRequest;
 import ch.unibe.ese.share.Request;
+import ch.unibe.ese.share.ShareRequest;
 
 /**
  * This Class organizes the database on the server. Can maybe be split up to some smaller classes
@@ -17,10 +18,16 @@ public class DatabaseManager {
 	public static final String TABLE_USERS = "users";
 	public static final String COLUMN_USERS_ID = "userId";
 	public static final String COLUMN_USERS_PHONENUMBER = "phoneNumber";
+	public static final String TABLE_SHAREDWITH = "sharedwith";
+	public static final String COLUMN_FRIEND_ID = "friendId";
 	// Create statement
 	public static final String CREATE_TABLE_USERS = "create table if not exists " + TABLE_USERS + "(" + 
 			COLUMN_USERS_ID + " integer primary key autoincrement, " +
 			COLUMN_USERS_PHONENUMBER + " varchar(20)" +
+			");";
+	public static final String CREATE_TABLE_SHAREDWITH = "create table if not exists " + TABLE_SHAREDWITH + "(" +
+			COLUMN_USERS_ID + " integer not null references " + TABLE_USERS + ", " +
+			COLUMN_FRIEND_ID + " integer not null references " + TABLE_USERS + "." + COLUMN_USERS_ID + 
 			");";
 	
 	// instance variables
@@ -38,6 +45,7 @@ public class DatabaseManager {
 
 			stmt = this.c.createStatement();
 			stmt.executeUpdate(CREATE_TABLE_USERS);
+			stmt.executeUpdate(CREATE_TABLE_SHAREDWITH);
 			stmt.close();
 
 		} catch (Exception e) {
@@ -97,4 +105,12 @@ public class DatabaseManager {
 		}
 	}
 
+	/**
+	 * Stores a Shopping list
+	 */
+	public void shareShoppingList(ShareRequest request) {
+		//TODO
+		
+	}
+	
 }
