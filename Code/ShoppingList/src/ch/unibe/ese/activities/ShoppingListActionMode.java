@@ -95,7 +95,13 @@ public class ShoppingListActionMode implements Callback {
 	            	itemAdapter.notifyDataSetChanged();
 	            	mode.finish(); // Action picked, so close the CAB
             	}
-            	return true;	
+            	return true;
+            case R.id.action_share:
+            	Intent intentShare = new Intent(activity, ShareListActivity.class);
+            	intentShare.putExtra("selectedList", listIndex);
+                activity.startActivity(intentShare);
+                mode.finish(); // Action picked, so close the CAB
+            	return true;
 
             default:
                 return false;
