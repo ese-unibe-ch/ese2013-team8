@@ -101,11 +101,4 @@
 	        <item>sexy</item>
 	    </string-array>
 
-    <string name="action_refresh">Refresh</string>
-    <string name="action_share">Share</string>
-    <string name="action_edit_list">Edit List</string>
-    <string name="action_archive">Archive</string>
-    <string name="action_delete">Delete</string>
-
-
 </resources>
