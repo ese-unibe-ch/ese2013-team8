@@ -68,7 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/friends_name"
         android:layout_alignRight="@+id/friends_list"
-        android:onClick="save"
+        android:onClick="addEntryToList"
         android:text="@string/button_save" />
 
 </RelativeLayout>

@@ -61,7 +61,9 @@
 	    <string name="error_name">Please enter a name</string>
 	    <string name="error_missing">Not implemented yet</string>
 	    <string name="error_friend">Error, friend not found</string>
-    
+    	<string name="error_friend_already">Error, friend already added</string>
+    	<string name="error_enter">Error, please enter correct data</string>
+	    
     <!-- The navigation drawer -->
 	    <string name="drawer_close">Navigationbar closed</string>
 	    <string name="drawer_open">Navigationbar open</string>
