@@ -99,6 +99,7 @@ public class HomeActivity extends BaseActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle presses on the action bar items
 		switch (item.getItemId()) {
+
 		case R.id.action_refresh:
 			
 			// needs to be replaced by something more general (reading the request queue, packing it into array, and bla)... 
@@ -126,6 +127,7 @@ public class HomeActivity extends BaseActivity {
 			}
 
 			// <- to down here
+
 			return true;
 		case R.id.action_new:
 			Intent intent = new Intent(this, CreateListActivity.class);
