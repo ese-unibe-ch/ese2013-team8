@@ -1,7 +1,9 @@
 package ch.unibe.ese.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -26,13 +28,6 @@ public class ManageFriendsActivity extends BaseActivity {
 		friendsManager = getFriendsManager();
 
 		updateFriendsList();
-
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.manage_friends, menu);
-		return true;
 	}
 	
 	/**
@@ -45,45 +40,29 @@ public class ManageFriendsActivity extends BaseActivity {
 		ListView listView = (ListView) findViewById(R.id.friends_list);
 		listView.setAdapter(friendsAdapter);	
 	}
-
-	/**
-	 * Reads the input and tries to creates a friend with it
-	 * @param View v
-	 */
-	public void addEntryToList(View w) {
-		try{
-			EditText friendName = (EditText) findViewById(R.id.friends_name_edit);
-			String name = friendName.getText().toString();
-
-			EditText friendNr = (EditText) findViewById(R.id.friends_nr_edit);
-			int nr = Integer.parseInt(friendNr.getText().toString());
 	
-			int processStatus = friendsManager.addFriend(nr, name);
-			if (processStatus == 0){
-				friendName.setText("");
-				friendNr.setText("");
-	
-				updateFriendsList();
-			} else 
-				printFailure(processStatus);
-		} catch(Exception e){
-			Toast.makeText(this, this.getString(R.string.error_enter), Toast.LENGTH_SHORT).show();
-		}
+	protected void onResume() {
+		super.onResume();
+		updateFriendsList();
 	}
 	
-	/**
-	 * prints the failure created by adding a friend
-	 * @param failureNumber
-	 */
-	private void printFailure(int failure){
-		switch(failure){
-		case 1: 
-			Toast.makeText(this, this.getString(R.string.error_friend_already), Toast.LENGTH_SHORT).show();
-			break;
-			
-		case 2: 
-			Toast.makeText(this, this.getString(R.string.error_name), Toast.LENGTH_SHORT).show();
-			break;
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.manage_friends, menu);
+		return true;
+	}
+	
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle presses on the action bar items
+		switch (item.getItemId()) {
+		
+		case R.id.action_new:
+			Intent intent = new Intent(this, CreateFriendsActivity.class);
+			this.startActivity(intent);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
 		}
 	}
 }
