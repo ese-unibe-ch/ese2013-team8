@@ -81,10 +81,13 @@ public class SQLitePersistenceManager implements PersistenceManager {
 	@Override
 	public void remove(ShoppingList list) {
 		if (readHelper.getListId(list.getName()) != -1) {
-			database.delete(
-					SQLiteHelper.TABLE_LISTS,
-					SQLiteHelper.COLUMN_LIST_ID + "="
-							+ readHelper.getListId(list.getName()), null);
+			int listId = readHelper.getListId(list.getName());
+			database.delete(SQLiteHelper.TABLE_ITEMTOLIST,
+					SQLiteHelper.COLUMN_LIST_ID + " = ?", new String[] { ""
+							+ listId });
+			database.delete(SQLiteHelper.TABLE_LISTS,
+					SQLiteHelper.COLUMN_LIST_ID + "= ?", new String[] { ""
+							+ listId });
 		}
 	}
 
