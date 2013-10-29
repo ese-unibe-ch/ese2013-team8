@@ -68,6 +68,10 @@
             android:name="ch.unibe.ese.activities.CreateFriendsActivity"
             android:label="@string/title_activity_create_friends" >
         </activity>
+        <activity
+            android:name="ch.unibe.ese.activities.ItemListActivity"
+            android:label="@string/title_activity_item_list" >
+        </activity>
     </application>
 
 </manifest>
