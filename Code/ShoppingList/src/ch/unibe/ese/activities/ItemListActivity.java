@@ -1,18 +1,40 @@
 package ch.unibe.ese.activities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import ch.unibe.ese.core.BaseActivity;
+import ch.unibe.ese.core.Item;
+import ch.unibe.ese.core.ListManager;
+import ch.unibe.ese.core.ShoppingList;
 import ch.unibe.ese.shoppinglist.R;
 
 public class ItemListActivity extends BaseActivity {
+	
+	
+	private ListManager manager;
+	private List<ShoppingList> shoppingLists = new ArrayList<ShoppingList>();
+	private List<Item> itemList = new ArrayList<Item>();
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_item_list);
+		
+		manager = getListManager();
+		shoppingLists = manager.getShoppingLists();
+	
+		for(ShoppingList shoppingList: shoppingLists){
+			for(Item item: manager.getItemsFor(shoppingList))
+				itemList.add(item);
+		}
+		
+		
 		// Show the Up button in the action bar.
 		setupActionBar();
 	}
