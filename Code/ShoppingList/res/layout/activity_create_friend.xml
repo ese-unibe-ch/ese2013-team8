@@ -11,7 +11,7 @@
         android:orientation="horizontal" >
 
         <Button
-            android:id="@+id/abord"
+            android:id="@+id/abort"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -77,8 +77,11 @@
             android:layout_marginTop="14dp"
 			android:layout_toRightOf="@+id/friend_name"
             android:ems="10"
-            android:inputType="textCapSentences" />
-
+            android:inputType="textCapSentences" >
+		    <requestFocus />
+	   </EditText>
+	    	
+    
         <!-- Phone Nr -->
 
         <TextView
@@ -91,6 +94,7 @@
             android:text="@string/friend_phone_number"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
+        
         <EditText
             android:id="@+id/edit_friend_phone_number"
             android:layout_width="wrap_content"
@@ -101,10 +105,7 @@
             android:layout_toRightOf="@+id/friend_phone_number"
             android:ems="10"
             android:inputType="phone"
-    		android:digits="0123456789+" >
-
-            <requestFocus />
-        </EditText>
+    		android:digits="0123456789+" />
 
     </RelativeLayout>
 

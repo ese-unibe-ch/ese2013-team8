@@ -64,8 +64,7 @@
         android:background="@android:color/white"
         android:cacheColorHint="@android:color/white"
         android:divider="#CCCCCC"
-        android:dividerHeight="1dp"
-        android:paddingLeft="2dp" >
+        android:dividerHeight="1dp" >
     </ListView>
     
     <ListView
@@ -78,8 +77,7 @@
         android:background="@android:color/white"
         android:cacheColorHint="@android:color/white"
         android:divider="#CCCCCC"
-        android:dividerHeight="1dp"
-        android:paddingLeft="2dp" >
+        android:dividerHeight="1dp" >
     </ListView>
 
 </RelativeLayout>

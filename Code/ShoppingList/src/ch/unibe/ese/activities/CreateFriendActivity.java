@@ -1,5 +1,6 @@
 package ch.unibe.ese.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -10,15 +11,25 @@ import ch.unibe.ese.core.BaseActivity;
 import ch.unibe.ese.core.FriendsManager;
 import ch.unibe.ese.shoppinglist.R;
 
-public class CreateFriendsActivity extends BaseActivity {
-	FriendsManager friendsManager;
+public class CreateFriendActivity extends BaseActivity {
+	
+	private FriendsManager friendsManager;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_create_friends);
+		setContentView(R.layout.activity_create_friend);
+		getActionBar().hide();
 		
 		friendsManager = getFriendsManager();
+		
+		Bundle extras = getIntent().getExtras();
+		if (extras != null) {
+			// get item name
+			String name = extras.getString("Friend");
+			EditText textName = (EditText) findViewById(R.id.edit_friend_name);
+			textName.setText(name);
+		}
 	}
 
 	@Override

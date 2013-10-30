@@ -50,11 +50,13 @@
         </activity>
         <activity
             android:name="ch.unibe.ese.activities.OptionsActivity"
-            android:label="@string/title_activity_options" >
+            android:label="@string/title_activity_options"
+            android:parentActivityName="ch.unibe.ese.activities.HomeActivity" >
         </activity>
         <activity
             android:name="ch.unibe.ese.activities.ManageFriendsActivity"
-            android:label="@string/title_activity_manage_friends" >
+            android:label="@string/title_activity_manage_friends"
+            android:parentActivityName="ch.unibe.ese.activities.HomeActivity" >
         </activity>
         <activity
             android:name="ch.unibe.ese.activities.ShareListActivity"
@@ -65,12 +67,13 @@
                 android:value="ch.unibe.ese.activities.ViewListActivity" />
         </activity>
         <activity
-            android:name="ch.unibe.ese.activities.CreateFriendsActivity"
+            android:name="ch.unibe.ese.activities.CreateFriendActivity"
             android:label="@string/title_activity_create_friends" >
         </activity>
         <activity
             android:name="ch.unibe.ese.activities.ItemListActivity"
-            android:label="@string/title_activity_item_list" >
+            android:label="@string/title_activity_item_list"
+            android:parentActivityName="ch.unibe.ese.activities.HomeActivity" >
         </activity>
     </application>
 

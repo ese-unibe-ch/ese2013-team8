@@ -9,14 +9,14 @@
     tools:context=".ShareListActivity" >
 
     <LinearLayout
-        android:id="@+id/addItem"
+        android:id="@+id/addFriend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
         android:cacheColorHint="@android:color/white"
         android:orientation="horizontal" >
         
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/editTextName"
             android:layout_marginTop="12dp"
 			android:layout_marginLeft="12dp"
@@ -29,7 +29,7 @@
 			android:hint="@string/share_list_hint"    
             android:ems="10" >
         <requestFocus />
-        </EditText>
+        </AutoCompleteTextView>
              
         <ImageButton
             android:id="@+id/imageButtonAdd"
@@ -38,8 +38,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.15"
-            android:onClick="addItem"
-            android:src="@drawable/ic_action_ok" />
+            android:onClick="addFriend"
+            android:src="@drawable/ic_action_new" />
 
     </LinearLayout>
 
@@ -48,13 +48,13 @@
         android:id="@+id/FriendView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/addFriend"
         android:layout_marginBottom="0dp"
         android:layout_marginTop="15dp"
         android:background="@android:color/white"
         android:cacheColorHint="@android:color/white"
         android:divider="#CCCCCC"
-        android:dividerHeight="1dp"
-        android:paddingLeft="2dp" >
+        android:dividerHeight="1dp" >
     </ListView>
 
 </RelativeLayout>
