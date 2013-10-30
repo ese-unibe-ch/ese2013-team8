@@ -79,7 +79,7 @@ public class SQLiteReadHelper {
 		cursor.moveToFirst();
 		return cursor;
 	}
-	
+
 	/**
 	 * Get a cursor on TABLE_FRIENDS
 	 * 
@@ -91,7 +91,6 @@ public class SQLiteReadHelper {
 		cursor.moveToFirst();
 		return cursor;
 	}
-	
 
 	/**
 	 * Shortcut for database querys (to save all the nulls)
@@ -131,7 +130,7 @@ public class SQLiteReadHelper {
 			item.setPrice(new BigDecimal(price));
 		return item;
 	}
-	
+
 	public Friend cursorToFriend(Cursor cursor) {
 		Friend friend = new Friend(cursor.getInt(0), cursor.getString(1));
 		return friend;
@@ -156,12 +155,14 @@ public class SQLiteReadHelper {
 	}
 
 	/**
-	 * Get Shop ID with shop name
+	 * Get Shop ID with shop name or -1 if the shop does not exist.
 	 * 
 	 * @param shopName
 	 * @return
 	 */
 	public int getShopId(String shopName) {
+		if (shopName == null)
+			return -1;
 		Cursor cursor = database.query(SQLiteHelper.TABLE_SHOPS,
 				SQLiteHelper.SHOPS_COLUMNS, SQLiteHelper.COLUMN_SHOP_NAME
 						+ "=?", new String[] { shopName }, null, null, null,
@@ -247,7 +248,6 @@ public class SQLiteReadHelper {
 		}
 	}
 
-	
 	/**
 	 * Get friend name with item ID
 	 * 
@@ -256,8 +256,9 @@ public class SQLiteReadHelper {
 	 */
 	public String getFriendName(int friendId) {
 		Cursor cursor = database.query(SQLiteHelper.TABLE_FRIENDS,
-				SQLiteHelper.FRIENDS_COLUMNS, SQLiteHelper.COLUMN_FRIEND_ID + "=?",
-				new String[] { "" + friendId }, null, null, null, null);
+				SQLiteHelper.FRIENDS_COLUMNS, SQLiteHelper.COLUMN_FRIEND_ID
+						+ "=?", new String[] { "" + friendId }, null, null,
+				null, null);
 		if (cursor.getCount() == 2) {
 			cursor.moveToFirst();
 			return cursor.getString(2);
@@ -274,8 +275,9 @@ public class SQLiteReadHelper {
 	 */
 	public long getFriendId(String friendName) {
 		Cursor cursor = database.query(SQLiteHelper.TABLE_FRIENDS,
-				SQLiteHelper.FRIENDS_COLUMNS, SQLiteHelper.COLUMN_FRIEND_ID + "=?",
-				new String[] { "" + friendName }, null, null, null, null);
+				SQLiteHelper.FRIENDS_COLUMNS, SQLiteHelper.COLUMN_FRIEND_ID
+						+ "=?", new String[] { "" + friendName }, null, null,
+				null, null);
 		if (cursor.getCount() == 2) {
 			cursor.moveToFirst();
 			return cursor.getLong(0);
@@ -284,8 +286,6 @@ public class SQLiteReadHelper {
 		}
 	}
 
-	
-	
 	/**
 	 * Check if an item is already in a list (database level)
 	 * 
