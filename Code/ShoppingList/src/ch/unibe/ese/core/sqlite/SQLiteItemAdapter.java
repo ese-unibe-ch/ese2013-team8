@@ -1,6 +1,5 @@
 package ch.unibe.ese.core.sqlite;
 
-import ch.unibe.ese.core.sqlite.SQLiteHelper;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;

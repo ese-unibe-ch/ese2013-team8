@@ -60,7 +60,7 @@ public class ShareListActivity extends BaseActivity {
 	        @Override
 	        public void onItemClick(AdapterView<?> parent, View arg1, int position,
 	                long id) {
-	        	Friend friend = friendsManager.getFriendsList().get((int)id);
+	        	Friend friend = (Friend) autocompleteAdapter.getItem(position);
 	        	friendsAdapter.add(friend);
 	        	updateFriendsList();
 	        	
