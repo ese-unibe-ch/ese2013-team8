@@ -8,7 +8,6 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import android.os.AsyncTask;
-import android.widget.Toast;
 
 /**
  * Is responsible to establish a connection socket to the server (hardcoded IP at the moment)

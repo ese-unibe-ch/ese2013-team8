@@ -11,12 +11,7 @@ import ch.unibe.ese.core.FriendsManager;
 import ch.unibe.ese.shoppinglist.R;
 
 public class CreateFriendActivity extends BaseActivity {
-<<<<<<< HEAD:Code/ShoppingList/src/ch/unibe/ese/activities/CreateFriendActivity.java
-	
 	private FriendsManager friendsManager;
-=======
-	FriendsManager friendsManager;
->>>>>>> sql-for-friends:Code/ShoppingList/src/ch/unibe/ese/activities/CreateFriendActivity.java
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
