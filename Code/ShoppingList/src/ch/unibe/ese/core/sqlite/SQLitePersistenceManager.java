@@ -148,17 +148,17 @@ public class SQLitePersistenceManager implements PersistenceManager {
 	 */
 
 	@Override
-	public List<Friend> readFriends() {
-		List<Friend> lists = new ArrayList<Friend>();
+	public ArrayList<Friend> readFriends() {
+		ArrayList<Friend> list = new ArrayList<Friend>();
 
 		Cursor cursor = readHelper.getFriendCursor();
 		while (!cursor.isAfterLast()) {
 			Friend friend = readHelper.cursorToFriend(cursor);
-			lists.add(friend);
+			list.add(friend);
 			cursor.moveToNext();
 		}
 		cursor.close();
-		return lists;
+		return list;
 	}
 	
 	

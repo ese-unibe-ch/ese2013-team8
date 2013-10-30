@@ -9,7 +9,7 @@ import ch.unibe.ese.core.BaseActivity;
 import ch.unibe.ese.core.FriendsManager;
 import ch.unibe.ese.shoppinglist.R;
 
-public class CreateFriendsActivity extends BaseActivity {
+public class CreateFriendActivity extends BaseActivity {
 	FriendsManager friendsManager;
 	
 	@Override

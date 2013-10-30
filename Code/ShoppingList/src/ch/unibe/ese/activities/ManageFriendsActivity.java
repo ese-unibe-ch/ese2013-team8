@@ -55,7 +55,7 @@ public class ManageFriendsActivity extends BaseActivity {
 		switch (item.getItemId()) {
 		
 		case R.id.action_new:
-			Intent intent = new Intent(this, CreateFriendsActivity.class);
+			Intent intent = new Intent(this, CreateFriendActivity.class);
 			this.startActivity(intent);
 			return true;
 		default:
