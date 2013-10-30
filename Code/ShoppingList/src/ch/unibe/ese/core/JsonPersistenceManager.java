@@ -119,4 +119,10 @@ public class JsonPersistenceManager implements PersistenceManager {
 		}
 	}
 
+	@Override
+	public List<Friend> readFriends() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

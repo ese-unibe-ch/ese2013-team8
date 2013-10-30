@@ -7,6 +7,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import ch.unibe.ese.core.Friend;
 import ch.unibe.ese.core.Item;
 import ch.unibe.ese.core.PersistenceManager;
 import ch.unibe.ese.core.ShoppingList;
@@ -35,6 +36,7 @@ public class SQLitePersistenceManager implements PersistenceManager {
 	public SQLitePersistenceManager(Context applicationContext) {
 		if (applicationContext == null)
 			throw new IllegalArgumentException("null is not allowed");
+		
 		this.context = applicationContext;
 		this.dbHelper = new SQLiteHelper(this.context);
 		this.database = dbHelper.getWritableDatabase();
@@ -137,6 +139,42 @@ public class SQLitePersistenceManager implements PersistenceManager {
 							+ SQLiteHelper.COLUMN_LIST_ID + "=?",
 					new String[] { "" + item.getId(),
 							"" + readHelper.getListId(list.getName()) });
+		}
+	}
+	
+	
+	/**
+	 * Everything for friends
+	 */
+
+	@Override
+	public List<Friend> readFriends() {
+		List<Friend> lists = new ArrayList<Friend>();
+
+		Cursor cursor = readHelper.getFriendCursor();
+		while (!cursor.isAfterLast()) {
+			Friend friend = readHelper.cursorToFriend(cursor);
+			lists.add(friend);
+			cursor.moveToNext();
+		}
+		cursor.close();
+		return lists;
+	}
+	
+	
+	public void save(Friend friend) {
+		// Convert the list to a ContentValue
+		// Automatically creates a new shop in the database if it doesn't exist
+		ContentValues values = updateHelper.toValue(friend);
+		// If this is a new list
+		if (readHelper.getListId(friend.getName()) == -1) {
+			database.insert(SQLiteHelper.TABLE_FRIENDS, null, values);
+		} else { // Else if it is an old list
+			database.update(
+					SQLiteHelper.TABLE_FRIENDS,
+					values,
+					SQLiteHelper.COLUMN_FRIEND_ID + "="
+							+ readHelper.getListId(friend.getName()), null);
 		}
 	}
 }

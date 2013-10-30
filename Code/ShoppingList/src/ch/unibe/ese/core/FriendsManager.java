@@ -6,17 +6,17 @@ public class FriendsManager {
 	private ArrayList<Friend> friendsList;
 	private PersistenceManager persistenceManager;
 	
-	public FriendsManager(){
+	public FriendsManager(PersistenceManager manager){
 		friendsList = new ArrayList<Friend>();
-		/*
-		this.persistenceManager = persistenceManager;
+	
+		this.persistenceManager = manager;
 		try {
 			//TODO: Load friends when creating manager from SQL database
-			//friendsList = persistenceManager.readFriends();
-		} catch (IOException e) {
+			friendsList = (ArrayList<Friend>) persistenceManager.readFriends();
+		} catch (Exception e) {
 			// TODO throw an appropriate exception
-			throw new IllegalStateException(e);
-		}*/	
+			//throw new IllegalStateException(e);
+		}	
 	}
 	
 	/**

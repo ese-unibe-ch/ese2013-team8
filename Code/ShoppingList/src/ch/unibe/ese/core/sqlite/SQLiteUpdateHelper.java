@@ -1,5 +1,6 @@
 package ch.unibe.ese.core.sqlite;
 
+import ch.unibe.ese.core.Friend;
 import ch.unibe.ese.core.Item;
 import ch.unibe.ese.core.ShoppingList;
 import android.content.ContentValues;
@@ -67,6 +68,20 @@ public class SQLiteUpdateHelper {
 		values.put(SQLiteHelper.COLUMN_ITEMBOUGHT, item.isBought() ? 1 : 0);
 		String price = item.getPrice()!= null?item.getPrice().toString():null;
 		values.put(SQLiteHelper.COLUMN_LISTPRICE, price);
+		return values;
+	}
+	
+	/**
+	 * Converts an friendto a Contentvalue (TABLE_FRIENDS)
+	 * 
+	 * @param friends
+	 * @return
+	 */
+	public ContentValues toValue(Friend friend) {
+		ContentValues values = new ContentValues();
+		//values.put(SQLiteHelper.COLUMN_FRIEND_ID, friend.getID());
+		values.put(SQLiteHelper.COLUMN_FRIEND_NAME, friend.getName());
+		values.put(SQLiteHelper.COLUMN_FRIEND_PHONENR, friend.getPhoneNr());
 		return values;
 	}
 

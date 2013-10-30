@@ -59,4 +59,12 @@ public interface PersistenceManager {
 	 * @return
 	 */
 	List<Item> getItems(ShoppingList list);
+
+	/**
+	 * Reads friends from their persistent state.
+	 * 
+	 * @return never <code>null</code>.
+	 * @throws IOException
+	 */
+	List<Friend> readFriends();
 }

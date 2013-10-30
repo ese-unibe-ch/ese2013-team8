@@ -3,10 +3,11 @@ package ch.unibe.ese.core.sqlite;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import ch.unibe.ese.core.Item;
-import ch.unibe.ese.core.ShoppingList;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import ch.unibe.ese.core.Friend;
+import ch.unibe.ese.core.Item;
+import ch.unibe.ese.core.ShoppingList;
 
 /**
  * This Class provides usefull functions for reading the database
@@ -78,6 +79,19 @@ public class SQLiteReadHelper {
 		cursor.moveToFirst();
 		return cursor;
 	}
+	
+	/**
+	 * Get a cursor on TABLE_FRIENDS
+	 * 
+	 * @return
+	 */
+	public Cursor getFriendCursor() {
+		Cursor cursor = getQueryCursor(SQLiteHelper.TABLE_FRIENDS,
+				SQLiteHelper.FRIENDS_COLUMNS, null);
+		cursor.moveToFirst();
+		return cursor;
+	}
+	
 
 	/**
 	 * Shortcut for database querys (to save all the nulls)
@@ -116,6 +130,11 @@ public class SQLiteReadHelper {
 		if (price != null && !price.isEmpty())
 			item.setPrice(new BigDecimal(price));
 		return item;
+	}
+	
+	public Friend cursorToFriend(Cursor cursor) {
+		Friend friend = new Friend(cursor.getInt(0), cursor.getString(1));
+		return friend;
 	}
 
 	/**
@@ -228,6 +247,45 @@ public class SQLiteReadHelper {
 		}
 	}
 
+	
+	/**
+	 * Get friend name with item ID
+	 * 
+	 * @param itemId
+	 * @return
+	 */
+	public String getFriendName(int friendId) {
+		Cursor cursor = database.query(SQLiteHelper.TABLE_FRIENDS,
+				SQLiteHelper.FRIENDS_COLUMNS, SQLiteHelper.COLUMN_FRIEND_ID + "=?",
+				new String[] { "" + friendId }, null, null, null, null);
+		if (cursor.getCount() == 2) {
+			cursor.moveToFirst();
+			return cursor.getString(2);
+		} else {
+			return null;
+		}
+	}
+
+	/**
+	 * Get Item Id with Item Name
+	 * 
+	 * @param itemName
+	 * @return
+	 */
+	public long getFriendId(String friendName) {
+		Cursor cursor = database.query(SQLiteHelper.TABLE_FRIENDS,
+				SQLiteHelper.FRIENDS_COLUMNS, SQLiteHelper.COLUMN_FRIEND_ID + "=?",
+				new String[] { "" + friendName }, null, null, null, null);
+		if (cursor.getCount() == 2) {
+			cursor.moveToFirst();
+			return cursor.getLong(0);
+		} else {
+			return -1;
+		}
+	}
+
+	
+	
 	/**
 	 * Check if an item is already in a list (database level)
 	 * 
@@ -245,4 +303,5 @@ public class SQLiteReadHelper {
 				null);
 		return (cursor.getCount() >= 1);
 	}
+
 }
