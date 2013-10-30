@@ -24,7 +24,8 @@ public class BaseActivity extends Activity {
 		BaseApplication app = (BaseApplication) this.getApplication();
 		FriendsManager manager = app.getFriendsManager();
 		if (manager == null) {
-			manager = new FriendsManager();
+			manager = new FriendsManager(new SQLitePersistenceManager(
+					getApplicationContext()));
 			app.setFriendsManager(manager);
 		}
 		return manager;

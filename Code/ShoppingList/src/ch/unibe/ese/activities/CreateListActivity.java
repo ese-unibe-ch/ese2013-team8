@@ -24,7 +24,6 @@ import android.widget.Toast;
 import ch.unibe.ese.core.BaseActivity;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
-import ch.unibe.ese.core.sqlite.SQLiteItemAdapter;
 import ch.unibe.ese.core.sqlite.SQLiteShopAdapter;
 import ch.unibe.ese.shoppinglist.R;
 

@@ -27,6 +27,11 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public static final String TABLE_ITEMTOLIST = "itemtolist";
 	public static final String COLUMN_LISTPRICE = "listprice";
 	public static final String COLUMN_ITEMBOUGHT = "itembought";
+	// Save all friends with an unique name and ID
+	public static final String TABLE_FRIENDS = "friendlist";
+	public static final String COLUMN_FRIEND_ID = "friendid";
+	public static final String COLUMN_FRIEND_NAME = "friendname";
+	public static final String COLUMN_FRIEND_PHONENR = "friendphonenr";
 
 	private static final String DATABASE_NAME = "shoppinglist.db";
 	private static final int DATABASE_VERSION = 1;
@@ -62,6 +67,13 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 			+ COLUMN_SHOP_NAME + " varchar(30) "
 			+ ");";
 	
+	private static final String DATABASE_CREATE_TABLE_FRIENDS =
+			"create table " + TABLE_FRIENDS + "(" 
+			+ COLUMN_FRIEND_ID + " integer primary key autoincrement, " 
+			+ COLUMN_FRIEND_NAME + " varchar(30), "
+			+ COLUMN_FRIEND_PHONENR + " integer NOT NULL "
+			+ ");";
+	
 	
 	public static String[] LISTS_COLUMNS = { SQLiteHelper.COLUMN_LIST_ID,
 			SQLiteHelper.COLUMN_LIST_NAME, SQLiteHelper.COLUMN_LIST_DUEDATE,
@@ -73,6 +85,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public static String[] ITEMTOLIST_COLUMNS = {
 			SQLiteHelper.COLUMN_ITEM_ID, SQLiteHelper.COLUMN_LIST_ID,
 			SQLiteHelper.COLUMN_LISTPRICE };
+	public static String[] FRIENDS_COLUMNS = { SQLiteHelper.COLUMN_FRIEND_ID,
+			SQLiteHelper.COLUMN_FRIEND_NAME, SQLiteHelper.COLUMN_FRIEND_PHONENR };
 
 	
 	public SQLiteHelper(Context context) {
@@ -86,6 +100,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 		database.execSQL(DATABASE_CREATE_TABLE_ITEMS);
 		database.execSQL(DATABASE_CREATE_TABLE_ITEMTOLIST);
 		database.execSQL(DATABASE_CREATE_TABLE_SHOPS);
+		database.execSQL(DATABASE_CREATE_TABLE_FRIENDS);
 	}
 
 	@Override
