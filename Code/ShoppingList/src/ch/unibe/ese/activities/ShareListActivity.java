@@ -1,13 +1,7 @@
 package ch.unibe.ese.activities;
 
-import ch.unibe.ese.core.BaseActivity;
-import ch.unibe.ese.core.Friend;
-import ch.unibe.ese.core.FriendsManager;
-import ch.unibe.ese.core.Item;
-import ch.unibe.ese.core.ListManager;
-import ch.unibe.ese.core.ShoppingList;
-import ch.unibe.ese.core.sqlite.SQLiteItemAdapter;
-import ch.unibe.ese.shoppinglist.R;
+import java.util.ArrayList;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -19,13 +13,19 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
+import ch.unibe.ese.core.BaseActivity;
+import ch.unibe.ese.core.Friend;
+import ch.unibe.ese.core.FriendsManager;
+import ch.unibe.ese.core.ListManager;
+import ch.unibe.ese.core.ShoppingList;
+import ch.unibe.ese.shoppinglist.R;
 
 public class ShareListActivity extends BaseActivity {
 
 	private ListManager manager;
 	private FriendsManager friendsManager;
 	private ArrayAdapter<Friend> friendsAdapter;
+	private ArrayAdapter<Friend> autocompleteAdapter;
 	private ShoppingList list;
 	private int listIndex;
 	
@@ -38,9 +38,10 @@ public class ShareListActivity extends BaseActivity {
 		
 		manager = getListManager();
 		friendsManager = getFriendsManager();
-		
+		friendsAdapter = new ArrayAdapter<Friend>(this,
+				R.layout.shopping_list_item, new ArrayList<Friend>());
 
-		
+
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
 			// Get list
@@ -49,26 +50,40 @@ public class ShareListActivity extends BaseActivity {
 			setTitle(this.getString(R.string.share_list_title) + " " + list.getName());
 		}
 		
-		// Autocompletion
-		AutoCompleteTextView textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
-		ArrayAdapter<Friend> adapter = new ArrayAdapter<Friend>(this,
-				android.R.layout.simple_list_item_1, friendsManager.getFriendsList());
-		textName.setAdapter(adapter);
+		// create autocompletion
+		AutoCompleteTextView textName = createAutocomplete();
+				
 		
-		// Autocompletion click listener
+		// autocompletion click listener
 		textName.setOnItemClickListener(new OnItemClickListener() {
 
 	        @Override
 	        public void onItemClick(AdapterView<?> parent, View arg1, int position,
 	                long id) {
-	        	// TODO: fix bugs
-	        	Friend friend = friendsManager.getFriendsList().get(position);
+	        	Friend friend = friendsManager.getFriendsList().get((int)id);
 	        	friendsAdapter.add(friend);
+	        	updateFriendsList();
+	        	
+	        	EditText textName = (EditText) findViewById(R.id.editTextName);
+	        	textName.setText("");
 	        }
 	    });
 
 	}
 	
+	/**
+	 * creates or updates the autocreation textfield
+	 * @return
+	 */
+	private AutoCompleteTextView createAutocomplete() {
+		AutoCompleteTextView textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
+		autocompleteAdapter = new ArrayAdapter<Friend>(this,
+				android.R.layout.simple_list_item_1, friendsManager.getFriendsList());
+		textName.setAdapter(autocompleteAdapter);
+		
+		return textName;
+	}
+
 	/** Called when the user touches the create button */
 	public void addFriend(View view) {
 		EditText textName = (EditText) findViewById(R.id.editTextName);
@@ -76,7 +91,7 @@ public class ShareListActivity extends BaseActivity {
 		
 		Intent intent = new Intent(this, CreateFriendActivity.class);
 		intent.putExtra("Friend", name);
-		this.startActivity(intent);
+		startActivityForResult(intent, 0);
 		
 		textName.setText("");
 	}
@@ -105,12 +120,30 @@ public class ShareListActivity extends BaseActivity {
 	}
 	
 	/**
+	 * Get the result from the CreateFriendsActivity (when a new friend is added) and add it to the list
+	 */
+	protected void onActivityResult(int requestCode, int resultCode, Intent data){
+	  super.onActivityResult(requestCode, resultCode, data);
+	  int phoneNr = -1;
+	  
+	  if(resultCode == RESULT_OK){
+		  Bundle korb = data.getExtras();
+		  phoneNr = korb.getInt("phoneNr");
+	  }
+	  
+	  if(phoneNr != -1 ){
+		  Friend friend = friendsManager.getFriendFromNr(phoneNr);
+	  	  friendsAdapter.add(friend);
+	  	  //update lists
+	  	  updateFriendsList();
+	  	  createAutocomplete();
+	  }
+	}
+	
+	/**
 	 * Updates the listView, which shows all friends
 	 */
 	public void updateFriendsList(){
-    	friendsAdapter = new ArrayAdapter<Friend>(this, 
-    			R.layout.shopping_list_item, friendsManager.getFriendsList());
-
 		ListView listView = (ListView) findViewById(R.id.FriendView);
 		listView.setAdapter(friendsAdapter);	
 	}

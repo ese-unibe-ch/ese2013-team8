@@ -65,6 +65,18 @@ public class FriendsManager {
 		//TODO: remove friend from database
 	}
 	
+	/**
+	 * Returns the friend to which the number belongs, if no friend found, returns null
+	 * @param PhoneNr
+	 * @return
+	 */
+	public Friend getFriendFromNr(int nr){
+		for(Friend friend: friendsList){
+			if(friend.getPhoneNr() == nr) return friend;
+		}
+		return null;
+	}
+	
 	public String toString(){
 		String result = "";
 		for(Friend friend : friendsList)

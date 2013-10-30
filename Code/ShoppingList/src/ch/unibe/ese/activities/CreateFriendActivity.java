@@ -56,13 +56,14 @@ public class CreateFriendActivity extends BaseActivity {
 				friendName.setText("");
 				friendNr.setText("");
 				
-				finish();
+				finishTheActivity(nr);
 			} else 
 				printFailure(processStatus);
 		} catch(Exception e){
 			Toast.makeText(this, this.getString(R.string.error_enter), Toast.LENGTH_SHORT).show();
 		}
 	}
+	
 	
 	/**
 	 * prints the failure created by adding a friend
@@ -83,5 +84,22 @@ public class CreateFriendActivity extends BaseActivity {
 	public void goBack(View view) {
 		finish();
 	}
+	
+	/**
+	 * finishs the program with no result when called from ManageFriendsActivity or with result when called by ShareListActivity
+	 */
+	private void finishTheActivity(int nr) {
+		if (getIntent().getExtras() != null) {
+			Intent intent = new Intent();
+			Bundle rucksack = new Bundle();
+			
+			rucksack.putInt("phoneNr", nr);
+			intent.putExtras(rucksack);
+			
+			setResult(RESULT_OK, intent);
+		} 
+			finish();
+	}
+
 
 }
