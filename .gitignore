@@ -7,6 +7,7 @@ Code/ShoppingList/gen/
 Code/ShoppingList/bin/
 Code/ShoppingListTests/gen/
 Code/ShoppingListTests/bin/
+local.properties
 
 # eclipse and setting files
 */eclipse
