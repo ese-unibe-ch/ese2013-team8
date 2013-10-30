@@ -14,11 +14,13 @@
     <string name="btn_done">Done</string>
 
     <!-- Default activity titles -->
-    <string name="title_activity_create_list">CreateListActivity</string>
-    <string name="title_activity_view_list">ViewListActivity</string>
-    <string name="title_activity_create_item">CreateItemActivity</string>
-    <string name="title_activity_share_list">ShareListActivity</string>
+    <string name="title_activity_create_list">Create List</string>
+    <string name="title_activity_create_item">Create Item</string>
+    <string name="title_activity_view_list">View List</string>
+    <string name="title_activity_share_list">Share List</string>
     <string name="title_activity_manage_friends">Friends</string>
+    <string name="title_activity_create_friend">Add Friend</string>
+    <string name="title_activity_item_list">Item List</string>
 
     <!-- CreateListActivity -->
     <string name="create_list_title">Add new shopping list:</string>
@@ -108,8 +110,5 @@
         <item>default</item>
         <item>sexy</item>
     </string-array>
-
-    <string name="title_activity_item_list">ItemListActivity</string>
-    <string name="title_activity_create_friends">CreateFriendsActivity</string>
 
 </resources>

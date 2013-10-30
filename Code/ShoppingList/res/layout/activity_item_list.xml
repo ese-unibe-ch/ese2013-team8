@@ -8,9 +8,17 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ItemListActivity" >
 
-    <TextView
+        <ListView
+        android:id="@+id/ItemView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_below="@+id/addItem"
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="0dp"
+        android:background="@android:color/white"
+        android:cacheColorHint="@android:color/white"
+        android:divider="#CCCCCC"
+        android:dividerHeight="1dp" >
+    </ListView>
 
 </RelativeLayout>

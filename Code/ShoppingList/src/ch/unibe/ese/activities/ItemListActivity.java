@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import ch.unibe.ese.core.BaseActivity;
 import ch.unibe.ese.core.Item;
 import ch.unibe.ese.core.ListManager;
@@ -26,6 +28,9 @@ public class ItemListActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_item_list);
 		
+		// Show the Up button in the action bar.
+		setupActionBar();
+		
 		manager = getListManager();
 		shoppingLists = manager.getShoppingLists();
 	
@@ -33,10 +38,16 @@ public class ItemListActivity extends BaseActivity {
 			for(Item item: manager.getItemsFor(shoppingList))
 				itemList.add(item);
 		}
+	
+		// display items
+		ArrayAdapter<Item> itemAdapter = new ArrayAdapter<Item>(this,
+				R.layout.shopping_list_item, itemList);
+
+		ListView listView = (ListView) findViewById(R.id.ItemView);
+		listView.setAdapter(itemAdapter);
 		
 		
-		// Show the Up button in the action bar.
-		setupActionBar();
+
 	}
 
 	/**
