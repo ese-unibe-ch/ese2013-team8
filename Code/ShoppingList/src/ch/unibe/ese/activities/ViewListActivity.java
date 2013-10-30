@@ -107,6 +107,22 @@ public class ViewListActivity extends BaseActivity {
 
 			}
 		});
+		
+		// Add click Listener to bought items
+		listViewBought.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// bought items
+				Item item = itemBoughtAdapter.getItem(position);
+				item.setBought(false);
+				manager.addItemToList(item, list);
+				itemBoughtAdapter.remove(item);
+				
+				itemAdapter.add(item);
+			}
+		});
 
 		// Autocompletion
 		AutoCompleteTextView textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
