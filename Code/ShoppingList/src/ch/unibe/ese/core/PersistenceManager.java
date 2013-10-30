@@ -1,6 +1,7 @@
 package ch.unibe.ese.core;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -66,5 +67,11 @@ public interface PersistenceManager {
 	 * @return never <code>null</code>.
 	 * @throws IOException
 	 */
-	List<Friend> readFriends();
+	ArrayList<Friend> readFriends();
+	
+	/**
+	 * Adds a new friend to the db
+	 * @param Friend
+	 */
+	void save(Friend friend);
 }

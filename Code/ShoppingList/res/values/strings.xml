@@ -111,4 +111,10 @@
         <item>sexy</item>
     </string-array>
 
+<<<<<<< HEAD
+=======
+    <string name="title_activity_item_list">ItemListActivity</string>
+    <string name="title_activity_create_friend">CreateFriendsActivity</string>
+
+>>>>>>> sql-for-friends
 </resources>

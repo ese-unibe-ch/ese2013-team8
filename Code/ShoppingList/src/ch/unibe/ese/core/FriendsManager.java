@@ -6,17 +6,9 @@ public class FriendsManager {
 	private ArrayList<Friend> friendsList;
 	private PersistenceManager persistenceManager;
 	
-	public FriendsManager(PersistenceManager manager){
-		friendsList = new ArrayList<Friend>();
-	
-		this.persistenceManager = manager;
-		try {
-			//TODO: Load friends when creating manager from SQL database
-			friendsList = (ArrayList<Friend>) persistenceManager.readFriends();
-		} catch (Exception e) {
-			// TODO throw an appropriate exception
-			//throw new IllegalStateException(e);
-		}	
+	public FriendsManager(PersistenceManager persistenceManager){
+		this.persistenceManager = persistenceManager;
+		friendsList = persistenceManager.readFriends();
 	}
 	
 	/**
@@ -30,9 +22,11 @@ public class FriendsManager {
 			return 1;
 		
 		//TODO: Check if friend has app on server, if no, return 2, else:
-		friendsList.add(new Friend(phoneNr, name));
+		Friend friend = new Friend(phoneNr, name);
+		friendsList.add(friend);
 		
-		//TODO: Save friend to database
+		//Save friend to database
+		persistenceManager.save(friend);
 		return 0;
 	}
 	
