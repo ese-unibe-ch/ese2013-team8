@@ -55,6 +55,35 @@ public class FriendsManager {
 	 */
 	public void update(Friend friend){
 		persistenceManager.save(friend);
+		
+		//update friendslist
+		int index = getIndex(friend);
+		updateFriendList(index, friend);
+	}
+	
+	/**
+	 * Get the index of the friend
+	 * @param friend
+	 * @return Index of friend, when no friend -1
+	 */
+	public int getIndex(Friend friend){
+		int index = -1;
+		for(Friend compare: friendsList){
+			if(friend.getPhoneNr() == compare.getPhoneNr())
+				index = friendsList.indexOf(compare);
+		}
+		
+		return index;	
+	}
+	
+	/**
+	 * updates the friendList
+	 * @param index
+	 * @param friend
+	 */
+	public void updateFriendList(int index, Friend friend){
+		friendsList.remove(index);
+		friendsList.add(index, friend);
 	}
 	
 	/**

@@ -166,14 +166,14 @@ public class SQLitePersistenceManager implements PersistenceManager {
 		// Convert the friend to a ContentValue
 		ContentValues values = updateHelper.toValue(friend);
 		// If this is a new friend
-		if (readHelper.getFriendNr(friend.getName()) == -1) {
+		if (readHelper.getFriendName(friend.getPhoneNr()) == null) {
 			database.insert(SQLiteHelper.TABLE_FRIENDS, null, values);
-		} else { // Else if it is an old list
+		} else { // Else if it is an old friend
 			database.update(
 					SQLiteHelper.TABLE_FRIENDS,
 					values,
 					SQLiteHelper.COLUMN_FRIEND_PHONENR + "="
-							+ readHelper.getFriendNr(friend.getName()), null);
+							+ friend.getPhoneNr(), null);
 		}
 	}
 

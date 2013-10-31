@@ -1,5 +1,10 @@
 package ch.unibe.ese.core;
 
+/**
+ * Class Friend with two values: phoneNr and name
+ * @author ESE Team 8
+ *
+ */
 public class Friend {
 	private int phoneNr;
 	private String name;

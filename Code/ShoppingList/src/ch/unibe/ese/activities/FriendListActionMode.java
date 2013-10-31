@@ -60,7 +60,7 @@ public class FriendListActionMode implements Callback {
 	                mode.finish(); 
 	                // open list edit screen
 		        	Intent intent = new Intent(activity, CreateFriendActivity.class);
-		        	intent.putExtra("selectedFriend", friendIndex);
+		        	intent.putExtra("friendIndex", friendIndex);
 		            activity.startActivity(intent);
 
                 return true;

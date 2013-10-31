@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 import ch.unibe.ese.core.BaseActivity;
+import ch.unibe.ese.core.Friend;
 import ch.unibe.ese.core.FriendsManager;
 import ch.unibe.ese.shoppinglist.R;
 
@@ -17,6 +18,7 @@ import ch.unibe.ese.shoppinglist.R;
  */
 public class CreateFriendActivity extends BaseActivity {
 	private FriendsManager friendsManager;
+	private boolean editFriend;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,13 +28,32 @@ public class CreateFriendActivity extends BaseActivity {
 		
 		friendsManager = getFriendsManager();
 		
+		//check if edit friend
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
-			// get item name
-			String name = extras.getString("Friend");
-			EditText textName = (EditText) findViewById(R.id.edit_friend_name);
-			textName.setText(name);
+			editFriend(extras);
 		}
+	}
+
+	/**
+	 * Allows to edit friend by adding the data of the friend to the textviews
+	 * @param extras
+	 */
+	private void editFriend(Bundle extras) {
+		editFriend = true;
+		
+		// get friend
+		int friendIndex = extras.getInt("friendIndex");
+		Friend friend = friendsManager.getFriendsList().get(friendIndex);
+		
+		//set name of friend
+		EditText friendName = (EditText) findViewById(R.id.edit_friend_name);
+		friendName.setText(friend.getName());
+
+		//set phoneNr but uneditable
+		EditText friendNr = (EditText) findViewById(R.id.edit_friend_phone_number);
+		friendNr.setText("" + friend.getPhoneNr());
+		friendNr.setEnabled(false);
 	}
 
 	@Override
@@ -43,7 +64,7 @@ public class CreateFriendActivity extends BaseActivity {
 	}
 	
 	/**
-	 * Reads the input and tries to creates a friend with it
+	 * Reads the input and tries to creates a friend with it or edits an old one
 	 * @param View v
 	 */
 	public void addEntryToList(View w) {
@@ -54,17 +75,28 @@ public class CreateFriendActivity extends BaseActivity {
 			EditText friendNr = (EditText) findViewById(R.id.edit_friend_phone_number);
 			int nr = Integer.parseInt(friendNr.getText().toString());
 	
-			int processStatus = friendsManager.addFriend(nr, name);
-			if (processStatus == 0){
-				friendName.setText("");
-				friendNr.setText("");
-				
-				finishTheActivity(nr);
-			} else 
-				printFailure(processStatus);
+			if(!editFriend)
+				addNewFriend(friendName, name, friendNr, nr);
+			else{
+				friendsManager.update(new Friend(nr, name));
+				finish();
+			}	
+			
 		} catch(Exception e){
 			Toast.makeText(this, this.getString(R.string.error_enter), Toast.LENGTH_SHORT).show();
 		}
+	}
+
+	private void addNewFriend(EditText friendName, String name,
+			EditText friendNr, int nr) {
+		int processStatus = friendsManager.addFriend(nr, name);
+		if (processStatus == 0){
+			friendName.setText("");
+			friendNr.setText("");
+			
+			finishTheActivity(nr);
+		} else 
+			printFailure(processStatus);
 	}
 	
 	
@@ -101,7 +133,7 @@ public class CreateFriendActivity extends BaseActivity {
 			
 			setResult(RESULT_OK, intent);
 		} 
-			finish();
+		finish();
 	}
 
 

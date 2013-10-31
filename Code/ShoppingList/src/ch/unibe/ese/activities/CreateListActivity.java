@@ -36,11 +36,6 @@ public class CreateListActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		// create Slidemenu
-		// SlideMenu menu = new SlideMenu(getApplicationContext(),
-		// R.layout.activity_create_list);
-		// setContentView(menu);
 		setContentView(R.layout.activity_create_list);
 
 		// hide the action bar on this activity
