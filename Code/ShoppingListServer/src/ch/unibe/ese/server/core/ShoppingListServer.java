@@ -1,12 +1,12 @@
 package ch.unibe.ese.server.core;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 import java.net.ServerSocket;
 import java.net.Socket;
-
-import ch.unibe.ese.share.requests.Request;
 
 /**
  * Driver for the shopping list server
@@ -30,6 +30,13 @@ public class ShoppingListServer {
 	private RequestHandler requestHandler;
 	
 	public ShoppingListServer() {
+		try {
+			FileOutputStream f = new FileOutputStream("serverlog.txt");
+			System.setOut(new PrintStream(f));
+		} catch (FileNotFoundException e) {
+			System.err.println("Failed to open serverlog.txt");
+		}
+		
 		this.requestHandler = new RequestHandler();
 		this.initServerSocket();
 		this.waitForConnection();

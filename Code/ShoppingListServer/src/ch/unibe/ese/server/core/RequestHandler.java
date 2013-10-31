@@ -25,9 +25,11 @@ public class RequestHandler {
 	public Request handle(Request request) {
 		switch (request.getType()) {
 		case Request.REGISTER_REQUEST:
+			System.out.println("\tRegister-request");
 			this.dbManager.addUser(request);
 			return request;
 		case Request.FRIEND_REQUEST:
+			System.out.println("\tFriend-request");
 			this.dbManager.findUser(request);
 			return request;
 		default:

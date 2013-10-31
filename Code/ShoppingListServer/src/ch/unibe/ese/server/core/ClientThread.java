@@ -28,7 +28,7 @@ public class ClientThread extends Thread {
 	 * This method does the magic when a user is connected to the socket
 	 */
 	public void run() {
-		System.out.println(new Date() +"\n"+ "Client Connected from " + socket.getInetAddress() + ":" + socket.getPort());
+		System.out.println("\n" + new Date() +"\n\t"+ "Client Connected from " + socket.getInetAddress() + ":" + socket.getPort());
 		ObjectInputStream in;
 		Request[] request = null;
 		// Open inputstream from socket
@@ -43,7 +43,7 @@ public class ClientThread extends Thread {
 			// Send answer to client
 			out.writeObject(request);
 			out.flush();
-			System.out.println("Closed Socket from " + socket.getInetAddress() + ":" + socket.getPort());
+			System.out.println("\tClosed Socket from " + socket.getInetAddress() + ":" + socket.getPort());
 			socket.close();
 		} catch (IOException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
