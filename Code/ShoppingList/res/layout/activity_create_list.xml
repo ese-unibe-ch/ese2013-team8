@@ -4,30 +4,38 @@
     android:layout_height="fill_parent"
     android:layout_weight="1" >
 
-    <LinearLayout
+    <LinearLayout style="?android:attr/buttonBarStyle"
         android:id="@+id/buttonBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal" 
+        android:background="@drawable/ic_button_bar" >
 
-        <Button
+        <Button style="?android:attr/buttonBarButtonStyle"
             android:id="@+id/button1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="goBack"
+            android:drawableLeft="@drawable/ic_action_abort"
+            android:paddingLeft="50dp"
+            android:gravity="left|center"
             android:text="@string/button_back" />
 
-        <Button
+        <Button style="?android:attr/buttonBarButtonStyle"
             android:id="@+id/button2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="saveList"
+            android:drawableLeft="@drawable/ic_action_ok"
+            android:paddingLeft="50dp"
+            android:gravity="left|center"
             android:text="@string/button_save" />
-    </LinearLayout>
+        
+   </LinearLayout>
 
-    <RelativeLayout
+   <RelativeLayout
         android:id="@+id/relativeLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
