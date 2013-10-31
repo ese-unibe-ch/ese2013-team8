@@ -1,8 +1,9 @@
-package ch.unibe.ese.share;
+package ch.unibe.ese.share.requests;
+
 
 /**
  * Some trivial implementation of the Request class
- * It just forwards the Phonenumber, which is already implemented in Register
+ * It just forwards the Phonenumber, which is already implemented in the basic Request class
  * 
  * @author Stephan
  *

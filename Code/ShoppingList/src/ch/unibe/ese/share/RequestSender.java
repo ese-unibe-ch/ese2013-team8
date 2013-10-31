@@ -8,15 +8,15 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import ch.unibe.ese.core.BaseActivity;
+import ch.unibe.ese.share.requests.Request;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Looper;
 
 /**
  * Is responsible to establish a connection socket to the server (hardcoded IP at the moment)
- * Every request is followed by an answer from the server. It passes the same object back with flags 'isHandled' and 'wasSuccessful' set
- * @author Stephan
+ * Every request is followed by an answer from the server IN THE SAME ORDER. 
+ * The server passes the same object back with flags 'isHandled' and 'wasSuccessful' set
  *
  */
 public class RequestSender extends AsyncTask<Request, Object, Boolean>{
@@ -36,16 +36,11 @@ public class RequestSender extends AsyncTask<Request, Object, Boolean>{
 	 * This method gets started as asynchronous task when you call .run()
 	 */
 	@Override
-	protected Boolean doInBackground(Request... request) {
+	protected Boolean doInBackground(Request... requests) {
 		this.initSocket();
-		this.send(request);
+		this.send(requests);
 		this.waitForAnswer();
 		return true;
-	}
-	
-	@Override
-	protected void onPostExecute(Boolean result) {
-		//TODO
 	}
 	
 	/**
@@ -54,32 +49,32 @@ public class RequestSender extends AsyncTask<Request, Object, Boolean>{
 	private void waitForAnswer() {
 		try {
 			this.in = new ObjectInputStream(socket.getInputStream());
-			Request[] answer = (Request[]) in.readObject();
-			if(answer[0].isHandled()) {
-				listener.setHandled();
-			}
-			if(answer[0].wasSuccessful()) {
-				listener.setSuccessful();
-			}
+			Request[] answers = (Request[]) in.readObject();
+			AnswerHandler aHandler = new AnswerHandler(listener);
+			aHandler.handle(answers);
 			socket.close();
-			showToastOnActivity(answer[0]);
+			showToastOnActivity(answers);
 			
-		} catch (StreamCorruptedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		} catch (StreamCorruptedException e) {
+			System.err.println("Failed to open stream from server");
+		} catch (IOException e) {
+			System.err.println("Failed to read answers from server");
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.err.println("Failed to read class from server");
 		}
 	}
 
-
-	private void showToastOnActivity(Request request) {
+	/**
+	 * Displays a toast with the result string of the request (see request.toString())
+	 * @param requests
+	 */
+	private void showToastOnActivity(Request... requests) {
+		String text = "";
+		for (Request r:requests) {
+			text += r.toString() + "\n";
+		}
 		BaseActivity activity = (BaseActivity) context;
-		activity.runOnUiThread(new ToastMaker(request.toString(), activity));
+		activity.runOnUiThread(new ToastMaker(text, activity));
 	}
 
 	/**
@@ -87,7 +82,7 @@ public class RequestSender extends AsyncTask<Request, Object, Boolean>{
 	 */
 	private void initSocket() {
 		try {
-			this.socket = new Socket("matter2.nine.ch", 1337);
+			this.socket = new Socket("10.0.0.2", 1337);
 		} catch (UnknownHostException e) {
 			System.err.println("Unknown Host in initSocket()");
 		} catch (IOException e) {

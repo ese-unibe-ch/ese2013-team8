@@ -22,16 +22,19 @@ import android.widget.Toast;
 import ch.unibe.ese.core.BaseActivity;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
-import ch.unibe.ese.share.RegisterRequest;
-import ch.unibe.ese.share.Request;
 import ch.unibe.ese.share.RequestListener;
 import ch.unibe.ese.share.RequestSender;
+import ch.unibe.ese.share.SyncManager;
+import ch.unibe.ese.share.requests.FriendRequest;
+import ch.unibe.ese.share.requests.RegisterRequest;
+import ch.unibe.ese.share.requests.Request;
 import ch.unibe.ese.shoppinglist.R;
 import ch.unibe.ese.sidelist.NavigationDrawer;
 
 public class HomeActivity extends BaseActivity {
 
-	private ListManager manager;
+	private ListManager listmanager;
+	private SyncManager syncmanager;
 	private ArrayAdapter<ShoppingList> shoppingListAdapter;
 	private Activity homeActivity = this;
 
@@ -46,10 +49,11 @@ public class HomeActivity extends BaseActivity {
 		NavigationDrawer nDrawer = new NavigationDrawer();
 		drawMenu = nDrawer.constructNavigationDrawer(drawMenu, this);
 
-		manager = getListManager();
+		listmanager = getListManager();
+		syncmanager = new SyncManager();
 
 		// Get List from manager
-		List<ShoppingList> shoppingLists = manager.getShoppingLists();
+		List<ShoppingList> shoppingLists = listmanager.getShoppingLists();
 
 		shoppingListAdapter = new ArrayAdapter<ShoppingList>(this,
 				R.layout.shopping_list_item, shoppingLists);
@@ -67,7 +71,7 @@ public class HomeActivity extends BaseActivity {
 					int arg2, long arg3) {
 				ShoppingList selectedList = shoppingListAdapter.getItem(arg2);
 				HomeActivity.this.startActionMode(new ShoppingListActionMode(
-						HomeActivity.this.manager, selectedList,
+						HomeActivity.this.listmanager, selectedList,
 						HomeActivity.this.shoppingListAdapter,
 						HomeActivity.this));
 				return true;
@@ -101,17 +105,16 @@ public class HomeActivity extends BaseActivity {
 		switch (item.getItemId()) {
 
 		case R.id.action_refresh:
-			
-			// needs to be replaced by something more general (reading the request queue, packing it into array, and bla)... 
-			// from here ->
+			// Test Requests added to the queue
 			TelephonyManager tMgr =(TelephonyManager)getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
 			String phoneNumber = tMgr.getLine1Number();
 			Request request = new RegisterRequest(phoneNumber);
-			// runs in an asynchronous task
-			RequestListener listener = new RequestListener();
-			RequestSender sender = new RequestSender(this,listener);
-			sender.execute(request);
-			// <- to down here
+			syncmanager.addRequest(request);
+			Request request2 = new FriendRequest(phoneNumber);
+			syncmanager.addRequest(request2);
+			
+			// This is the only line, which is not testing :)
+			syncmanager.synchronise(this);
 
 			return true;
 		case R.id.action_new:

@@ -6,7 +6,7 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import ch.unibe.ese.share.Request;
+import ch.unibe.ese.share.requests.Request;
 
 /**
  * Driver for the shopping list server
@@ -17,8 +17,16 @@ import ch.unibe.ese.share.Request;
  */
 public class ShoppingListServer {
 
+	/**
+	 * Configuration
+	 */
+	public static boolean WIPE_DATABSE_ON_STARTUP = true;
+	private static int PORT = 1337;
+	/**
+	 * \Configuration 
+	 */
+	
 	private ServerSocket serverSocket;
-	private int port = 1337;
 	private RequestHandler requestHandler;
 	
 	public ShoppingListServer() {
@@ -48,9 +56,9 @@ public class ShoppingListServer {
 
 	private void initServerSocket() {
 		try {
-			this.serverSocket = new ServerSocket(this.port );
+			this.serverSocket = new ServerSocket(PORT);
 		} catch (IOException e) {
-			System.err.println("Failed to init socket on port " + this.port);
+			System.err.println("Failed to init socket on port " + PORT);
 		}
 	}
 	

@@ -4,10 +4,11 @@ import ch.unibe.ese.core.BaseActivity;
 
 /**
  * Gives the possibility to print a Toast from an asynchronous task
- * Invoke like this:
- * 		BaseActivity activity = (BaseActivity) context;
-		activity.runOnUiThread(new ToastMaker(request.toString(), activity));
-		
+ * Use it like this:
+ * <code>
+ * BaseActivity activity = (BaseActivity) context;
+ * activity.runOnUiThread(new ToastMaker(request.toString(), activity));
+ * </code>	
  * @author Stephan
  *
  */

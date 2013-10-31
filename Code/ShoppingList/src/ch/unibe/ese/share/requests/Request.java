@@ -1,4 +1,4 @@
-package ch.unibe.ese.share;
+package ch.unibe.ese.share.requests;
 
 import java.io.Serializable;
 
@@ -6,16 +6,16 @@ import java.io.Serializable;
  * Abstract class for Requests
  * Every request needs to send the phone number as primary identification on the server
  * There are 2 flags 'isHandled' and 'wasSuccessful'. Check below for description
- * 
- * @author Stephan
  *
  */
 
 public abstract class Request implements Serializable {
-	private static final long serialVersionUID = 6439284234031136995L;
+	
+	private static final long serialVersionUID = 8753041839526964200L;
 	
 	// Define an integer for every Type of request you implement
 	public static final int REGISTER_REQUEST = 1;
+	public static final int FRIEND_REQUEST = 2;
 	
 	// Phone Number is always passed with the request
 	private String phoneNumber;
@@ -44,18 +44,32 @@ public abstract class Request implements Serializable {
 		return this.phoneNumber;
 	}
 	
+	/**
+	 * Set the Request as handled by the server
+	 */
 	public void setHandled() {
 		this.isHandled = true;
 	}
 	
+	/**
+	 * Ask if the request is already handled by the server
+	 * @return true if it is handled
+	 */
 	public boolean isHandled() {
 		return this.isHandled;
 	}
 	
+	/**
+	 * Set the request successful, if the server processed it (successfully)
+	 */
 	public void setSuccessful() {
 		this.wasSuccessful = true;
 	}
 	
+	/**
+	 * Ask if the request was successfully handled by the server
+	 * @return true if it was successful
+	 */
 	public boolean wasSuccessful() {
 		return this.wasSuccessful;
 	}

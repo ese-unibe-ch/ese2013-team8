@@ -2,7 +2,8 @@ package ch.unibe.ese.server.database;
 
 import java.sql.*;
 
-import ch.unibe.ese.share.Request;
+import ch.unibe.ese.server.core.ShoppingListServer;
+import ch.unibe.ese.share.requests.Request;
 
 /**
  * This Class organizes the database on the server. Can maybe be split up to some smaller classes
@@ -20,6 +21,7 @@ public class DatabaseManager {
 			COLUMN_USERS_ID + " integer primary key autoincrement, " +
 			COLUMN_USERS_PHONENUMBER + " varchar(20)" +
 			");";
+	private static final String DROP_TABLES = "drop table " + TABLE_USERS + ";";
 	
 	// instance variables
 	Connection c;
@@ -33,8 +35,11 @@ public class DatabaseManager {
 		try {
 			Class.forName("org.sqlite.JDBC");
 			this.c = DriverManager.getConnection("jdbc:sqlite:shoppinglist.db");
-
+			
 			stmt = this.c.createStatement();
+			if(ShoppingListServer.WIPE_DATABSE_ON_STARTUP) {
+				stmt.executeUpdate(DROP_TABLES);
+			}
 			stmt.executeUpdate(CREATE_TABLE_USERS);
 			stmt.close();
 
@@ -65,6 +70,25 @@ public class DatabaseManager {
 				request.setSuccessful();
 			} else {
 				System.out.println("User " + rs.getString(COLUMN_USERS_PHONENUMBER) + " already existed");
+			}
+			request.setHandled();
+		} catch (SQLException e) {
+			e.printStackTrace(System.err);
+		}
+	}
+
+	public void findUser(Request request) {
+		String phoneNumber = request.getPhoneNumber();
+		Statement stmt;
+		try {
+			stmt = this.c.createStatement();
+			String selectUserifExists = "select * from " + TABLE_USERS + " where " + COLUMN_USERS_PHONENUMBER + "=" + phoneNumber + ";";
+			ResultSet rs = stmt.executeQuery(selectUserifExists);
+			if(rs.next()) {
+				System.out.println("User " + rs.getString(COLUMN_USERS_PHONENUMBER) + " does exist in Database");
+				request.setSuccessful();
+			} else {
+				System.out.println("User " + rs.getString(COLUMN_USERS_PHONENUMBER) + " does not exist in Database");
 			}
 			request.setHandled();
 		} catch (SQLException e) {

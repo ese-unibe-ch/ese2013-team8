@@ -1,11 +1,10 @@
 package ch.unibe.ese.server.core;
 
 import ch.unibe.ese.server.database.DatabaseManager;
-import ch.unibe.ese.share.Request;
+import ch.unibe.ese.share.requests.Request;
 
 /**
  * Forwarding and filtering of Requests
- * @author Stephan
  *
  */
 public class RequestHandler {
@@ -27,8 +26,13 @@ public class RequestHandler {
 		switch (request.getType()) {
 		case Request.REGISTER_REQUEST:
 			this.dbManager.addUser(request);
+			return request;
+		case Request.FRIEND_REQUEST:
+			this.dbManager.findUser(request);
+			return request;
+		default:
+			return request;
 		}
-		return request;
 	}
 
 }

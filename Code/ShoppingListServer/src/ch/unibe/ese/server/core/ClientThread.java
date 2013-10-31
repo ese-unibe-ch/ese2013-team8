@@ -4,8 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-
-import ch.unibe.ese.share.Request;
+import ch.unibe.ese.share.requests.Request;
 
 /**
  * This is the thread which gets created for each new user that connects to the server
