@@ -54,9 +54,15 @@ public class ItemListActivity extends BaseActivity {
 	 * Set up the {@link android.app.ActionBar}.
 	 */
 	private void setupActionBar() {
-
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-
+	}
+	
+	/**
+	 * Fix to close the drawer menu on back button press
+	 */
+	@Override       
+	public void onBackPressed() {
+		NavUtils.navigateUpFromSameTask(this);
 	}
 
 	@Override

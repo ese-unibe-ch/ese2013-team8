@@ -50,6 +50,14 @@ public class ManageFriendsActivity extends BaseActivity {
 	}
 	
 	/**
+	 * Fix to close the drawer menu on back button press
+	 */
+	@Override       
+	public void onBackPressed() {
+		NavUtils.navigateUpFromSameTask(this);
+	}
+	
+	/**
 	 * Updates the Viewlist, which shows all friends and adds itemclicklistener
 	 */
 	public void updateFriendsList(){
