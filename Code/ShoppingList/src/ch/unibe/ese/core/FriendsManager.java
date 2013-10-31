@@ -2,6 +2,9 @@ package ch.unibe.ese.core;
 
 import java.util.ArrayList;
 
+import ch.unibe.ese.share.SyncManager;
+import ch.unibe.ese.share.requests.FriendRequest;
+
 public class FriendsManager {
 	private ArrayList<Friend> friendsList;
 	private PersistenceManager persistenceManager;
@@ -21,7 +24,14 @@ public class FriendsManager {
 		if(checkIfDouble(phoneNr, name))
 			return 1;
 		
-		//TODO: Check if friend has app on server, if no, return 2, else:
+		// TODO
+		// You cannot wait for a network request to finish
+		// It needs to update the status of the friend (setChanged) when the
+		// result of the request is here.
+		FriendRequest fRequest = new FriendRequest("" + phoneNr);
+		SyncManager.getInstance().addRequest(fRequest);
+		SyncManager.getInstance().synchronise();
+		// \TODO
 		Friend friend = new Friend(phoneNr, name);
 		friendsList.add(friend);
 		

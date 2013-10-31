@@ -25,11 +25,9 @@ public class RequestSender extends AsyncTask<Request, Object, Boolean>{
 	private ObjectOutputStream out;
 	private ObjectInputStream in;
 	private RequestListener listener;
-	private Context context;
 	
-	public RequestSender(Context context, RequestListener listener) {
+	public RequestSender(RequestListener listener) {
 		this.listener = listener;
-		this.context = context;
 	}
 	
 	/**
@@ -53,8 +51,6 @@ public class RequestSender extends AsyncTask<Request, Object, Boolean>{
 			AnswerHandler aHandler = new AnswerHandler(listener);
 			aHandler.handle(answers);
 			socket.close();
-			showToastOnActivity(answers);
-			
 		} catch (StreamCorruptedException e) {
 			System.err.println("Failed to open stream from server");
 		} catch (IOException e) {
@@ -62,19 +58,6 @@ public class RequestSender extends AsyncTask<Request, Object, Boolean>{
 		} catch (ClassNotFoundException e) {
 			System.err.println("Failed to read class from server");
 		}
-	}
-
-	/**
-	 * Displays a toast with the result string of the request (see request.toString())
-	 * @param requests
-	 */
-	private void showToastOnActivity(Request... requests) {
-		String text = "";
-		for (Request r:requests) {
-			text += r.toString() + "\n";
-		}
-		BaseActivity activity = (BaseActivity) context;
-		activity.runOnUiThread(new ToastMaker(text, activity));
 	}
 
 	/**

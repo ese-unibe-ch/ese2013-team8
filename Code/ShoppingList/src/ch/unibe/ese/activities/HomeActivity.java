@@ -161,7 +161,7 @@ public class HomeActivity extends BaseActivity {
 			syncmanager.addRequest(request);
 			
 			// This is the only line, which is not testing :)
-			syncmanager.synchronise(this);
+			syncmanager.synchronise();
 
 			return true;
 		case R.id.action_new:

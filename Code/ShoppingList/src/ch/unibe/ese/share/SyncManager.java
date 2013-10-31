@@ -28,9 +28,9 @@ public class SyncManager {
 		return this.rQueue;
 	}
 	
-	public void synchronise(Context context) {
+	public void synchronise() {
 		RequestListener listener = new RequestListener(rQueue.getRequests());
-		RequestSender sender = new RequestSender(context, listener);
+		RequestSender sender = new RequestSender(listener);
 		sender.execute(rQueue.getRequests());
 		rQueue.clear();
 	}
