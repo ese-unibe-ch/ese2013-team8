@@ -82,8 +82,8 @@ public class SQLitePersistenceManager implements PersistenceManager {
 
 	@Override
 	public void remove(ShoppingList list) {
-		if (readHelper.getListId(list.getName()) != -1) {
-			int listId = readHelper.getListId(list.getName());
+		int listId = readHelper.getListId(list.getName());
+		if (listId != -1) {
 			database.delete(SQLiteHelper.TABLE_ITEMTOLIST,
 					SQLiteHelper.COLUMN_LIST_ID + " = ?", new String[] { ""
 							+ listId });
@@ -163,18 +163,28 @@ public class SQLitePersistenceManager implements PersistenceManager {
 	
 	
 	public void save(Friend friend) {
-		// Convert the list to a ContentValue
-		// Automatically creates a new shop in the database if it doesn't exist
+		// Convert the friend to a ContentValue
 		ContentValues values = updateHelper.toValue(friend);
-		// If this is a new list
-		if (readHelper.getListId(friend.getName()) == -1) {
+		// If this is a new friend
+		if (readHelper.getFriendNr(friend.getName()) == -1) {
 			database.insert(SQLiteHelper.TABLE_FRIENDS, null, values);
 		} else { // Else if it is an old list
 			database.update(
 					SQLiteHelper.TABLE_FRIENDS,
 					values,
-					SQLiteHelper.COLUMN_FRIEND_ID + "="
-							+ readHelper.getListId(friend.getName()), null);
+					SQLiteHelper.COLUMN_FRIEND_PHONENR + "="
+							+ readHelper.getFriendNr(friend.getName()), null);
 		}
+	}
+
+	@Override
+	public void removeFriend(Friend friend) {
+		int friendNr = readHelper.getFriendNr(friend.getName());
+		if (friendNr != -1) {
+			database.delete(SQLiteHelper.TABLE_FRIENDS,
+					SQLiteHelper.COLUMN_FRIEND_PHONENR + "= ?", new String[] { ""
+							+ friendNr });
+		}
+		
 	}
 }

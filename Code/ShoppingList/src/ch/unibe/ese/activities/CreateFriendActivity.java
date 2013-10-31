@@ -10,6 +10,11 @@ import ch.unibe.ese.core.BaseActivity;
 import ch.unibe.ese.core.FriendsManager;
 import ch.unibe.ese.shoppinglist.R;
 
+/**
+ * Creates a frame to create new friends or edit them if the intent has a extra
+ * @author ESE Team 8
+ *
+ */
 public class CreateFriendActivity extends BaseActivity {
 	private FriendsManager friendsManager;
 	

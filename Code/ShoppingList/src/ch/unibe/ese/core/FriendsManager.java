@@ -50,11 +50,20 @@ public class FriendsManager {
 	}
 	
 	/**
+	 * Permits to update the name of a friend
+	 * @param updated friend
+	 */
+	public void update(Friend friend){
+		persistenceManager.save(friend);
+	}
+	
+	/**
 	 * Removes friend only on the phone, no access to server is needed.
 	 * @param friend to remove
 	 * @return if successful
 	 */
 	public boolean removeFriend(Friend friend){
+		persistenceManager.removeFriend(friend);
 		return friendsList.remove(friend);
 		//TODO: remove friend from database
 	}

@@ -254,14 +254,14 @@ public class SQLiteReadHelper {
 	 * @param itemId
 	 * @return
 	 */
-	public String getFriendName(int friendId) {
+	public String getFriendName(int friendNr) {
 		Cursor cursor = database.query(SQLiteHelper.TABLE_FRIENDS,
-				SQLiteHelper.FRIENDS_COLUMNS, SQLiteHelper.COLUMN_FRIEND_ID
-						+ "=?", new String[] { "" + friendId }, null, null,
+				SQLiteHelper.FRIENDS_COLUMNS, SQLiteHelper.COLUMN_FRIEND_PHONENR
+						+ "=?", new String[] { "" + friendNr }, null, null,
 				null, null);
-		if (cursor.getCount() == 2) {
+		if (cursor.getCount() == 1) {
 			cursor.moveToFirst();
-			return cursor.getString(2);
+			return cursor.getString(1);
 		} else {
 			return null;
 		}
@@ -273,14 +273,14 @@ public class SQLiteReadHelper {
 	 * @param itemName
 	 * @return
 	 */
-	public long getFriendId(String friendName) {
+	public int getFriendNr(String friendName) {
 		Cursor cursor = database.query(SQLiteHelper.TABLE_FRIENDS,
-				SQLiteHelper.FRIENDS_COLUMNS, SQLiteHelper.COLUMN_FRIEND_ID
+				SQLiteHelper.FRIENDS_COLUMNS, SQLiteHelper.COLUMN_FRIEND_NAME
 						+ "=?", new String[] { "" + friendName }, null, null,
 				null, null);
-		if (cursor.getCount() == 2) {
+		if (cursor.getCount() == 1) {
 			cursor.moveToFirst();
-			return cursor.getLong(0);
+			return cursor.getInt(0);
 		} else {
 			return -1;
 		}

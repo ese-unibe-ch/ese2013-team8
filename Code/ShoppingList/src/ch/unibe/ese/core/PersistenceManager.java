@@ -74,4 +74,10 @@ public interface PersistenceManager {
 	 * @param Friend
 	 */
 	void save(Friend friend);
+
+	/**
+	 * Removes an already existing friend from the db
+	 * @param friend
+	 */
+	void removeFriend(Friend friend);
 }

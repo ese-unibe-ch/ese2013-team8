@@ -1,8 +1,6 @@
 package ch.unibe.ese.activities;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-
 
 import android.app.Activity;
 import android.content.Context;
@@ -18,12 +16,9 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 import ch.unibe.ese.core.BaseActivity;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
-import ch.unibe.ese.share.RequestListener;
-import ch.unibe.ese.share.RequestSender;
 import ch.unibe.ese.share.SyncManager;
 import ch.unibe.ese.share.requests.FriendRequest;
 import ch.unibe.ese.share.requests.RegisterRequest;

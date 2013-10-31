@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import ch.unibe.ese.core.BaseActivity;
@@ -12,8 +15,15 @@ import ch.unibe.ese.core.Friend;
 import ch.unibe.ese.core.FriendsManager;
 import ch.unibe.ese.shoppinglist.R;
 
+/**
+ * Creates a frame which enlists all friends and the possibility to manage them
+ * @author ESE Team 8
+ *
+ */
+
 public class ManageFriendsActivity extends BaseActivity {
 	FriendsManager friendsManager;
+	ArrayAdapter<Friend> friendsAdapter;
 
 	@Override
 	/**
@@ -40,14 +50,28 @@ public class ManageFriendsActivity extends BaseActivity {
 	}
 	
 	/**
-	 * Updates the Viewlist, which shows all friends
+	 * Updates the Viewlist, which shows all friends and adds itemclicklistener
 	 */
 	public void updateFriendsList(){
-		ArrayAdapter<Friend> friendsAdapter = new ArrayAdapter<Friend>(this,
+		friendsAdapter = new ArrayAdapter<Friend>(this,
 				R.layout.shopping_list_item, friendsManager.getFriendsList());
 
 		ListView listView = (ListView) findViewById(R.id.friends_list);
-		listView.setAdapter(friendsAdapter);	
+		listView.setAdapter(friendsAdapter);
+		
+		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+					int position, long arg3) {
+				Friend selectedFriend = friendsAdapter.getItem(position);
+				ManageFriendsActivity.this.startActionMode(new FriendListActionMode(
+						friendsManager, friendsAdapter, selectedFriend, ManageFriendsActivity.this));
+				return true;
+			}
+		});
+
+
+	
 	}
 	
 	protected void onResume() {

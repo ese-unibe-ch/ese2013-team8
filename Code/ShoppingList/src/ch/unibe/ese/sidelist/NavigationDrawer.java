@@ -15,6 +15,11 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import ch.unibe.ese.shoppinglist.R;
 
+/**
+ * Creates a slide bar for an Activity with all main navigation points
+ * @author ESE Team 8
+ *
+ */
 public class NavigationDrawer {
 
 	private ListView menuListView;

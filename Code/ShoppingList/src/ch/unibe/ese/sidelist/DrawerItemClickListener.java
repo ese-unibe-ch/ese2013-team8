@@ -10,7 +10,11 @@ import ch.unibe.ese.activities.ManageFriendsActivity;
 import ch.unibe.ese.activities.OptionsActivity;
 import ch.unibe.ese.shoppinglist.R;
 
-
+/**
+ * Creates a listener for the navigation drawer 
+ * @author ESE Team 8
+ *
+ */
 
 public class DrawerItemClickListener implements OnItemClickListener {
 	private Activity activity;
