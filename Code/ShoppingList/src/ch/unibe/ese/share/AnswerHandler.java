@@ -14,7 +14,6 @@ public class AnswerHandler {
 	
 	public AnswerHandler(RequestListener listener) {
 		this.syncmanager = SyncManager.getInstance();
-		this.answers = answers;
 		this.listener = listener;
 	}
 	

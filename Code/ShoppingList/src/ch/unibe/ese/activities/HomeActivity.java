@@ -50,7 +50,7 @@ public class HomeActivity extends BaseActivity {
 		drawMenu = nDrawer.constructNavigationDrawer(drawMenu, this);
 
 		listmanager = getListManager();
-		syncmanager = new SyncManager();
+		syncmanager = getSyncManager();
 
 		// Get List from manager
 		List<ShoppingList> shoppingLists = listmanager.getShoppingLists();

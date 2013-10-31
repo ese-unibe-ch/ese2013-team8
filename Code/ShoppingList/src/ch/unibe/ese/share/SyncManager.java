@@ -11,12 +11,12 @@ import android.content.Context;
 
 public class SyncManager {
 
-	public static SyncManager instance;
+	private static SyncManager instance;
+	
 	private RequestQueue rQueue;
-	private AnswerHandler aHandler;
 	
 	public SyncManager() {
-		this.instance = this;
+		instance = this;
 		this.rQueue = new RequestQueue();
 	}
 	

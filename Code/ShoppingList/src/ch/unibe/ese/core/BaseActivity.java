@@ -1,12 +1,13 @@
 package ch.unibe.ese.core;
 
 import ch.unibe.ese.core.sqlite.SQLitePersistenceManager;
+import ch.unibe.ese.share.SyncManager;
 import android.app.Activity;
 import android.widget.Toast;
 
 /**
  * Extension of {@link Activity} that allowes easy access to the global managers
- * (like {@link ListManager} or {@link FriendsManager}.
+ * (like {@link ListManager}, {@link FriendsManager} or {@link SyncManager}.
  */
 public class BaseActivity extends Activity {
 
@@ -28,6 +29,16 @@ public class BaseActivity extends Activity {
 			manager = new FriendsManager(new SQLitePersistenceManager(
 					getApplicationContext()));
 			app.setFriendsManager(manager);
+		}
+		return manager;
+	}
+	
+	public SyncManager getSyncManager() {
+		BaseApplication app = (BaseApplication) this.getApplication();
+		SyncManager manager = app.getSyncManager();
+		if (manager == null) {
+			manager = new SyncManager();
+			app.setSyncManager(manager);
 		}
 		return manager;
 	}

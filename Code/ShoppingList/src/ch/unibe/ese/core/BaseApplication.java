@@ -1,5 +1,6 @@
 package ch.unibe.ese.core;
 
+import ch.unibe.ese.share.SyncManager;
 import android.app.Application;
 
 /**
@@ -9,6 +10,15 @@ import android.app.Application;
 public class BaseApplication extends Application {
 	private ListManager listManager;
 	private FriendsManager friendsManager;
+	private SyncManager syncManager;
+
+	public void setSyncManager(SyncManager syncManager) {
+		this.syncManager = syncManager;
+	}
+
+	public SyncManager getSyncManager() {
+		return syncManager;
+	}
 
 	public ListManager getListManager() {
 		return listManager;
