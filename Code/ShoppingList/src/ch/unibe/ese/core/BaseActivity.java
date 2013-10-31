@@ -2,6 +2,7 @@ package ch.unibe.ese.core;
 
 import ch.unibe.ese.core.sqlite.SQLitePersistenceManager;
 import android.app.Activity;
+import android.widget.Toast;
 
 /**
  * Extension of {@link Activity} that allowes easy access to the global managers
@@ -29,5 +30,9 @@ public class BaseActivity extends Activity {
 			app.setFriendsManager(manager);
 		}
 		return manager;
+	}
+	
+	public void showToast(String text) {
+		Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
 	}
 }

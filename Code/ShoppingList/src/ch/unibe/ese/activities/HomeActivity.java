@@ -109,23 +109,8 @@ public class HomeActivity extends BaseActivity {
 			Request request = new RegisterRequest(phoneNumber);
 			// runs in an asynchronous task
 			RequestListener listener = new RequestListener();
-			RequestSender sender = new RequestSender(listener);
-			try {
-				// NEVER DO THIS!!!
-				// This is now just for demonstration purposes
-				// NEVER use .get() on an asynchronous task, because it waits for it (where's the sense, if it should be asynchronous)
-				if(sender.execute(request).get())
-					Toast.makeText(this, "Created new Account for you", Toast.LENGTH_SHORT).show();
-				else
-					Toast.makeText(this, "You already have an account", Toast.LENGTH_SHORT).show();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ExecutionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
+			RequestSender sender = new RequestSender(this,listener);
+			sender.execute(request);
 			// <- to down here
 
 			return true;

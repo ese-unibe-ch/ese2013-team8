@@ -61,10 +61,8 @@ public abstract class Request implements Serializable {
 	}
 	
 	/**
-	 * Get some string representation
+	 * Needs to print the current state of the request (for the user)
+	 * Have a look at RegisterRequest for an example
 	 */
-	public String toString() {
-		return this.phoneNumber + ", type: " + getType();
-	}
-	
+	public  abstract String toString();
 }

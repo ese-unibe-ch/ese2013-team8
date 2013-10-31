@@ -7,7 +7,11 @@ import java.io.StreamCorruptedException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import ch.unibe.ese.core.BaseActivity;
+
+import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Looper;
 
 /**
  * Is responsible to establish a connection socket to the server (hardcoded IP at the moment)
@@ -21,9 +25,11 @@ public class RequestSender extends AsyncTask<Request, Object, Boolean>{
 	private ObjectOutputStream out;
 	private ObjectInputStream in;
 	private RequestListener listener;
+	private Context context;
 	
-	public RequestSender(RequestListener listener) {
+	public RequestSender(Context context, RequestListener listener) {
 		this.listener = listener;
+		this.context = context;
 	}
 	
 	/**
@@ -34,7 +40,7 @@ public class RequestSender extends AsyncTask<Request, Object, Boolean>{
 		this.initSocket();
 		this.send(request);
 		this.waitForAnswer();
-		return listener.wasSuccessful();
+		return true;
 	}
 	
 	@Override
@@ -47,17 +53,17 @@ public class RequestSender extends AsyncTask<Request, Object, Boolean>{
 	 */
 	private void waitForAnswer() {
 		try {
-			// Get the answer from the server
 			this.in = new ObjectInputStream(socket.getInputStream());
 			Request[] answer = (Request[]) in.readObject();
-			// Set listener values for further use in Activity or stuff
-			if(answer[0].isHandled())
+			if(answer[0].isHandled()) {
 				listener.setHandled();
-			if(answer[0].wasSuccessful())
+			}
+			if(answer[0].wasSuccessful()) {
 				listener.setSuccessful();
-			System.err.println("Received Answer; handled: " + answer[0].isHandled() + " successfull: " + answer[0].wasSuccessful());
-			// Close the socket
+			}
 			socket.close();
+			showToastOnActivity(answer[0]);
+			
 		} catch (StreamCorruptedException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -70,6 +76,11 @@ public class RequestSender extends AsyncTask<Request, Object, Boolean>{
 		}
 	}
 
+
+	private void showToastOnActivity(Request request) {
+		BaseActivity activity = (BaseActivity) context;
+		activity.runOnUiThread(new ToastMaker(request.toString(), activity));
+	}
 
 	/**
 	 * Tries to open a socket on the android device to a specified Host

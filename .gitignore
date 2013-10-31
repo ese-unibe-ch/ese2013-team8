@@ -8,6 +8,7 @@ Code/ShoppingList/bin/
 Code/ShoppingListTests/gen/
 Code/ShoppingListTests/bin/
 local.properties
+Code/ShoppingListServer/shoppinglist.db
 
 # eclipse and setting files
 */eclipse
