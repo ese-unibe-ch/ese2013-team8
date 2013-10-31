@@ -22,7 +22,7 @@ public class FriendRequest extends Request {
 		if(this.wasSuccessful()) 
 			return "Your friend has the app";
 		if(this.isHandled())
-			return "Your friend does not have the appt";
+			return "Your friend does not have the app";
 		else 
 			return "Request wasn't handled";
 	}

@@ -60,10 +60,10 @@ public class DatabaseManager {
 		Statement stmt;
 		try {
 			stmt = this.c.createStatement();
-			String selectUserifExists = "select * from " + TABLE_USERS + " where " + COLUMN_USERS_PHONENUMBER + "=" + phoneNumber + ";";
+			String selectUserifExists = "select * from " + TABLE_USERS + " where " + COLUMN_USERS_PHONENUMBER + "=\"" + phoneNumber + "\";";
 			ResultSet rs = stmt.executeQuery(selectUserifExists);
 			if(!rs.next()) {
-				String insertUser = "insert into " + TABLE_USERS + " (" + COLUMN_USERS_PHONENUMBER + ") values (" + phoneNumber + ");";			
+				String insertUser = "insert into " + TABLE_USERS + " (" + COLUMN_USERS_PHONENUMBER + ") values (\"" + phoneNumber + "\");";			
 				stmt.executeUpdate(insertUser);
 				rs = stmt.executeQuery(selectUserifExists);
 				System.out.println("Added user: " + rs.getString(COLUMN_USERS_PHONENUMBER));
@@ -82,13 +82,13 @@ public class DatabaseManager {
 		Statement stmt;
 		try {
 			stmt = this.c.createStatement();
-			String selectUserifExists = "select * from " + TABLE_USERS + " where " + COLUMN_USERS_PHONENUMBER + "=" + phoneNumber + ";";
+			String selectUserifExists = "select * from " + TABLE_USERS + " where " + COLUMN_USERS_PHONENUMBER + "=\"" + phoneNumber + "\";";
 			ResultSet rs = stmt.executeQuery(selectUserifExists);
 			if(rs.next()) {
 				System.out.println("User " + rs.getString(COLUMN_USERS_PHONENUMBER) + " does exist in Database");
 				request.setSuccessful();
 			} else {
-				System.out.println("User " + rs.getString(COLUMN_USERS_PHONENUMBER) + " does not exist in Database");
+				System.out.println("User " + phoneNumber + " does not exist in Database");
 			}
 			request.setHandled();
 		} catch (SQLException e) {

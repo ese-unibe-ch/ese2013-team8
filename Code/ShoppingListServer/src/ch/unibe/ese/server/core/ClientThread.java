@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Date;
+
 import ch.unibe.ese.share.requests.Request;
 
 /**
@@ -26,7 +28,7 @@ public class ClientThread extends Thread {
 	 * This method does the magic when a user is connected to the socket
 	 */
 	public void run() {
-		System.out.println("Client Connected from " + socket.getInetAddress() + ":" + socket.getPort());
+		System.out.println(new Date() +"\n"+ "Client Connected from " + socket.getInetAddress() + ":" + socket.getPort());
 		ObjectInputStream in;
 		Request[] request = null;
 		// Open inputstream from socket

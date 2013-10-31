@@ -108,10 +108,10 @@ public class HomeActivity extends BaseActivity {
 			// Test Requests added to the queue
 			TelephonyManager tMgr =(TelephonyManager)getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
 			String phoneNumber = tMgr.getLine1Number();
-			Request request = new RegisterRequest(phoneNumber);
-			syncmanager.addRequest(request);
 			Request request2 = new FriendRequest(phoneNumber);
 			syncmanager.addRequest(request2);
+			Request request = new RegisterRequest(phoneNumber);
+			syncmanager.addRequest(request);
 			
 			// This is the only line, which is not testing :)
 			syncmanager.synchronise(this);
