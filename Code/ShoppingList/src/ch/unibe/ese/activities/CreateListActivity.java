@@ -130,6 +130,7 @@ public class CreateListActivity extends BaseActivity {
 		int position = manager.getShoppingLists().indexOf(list);
 		intent.putExtra("selectedList", position);
 		this.startActivity(intent);
+		finish();
 	}
 
 	/**

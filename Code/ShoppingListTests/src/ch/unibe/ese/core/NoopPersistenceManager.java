@@ -53,4 +53,16 @@ public class NoopPersistenceManager implements PersistenceManager {
 
 	}
 
+	@Override
+	public void removeFriend(Friend friend) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public ArrayList<Item> getAllItems() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

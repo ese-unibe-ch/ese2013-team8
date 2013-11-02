@@ -109,6 +109,19 @@ public class SQLitePersistenceManager implements PersistenceManager {
 		cursor.close();
 		return itemList;
 	}
+	
+
+	public ArrayList<Item> getAllItems(){
+		ArrayList<Item> itemList = new ArrayList<Item>();
+		Cursor cursor = readHelper.getItemCursor();
+		while (!cursor.isAfterLast()) {
+			Item item = readHelper.cursorToItem(cursor);
+			itemList.add(item);
+			cursor.moveToNext();
+		}
+		cursor.close();
+		return itemList;
+	}
 
 	@Override
 	public void save(Item item, ShoppingList list) {
@@ -140,6 +153,31 @@ public class SQLitePersistenceManager implements PersistenceManager {
 					new String[] { "" + item.getId(),
 							"" + readHelper.getListId(list.getName()) });
 		}
+	}
+	
+	public void save(Item item){
+		updateHelper.addItemIfNotExistent(item);
+		
+		ContentValues values = updateHelper.toValue(item);
+		if (readHelper.isInList(item))
+			database.update( SQLiteHelper.TABLE_ITEMS, values, SQLiteHelper.COLUMN_ITEM_ID 
+					+ "= ? ", new String[] { "" + item.getId() });
+		else 
+			database.insert(SQLiteHelper.TABLE_ITEMS, null, values);
+	}
+	
+	@Override
+	public void remove(Item item) {
+		if (readHelper.isInList(item)) {
+			database.delete(
+					SQLiteHelper.TABLE_ITEMTOLIST,
+					SQLiteHelper.COLUMN_ITEM_ID + "=? ",
+					new String[] { "" + item.getId() });
+			
+			database.delete(SQLiteHelper.TABLE_ITEMS, 
+					SQLiteHelper.COLUMN_ITEM_ID + "=? ",
+					new String[] { "" + item.getId() });
+		} 	
 	}
 	
 	

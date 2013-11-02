@@ -1,26 +1,29 @@
 package ch.unibe.ese.activities;
 
 import java.util.ArrayList;
-import java.util.List;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import ch.unibe.ese.core.BaseActivity;
 import ch.unibe.ese.core.Item;
 import ch.unibe.ese.core.ListManager;
-import ch.unibe.ese.core.ShoppingList;
 import ch.unibe.ese.shoppinglist.R;
 
 public class ItemListActivity extends BaseActivity {
 	
 	
 	private ListManager manager;
-	private List<ShoppingList> shoppingLists = new ArrayList<ShoppingList>();
-	private List<Item> itemList = new ArrayList<Item>();
+	private ArrayList<Item> itemList;
+	private ArrayAdapter<Item> itemAdapter;
 	
 
 	@Override
@@ -31,23 +34,36 @@ public class ItemListActivity extends BaseActivity {
 		// Show the Up button in the action bar.
 		setupActionBar();
 		
+		//get manager and all items 
 		manager = getListManager();
-		shoppingLists = manager.getShoppingLists();
+		itemList = manager.getAllItems();
 	
-		for(ShoppingList shoppingList: shoppingLists){
-			for(Item item: manager.getItemsFor(shoppingList))
-				itemList.add(item);
-		}
-	
-		// display items
-		ArrayAdapter<Item> itemAdapter = new ArrayAdapter<Item>(this,
-				R.layout.shopping_list_item, itemList);
+		updateAdapter();
 
+	}
+
+	private void updateAdapter() {
+		// display items
+		itemAdapter = new ArrayAdapter<Item>(this, R.layout.shopping_list_item, itemList);
 		ListView listView = (ListView) findViewById(R.id.ItemView);
 		listView.setAdapter(itemAdapter);
 		
-		
+		setItemLongClick(listView);
+	}
 
+	private void setItemLongClick(ListView listView) {
+		//sets clicklistener
+		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				Item selectedItem = itemAdapter.getItem(arg2);
+				ItemListActivity.this.startActionMode(new ShoppingListActionMode(
+						ItemListActivity.this.manager, selectedItem, ItemListActivity.this.itemAdapter, ItemListActivity.this));
+				return true;
+			}
+		});
 	}
 
 	/**
@@ -88,5 +104,18 @@ public class ItemListActivity extends BaseActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
+	/**
+	 * Updates the Adapters to get the newest list when returning to activity
+	 */
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == 1 && resultCode == RESULT_OK) 
+				updateAdapter(); 
+	}
+	
+	public void onResume(){
+    	super.onResume();
+    	updateAdapter();
+    }
 
 }

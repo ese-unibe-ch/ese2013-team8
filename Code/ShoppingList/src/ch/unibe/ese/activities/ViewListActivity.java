@@ -30,6 +30,8 @@ public class ViewListActivity extends BaseActivity {
 	private ListManager manager;
 	private ArrayAdapter<Item> itemAdapter;
 	private ArrayAdapter<Item> itemBoughtAdapter;
+	private ArrayList<Item>	itemsList;
+	private ArrayList<Item>	itemsBoughtList;
 	private Activity viewListActivity = this;
 	private ShoppingList list;
 	private int listIndex;
@@ -51,28 +53,55 @@ public class ViewListActivity extends BaseActivity {
 			setTitle(list.getName());
 		}
 
+		updateAdapters();
+
+		// Autocompletion
+		AutoCompleteTextView textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
+		SQLiteItemAdapter sqliteAdapter = new SQLiteItemAdapter(this,
+				android.R.layout.simple_list_item_1);
+		textName.setAdapter(sqliteAdapter);
+	}
+
+	private void updateAdapters() {
 		// Get list items
 		List<Item> items = manager.getItemsFor(list);
+		separateBoughtItems(items);
 
-		itemAdapter = new ArrayAdapter<Item>(this, R.layout.shopping_list_item,
-				new ArrayList<Item>());
-		itemBoughtAdapter = new ArrayAdapter<Item>(viewListActivity,
-				R.layout.shopping_list_item, new ArrayList<Item>());
+		ListView listView = updateItemAdapter();
+		ListView listViewBought = updateItemBoughtAdapter();	
+		addListeners(listView, listViewBought);
+	}
+	
+	private void separateBoughtItems(List<Item> items) {
+		itemsBoughtList = new ArrayList<Item>();
+		itemsList = new ArrayList<Item>();
 		
-
-		ListView listView = (ListView) findViewById(R.id.ItemView);
-		listView.setAdapter(itemAdapter);
-		
-		ListView listViewBought = (ListView) findViewById(R.id.ItemBoughtView);
-		listViewBought.setAdapter(itemBoughtAdapter);
-
 		for (Item item : items) {
 			if (item.isBought())
-				itemBoughtAdapter.add(item);
+				itemsBoughtList.add(item);
 			else
-				itemAdapter.add(item);
+				itemsList.add(item);
 		}
+	}
+	
+	private ListView updateItemAdapter() {
+		itemAdapter = new ArrayAdapter<Item>(this, R.layout.shopping_list_item,
+				itemsList);
+		ListView listView = (ListView) findViewById(R.id.ItemView);
+		listView.setAdapter(itemAdapter);
+		return listView;
+	}
 
+	private ListView updateItemBoughtAdapter() {
+		ListView listViewBought = (ListView) findViewById(R.id.ItemBoughtView);
+		itemBoughtAdapter = new ArrayAdapter<Item>(viewListActivity,
+				R.layout.shopping_list_item, itemsBoughtList);
+		listViewBought.setAdapter(itemBoughtAdapter);
+		return listViewBought;
+	}
+
+	//TODO: rewrite this method-code, its not that beautiful...
+	private void addListeners(ListView listView, ListView listViewBought) {
 		// Add long click Listener
 		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
 
@@ -123,13 +152,6 @@ public class ViewListActivity extends BaseActivity {
 				itemAdapter.add(item);
 			}
 		});
-
-		// Autocompletion
-		AutoCompleteTextView textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
-		SQLiteItemAdapter sqliteAdapter = new SQLiteItemAdapter(this,
-				android.R.layout.simple_list_item_1);
-		textName.setAdapter(sqliteAdapter);
-
 	}
 
 	/**
@@ -146,7 +168,7 @@ public class ViewListActivity extends BaseActivity {
 		String name = textName.getText().toString();
 		intent.putExtra("Item", name);
 		intent.putExtra("selectedList", listIndex);
-		this.startActivity(intent);
+		this.startActivityForResult(intent, 1);
 	}
 
 	/** Called when the user touches the ok button */
@@ -225,5 +247,11 @@ public class ViewListActivity extends BaseActivity {
 		
 		
 		return super.onOptionsItemSelected(item);
+	}
+	
+	
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		//if (requestCode == 1 && resultCode == RESULT_OK) 
+				updateAdapters();
 	}
 }

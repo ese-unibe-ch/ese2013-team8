@@ -2,6 +2,7 @@ package ch.unibe.ese.activities;
 
 import java.math.BigDecimal;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -37,46 +38,45 @@ public class CreateItemActivity extends BaseActivity {
 
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
-			// get item name
-			String name = extras.getString("Item");
-			
-			AutoCompleteTextView textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
-			SQLiteItemAdapter sqliteItemAdapter = new SQLiteItemAdapter(this,
-					android.R.layout.simple_list_item_1);
-			textName.setAdapter(sqliteItemAdapter);
-			textName.setText(name);
-			// get list
-			listIndex = extras.getInt("selectedList");
-			list = manager.getShoppingLists().get(listIndex);
-			
-			// Set autocompletion adapter
-			AutoCompleteTextView textShop = (AutoCompleteTextView) findViewById(R.id.editTextShop);
-			SQLiteShopAdapter sqliteShopAdapter = new SQLiteShopAdapter(this,
-					android.R.layout.simple_list_item_1);
-			textShop.setAdapter(sqliteShopAdapter);
-			
-			// edit item
-			if (extras.getBoolean("editItem")) {
-				long itemId = extras.getLong("selectedItem");
-				for (Item it : manager.getItemsFor(list)) {
-					if (it.getId() == itemId) {
-						item = it;
-						break;
-					}
-				}
-				textViewTitle = (TextView) findViewById(R.id.textViewTitle);
-				textViewTitle.setText(this.getString(R.string.edit_item_title));
-				setItem();
-			}
-
+			editItem(extras);
 		}
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.create_item, menu);
-		return true;
+	private void editItem(Bundle extras) {
+		// get item name
+		String name = extras.getString("Item");
+		
+		//create autocomplete adapter for name
+		AutoCompleteTextView textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
+		SQLiteItemAdapter sqliteItemAdapter = new SQLiteItemAdapter(this,
+				android.R.layout.simple_list_item_1);
+		textName.setAdapter(sqliteItemAdapter);
+		textName.setText(name);
+		
+		// get list
+		listIndex = extras.getInt("selectedList");
+		if(listIndex != -1)
+			list = manager.getShoppingLists().get(listIndex);
+		
+		// Set autocompletion adapter for shop
+		AutoCompleteTextView textShop = (AutoCompleteTextView) findViewById(R.id.editTextShop);
+		SQLiteShopAdapter sqliteShopAdapter = new SQLiteShopAdapter(this,
+				android.R.layout.simple_list_item_1);
+		textShop.setAdapter(sqliteShopAdapter);
+		
+		// edit item
+		if (extras.getBoolean("editItem")) {
+			long itemId = extras.getLong("selectedItem");
+			for (Item it : list == null? manager.getAllItems() : manager.getItemsFor(list)) {
+				if (it.getId() == itemId) {
+					item = it;
+					break;
+				}
+			}
+			textViewTitle = (TextView) findViewById(R.id.textViewTitle);
+			textViewTitle.setText(this.getString(R.string.edit_item_title));
+			setItem();
+		}
 	}
 
 	private void setItem() {
@@ -106,6 +106,13 @@ public class CreateItemActivity extends BaseActivity {
 			textPrice.setText(item.getPrice().toString());
 		}
 	}
+	
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.create_item, menu);
+		return true;
+	}
 
 	/** Called when the user touches the abort button */
 	public void goBack(View view) {
@@ -114,7 +121,7 @@ public class CreateItemActivity extends BaseActivity {
 
 	/** Called when the user touches the save button */
 	public void saveItem(View view) {
-		// get name
+		// get name and change it if necessary
 		EditText textName = (EditText) findViewById(R.id.editTextName);
 		String name = textName.getText().toString();
 		if (name == null || name.trim().isEmpty()) {
@@ -127,7 +134,7 @@ public class CreateItemActivity extends BaseActivity {
 		else
 			item.setName(name);
 
-		// get shop
+		// get shop and set it if necessary
 		EditText textShop = (EditText) findViewById(R.id.editTextShop);
 		String shopName = textShop.getText().toString();
 		if (!shopName.isEmpty()) {
@@ -135,7 +142,7 @@ public class CreateItemActivity extends BaseActivity {
 			item.setShop(shop);
 		}
 
-		// get price
+		// get price and set it if necessary
 		EditText textPrice = (EditText) findViewById(R.id.editTextPrice);
 		String priceString = textPrice.getText().toString();
 		if (priceString != null && !priceString.isEmpty()) {
@@ -144,11 +151,21 @@ public class CreateItemActivity extends BaseActivity {
 		}
 
 		// save the item
-		manager.addItemToList(item, list);
+		if(list != null)
+			manager.addItemToList(item, list);
+		else {
+			//save item if called in itemlist
+			manager.save(item);
+		}
 
 		// go back to the list
-		Intent intent = new Intent(this, ViewListActivity.class);
-		intent.putExtra("selectedList", listIndex);
-		this.startActivity(intent);
+		finish();
 	}
+	
+	public void finish() {
+        Intent data = new Intent();
+        data.putExtra("item", item.getId());
+        setResult(Activity.RESULT_OK, data); 
+        super.finish();
+    }
 }
