@@ -61,8 +61,11 @@ public class ViewListActivity extends BaseActivity {
 				android.R.layout.simple_list_item_1);
 		textName.setAdapter(sqliteAdapter);
 	}
-
-	private void updateAdapters() {
+	
+	/**
+	 * Updates the adapters
+	 */
+	public void updateAdapters() {
 		// Get list items
 		List<Item> items = manager.getItemsFor(list);
 		separateBoughtItems(items);
@@ -251,7 +254,7 @@ public class ViewListActivity extends BaseActivity {
 	
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		//if (requestCode == 1 && resultCode == RESULT_OK) 
+		if (requestCode == 1 && resultCode == RESULT_OK) 
 				updateAdapters();
 	}
 }

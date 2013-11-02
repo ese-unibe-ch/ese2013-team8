@@ -115,6 +115,7 @@ public class ShoppingListActionMode implements Callback {
                 return true;
             case R.id.action_remove:
             	if (isList) {
+            		//TODO: just temporary bugfix to update the list from here!
 	            	manager.removeShoppingList(selectedList);
 	            	shoppingListAdapter.notifyDataSetChanged();
 	            	mode.finish(); // Action picked, so close the CAB
@@ -122,8 +123,12 @@ public class ShoppingListActionMode implements Callback {
             	else {
             		if(selectedList != null){
             			manager.removeItemFromList(selectedItem, selectedList);
+            			ViewListActivity viewListActivity = (ViewListActivity) activity;
+            			viewListActivity.updateAdapters();
             		} else {
             			manager.remove(selectedItem);
+            			ItemListActivity itemListActivity = (ItemListActivity) activity;
+            			itemListActivity.updateAdapter();
             		}
             		itemAdapter.notifyDataSetChanged();
 	            	mode.finish(); // Action picked, so close the CAB

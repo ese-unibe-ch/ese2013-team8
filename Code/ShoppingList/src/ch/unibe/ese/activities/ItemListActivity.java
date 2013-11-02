@@ -36,14 +36,17 @@ public class ItemListActivity extends BaseActivity {
 		
 		//get manager and all items 
 		manager = getListManager();
-		itemList = manager.getAllItems();
 	
 		updateAdapter();
 
 	}
-
-	private void updateAdapter() {
+	
+	/**
+	 * Updates all adapters 
+	 */
+	public void updateAdapter() {
 		// display items
+		itemList = manager.getAllItems();
 		itemAdapter = new ArrayAdapter<Item>(this, R.layout.shopping_list_item, itemList);
 		ListView listView = (ListView) findViewById(R.id.ItemView);
 		listView.setAdapter(itemAdapter);
