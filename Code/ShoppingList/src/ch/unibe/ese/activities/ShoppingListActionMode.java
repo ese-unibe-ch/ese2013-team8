@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 import ch.unibe.ese.core.Item;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
@@ -110,7 +111,7 @@ public class ShoppingListActionMode implements Callback {
 		        	Intent intent = new Intent(activity, CreateItemActivity.class);
 		        	intent.putExtra("selectedItem",selectedItem.getId());
 		        	intent.putExtra("editItem", true);
-		            activity.startActivityForResult(intent, 1);
+		            activity.startActivityForResult(intent, 1);	
             	}
                 return true;
             case R.id.action_remove:
@@ -135,11 +136,14 @@ public class ShoppingListActionMode implements Callback {
             	}
             	return true;
             case R.id.action_share:
-            	Intent intentShare = new Intent(activity, ShareListActivity.class);
-            	intentShare.putExtra("selectedList", listIndex);
-                activity.startActivity(intentShare);
-                mode.finish(); // Action picked, so close the CAB
-            	return true;
+            	if(selectedList != null){
+	            	Intent intentShare = new Intent(activity, ShareListActivity.class);
+	            	intentShare.putExtra("selectedList", listIndex);
+	                activity.startActivity(intentShare);
+	                mode.finish(); // Action picked, so close the CAB
+	            	return true;
+            	} else
+            		Toast.makeText(activity, "Not implemented yet", Toast.LENGTH_SHORT).show();
 
             default:
                 return false;

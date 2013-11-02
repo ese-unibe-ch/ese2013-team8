@@ -67,7 +67,7 @@ public class CreateItemActivity extends BaseActivity {
 		// edit item
 		if (extras.getBoolean("editItem")) {
 			long itemId = extras.getLong("selectedItem");
-			for (Item it : list == null? manager.getAllItems() : manager.getItemsFor(list)) {
+			for (Item it : (list == null? manager.getAllItems() : manager.getItemsFor(list))) {
 				if (it.getId() == itemId) {
 					item = it;
 					break;
@@ -153,11 +153,10 @@ public class CreateItemActivity extends BaseActivity {
 		// save the item
 		if(list != null)
 			manager.addItemToList(item, list);
-		else {
+		else 
 			//save item if called in itemlist
 			manager.save(item);
-		}
-
+		
 		// go back to the list
 		finish();
 	}

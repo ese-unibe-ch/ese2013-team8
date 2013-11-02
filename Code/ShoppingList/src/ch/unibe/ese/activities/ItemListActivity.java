@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -103,6 +102,11 @@ public class ItemListActivity extends BaseActivity {
 			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
 			//
 			NavUtils.navigateUpFromSameTask(this);
+			return true;
+			
+		case R.id.action_new:
+			Intent intent = new Intent(this, CreateItemActivity.class);
+			this.startActivityForResult(intent, 1);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

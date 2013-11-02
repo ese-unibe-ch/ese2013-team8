@@ -156,14 +156,12 @@ public class SQLitePersistenceManager implements PersistenceManager {
 	}
 	
 	public void save(Item item){
-		updateHelper.addItemIfNotExistent(item);
-		
 		ContentValues values = updateHelper.toValue(item);
 		if (readHelper.isInList(item))
 			database.update( SQLiteHelper.TABLE_ITEMS, values, SQLiteHelper.COLUMN_ITEM_ID 
-					+ "= ? ", new String[] { "" + item.getId() });
+					+ "=? ", new String[] { "" + item.getId() });
 		else 
-			database.insert(SQLiteHelper.TABLE_ITEMS, null, values);
+			updateHelper.addItemIfNotExistent(item);
 	}
 	
 	@Override
