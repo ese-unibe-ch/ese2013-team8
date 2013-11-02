@@ -90,4 +90,27 @@ public class ListManager {
 		}
 		return Collections.unmodifiableList(items);
 	}
+	
+	/**
+	 * Gets all items-objects which are in the item table 
+	 * @return ArrayList<Item>
+	 */
+	public ArrayList<Item> getAllItems(){
+		return persistenceManager.getAllItems();
+	}
+	
+	/**
+	 * Adds an item to the item list or updates it if it is already in the list
+	 * @param item
+	 */
+	public void save(Item item) {
+		persistenceManager.save(item);
+	}
+	
+	public void remove(Item item){
+		persistenceManager.remove(item);
+		
+		for(ShoppingList list: shoppingLists)
+			removeItemFromList(item, list);
+	}
 }

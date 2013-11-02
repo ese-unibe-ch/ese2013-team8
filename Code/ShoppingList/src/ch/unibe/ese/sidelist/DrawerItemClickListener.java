@@ -27,7 +27,7 @@ public class DrawerItemClickListener implements OnItemClickListener {
 	}
 	
 	
-	public void onItemClick(AdapterView parent, View view, int position, long idNumber) {
+	public void onItemClick(AdapterView<?> parent, View view, int position, long idNumber) {
 		if(this.id == R.id.left_drawer)  selectMenuItem(position);
 		if(this.id == R.id.left_drawer_options)  selectOptionsItem(position);
     }

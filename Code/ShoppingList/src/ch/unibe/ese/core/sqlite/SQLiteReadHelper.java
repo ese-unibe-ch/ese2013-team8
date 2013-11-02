@@ -18,7 +18,7 @@ import ch.unibe.ese.core.ShoppingList;
 public class SQLiteReadHelper {
 
 	private SQLiteDatabase database;
-	private static final String SELECT_ITEM_DATA = "SELECT " //
+	private static final String SELECT_ALL_ITEM_DATA = "SELECT " //
 			+ SQLiteHelper.TABLE_ITEMS
 			+ "."
 			+ SQLiteHelper.COLUMN_ITEM_ID
@@ -43,11 +43,14 @@ public class SQLiteReadHelper {
 			+ SQLiteHelper.COLUMN_ITEM_ID
 			+ " = " + SQLiteHelper.TABLE_ITEMTOLIST
 			+ "."
-			+ SQLiteHelper.COLUMN_ITEM_ID
+			+ SQLiteHelper.COLUMN_ITEM_ID;
+	
+	private static final String SELECT_ITEM_DATA = SELECT_ALL_ITEM_DATA
 			+ " AND "
 			+ SQLiteHelper.TABLE_ITEMTOLIST + "."
 			+ SQLiteHelper.COLUMN_LIST_ID
 			+ " = ?";;
+			
 
 	public SQLiteReadHelper(SQLiteDatabase database) {
 		this.database = database;
@@ -67,7 +70,6 @@ public class SQLiteReadHelper {
 
 	/**
 	 * Get a cursor on TABLE_ITEMTOLIST for a specific listID
-	 * 
 	 * @param list
 	 * @return
 	 */
@@ -79,10 +81,19 @@ public class SQLiteReadHelper {
 		cursor.moveToFirst();
 		return cursor;
 	}
+	
+	/**
+	 * Get a cursor on TABLE_ITEM for all items
+	 * @return
+	 */
+	public Cursor getItemCursor(){
+		Cursor cursor = database.rawQuery(SELECT_ALL_ITEM_DATA, null );
+		cursor.moveToFirst();
+		return cursor;
+	}
 
 	/**
 	 * Get a cursor on TABLE_FRIENDS
-	 * 
 	 * @return
 	 */
 	public Cursor getFriendCursor() {
@@ -94,7 +105,6 @@ public class SQLiteReadHelper {
 
 	/**
 	 * Shortcut for database querys (to save all the nulls)
-	 * 
 	 * @param table
 	 * @param columns
 	 * @param where
@@ -302,6 +312,14 @@ public class SQLiteReadHelper {
 				new String[] { "" + itemId, "" + listId }, null, null, null,
 				null);
 		return (cursor.getCount() >= 1);
+	}
+
+	public boolean isInList(Item item) {
+		long itemId = item.getId() == null ? -1 : item.getId();
+		Cursor cursor = database.query(SQLiteHelper.TABLE_ITEMS,
+				SQLiteHelper.ITEMS_COLUMNS, SQLiteHelper.COLUMN_ITEM_ID + "=? ", 
+				new String[] { "" + itemId }, null, null, null, null);
+		return cursor.getColumnCount() >= 1;
 	}
 
 }

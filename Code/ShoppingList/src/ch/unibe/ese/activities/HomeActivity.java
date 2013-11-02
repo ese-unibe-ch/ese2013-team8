@@ -45,41 +45,20 @@ public class HomeActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 
-		// Create drawer menu
-		NavigationDrawer nDrawer = new NavigationDrawer();
-		drawMenu = nDrawer.constructNavigationDrawer(drawMenu, this);
+		createNavigationDrawer();
 		
-		drawerToggle = new ActionBarDrawerToggle(
-                this,                  	/* host Activity */
-                drawMenu,         		/* DrawerLayout object */
-                R.drawable.ic_drawer,  	/* nav drawer icon to replace 'Up' caret */
-                R.string.drawer_open,  	/* "open drawer" description */
-                R.string.drawer_close  	/* "close drawer" description */
-                ) {
-
-			// At the moment the following two methods are useless, but maybe 
-			// we will want to add stuff later
-            /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-                getActionBar().setTitle(R.string.app_name);
-            }
-
-            /** Called when a drawer has settled in a completely open state. */
-            public void onDrawerOpened(View drawerView) {
-                getActionBar().setTitle(R.string.app_name);
-            }
-        };
-        
-        // Set the drawer toggle as the DrawerListener
-        drawMenu.setDrawerListener(drawerToggle);
-
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
 
-        
+        //create Managers for local lists and synch lists
 		listmanager = getListManager();
 		syncmanager = getSyncManager();
 
+		updateAdapter();
+
+	}
+
+	private void updateAdapter() {
 		// Get List from manager
 		List<ShoppingList> shoppingLists = listmanager.getShoppingLists();
 
@@ -89,6 +68,10 @@ public class HomeActivity extends BaseActivity {
 		ListView listView = (ListView) findViewById(R.id.ShoppingListView);
 		listView.setAdapter(shoppingListAdapter);
 
+		addListener(listView);
+	}
+
+	private void addListener(ListView listView) {
 		// Add long click Listener
 		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
 
@@ -117,7 +100,37 @@ public class HomeActivity extends BaseActivity {
 				homeActivity.startActivity(intent);
 			}
 		});
+	}
+	
 
+	private void createNavigationDrawer() {
+		// Create drawer menu
+		NavigationDrawer nDrawer = new NavigationDrawer();
+		drawMenu = nDrawer.constructNavigationDrawer(drawMenu, this);
+		
+		drawerToggle = new ActionBarDrawerToggle(
+                this,                  	/* host Activity */
+                drawMenu,         		/* DrawerLayout object */
+                R.drawable.ic_drawer,  	/* nav drawer icon to replace 'Up' caret */
+                R.string.drawer_open,  	/* "open drawer" description */
+                R.string.drawer_close  	/* "close drawer" description */
+                ) {
+
+			// At the moment the following two methods are useless, but maybe 
+			// we will want to add stuff later
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                getActionBar().setTitle(R.string.app_name);
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                getActionBar().setTitle(R.string.app_name);
+            }
+        };
+        
+        // Set the drawer toggle as the DrawerListener
+        drawMenu.setDrawerListener(drawerToggle);
 	}
 	
     @Override
@@ -144,32 +157,31 @@ public class HomeActivity extends BaseActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
         // Pass the event to ActionBarDrawerToggle, if it returns
         // true, then it has handled the app icon touch event
-        if (drawerToggle.onOptionsItemSelected(item)) {
-          return true;
-        }
-        
+        if (drawerToggle.onOptionsItemSelected(item))
+        		return true;
+                
 		// Handle presses on the action bar items
 		switch (item.getItemId()) {
 
-		case R.id.action_refresh:
-			// Test Requests added to the queue
-			TelephonyManager tMgr =(TelephonyManager)getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
-			String phoneNumber = tMgr.getLine1Number();
-			Request request2 = new FriendRequest(phoneNumber);
-			syncmanager.addRequest(request2);
-			Request request = new RegisterRequest(phoneNumber);
-			syncmanager.addRequest(request);
-			
-			// This is the only line, which is not testing :)
-			syncmanager.synchronise();
-
-			return true;
-		case R.id.action_new:
-			Intent intent = new Intent(this, CreateListActivity.class);
-			this.startActivity(intent);
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
+			case R.id.action_refresh:
+				// Test Requests added to the queue
+				TelephonyManager tMgr =(TelephonyManager)getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
+				String phoneNumber = tMgr.getLine1Number();
+				Request request2 = new FriendRequest(phoneNumber);
+				syncmanager.addRequest(request2);
+				Request request = new RegisterRequest(phoneNumber);
+				syncmanager.addRequest(request);
+				
+				// This is the only line, which is not testing :)
+				syncmanager.synchronise();
+	
+				return true;
+			case R.id.action_new:
+				Intent intent = new Intent(this, CreateListActivity.class);
+				this.startActivity(intent);
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
 		}
 	}
 
@@ -177,4 +189,10 @@ public class HomeActivity extends BaseActivity {
 	protected void onPause() {
 		super.onPause();
 	}
+	
+	public void onResume(){
+    	super.onResume();
+    	updateAdapter();
+    }
+
 }

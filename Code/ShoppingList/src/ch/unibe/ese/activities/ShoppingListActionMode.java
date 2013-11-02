@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 import ch.unibe.ese.core.Item;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
@@ -23,6 +24,13 @@ public class ShoppingListActionMode implements Callback {
 	private ArrayAdapter<Item> itemAdapter;
 	private boolean isList;
 	
+	/**
+	 * Is called when longpress on shoppinglist in homescreen 
+	 * @param manager
+	 * @param selectedList
+	 * @param shoppingListAdapter
+	 * @param homeActivity
+	 */
 	public ShoppingListActionMode(ListManager manager, ShoppingList selectedList, ArrayAdapter<ShoppingList> shoppingListAdapter, Activity homeActivity) {
 		this.manager = manager;
 		this.selectedList = selectedList;
@@ -31,6 +39,14 @@ public class ShoppingListActionMode implements Callback {
 		isList = true;
 	}
 	
+	/**
+	 * Is called when longpress on item in a shoppinglist
+	 * @param manager
+	 * @param selectedItem
+	 * @param selectedList
+	 * @param itemAdapter
+	 * @param activity
+	 */
 	public ShoppingListActionMode(ListManager manager, Item selectedItem, ShoppingList selectedList, ArrayAdapter<Item> itemAdapter, Activity activity) {
 		this.manager = manager;
 		this.selectedItem = selectedItem;
@@ -40,10 +56,25 @@ public class ShoppingListActionMode implements Callback {
 		isList = false;
 	}
 	
+	/**
+	 * Is called when longpress on item in the ItemListManager
+	 * @param manager
+	 * @param selectedItem
+	 * @param itemAdapter
+	 * @param activity
+	 */
+	public ShoppingListActionMode(ListManager manager, Item selectedItem, ArrayAdapter<Item> itemAdapter, Activity activity){
+		this.manager = manager;
+		this.selectedItem = selectedItem;
+		this.selectedList = null;
+		this.itemAdapter = itemAdapter;
+		this.activity = activity;
+		isList = false;
+	}
+	
     // Called when the action mode is created; startActionMode() was called
     @Override
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-        // Inflate a menu resource providing context menu items
         MenuInflater inflater = mode.getMenuInflater();
         inflater.inflate(R.menu.actionbar_longpress_shoppinglist, menu);
         return true;
@@ -59,7 +90,9 @@ public class ShoppingListActionMode implements Callback {
     // Called when the user selects a contextual menu item
     @Override
     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-    	int listIndex = manager.getShoppingLists().indexOf(selectedList);
+    	int listIndex = -1;
+    	if(selectedList != null) //when called from ItemList, listIndex stays -1 
+    		listIndex = manager.getShoppingLists().indexOf(selectedList);
     	
         switch (item.getItemId()) {
             case R.id.action_edit:
@@ -78,27 +111,39 @@ public class ShoppingListActionMode implements Callback {
 		        	Intent intent = new Intent(activity, CreateItemActivity.class);
 		        	intent.putExtra("selectedItem",selectedItem.getId());
 		        	intent.putExtra("editItem", true);
-		            activity.startActivity(intent);
+		            activity.startActivityForResult(intent, 1);	
             	}
                 return true;
             case R.id.action_remove:
             	if (isList) {
+            		//TODO: just temporary bugfix to update the list from here!
 	            	manager.removeShoppingList(selectedList);
 	            	shoppingListAdapter.notifyDataSetChanged();
 	            	mode.finish(); // Action picked, so close the CAB
             	}
             	else {
-	            	manager.removeItemFromList(selectedItem, selectedList);
-	            	itemAdapter.notifyDataSetChanged();
+            		if(selectedList != null){
+            			manager.removeItemFromList(selectedItem, selectedList);
+            			ViewListActivity viewListActivity = (ViewListActivity) activity;
+            			viewListActivity.updateAdapters();
+            		} else {
+            			manager.remove(selectedItem);
+            			ItemListActivity itemListActivity = (ItemListActivity) activity;
+            			itemListActivity.updateAdapter();
+            		}
+            		itemAdapter.notifyDataSetChanged();
 	            	mode.finish(); // Action picked, so close the CAB
             	}
             	return true;
             case R.id.action_share:
-            	Intent intentShare = new Intent(activity, ShareListActivity.class);
-            	intentShare.putExtra("selectedList", listIndex);
-                activity.startActivity(intentShare);
-                mode.finish(); // Action picked, so close the CAB
-            	return true;
+            	if(selectedList != null){
+	            	Intent intentShare = new Intent(activity, ShareListActivity.class);
+	            	intentShare.putExtra("selectedList", listIndex);
+	                activity.startActivity(intentShare);
+	                mode.finish(); // Action picked, so close the CAB
+	            	return true;
+            	} else
+            		Toast.makeText(activity, "Not implemented yet", Toast.LENGTH_SHORT).show();
 
             default:
                 return false;
@@ -107,6 +152,8 @@ public class ShoppingListActionMode implements Callback {
 
 	@Override
 	public void onDestroyActionMode(ActionMode mode) {
-		// nothing to do
+		
 	}
+
+    
 }

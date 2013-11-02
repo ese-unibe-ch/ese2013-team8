@@ -46,4 +46,5 @@ public class BaseActivity extends Activity {
 	public void showToast(String text) {
 		Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
 	}
+
 }

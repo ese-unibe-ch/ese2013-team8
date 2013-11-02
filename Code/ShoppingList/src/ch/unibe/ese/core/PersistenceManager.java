@@ -80,4 +80,22 @@ public interface PersistenceManager {
 	 * @param friend
 	 */
 	void removeFriend(Friend friend);
+
+	/**
+	 * Get all items which are saved in the db
+	 * @return List<Item> of all Items in db
+	 */
+	ArrayList<Item> getAllItems();
+	
+	/**
+	 * Saves item to the db where all items are saved.
+	 * @param item
+	 */
+	public void save(Item item);
+	
+	/**
+	 * Removes item from item db
+	 * @param item
+	 */
+	public void remove(Item item);
 }
