@@ -116,7 +116,7 @@ public class CreateItemActivity extends BaseActivity {
 
 	/** Called when the user touches the abort button */
 	public void goBack(View view) {
-		finish();
+		super.finish();
 	}
 
 	/** Called when the user touches the save button */
