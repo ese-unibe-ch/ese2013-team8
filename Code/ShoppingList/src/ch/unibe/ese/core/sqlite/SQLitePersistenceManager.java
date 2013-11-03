@@ -119,7 +119,23 @@ public class SQLitePersistenceManager implements PersistenceManager {
 			itemList.add(item);
 			cursor.moveToNext();
 		}
+		//TODO: Restructer database so that items can be loaded just with the code above.
+		cursor = readHelper.getItemTableCursor();
+		while(!cursor.isAfterLast()) {
+			Item item = readHelper.cursorToItemLite(cursor);
+			for(Item compare: itemList)
+				if(item != null)
+					if(compare.getName().equals(item.getName())) 
+					item = null;
+			if(item != null)
+				itemList.add(item);
+			cursor.moveToNext();
+		}
+		
+		
 		cursor.close();
+		
+		
 		return itemList;
 	}
 
@@ -157,11 +173,16 @@ public class SQLitePersistenceManager implements PersistenceManager {
 	
 	public void save(Item item){
 		ContentValues values = updateHelper.toValue(item);
-		if (readHelper.isInList(item))
+		long id = 0;
+		if (readHelper.isInList(item)){
+			id = item.getId();
 			database.update( SQLiteHelper.TABLE_ITEMS, values, SQLiteHelper.COLUMN_ITEM_ID 
-					+ "=? ", new String[] { "" + item.getId() });
-		else 
-			updateHelper.addItemIfNotExistent(item);
+					+ "=? ", new String[] { "" + id });
+		}
+		else {
+			id = database.insert(SQLiteHelper.TABLE_ITEMS, null, values);
+			item.setId(id);
+		}
 	}
 	
 	@Override

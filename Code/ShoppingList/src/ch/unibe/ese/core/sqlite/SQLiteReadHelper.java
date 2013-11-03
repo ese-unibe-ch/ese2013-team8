@@ -83,11 +83,21 @@ public class SQLiteReadHelper {
 	}
 	
 	/**
-	 * Get a cursor on TABLE_ITEM for all items
+	 * Get a cursor on TABLE_ITEM for all items with all abilities
 	 * @return
 	 */
 	public Cursor getItemCursor(){
 		Cursor cursor = database.rawQuery(SELECT_ALL_ITEM_DATA, null );
+		cursor.moveToFirst();
+		return cursor;
+	}
+	
+	/**
+	 * Get a cursor on TABLE_ITEM for all items with just name ability 
+	 * @return
+	 */
+	public Cursor getItemTableCursor() {
+		Cursor cursor = getQueryCursor(SQLiteHelper.TABLE_ITEMS, SQLiteHelper.ITEMS_COLUMNS , null);
 		cursor.moveToFirst();
 		return cursor;
 	}
@@ -138,6 +148,12 @@ public class SQLiteReadHelper {
 		String price = cursor.getString(3);
 		if (price != null && !price.isEmpty())
 			item.setPrice(new BigDecimal(price));
+		return item;
+	}
+	
+	public Item cursorToItemLite(Cursor cursor) {
+		Item item = new Item(cursor.getString(1));
+		item.setId(cursor.getInt(0));
 		return item;
 	}
 
@@ -315,7 +331,8 @@ public class SQLiteReadHelper {
 	}
 
 	public boolean isInList(Item item) {
-		long itemId = item.getId() == null ? -1 : item.getId();
+		if(item.getId() == null) return false;
+		long itemId = item.getId();
 		Cursor cursor = database.query(SQLiteHelper.TABLE_ITEMS,
 				SQLiteHelper.ITEMS_COLUMNS, SQLiteHelper.COLUMN_ITEM_ID + "=? ", 
 				new String[] { "" + itemId }, null, null, null, null);

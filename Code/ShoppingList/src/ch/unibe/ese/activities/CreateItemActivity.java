@@ -35,16 +35,17 @@ public class CreateItemActivity extends BaseActivity {
 		// Show the Up button in the action bar.
 		getActionBar().hide();
 		manager = getListManager();
-
-		Bundle extras = getIntent().getExtras();
-		if (extras != null) {
-			editItem(extras);
-		}
+		
+		setTextViews();		
 	}
 
-	private void editItem(Bundle extras) {
+	private void setTextViews() {
 		// get item name
-		String name = extras.getString("Item");
+		Bundle extras = getIntent().getExtras();
+		String name = "";
+		
+		if (extras != null)
+			name = extras.getString("Item");
 		
 		//create autocomplete adapter for name
 		AutoCompleteTextView textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
@@ -53,33 +54,36 @@ public class CreateItemActivity extends BaseActivity {
 		textName.setAdapter(sqliteItemAdapter);
 		textName.setText(name);
 		
-		// get list
-		listIndex = extras.getInt("selectedList");
-		if(listIndex != -1)
-			list = manager.getShoppingLists().get(listIndex);
-		
 		// Set autocompletion adapter for shop
 		AutoCompleteTextView textShop = (AutoCompleteTextView) findViewById(R.id.editTextShop);
 		SQLiteShopAdapter sqliteShopAdapter = new SQLiteShopAdapter(this,
 				android.R.layout.simple_list_item_1);
 		textShop.setAdapter(sqliteShopAdapter);
 		
-		// edit item
-		if (extras.getBoolean("editItem")) {
-			long itemId = extras.getLong("selectedItem");
-			for (Item it : (list == null? manager.getAllItems() : manager.getItemsFor(list))) {
-				if (it.getId() == itemId) {
-					item = it;
-					break;
+		
+		// get list if available
+		if(extras != null) {
+			listIndex = extras.getInt("selectedList");
+			if(listIndex != 0)
+				list = manager.getShoppingLists().get(listIndex);
+			
+			// prepare for edit item when necessary
+			if (extras.getBoolean("editItem")) {
+				long itemId = extras.getLong("selectedItem");
+				for (Item it : (list == null? manager.getAllItems() : manager.getItemsFor(list))) {
+					if (it.getId() == itemId) {
+						item = it;
+						break;
+					}
 				}
+				textViewTitle = (TextView) findViewById(R.id.textViewTitle);
+				textViewTitle.setText(this.getString(R.string.edit_item_title));
+				editItem();
 			}
-			textViewTitle = (TextView) findViewById(R.id.textViewTitle);
-			textViewTitle.setText(this.getString(R.string.edit_item_title));
-			setItem();
 		}
 	}
 
-	private void setItem() {
+	private void editItem() {
 		// set name
 		EditText textName = (EditText) findViewById(R.id.editTextName);
 		textName.setText(item.getName());
@@ -163,7 +167,8 @@ public class CreateItemActivity extends BaseActivity {
 	
 	public void finish() {
         Intent data = new Intent();
-        data.putExtra("item", item.getId());
+        if(item != null)
+        	data.putExtra("item", item.getId());
         setResult(Activity.RESULT_OK, data); 
         super.finish();
     }
