@@ -42,12 +42,11 @@
     <!-- ShareListActivity -->
     <string name="share_list_title">Share</string>
     <string name="share_list_hint">Add Friend</string>
-    
-     <!-- CreateFriendsActivity -->
+
+    <!-- CreateFriendsActivity -->
     <string name="add_friend">Add a friend:</string>
     <string name="friend_name">Name:</string>
     <string name="friend_phone_number">Phone Nr:</string>
-
 
     <!-- Buttons / Menu items -->
     <string name="button_back">Abort</string>
@@ -111,5 +110,6 @@
         <item>sexy</item>
     </string-array>
 
+    <string name="title_activity_archive">Archive</string>
 
 </resources>

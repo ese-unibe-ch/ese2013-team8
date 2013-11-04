@@ -6,6 +6,7 @@ public class ShoppingList {
 	private String name;
 	private Date dueDate;
 	private String shop;
+	private boolean archived;
 
 	/**
 	 * @param name
@@ -43,6 +44,14 @@ public class ShoppingList {
 
 	public void setShop(String shop) {
 		this.shop = shop;
+	}
+	
+	public boolean isArchived() {
+		return archived;
+	}
+
+	public void setArchived(boolean archived) {
+		this.archived = archived;
 	}
 
 	private void invariant() {

@@ -14,6 +14,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public static final String TABLE_LISTS = "shoppinglists";
 	public static final String COLUMN_LIST_ID = "listid";
 	public static final String COLUMN_LIST_NAME = "listname";
+	public static final String COLUMN_LIST_ARCHIVED = "archived";
 	public static final String COLUMN_LIST_DUEDATE = "duedate";
 	// Save all Items with an unique name and ID
 	public static final String TABLE_ITEMS = "items";
@@ -41,6 +42,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 			"create table " + TABLE_LISTS + "(" //
 			+ COLUMN_LIST_ID + " integer primary key autoincrement, " //
 			+ COLUMN_LIST_NAME + " text not null, " //
+			+ COLUMN_LIST_ARCHIVED + " integer, "
 			+ COLUMN_LIST_DUEDATE + " integer, " //
 			+ COLUMN_SHOP_ID + " integer" //
 			+ ");";
@@ -74,8 +76,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	
 	
 	public static String[] LISTS_COLUMNS = { SQLiteHelper.COLUMN_LIST_ID,
-			SQLiteHelper.COLUMN_LIST_NAME, SQLiteHelper.COLUMN_LIST_DUEDATE,
-			SQLiteHelper.COLUMN_SHOP_ID };
+			SQLiteHelper.COLUMN_LIST_NAME, SQLiteHelper.COLUMN_LIST_ARCHIVED,
+			SQLiteHelper.COLUMN_LIST_DUEDATE, SQLiteHelper.COLUMN_SHOP_ID };
 	public static String[] SHOPS_COLUMNS = { SQLiteHelper.COLUMN_SHOP_ID,
 			SQLiteHelper.COLUMN_SHOP_NAME };
 	public static String[] ITEMS_COLUMNS = { SQLiteHelper.COLUMN_ITEM_ID,

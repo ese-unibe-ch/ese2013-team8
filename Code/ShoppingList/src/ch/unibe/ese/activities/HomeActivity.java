@@ -1,5 +1,6 @@
 package ch.unibe.ese.activities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
@@ -61,9 +62,15 @@ public class HomeActivity extends BaseActivity {
 	private void updateAdapter() {
 		// Get List from manager
 		List<ShoppingList> shoppingLists = listmanager.getShoppingLists();
+		List<ShoppingList> shoppingLists2 = new ArrayList<ShoppingList>();
+		
+		// separate archived lists
+		for (ShoppingList list: shoppingLists)
+			if (!list.isArchived())
+				shoppingLists2.add(list);
 
 		shoppingListAdapter = new ArrayAdapter<ShoppingList>(this,
-				R.layout.shopping_list_item, shoppingLists);
+				R.layout.shopping_list_item, shoppingLists2);
 
 		ListView listView = (ListView) findViewById(R.id.ShoppingListView);
 		listView.setAdapter(shoppingListAdapter);

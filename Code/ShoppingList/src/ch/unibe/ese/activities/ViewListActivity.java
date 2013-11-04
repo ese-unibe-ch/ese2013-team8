@@ -23,11 +23,13 @@ import ch.unibe.ese.core.Item;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
 import ch.unibe.ese.core.sqlite.SQLiteItemAdapter;
+import ch.unibe.ese.share.SyncManager;
 import ch.unibe.ese.shoppinglist.R;
 
 public class ViewListActivity extends BaseActivity {
 
 	private ListManager manager;
+	private SyncManager syncmanager;
 	private ArrayAdapter<Item> itemAdapter;
 	private ArrayAdapter<Item> itemBoughtAdapter;
 	private ArrayList<Item>	itemsList;
@@ -44,6 +46,7 @@ public class ViewListActivity extends BaseActivity {
 		setupActionBar();
 
 		manager = getListManager();
+		syncmanager = getSyncManager();
 
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
@@ -140,6 +143,22 @@ public class ViewListActivity extends BaseActivity {
 			}
 		});
 		
+		// Add long click Listener to bought items
+		listViewBought.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				Item selectedItem = itemAdapter.getItem(arg2);
+				ViewListActivity.this
+						.startActionMode(new ShoppingListActionMode(
+								ViewListActivity.this.manager, selectedItem,
+								list, ViewListActivity.this.itemAdapter,
+								ViewListActivity.this));
+				return true;
+			}
+		});
+		
 		// Add click Listener to bought items
 		listViewBought.setOnItemClickListener(new OnItemClickListener() {
 
@@ -231,16 +250,15 @@ public class ViewListActivity extends BaseActivity {
             this.startActivity(intentEdit);
 			return true;
 		case R.id.action_archive:
-			// TODO: add archive function
-			Toast.makeText(this, this.getString(R.string.error_missing), Toast.LENGTH_SHORT).show();
+			list.setArchived(true);
+			NavUtils.navigateUpFromSameTask(this);
 			return true;
 		case R.id.action_delete:
 			manager.removeShoppingList(list);
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
 		case R.id.action_refresh:
-			// TODO: add synchronize function
-			Toast.makeText(this, this.getString(R.string.error_missing), Toast.LENGTH_SHORT).show();
+			syncmanager.synchronise();
 			return true;
 		case R.id.action_settings:
 			Intent optionsIntent = new Intent(this, OptionsActivity.class);

@@ -75,6 +75,14 @@
             android:label="@string/title_activity_item_list"
             android:parentActivityName="ch.unibe.ese.activities.HomeActivity" >
         </activity>
+        <activity
+            android:name="ch.unibe.ese.activities.ArchiveActivity"
+            android:label="@string/title_activity_archive"
+            android:parentActivityName="ch.unibe.ese.activities.HomeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ch.unibe.ese.activities.HomeActivity" />
+        </activity>
     </application>
 
 </manifest>

@@ -134,10 +134,11 @@ public class SQLiteReadHelper {
 	 */
 	public ShoppingList cursorToShoppingList(Cursor cursor) {
 		ShoppingList list = new ShoppingList(cursor.getString(1));
-		if (cursor.getLong(2) > 0)
-			list.setDueDate(new Date(cursor.getLong(2)));
-
-		list.setShop(getShopName(cursor.getInt(3)));
+		list.setArchived(cursor.getInt(2) == 1);
+		if (cursor.getLong(3) > 0)
+			list.setDueDate(new Date(cursor.getLong(3)));
+		
+		list.setShop(getShopName(cursor.getInt(4)));
 		return list;
 	}
 
@@ -236,7 +237,7 @@ public class SQLiteReadHelper {
 			return -1;
 		}
 	}
-
+	
 	/**
 	 * Get Item name with item ID
 	 * 

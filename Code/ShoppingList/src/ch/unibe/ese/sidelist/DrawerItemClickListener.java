@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Toast;
+import ch.unibe.ese.activities.ArchiveActivity;
 import ch.unibe.ese.activities.ItemListActivity;
 import ch.unibe.ese.activities.ManageFriendsActivity;
 import ch.unibe.ese.activities.OptionsActivity;
@@ -35,10 +37,13 @@ public class DrawerItemClickListener implements OnItemClickListener {
 	private void selectMenuItem(int position) {
 		switch(position){
 			case 1: 
+				Toast.makeText(activity, activity.getString(R.string.error_missing), Toast.LENGTH_SHORT).show();
 				break;
-			case 2: 
+			case 2:
+				Toast.makeText(activity, activity.getString(R.string.error_missing), Toast.LENGTH_SHORT).show();
 				break;
 			case 3:
+				Toast.makeText(activity, activity.getString(R.string.error_missing), Toast.LENGTH_SHORT).show();
 				break;
 		}	
 	}
@@ -46,6 +51,9 @@ public class DrawerItemClickListener implements OnItemClickListener {
 	private void selectOptionsItem(int position) {
 		switch(position){
 		case 1: 
+			//start Archive
+			Intent archiveIntent = new Intent(activity, ArchiveActivity.class);
+			activity.startActivity(archiveIntent);
 			break;
 		case 2: 
 			//start itemList
