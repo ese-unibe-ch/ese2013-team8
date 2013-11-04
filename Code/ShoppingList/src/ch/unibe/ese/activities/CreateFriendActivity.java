@@ -89,7 +89,8 @@ public class CreateFriendActivity extends BaseActivity {
 
 	private void addNewFriend(EditText friendName, String name,
 			EditText friendNr, int nr) {
-		int processStatus = friendsManager.addFriend(nr, name);
+		Friend friend = new Friend(nr, name);
+		int processStatus = friendsManager.addFriend(friend);
 		if (processStatus == 0){
 			friendName.setText("");
 			friendNr.setText("");

@@ -294,9 +294,9 @@ public class SQLiteReadHelper {
 	}
 
 	/**
-	 * Get Item Id with Item Name
+	 * Get Friend Nr with Friend Name
 	 * 
-	 * @param itemName
+	 * @param friendName
 	 * @return
 	 */
 	public int getFriendNr(String friendName) {

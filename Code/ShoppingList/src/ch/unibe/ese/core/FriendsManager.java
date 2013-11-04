@@ -20,19 +20,18 @@ public class FriendsManager {
 	 * @param name
 	 * @int 0 successful, >= 1 fail
 	 */
-	public int addFriend(int phoneNr, String name){
-		if(checkIfDouble(phoneNr, name))
+	public int addFriend(Friend friend){
+		if(checkIfDouble(friend))
 			return 1;
 		
 		// TODO
 		// You cannot wait for a network request to finish
 		// It needs to update the status of the friend (setChanged) when the
 		// result of the request is here.
-		FriendRequest fRequest = new FriendRequest("" + phoneNr);
-		SyncManager.getInstance().addRequest(fRequest);
-		SyncManager.getInstance().synchronise();
+		//FriendRequest fRequest = new FriendRequest("" + friend.getPhoneNr());
+		//SyncManager.getInstance().addRequest(fRequest);
+		//SyncManager.getInstance().synchronise();
 		// \TODO
-		Friend friend = new Friend(phoneNr, name);
 		friendsList.add(friend);
 		
 		//Save friend to database
@@ -44,8 +43,7 @@ public class FriendsManager {
 	 * Checks if a friend is already in the friendslist
 	 * @return true if already in list, otherwise false
 	 */
-	private boolean checkIfDouble(int phoneNr, String name) {
-		Friend friend = new Friend(phoneNr, name);
+	private boolean checkIfDouble(Friend friend) {
 		for(Friend compare: friendsList)
 			if(compare.equals(friend)) return true;
 		
