@@ -36,7 +36,6 @@ public class HomeActivity extends BaseActivity {
 	private SyncManager syncmanager;
 	private ArrayAdapter<ShoppingList> shoppingListAdapter;
 	private Activity homeActivity = this;
-
 	private DrawerLayout drawMenu;
 	private ActionBarDrawerToggle drawerToggle;
 
@@ -46,8 +45,10 @@ public class HomeActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 
-		createNavigationDrawer();
-		
+		// Create drawer menu
+		NavigationDrawer nDrawer = new NavigationDrawer();
+		drawMenu = nDrawer.constructNavigationDrawer(drawMenu, this);
+		createDrawerToggle();
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
 
@@ -58,6 +59,45 @@ public class HomeActivity extends BaseActivity {
 		updateAdapter();
 
 	}
+	
+	private void createDrawerToggle() {
+		drawerToggle = new ActionBarDrawerToggle(
+                this,                  	/* host Activity */
+                drawMenu,         		/* DrawerLayout object */
+                R.drawable.ic_drawer,  	/* nav drawer icon to replace 'Up' caret */
+                R.string.drawer_open,  	/* "open drawer" description */
+                R.string.drawer_close  	/* "close drawer" description */
+                ) {
+
+			// At the moment the following two methods are useless, but maybe 
+			// we will want to add stuff later
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                getActionBar().setTitle(R.string.app_name);
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                getActionBar().setTitle(R.string.app_name);
+            }
+        };
+        
+        // Set the drawer toggle as the DrawerListener
+        drawMenu.setDrawerListener(drawerToggle);
+	}
+	
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        drawerToggle.syncState();
+    }
+    
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        drawerToggle.onConfigurationChanged(newConfig);
+    }
 
 	private void updateAdapter() {
 		// Get List from manager
@@ -108,50 +148,6 @@ public class HomeActivity extends BaseActivity {
 			}
 		});
 	}
-	
-
-	private void createNavigationDrawer() {
-		// Create drawer menu
-		NavigationDrawer nDrawer = new NavigationDrawer();
-		drawMenu = nDrawer.constructNavigationDrawer(drawMenu, this);
-		
-		drawerToggle = new ActionBarDrawerToggle(
-                this,                  	/* host Activity */
-                drawMenu,         		/* DrawerLayout object */
-                R.drawable.ic_drawer,  	/* nav drawer icon to replace 'Up' caret */
-                R.string.drawer_open,  	/* "open drawer" description */
-                R.string.drawer_close  	/* "close drawer" description */
-                ) {
-
-			// At the moment the following two methods are useless, but maybe 
-			// we will want to add stuff later
-            /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-                getActionBar().setTitle(R.string.app_name);
-            }
-
-            /** Called when a drawer has settled in a completely open state. */
-            public void onDrawerOpened(View drawerView) {
-                getActionBar().setTitle(R.string.app_name);
-            }
-        };
-        
-        // Set the drawer toggle as the DrawerListener
-        drawMenu.setDrawerListener(drawerToggle);
-	}
-	
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
-        drawerToggle.syncState();
-    }
-    
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        drawerToggle.onConfigurationChanged(newConfig);
-    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

@@ -4,23 +4,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ch.unibe.ese.core.BaseActivity;
-import ch.unibe.ese.core.Item;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
 import ch.unibe.ese.shoppinglist.R;
-import ch.unibe.ese.shoppinglist.R.layout;
-import ch.unibe.ese.shoppinglist.R.menu;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.support.v4.app.NavUtils;
 
 public class ArchiveActivity extends BaseActivity {
 	
 	private ListManager manager;
 	private ArrayAdapter<ShoppingList> listAdapter;
+	List<ShoppingList> shoppingLists;
+	List<ShoppingList> shoppingListsArchived;
+	private Activity archiveActivity = this;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +45,8 @@ public class ArchiveActivity extends BaseActivity {
 	 */
 	public void updateAdapter() {
 		// display items
-		List<ShoppingList> shoppingLists = manager.getShoppingLists();
-		List<ShoppingList> shoppingListsArchived = new ArrayList<ShoppingList>();
+		shoppingLists = manager.getShoppingLists();
+		shoppingListsArchived = new ArrayList<ShoppingList>();
 		
 		// separate archived lists
 		for (ShoppingList list: shoppingLists)
@@ -50,6 +56,44 @@ public class ArchiveActivity extends BaseActivity {
 		listAdapter = new ArrayAdapter<ShoppingList>(this, R.layout.shopping_list_item, shoppingListsArchived);
 		ListView listView = (ListView) findViewById(R.id.ListView);
 		listView.setAdapter(listAdapter);
+		
+		addListener(listView);
+	}
+	
+	private void addListener(ListView listView) {
+		// Add long click Listener
+		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			// TODO: Merge those 2 Listeners together, because we don't need two
+			// seperate listeners...
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				ShoppingList selectedList = listAdapter.getItem(arg2);
+				ArchiveActivity.this.startActionMode(new ShoppingListActionMode(
+						ArchiveActivity.this.manager, selectedList,
+						ArchiveActivity.this.listAdapter,
+						ArchiveActivity.this));
+				return true;
+			}
+		});
+
+		// Add click Listener
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Intent intent = new Intent(archiveActivity, ViewListActivity.class);
+				
+				// get position in listmanager
+				ShoppingList list = shoppingListsArchived.get(position);
+				int listPosition = manager.getShoppingLists().indexOf(list);
+				
+				intent.putExtra("selectedList", listPosition);
+				archiveActivity.startActivity(intent);
+			}
+		});
 	}
 
 	/**

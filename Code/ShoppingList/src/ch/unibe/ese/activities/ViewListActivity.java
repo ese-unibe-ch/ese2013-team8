@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +26,7 @@ import ch.unibe.ese.core.ShoppingList;
 import ch.unibe.ese.core.sqlite.SQLiteItemAdapter;
 import ch.unibe.ese.share.SyncManager;
 import ch.unibe.ese.shoppinglist.R;
+import ch.unibe.ese.sidelist.NavigationDrawer;
 
 public class ViewListActivity extends BaseActivity {
 
@@ -37,6 +39,7 @@ public class ViewListActivity extends BaseActivity {
 	private Activity viewListActivity = this;
 	private ShoppingList list;
 	private int listIndex;
+	private DrawerLayout drawMenu;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,10 @@ public class ViewListActivity extends BaseActivity {
 
 		manager = getListManager();
 		syncmanager = getSyncManager();
+		
+		// Create drawer menu
+		//NavigationDrawer nDrawer = new NavigationDrawer();
+		//drawMenu = nDrawer.constructNavigationDrawer(drawMenu, this);
 
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
@@ -250,7 +257,11 @@ public class ViewListActivity extends BaseActivity {
             this.startActivity(intentEdit);
 			return true;
 		case R.id.action_archive:
-			list.setArchived(true);
+			// toggle archive state
+			if (list.isArchived())
+				list.setArchived(false);
+			else
+				list.setArchived(true);
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
 		case R.id.action_delete:
