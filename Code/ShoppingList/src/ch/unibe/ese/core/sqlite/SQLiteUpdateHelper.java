@@ -82,6 +82,10 @@ public class SQLiteUpdateHelper {
 	public ContentValues toValue(Friend friend) {
 		ContentValues values = new ContentValues();
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+		// values.put(SQLiteHelper.COLUMN_FRIEND_ID, friend.getID());
+>>>>>>> 1df1ae7a298953f3595f4a658b29040d45638a11
 =======
 		// values.put(SQLiteHelper.COLUMN_FRIEND_ID, friend.getID());
 >>>>>>> 1df1ae7a298953f3595f4a658b29040d45638a11

@@ -39,9 +39,13 @@ public class DrawerItemClickListener implements OnItemClickListener {
 		switch(position){
 			case 1: 
 <<<<<<< HEAD
+<<<<<<< HEAD
 				//start itemList
 				Intent itemListIntent = new Intent(activity, ItemListActivity.class);
 				activity.startActivity(itemListIntent);
+=======
+				Toast.makeText(activity, activity.getString(R.string.error_missing), Toast.LENGTH_SHORT).show();
+>>>>>>> 1df1ae7a298953f3595f4a658b29040d45638a11
 =======
 				Toast.makeText(activity, activity.getString(R.string.error_missing), Toast.LENGTH_SHORT).show();
 >>>>>>> 1df1ae7a298953f3595f4a658b29040d45638a11

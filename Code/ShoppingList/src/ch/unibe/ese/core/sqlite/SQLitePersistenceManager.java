@@ -133,8 +133,14 @@ public class SQLitePersistenceManager implements PersistenceManager {
 			cursor.moveToNext();
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 		cursor.close();
 				
+=======
+
+		cursor.close();
+
+>>>>>>> 1df1ae7a298953f3595f4a658b29040d45638a11
 =======
 
 		cursor.close();
@@ -186,6 +192,7 @@ public class SQLitePersistenceManager implements PersistenceManager {
 		}
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	
 	/**
 	 * Returns item with the id
@@ -201,6 +208,9 @@ public class SQLitePersistenceManager implements PersistenceManager {
 		return null;
 	}
 	
+=======
+
+>>>>>>> 1df1ae7a298953f3595f4a658b29040d45638a11
 =======
 
 >>>>>>> 1df1ae7a298953f3595f4a658b29040d45638a11
@@ -255,6 +265,7 @@ public class SQLitePersistenceManager implements PersistenceManager {
 		int friendNr = readHelper.getFriendNr(friend.getName());
 		if (friendNr != -1) {
 			database.delete(SQLiteHelper.TABLE_FRIENDS,
+<<<<<<< HEAD
 <<<<<<< HEAD
 					SQLiteHelper.COLUMN_FRIEND_PHONENR + "=? ", new String[] { ""
 							+ friendNr });
@@ -339,7 +350,11 @@ public class SQLitePersistenceManager implements PersistenceManager {
 							+ recipeNr });
 			database.delete(SQLiteHelper.TABLE_ITEMTORECIPE, SQLiteHelper.COLUMN_RECIPE_ID + "=? ",
 					new String[] { "" + recipeNr});
+=======
+					SQLiteHelper.COLUMN_FRIEND_PHONENR + "= ?",
+					new String[] { "" + friendNr });
+>>>>>>> 1df1ae7a298953f3595f4a658b29040d45638a11
 		}
-		
+
 	}
 }

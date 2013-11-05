@@ -77,6 +77,7 @@
         </activity>
         <activity
 <<<<<<< HEAD
+<<<<<<< HEAD
             android:name="ch.unibe.ese.activities.ManageRecipeActivity"
             android:label="@string/title_activity_manage_recipe" >
         </activity>
@@ -84,12 +85,17 @@
             android:name="ch.unibe.ese.activities.CreateRecipeActivity"
             android:label="@string/title_activity_create_recipe" >
 =======
+=======
+>>>>>>> 1df1ae7a298953f3595f4a658b29040d45638a11
             android:name="ch.unibe.ese.activities.ArchiveActivity"
             android:label="@string/title_activity_archive"
             android:parentActivityName="ch.unibe.ese.activities.HomeActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ch.unibe.ese.activities.HomeActivity" />
+<<<<<<< HEAD
+>>>>>>> 1df1ae7a298953f3595f4a658b29040d45638a11
+=======
 >>>>>>> 1df1ae7a298953f3595f4a658b29040d45638a11
         </activity>
     </application>
