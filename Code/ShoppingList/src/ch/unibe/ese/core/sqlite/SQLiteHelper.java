@@ -41,8 +41,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 			// create table for lists
 			"create table " + TABLE_LISTS + "(" //
 			+ COLUMN_LIST_ID + " integer primary key autoincrement, " //
-			+ COLUMN_LIST_NAME + " text not null, " //
-			+ COLUMN_LIST_ARCHIVED + " integer, "
+			+ COLUMN_LIST_NAME + " text NOT NULL, " //
+			+ COLUMN_LIST_ARCHIVED + " integer NOT NULL, "
 			+ COLUMN_LIST_DUEDATE + " integer, " //
 			+ COLUMN_SHOP_ID + " integer" //
 			+ ");";

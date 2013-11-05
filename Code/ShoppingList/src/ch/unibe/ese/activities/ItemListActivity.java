@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +17,7 @@ import ch.unibe.ese.core.BaseActivity;
 import ch.unibe.ese.core.Item;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.shoppinglist.R;
+import ch.unibe.ese.sidelist.NavigationDrawer;
 
 public class ItemListActivity extends BaseActivity {
 	
@@ -23,7 +25,7 @@ public class ItemListActivity extends BaseActivity {
 	private ListManager manager;
 	private ArrayList<Item> itemList;
 	private ArrayAdapter<Item> itemAdapter;
-	
+	private DrawerLayout drawMenu;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,10 @@ public class ItemListActivity extends BaseActivity {
 		
 		//get manager and all items 
 		manager = getListManager();
+		
+		// Create drawer menu
+		NavigationDrawer nDrawer = new NavigationDrawer();
+		drawMenu = nDrawer.constructNavigationDrawer(drawMenu, this);
 	
 		updateAdapter();
 

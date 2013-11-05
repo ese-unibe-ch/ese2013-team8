@@ -52,8 +52,8 @@ public class ViewListActivity extends BaseActivity {
 		syncmanager = getSyncManager();
 		
 		// Create drawer menu
-		//NavigationDrawer nDrawer = new NavigationDrawer();
-		//drawMenu = nDrawer.constructNavigationDrawer(drawMenu, this);
+		NavigationDrawer nDrawer = new NavigationDrawer();
+		drawMenu = nDrawer.constructNavigationDrawer(drawMenu, this);
 
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
