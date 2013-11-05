@@ -19,7 +19,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.support.v4.app.NavUtils;
 import android.support.v4.widget.DrawerLayout;
 
 public class ArchiveActivity extends BaseActivity {
@@ -130,10 +129,15 @@ public class ArchiveActivity extends BaseActivity {
 			//
 			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
 			//
-			NavUtils.navigateUpFromSameTask(this);
+			finish();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
 
+	@Override
+	protected void onPause() {
+		super.onPause();
+    	drawMenu.closeDrawers();
+	}
 }

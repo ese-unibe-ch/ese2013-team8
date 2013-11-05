@@ -286,4 +286,10 @@ public class ViewListActivity extends BaseActivity {
 		if (requestCode == 1 && resultCode == RESULT_OK) 
 				updateAdapters();
 	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+    	drawMenu.closeDrawers();
+	}
 }

@@ -2,7 +2,6 @@ package ch.unibe.ese.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -58,14 +57,6 @@ public class ManageFriendsActivity extends BaseActivity {
 	}
 	
 	/**
-	 * Fix to close the drawer menu on back button press
-	 */
-	@Override       
-	public void onBackPressed() {
-		NavUtils.navigateUpFromSameTask(this);
-	}
-	
-	/**
 	 * Updates the Viewlist, which shows all friends and adds itemclicklistener
 	 */
 	public void updateFriendsList(){
@@ -113,7 +104,7 @@ public class ManageFriendsActivity extends BaseActivity {
 			//
 			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
 			//
-			NavUtils.navigateUpFromSameTask(this);
+			finish();
 			return true;
 		case R.id.action_new:
 			Intent intent = new Intent(this, CreateFriendActivity.class);

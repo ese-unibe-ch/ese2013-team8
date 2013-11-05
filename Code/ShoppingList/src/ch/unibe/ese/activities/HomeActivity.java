@@ -198,6 +198,7 @@ public class HomeActivity extends BaseActivity {
 	@Override
 	protected void onPause() {
 		super.onPause();
+    	drawMenu.closeDrawers();
 	}
 	
 	public void onResume(){

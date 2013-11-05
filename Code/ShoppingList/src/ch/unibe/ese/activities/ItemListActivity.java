@@ -80,14 +80,6 @@ public class ItemListActivity extends BaseActivity {
 	private void setupActionBar() {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
-	
-	/**
-	 * Fix to close the drawer menu on back button press
-	 */
-	@Override       
-	public void onBackPressed() {
-		NavUtils.navigateUpFromSameTask(this);
-	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -107,7 +99,7 @@ public class ItemListActivity extends BaseActivity {
 			//
 			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
 			//
-			NavUtils.navigateUpFromSameTask(this);
+			finish();
 			return true;
 			
 		case R.id.action_new:
@@ -126,9 +118,14 @@ public class ItemListActivity extends BaseActivity {
 				updateAdapter(); 
 	}
 	
+	@Override
+	protected void onPause() {
+		super.onPause();
+    	drawMenu.closeDrawers();
+	}
+	
 	public void onResume(){
     	super.onResume();
     	updateAdapter();
     }
-
 }
