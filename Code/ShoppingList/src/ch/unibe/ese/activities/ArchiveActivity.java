@@ -7,6 +7,7 @@ import ch.unibe.ese.core.BaseActivity;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
 import ch.unibe.ese.shoppinglist.R;
+import ch.unibe.ese.sidelist.NavigationDrawer;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.support.v4.app.NavUtils;
+import android.support.v4.widget.DrawerLayout;
 
 public class ArchiveActivity extends BaseActivity {
 	
@@ -27,6 +29,7 @@ public class ArchiveActivity extends BaseActivity {
 	List<ShoppingList> shoppingLists;
 	List<ShoppingList> shoppingListsArchived;
 	private Activity archiveActivity = this;
+	private DrawerLayout drawMenu;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,10 @@ public class ArchiveActivity extends BaseActivity {
 		setupActionBar();
 		
 		manager = getListManager();
+		
+		// Create drawer menu
+		NavigationDrawer nDrawer = new NavigationDrawer();
+		drawMenu = nDrawer.constructNavigationDrawer(drawMenu, this);
 		
 		updateAdapter();
 	}
@@ -128,4 +135,9 @@ public class ArchiveActivity extends BaseActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
+	@Override
+	protected void onPause() {
+		super.onPause();
+    	drawMenu.closeDrawers();
+	}
 }

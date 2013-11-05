@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,16 +18,20 @@ import ch.unibe.ese.core.Friend;
 import ch.unibe.ese.core.FriendsManager;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
+import ch.unibe.ese.share.SyncManager;
 import ch.unibe.ese.shoppinglist.R;
+import ch.unibe.ese.sidelist.NavigationDrawer;
 
 public class ShareListActivity extends BaseActivity {
 
 	private ListManager manager;
 	private FriendsManager friendsManager;
+	private SyncManager syncManager;
 	private ArrayAdapter<Friend> friendsAdapter;
 	private ArrayAdapter<Friend> autocompleteAdapter;
 	private ShoppingList list;
-
+	private DrawerLayout drawMenu;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -38,6 +43,10 @@ public class ShareListActivity extends BaseActivity {
 		friendsManager = getFriendsManager();
 		friendsAdapter = new ArrayAdapter<Friend>(this,
 				R.layout.shopping_list_item, new ArrayList<Friend>());
+		
+		// Create drawer menu
+		NavigationDrawer nDrawer = new NavigationDrawer();
+		drawMenu = nDrawer.constructNavigationDrawer(drawMenu, this);
 
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
@@ -144,5 +153,16 @@ public class ShareListActivity extends BaseActivity {
 	public void updateFriendsList() {
 		ListView listView = (ListView) findViewById(R.id.FriendView);
 		listView.setAdapter(friendsAdapter);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+    	drawMenu.closeDrawers();
+	}
+	
+	@Override
+	public void onBackPressed() {
+		this.syncManager.synchronise();
 	}
 }

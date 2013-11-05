@@ -29,10 +29,17 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public static final String COLUMN_LISTPRICE = "listprice";
 	public static final String COLUMN_ITEMBOUGHT = "itembought";
 	public static final String COLUMN_ITEM_QUANTITY ="quantity";
-	// Save all friends with an unique name and ID
+	// Save all friends with an unique phoneNr
 	public static final String TABLE_FRIENDS = "friendlist";
 	public static final String COLUMN_FRIEND_NAME = "friendname";
 	public static final String COLUMN_FRIEND_PHONENR = "friendphonenr";
+	// Save all recipes with an unique id and name
+	public static final String TABLE_RECIPES = "recipelist";
+	public static final String COLUMN_RECIPE_ID = "recipeid";
+	public static final String COLUMN_RECIPE_NAME = "recipename";
+	// Save all items to recipeid of a recipe
+	public static final String TABLE_ITEMTORECIPE = "itemtorecipe";
+	
 
 	private static final String DATABASE_NAME = "shoppinglist.db";
 	private static final int DATABASE_VERSION = 1;
@@ -42,8 +49,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 			// create table for lists
 			"create table " + TABLE_LISTS + "(" //
 			+ COLUMN_LIST_ID + " integer primary key autoincrement, " //
-			+ COLUMN_LIST_NAME + " text not null, " //
-			+ COLUMN_LIST_ARCHIVED + " integer, "
+			+ COLUMN_LIST_NAME + " text NOT NULL, " //
+			+ COLUMN_LIST_ARCHIVED + " integer NOT NULL, "
 			+ COLUMN_LIST_DUEDATE + " integer, " //
 			+ COLUMN_SHOP_ID + " integer" //
 			+ ");";
@@ -76,6 +83,17 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 			+ COLUMN_FRIEND_NAME + " varchar(30) "
 			+ ");";
 	
+	private static final String DATABASE_CREATE_TABLE_RECIPE =
+			"create table " + TABLE_RECIPES + "("
+			+ COLUMN_RECIPE_ID + " integer primary key autoincrement, "
+			+ COLUMN_RECIPE_NAME + " text NOT NULL "
+			+ ");";
+	private static final String DATABASE_CREATE_TABLE_ITEMTORECIPE = 
+			"create table " + TABLE_ITEMTORECIPE + "("
+			+ COLUMN_RECIPE_ID + " integer NOT NULL, "
+			+ COLUMN_ITEM_ID + " integer NOT NULL"
+			+ ");";
+	
 	
 	public static String[] LISTS_COLUMNS = { SQLiteHelper.COLUMN_LIST_ID,
 			SQLiteHelper.COLUMN_LIST_NAME, SQLiteHelper.COLUMN_LIST_ARCHIVED,
@@ -89,6 +107,10 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 			SQLiteHelper.COLUMN_LISTPRICE, SQLiteHelper.COLUMN_ITEMBOUGHT, SQLiteHelper.COLUMN_ITEM_QUANTITY };
 	public static String[] FRIENDS_COLUMNS = { SQLiteHelper.COLUMN_FRIEND_PHONENR,
 			SQLiteHelper.COLUMN_FRIEND_NAME };
+	public static String[] RECIPE_COLUMNS = { SQLiteHelper.COLUMN_RECIPE_ID,
+			SQLiteHelper.COLUMN_RECIPE_NAME };
+	public static String[] ITEMTORECIPE_COLUMNS = {
+			SQLiteHelper.COLUMN_RECIPE_ID, SQLiteHelper.COLUMN_ITEM_ID };
 
 	
 	public SQLiteHelper(Context context) {
@@ -103,6 +125,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 		database.execSQL(DATABASE_CREATE_TABLE_ITEMTOLIST);
 		database.execSQL(DATABASE_CREATE_TABLE_SHOPS);
 		database.execSQL(DATABASE_CREATE_TABLE_FRIENDS);
+		database.execSQL(DATABASE_CREATE_TABLE_RECIPE);
+		database.execSQL(DATABASE_CREATE_TABLE_ITEMTORECIPE);
 	}
 
 	@Override

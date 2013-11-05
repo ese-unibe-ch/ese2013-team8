@@ -22,6 +22,7 @@ import android.widget.Toast;
 import ch.unibe.ese.core.BaseActivity;
 import ch.unibe.ese.core.Item;
 import ch.unibe.ese.core.ListManager;
+import ch.unibe.ese.core.Recipe;
 import ch.unibe.ese.core.ShoppingList;
 import ch.unibe.ese.core.sqlite.SQLiteItemAdapter;
 import ch.unibe.ese.share.SyncManager;
@@ -51,8 +52,8 @@ public class ViewListActivity extends BaseActivity {
 		syncmanager = getSyncManager();
 		
 		// Create drawer menu
-		//NavigationDrawer nDrawer = new NavigationDrawer();
-		//drawMenu = nDrawer.constructNavigationDrawer(drawMenu, this);
+		NavigationDrawer nDrawer = new NavigationDrawer();
+		drawMenu = nDrawer.constructNavigationDrawer(drawMenu, this);
 
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
@@ -205,18 +206,31 @@ public class ViewListActivity extends BaseActivity {
 		String name = textName.getText().toString();
 		if (name.trim().length() == 0) {
 			Toast.makeText(this, this.getString(R.string.error_name), Toast.LENGTH_SHORT).show();
+			return;
+		} else if(name.charAt(0) == '/') {
+			ArrayList<Recipe> recipeList = (ArrayList<Recipe>) manager.getRecipes();
+			String recipeName = name.substring(1);
+			
+			for(Recipe recipe : recipeList) {
+				if(recipe.getName().equals(recipeName)) {
+					for(Item item: recipe.getItemList()) {
+						manager.addItemToList(item, list);
+						itemAdapter.add(item);
+					}
+				}
+			}
+					
 		} else {
 			Item item = new Item(name);
 			manager.addItemToList(item, list);
 
 			// refresh view
 			itemAdapter.add(item);
-
-			// remove text from field
-			textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
-			textName.setText("");
-
 		}
+
+		// remove text from field
+		textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
+		textName.setText("");
 	}
 
 	@Override
@@ -284,5 +298,11 @@ public class ViewListActivity extends BaseActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == 1 && resultCode == RESULT_OK) 
 				updateAdapters();
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+    	drawMenu.closeDrawers();
 	}
 }

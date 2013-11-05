@@ -7,11 +7,8 @@ import java.io.StreamCorruptedException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import ch.unibe.ese.core.BaseActivity;
-import ch.unibe.ese.share.requests.Request;
-
-import android.content.Context;
 import android.os.AsyncTask;
+import ch.unibe.ese.share.requests.Request;
 
 /**
  * Is responsible to establish a connection socket to the server (hardcoded IP at the moment)
@@ -65,8 +62,8 @@ public class RequestSender extends AsyncTask<Request, Object, Boolean>{
 	 */
 	private void initSocket() {
 		try {
-			this.socket = new Socket("matter2.nine.ch", 1337);
-//			this.socket = new Socket("10.0.0.2", 1337); // Enter your local ip here
+//			this.socket = new Socket("matter2.nine.ch", 1337);
+			this.socket = new Socket("10.0.0.2", 1337); // Enter your local ip here
 		} catch (UnknownHostException e) {
 			System.err.println("Unknown Host in initSocket()");
 		} catch (IOException e) {

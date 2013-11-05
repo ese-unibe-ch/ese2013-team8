@@ -9,6 +9,8 @@ import android.widget.Toast;
 import ch.unibe.ese.core.BaseActivity;
 import ch.unibe.ese.core.Friend;
 import ch.unibe.ese.core.FriendsManager;
+import ch.unibe.ese.share.SyncManager;
+import ch.unibe.ese.share.requests.FriendRequest;
 import ch.unibe.ese.shoppinglist.R;
 
 /**
@@ -74,6 +76,12 @@ public class CreateFriendActivity extends BaseActivity {
 			EditText friendNr = (EditText) findViewById(R.id.edit_friend_phone_number);
 			int nr = Integer.parseInt(friendNr.getText().toString());
 	
+			SyncManager syncmanager = this.getSyncManager();
+			// Ask server if friend has the app
+			FriendRequest frequest = new FriendRequest("" + nr);
+			syncmanager.addRequest(frequest);
+			syncmanager.synchronise();
+			
 			if(!editFriend)
 				addNewFriend(friendName, name, friendNr, nr);
 			else{

@@ -11,7 +11,7 @@ import android.widget.Toast;
  * (like {@link ListManager}, {@link FriendsManager} or {@link SyncManager}.
  */
 public class BaseActivity extends Activity {
-
+	
 	public ListManager getListManager() {
 		BaseApplication app = (BaseApplication) this.getApplication();
 		ListManager manager = app.getListManager();

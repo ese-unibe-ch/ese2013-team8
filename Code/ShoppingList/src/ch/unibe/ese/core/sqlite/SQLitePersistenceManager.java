@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import ch.unibe.ese.core.Friend;
 import ch.unibe.ese.core.Item;
 import ch.unibe.ese.core.PersistenceManager;
+import ch.unibe.ese.core.Recipe;
 import ch.unibe.ese.core.ShoppingList;
 
 /**
@@ -130,9 +131,8 @@ public class SQLitePersistenceManager implements PersistenceManager {
 				itemList.add(item);
 			cursor.moveToNext();
 		}
-
 		cursor.close();
-
+		
 		return itemList;
 	}
 
@@ -178,6 +178,21 @@ public class SQLitePersistenceManager implements PersistenceManager {
 			id = database.insert(SQLiteHelper.TABLE_ITEMS, null, values);
 			item.setId(id);
 		}
+	}
+
+	
+	/**
+	 * Returns item with the id
+	 * @param l
+	 * @return item with the itemId, if not found, null
+	 */
+	public Item getItem(long l) {
+		//TODO: rewrite code when problem is solved with shop and date in item db
+		List<Item> itemList = getAllItems();
+		for(Item item : itemList)
+			if(item.getId() == l)
+				return item;	
+		return null;
 	}
 
 	@Override
@@ -231,8 +246,85 @@ public class SQLitePersistenceManager implements PersistenceManager {
 		int friendNr = readHelper.getFriendNr(friend.getName());
 		if (friendNr != -1) {
 			database.delete(SQLiteHelper.TABLE_FRIENDS,
-					SQLiteHelper.COLUMN_FRIEND_PHONENR + "= ?",
-					new String[] { "" + friendNr });
+					SQLiteHelper.COLUMN_FRIEND_PHONENR + "=? "
+					, new String[] { "" + friendNr });
+		}
+
+	}
+	
+	/**
+	 * Everything for recipes
+	 */
+	@Override
+	public List<Recipe> readRecipes() {
+		List<Recipe> listOfRecipes = new ArrayList<Recipe>();
+
+		Cursor cursor = readHelper.getRecipeCursor();
+		while (!cursor.isAfterLast()) {
+			Recipe recipe = readHelper.cursorToRecipe(cursor);
+			listOfRecipes.add(recipe);
+			cursor.moveToNext();
+		}
+		cursor.close();
+		
+		addItemsToRecipes(listOfRecipes);
+		return listOfRecipes;
+	}
+
+	private void addItemsToRecipes(List<Recipe> listOfRecipes) {
+		Cursor cursor = readHelper.getItemToRecipeCursor();
+		
+		//TODO: rewrite code, its just a fix. At the moment it would take a lot of resources for big lists
+		while(!cursor.isAfterLast()) {
+			Item item = getItem(cursor.getLong(1));
+
+			if(item != null)
+				for(Recipe recipe: listOfRecipes){
+					if(recipe.getId() == cursor.getLong(0))
+						recipe.addItem(item);
+					}
+			cursor.moveToNext();
+		}
+	}
+	
+	public void save(Recipe recipe) {
+		// Convert the Recipe to a ContentValue
+		ContentValues values = updateHelper.toValue(recipe);
+		// If this is a new recipe
+		if (!readHelper.isInList(recipe)) {
+			long id = database.insert(SQLiteHelper.TABLE_RECIPES, null, values);
+			recipe.setId(id);
+		} else { // Else if it is an old recipe
+			database.update(
+					SQLiteHelper.TABLE_RECIPES,
+					values,
+					SQLiteHelper.COLUMN_RECIPE_ID + "="
+							+ recipe.getId(), null);
+		}
+		
+		ArrayList<Item> ingredients = recipe.getItemList();
+		if(ingredients != null && !ingredients.isEmpty()) 
+			saveIngredients(recipe, ingredients);	
+	}
+
+	private void saveIngredients(Recipe recipe, ArrayList<Item> ingredients) {
+		for(Item item : ingredients)
+		{
+			ContentValues values = updateHelper.toValue(recipe, item);
+			if(!readHelper.isInList(item, recipe))
+				database.insert(SQLiteHelper.TABLE_ITEMTORECIPE, null, values);	
+		}
+	}
+
+	@Override
+	public void remove(Recipe recipe) {
+		long recipeNr = readHelper.getRecipeId(recipe.getName());
+		if (recipeNr != -1) {
+			database.delete(SQLiteHelper.TABLE_RECIPES,
+					SQLiteHelper.COLUMN_RECIPE_ID + "=?", new String[] { ""
+							+ recipeNr });
+			database.delete(SQLiteHelper.TABLE_ITEMTORECIPE, SQLiteHelper.COLUMN_RECIPE_ID + "=? ",
+					new String[] { "" + recipeNr});
 		}
 
 	}

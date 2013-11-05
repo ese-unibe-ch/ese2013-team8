@@ -36,7 +36,7 @@
    </LinearLayout>
 
    <RelativeLayout
-        android:id="@+id/relativeLayout1"
+        android:id="@+id/relativeLayoutRecipe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
@@ -59,100 +59,73 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:text="@string/create_item_title"
+            android:text="@string/add_recipe"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <!-- Name -->
+        <!-- Name of recipe -->
         <TextView
-            android:id="@+id/textViewName"
+            android:id="@+id/recipeName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/editTextName"
+            android:layout_alignBottom="@+id/editRecipeName"
             android:layout_alignLeft="@+id/textViewTitle"
-            android:text="@string/create_item_name"
+            android:text="@string/recipe_name"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <AutoCompleteTextView
-            android:id="@+id/editTextName"
+            android:id="@+id/editRecipeName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/textViewTitle"
             android:layout_marginLeft="14dp"
             android:layout_marginTop="14dp"
-            android:layout_toRightOf="@+id/textViewName"
+            android:layout_toRightOf="@+id/recipeName"
             android:completionThreshold="1"
             android:ems="10"
             android:inputType="textCapSentences">
-            <requestFocus />
         </AutoCompleteTextView>
 
 
-        <!-- Shop -->
+        <!-- add Items to recipe -->
         <TextView
-            android:id="@+id/textViewShop"
+            android:id="@+id/addItemToRecipe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textViewName"
-            android:layout_below="@+id/textViewName"
+            android:layout_alignLeft="@+id/recipeName"
+            android:layout_below="@+id/recipeName"
             android:layout_marginTop="26dp"
-            android:text="@string/create_item_shop"
+            android:text="@string/add_item_to_recipe"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-       <AutoCompleteTextView
-            android:id="@+id/editTextShop"
+        <AutoCompleteTextView
+            android:id="@+id/editAddItemToRecipe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/textViewShop"
-            android:layout_alignRight="@+id/editTextName"
+            android:layout_alignBottom="@+id/addItemToRecipe"
+            android:layout_alignRight="@+id/editRecipeName"
             android:layout_marginLeft="14dp"
-            android:layout_toRightOf="@+id/textViewShop"
+            android:layout_toRightOf="@+id/addItemToRecipe"
             android:ems="10"
             android:completionThreshold="1"
             android:inputType="textCapSentences" >
+            <requestFocus />
         </AutoCompleteTextView>
 
-        <!-- Price -->
-        <TextView
-            android:id="@+id/textViewPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textViewShop"
-            android:layout_below="@+id/textViewShop"
-            android:layout_marginTop="26dp"
-            android:text="@string/create_item_price"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <EditText
-            android:id="@+id/editTextPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/textViewPrice"
-            android:layout_alignLeft="@+id/editTextShop"
-            android:layout_alignParentRight="true"
-            android:ems="10"
-            android:inputType="numberDecimal" />
-
-        <!-- Quantity -->
-        <TextView
-            android:id="@+id/textViewQuantity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textViewPrice"
-            android:layout_below="@+id/textViewPrice"
-            android:layout_marginTop="26dp"
-            android:text="@string/create_item_quantity"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <EditText
-            android:id="@+id/editTextQuantity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/textViewQuantity"
-            android:layout_alignLeft="@+id/editTextPrice"
-            android:layout_alignParentRight="true"
-            android:ems="10"
-            android:inputType="text" />
+       
     </RelativeLayout>
+    
+    <ListView
+        android:id="@+id/recipeListView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relativeLayoutRecipe"
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="15dp"
+        android:background="@android:color/white"
+        android:cacheColorHint="@android:color/white"
+        android:divider="#CCCCCC"
+        android:dividerHeight="1dp" >
+    </ListView>
 
 </RelativeLayout>

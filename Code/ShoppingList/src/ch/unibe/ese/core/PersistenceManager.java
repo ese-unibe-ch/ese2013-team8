@@ -98,4 +98,22 @@ public interface PersistenceManager {
 	 * @param item
 	 */
 	public void remove(Item item);
+
+	/**
+	 * Reads all recipes on the db
+	 * @return
+	 */
+	List<Recipe> readRecipes();
+	
+	/**
+	 * Saves a recipe to the db
+	 * @param recipe
+	 */
+	public void save(Recipe recipe);
+
+	/**
+	 * removes a recipe from the db
+	 * @param recipe
+	 */
+	void remove(Recipe recipe);
 }

@@ -1,7 +1,6 @@
 package ch.unibe.ese.share;
 
 import ch.unibe.ese.share.requests.Request;
-import android.content.Context;
 
 /**
  * Main Class of the share package

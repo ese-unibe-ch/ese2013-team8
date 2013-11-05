@@ -17,11 +17,13 @@ public class ListManager {
 	private final List<ShoppingList> shoppingLists;
 	private final PersistenceManager persistenceManager;
 	private final Map<ShoppingList, List<Item>> listToItems;
+	private List<Recipe> recipes;
 
 	public ListManager(PersistenceManager persistenceManager) {
 		this.persistenceManager = persistenceManager;
 		this.listToItems = new HashMap<ShoppingList, List<Item>>();
-		shoppingLists = persistenceManager.getLists();
+		this.shoppingLists = persistenceManager.getLists();
+		this.recipes = persistenceManager.readRecipes();
 	}
 
 	/**
@@ -122,5 +124,44 @@ public class ListManager {
 
 		for (ShoppingList list : shoppingLists)
 			removeItemFromList(item, list);
+	}
+
+	/**
+	 * Returns a list of all recipes which are saved in the db
+	 * @return list of recipes
+	 */
+	public List<Recipe> readRecipes() {
+		return recipes;
+	}
+	
+	/**
+	 * Saves all Recipes to the db 
+	 * @param recipe
+	 */
+	public void saveRecipe(Recipe recipe) {
+		persistenceManager.save(recipe);
+		recipes = persistenceManager.readRecipes();
+	}
+	
+	/**
+	 * Removes a Recipe from the db
+	 * @param recipe
+	 */
+	public void removeRecipe(Recipe recipe) {
+		recipes.remove(recipe);
+		persistenceManager.remove(recipe);
+	}
+
+	/**
+	 * Gets the Recipe at the correct position
+	 * @param position
+	 * @return recipe at position x
+	 */
+	public Recipe getRecipeAt(int position) {
+		return recipes.get(position);
+	}
+	
+	public List<Recipe> getRecipes() {
+		return recipes;
 	}
 }

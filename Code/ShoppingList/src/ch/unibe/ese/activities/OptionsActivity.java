@@ -31,14 +31,6 @@ public class OptionsActivity extends Activity {
 
 	}
 	
-	/**
-	 * Fix to close the drawer menu on back button press
-	 */
-	@Override       
-	public void onBackPressed() {
-		NavUtils.navigateUpFromSameTask(this);
-	}
-	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

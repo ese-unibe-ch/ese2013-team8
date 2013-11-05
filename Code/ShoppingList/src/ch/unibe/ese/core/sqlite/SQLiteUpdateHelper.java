@@ -2,6 +2,7 @@ package ch.unibe.ese.core.sqlite;
 
 import ch.unibe.ese.core.Friend;
 import ch.unibe.ese.core.Item;
+import ch.unibe.ese.core.Recipe;
 import ch.unibe.ese.core.ShoppingList;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
@@ -74,16 +75,35 @@ public class SQLiteUpdateHelper {
 	}
 
 	/**
-	 * Converts an friendto a Contentvalue (TABLE_FRIENDS)
+	 * Converts an friend into a Contentvalue (TABLE_FRIENDS)
 	 * 
 	 * @param friends
 	 * @return
 	 */
 	public ContentValues toValue(Friend friend) {
 		ContentValues values = new ContentValues();
-		// values.put(SQLiteHelper.COLUMN_FRIEND_ID, friend.getID());
 		values.put(SQLiteHelper.COLUMN_FRIEND_NAME, friend.getName());
 		values.put(SQLiteHelper.COLUMN_FRIEND_PHONENR, friend.getPhoneNr());
+		return values;
+	}
+	
+	/**
+	 * Converts an recipe into a ContentValue (TABLE_RECIPE)
+	 * @param recipe
+	 * @return
+	 */
+	public ContentValues toValue(Recipe recipe) {
+		ContentValues values = new ContentValues();
+//		if(recipe.getId() != null)
+//			values.put(SQLiteHelper.COLUMN_RECIPE_ID, recipe.getId());
+		values.put(SQLiteHelper.COLUMN_RECIPE_NAME, recipe.getName());
+		return values;
+	}
+	
+	public ContentValues toValue(Recipe recipe, Item item) {
+		ContentValues values = new ContentValues();
+		values.put(SQLiteHelper.COLUMN_RECIPE_ID, recipe.getId());
+		values.put(SQLiteHelper.COLUMN_ITEM_ID, item.getId());
 		return values;
 	}
 

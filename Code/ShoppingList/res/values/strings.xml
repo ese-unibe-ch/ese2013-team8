@@ -21,7 +21,11 @@
     <string name="title_activity_manage_friends">Friends</string>
     <string name="title_activity_create_friend">Add Friend</string>
     <string name="title_activity_item_list">Item List</string>
-
+    <string name="title_activity_manage_recipe">Manage Recipes</string>
+ 	<string name="title_activity_create_recipe">Create Recipes</string>
+ 	<string name="title_activity_archive">Archive</string>
+ 	
+    
     <!-- CreateListActivity -->
     <string name="create_list_title">Add new shopping list:</string>
     <string name="edit_list_title">Edit shopping list:</string>
@@ -74,18 +78,16 @@
     <string name="navigation_bar_name">Navigator</string>
 
     <string-array name="navigation_items">
-        <item>Show all</item>
-        <item>Electronics</item>
-        <item>Food</item>
+        <item>Show all Items</item>
     </string-array>
     <string-array name="navigation_options">
         <item>Archive</item>
-        <item>Item List</item>
+        <item>Recipes</item>
         <item>Friends</item>
         <item>Settings</item>
     </string-array>
     <string-array name="navigation_sections">
-        <item>Categories</item>
+        <item>Lists</item>
         <item>Menu</item>
     </string-array>
 
@@ -111,6 +113,11 @@
         <item>sexy</item>
     </string-array>
 
-    <string name="title_activity_archive">Archive</string>
+
+    <!-- Recipe Menu -->
+
+    <string name="add_recipe">Add new recipe:</string>
+    <string name="recipe_name">Name:</string>
+    <string name="add_item_to_recipe">add item:</string>
 
 </resources>

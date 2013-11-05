@@ -76,6 +76,14 @@
             android:parentActivityName="ch.unibe.ese.activities.HomeActivity" >
         </activity>
         <activity
+            android:name="ch.unibe.ese.activities.ManageRecipeActivity"
+            android:label="@string/title_activity_manage_recipe" >
+        </activity>
+        <activity
+            android:name="ch.unibe.ese.activities.CreateRecipeActivity"
+            android:label="@string/title_activity_create_recipe" >
+ 		</activity>
+        <activity
             android:name="ch.unibe.ese.activities.ArchiveActivity"
             android:label="@string/title_activity_archive"
             android:parentActivityName="ch.unibe.ese.activities.HomeActivity" >
