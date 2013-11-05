@@ -16,6 +16,7 @@ public abstract class Request implements Serializable {
 	// Define an integer for every Type of request you implement
 	public static final int REGISTER_REQUEST = 1;
 	public static final int FRIEND_REQUEST = 2;
+	public static final int SHARELIST_REQUEST = 3;
 	
 	// Phone Number is always passed with the request
 	private String phoneNumber;

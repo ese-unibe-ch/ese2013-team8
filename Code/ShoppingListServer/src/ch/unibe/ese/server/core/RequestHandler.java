@@ -1,7 +1,9 @@
 package ch.unibe.ese.server.core;
 
-import ch.unibe.ese.server.database.DatabaseManager;
+import ch.unibe.ese.server.database.NeodatisDatabaseManager;
+import ch.unibe.ese.server.database.SQLiteDatabaseManager;
 import ch.unibe.ese.share.requests.Request;
+import ch.unibe.ese.share.requests.ShareListRequest;
 
 /**
  * Forwarding and filtering of Requests
@@ -9,10 +11,14 @@ import ch.unibe.ese.share.requests.Request;
  */
 public class RequestHandler {
 
-	private DatabaseManager dbManager;
+	private SQLiteDatabaseManager dbManager;
+	private NeodatisDatabaseManager odbManager;
 	
 	public RequestHandler() {
-		this.dbManager = new DatabaseManager();
+		// Manages users and connections between users
+		this.dbManager = new SQLiteDatabaseManager();
+		// Manages requests (objects)
+		this.odbManager = new NeodatisDatabaseManager();
 	}
 	
 	public Request[] handle(Request[] request) {
@@ -25,12 +31,17 @@ public class RequestHandler {
 	public Request handle(Request request) {
 		switch (request.getType()) {
 		case Request.REGISTER_REQUEST:
-			System.out.println("\tRegister-request");
+			System.out.println("\tRegister request");
 			this.dbManager.addUser(request);
 			return request;
 		case Request.FRIEND_REQUEST:
-			System.out.println("\tFriend-request");
-			this.dbManager.findUser(request);
+			System.out.println("\tFriend request");
+			if(this.dbManager.findUser(request)>-1)
+				request.setSuccessful();
+			return request;
+		case Request.SHARELIST_REQUEST:
+			System.out.println("\tShareList request");
+			this.dbManager.shareList((ShareListRequest)request);
 			return request;
 		default:
 			return request;

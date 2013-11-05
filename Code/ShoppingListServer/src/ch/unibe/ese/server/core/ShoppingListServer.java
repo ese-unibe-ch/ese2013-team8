@@ -21,6 +21,7 @@ public class ShoppingListServer {
 	 * Configuration
 	 */
 	public static boolean WIPE_DATABSE_ON_STARTUP = true;
+	public static boolean REDIRECT_OUTPUT_TO_FILE = false;
 	private static int PORT = 1337;
 	/**
 	 * \Configuration 
@@ -30,13 +31,16 @@ public class ShoppingListServer {
 	private RequestHandler requestHandler;
 	
 	public ShoppingListServer() {
-		try {
-			FileOutputStream f = new FileOutputStream("serverlog.txt");
-			System.setOut(new PrintStream(f));
-		} catch (FileNotFoundException e) {
-			System.err.println("Failed to open serverlog.txt");
+		if(REDIRECT_OUTPUT_TO_FILE) {
+			try {
+				FileOutputStream f = new FileOutputStream("serverlog.txt");
+				PrintStream pf = new PrintStream(f);
+				System.setOut(pf);
+				System.setErr(pf);
+			} catch (FileNotFoundException e) {
+				System.err.println("Failed to open serverlog.txt");
+			}
 		}
-		
 		this.requestHandler = new RequestHandler();
 		this.initServerSocket();
 		this.waitForConnection();
