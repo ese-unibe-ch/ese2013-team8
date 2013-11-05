@@ -136,14 +136,14 @@ public class ShoppingListActionMode implements Callback {
             	}
             	return true;
             case R.id.action_share:
-            	if(selectedList != null){
+            	if(isList) {
 	            	Intent intentShare = new Intent(activity, ShareListActivity.class);
 	            	intentShare.putExtra("selectedList", listIndex);
 	                activity.startActivity(intentShare);
 	                mode.finish(); // Action picked, so close the CAB
 	            	return true;
             	} else
-            		Toast.makeText(activity, "Not implemented yet", Toast.LENGTH_SHORT).show();
+            		Toast.makeText(activity, activity.getString(R.string.error_missing), Toast.LENGTH_SHORT).show();
 
             default:
                 return false;

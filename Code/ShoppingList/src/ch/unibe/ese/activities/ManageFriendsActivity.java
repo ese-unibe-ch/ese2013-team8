@@ -2,7 +2,7 @@ package ch.unibe.ese.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
+import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +14,7 @@ import ch.unibe.ese.core.BaseActivity;
 import ch.unibe.ese.core.Friend;
 import ch.unibe.ese.core.FriendsManager;
 import ch.unibe.ese.shoppinglist.R;
+import ch.unibe.ese.sidelist.NavigationDrawer;
 
 /**
  * Creates a frame which enlists all friends and the possibility to manage them
@@ -22,8 +23,10 @@ import ch.unibe.ese.shoppinglist.R;
  */
 
 public class ManageFriendsActivity extends BaseActivity {
-	FriendsManager friendsManager;
-	ArrayAdapter<Friend> friendsAdapter;
+	
+	private FriendsManager friendsManager;
+	private ArrayAdapter<Friend> friendsAdapter;
+	private DrawerLayout drawMenu;
 
 	@Override
 	/**
@@ -36,6 +39,10 @@ public class ManageFriendsActivity extends BaseActivity {
 		setupActionBar();
 
 		friendsManager = getFriendsManager();
+		
+		// Create drawer menu
+		NavigationDrawer nDrawer = new NavigationDrawer();
+		drawMenu = nDrawer.constructNavigationDrawer(drawMenu, this);
 
 		updateFriendsList();
 	}
@@ -47,14 +54,6 @@ public class ManageFriendsActivity extends BaseActivity {
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
-	}
-	
-	/**
-	 * Fix to close the drawer menu on back button press
-	 */
-	@Override       
-	public void onBackPressed() {
-		NavUtils.navigateUpFromSameTask(this);
 	}
 	
 	/**
@@ -105,7 +104,7 @@ public class ManageFriendsActivity extends BaseActivity {
 			//
 			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
 			//
-			NavUtils.navigateUpFromSameTask(this);
+			finish();
 			return true;
 		case R.id.action_new:
 			Intent intent = new Intent(this, CreateFriendActivity.class);

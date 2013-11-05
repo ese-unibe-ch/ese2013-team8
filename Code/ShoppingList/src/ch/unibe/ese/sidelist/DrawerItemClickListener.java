@@ -5,8 +5,11 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Toast;
+import ch.unibe.ese.activities.ArchiveActivity;
 import ch.unibe.ese.activities.ItemListActivity;
 import ch.unibe.ese.activities.ManageFriendsActivity;
+import ch.unibe.ese.activities.ManageRecipeActivity;
 import ch.unibe.ese.activities.OptionsActivity;
 import ch.unibe.ese.shoppinglist.R;
 
@@ -35,10 +38,19 @@ public class DrawerItemClickListener implements OnItemClickListener {
 	private void selectMenuItem(int position) {
 		switch(position){
 			case 1: 
+<<<<<<< HEAD
+				//start itemList
+				Intent itemListIntent = new Intent(activity, ItemListActivity.class);
+				activity.startActivity(itemListIntent);
+=======
+				Toast.makeText(activity, activity.getString(R.string.error_missing), Toast.LENGTH_SHORT).show();
+>>>>>>> 1df1ae7a298953f3595f4a658b29040d45638a11
 				break;
-			case 2: 
+			case 2:
+				Toast.makeText(activity, activity.getString(R.string.error_missing), Toast.LENGTH_SHORT).show();
 				break;
 			case 3:
+				Toast.makeText(activity, activity.getString(R.string.error_missing), Toast.LENGTH_SHORT).show();
 				break;
 		}	
 	}
@@ -46,11 +58,14 @@ public class DrawerItemClickListener implements OnItemClickListener {
 	private void selectOptionsItem(int position) {
 		switch(position){
 		case 1: 
+			//start Archive
+			Intent archiveIntent = new Intent(activity, ArchiveActivity.class);
+			activity.startActivity(archiveIntent);
 			break;
-		case 2: 
-			//start itemList
-			Intent itemListIntent = new Intent(activity, ItemListActivity.class);
-			activity.startActivity(itemListIntent);
+		case 2:
+			//start RecipeActivity
+			Intent recipeActivity = new Intent(activity, ManageRecipeActivity.class);
+			activity.startActivity(recipeActivity);
 			break;
 		case 3:
 			//start Friendscreen

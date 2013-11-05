@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import ch.unibe.ese.core.Friend;
 import ch.unibe.ese.core.Item;
+import ch.unibe.ese.core.Recipe;
 import ch.unibe.ese.core.ShoppingList;
 
 /**
@@ -51,10 +52,23 @@ public class SQLiteReadHelper {
 			+ SQLiteHelper.COLUMN_LIST_ID
 			+ " = ?";;
 			
+	private static final String SELECT_RECIPE_DATA = "SELECT "
+			+ SQLiteHelper.TABLE_RECIPES + 		"." + SQLiteHelper.COLUMN_RECIPE_ID + ","
+			+ SQLiteHelper.TABLE_RECIPES + 		"." + SQLiteHelper.COLUMN_RECIPE_NAME + ","
+			+ SQLiteHelper.TABLE_ITEMTORECIPE + "." + SQLiteHelper.COLUMN_ITEM_ID 
+			+ " FROM " 
+			+ SQLiteHelper.TABLE_RECIPES + ","
+			+ SQLiteHelper.TABLE_ITEMTORECIPE 
+			+ " WHERE "
+			+ SQLiteHelper.TABLE_ITEMTORECIPE + "." + SQLiteHelper.COLUMN_RECIPE_ID
+			+ " = " 
+			+ SQLiteHelper.TABLE_RECIPES + 		"." + SQLiteHelper.COLUMN_RECIPE_ID;
+	
 
 	public SQLiteReadHelper(SQLiteDatabase database) {
 		this.database = database;
 	}
+	
 
 	/**
 	 * Get a cursor on TABLE_LISTS
@@ -74,7 +88,7 @@ public class SQLiteReadHelper {
 	 * @return
 	 */
 	public Cursor getItemCursor(ShoppingList list) {
-		int listId = getListId(list.getName());
+		Long listId = list.getId();
 
 		Cursor cursor = database.rawQuery(SELECT_ITEM_DATA, new String[] { ""
 				+ listId });
@@ -112,6 +126,24 @@ public class SQLiteReadHelper {
 		cursor.moveToFirst();
 		return cursor;
 	}
+	
+	/**
+	 * Get the cursor to a complete recipe db
+	 * @return
+	 */
+	public Cursor getRecipeCursor() {
+		Cursor cursor = getQueryCursor(SQLiteHelper.TABLE_RECIPES,
+				SQLiteHelper.RECIPE_COLUMNS, null);
+		cursor.moveToFirst();
+		return cursor;
+	}
+	
+	public Cursor getItemToRecipeCursor() {
+		Cursor cursor = getQueryCursor(SQLiteHelper.TABLE_ITEMTORECIPE,
+				SQLiteHelper.ITEMTORECIPE_COLUMNS, null);
+		cursor.moveToFirst();
+		return cursor;
+	}
 
 	/**
 	 * Shortcut for database querys (to save all the nulls)
@@ -134,10 +166,12 @@ public class SQLiteReadHelper {
 	 */
 	public ShoppingList cursorToShoppingList(Cursor cursor) {
 		ShoppingList list = new ShoppingList(cursor.getString(1));
-		if (cursor.getLong(2) > 0)
-			list.setDueDate(new Date(cursor.getLong(2)));
-
-		list.setShop(getShopName(cursor.getInt(3)));
+		list.setId(cursor.getLong(0));
+		list.setArchived(cursor.getInt(2) == 1);
+		if (cursor.getLong(3) > 0)
+			list.setDueDate(new Date(cursor.getLong(3)));
+		
+		list.setShop(getShopName(cursor.getInt(4)));
 		return list;
 	}
 
@@ -160,6 +194,12 @@ public class SQLiteReadHelper {
 	public Friend cursorToFriend(Cursor cursor) {
 		Friend friend = new Friend(cursor.getInt(0), cursor.getString(1));
 		return friend;
+	}
+	
+	public Recipe cursorToRecipe(Cursor cursor) {
+		Recipe recipe = new Recipe(cursor.getString(1));
+		recipe.setId(cursor.getLong(0));
+		return recipe;
 	}
 
 	/**
@@ -220,24 +260,6 @@ public class SQLiteReadHelper {
 	}
 
 	/**
-	 * Get List ID with list Name
-	 * 
-	 * @param listName
-	 * @return
-	 */
-	public int getListId(String listName) {
-		Cursor cursor = database.query(SQLiteHelper.TABLE_LISTS,
-				SQLiteHelper.LISTS_COLUMNS, SQLiteHelper.COLUMN_LIST_NAME
-						+ "=?", new String[] { listName }, null, null, null);
-		if (cursor.getCount() == 1) {
-			cursor.moveToFirst();
-			return cursor.getInt(0);
-		} else {
-			return -1;
-		}
-	}
-
-	/**
 	 * Get Item name with item ID
 	 * 
 	 * @param itemId
@@ -294,9 +316,9 @@ public class SQLiteReadHelper {
 	}
 
 	/**
-	 * Get Item Id with Item Name
+	 * Get Friend Nr with Friend Name
 	 * 
-	 * @param itemName
+	 * @param friendName
 	 * @return
 	 */
 	public int getFriendNr(String friendName) {
@@ -307,9 +329,45 @@ public class SQLiteReadHelper {
 		if (cursor.getCount() == 1) {
 			cursor.moveToFirst();
 			return cursor.getInt(0);
-		} else {
-			return -1;
 		}
+		
+		return -1;
+	}
+
+	/**
+	 * Get the name of the recipe with the id
+	 * @param id
+	 * @return name of recipe or when no such id in list null
+	 */
+	public String getRecipeName(Long id) {
+		Cursor cursor = database.query(SQLiteHelper.TABLE_RECIPES,
+				SQLiteHelper.RECIPE_COLUMNS, SQLiteHelper.COLUMN_RECIPE_ID
+						+ "=?", new String[] { "" + id }, null, null,
+				null, null);
+		if (cursor.getCount() == 1) {
+			cursor.moveToFirst();
+			return cursor.getString(1);
+		}  
+		
+		return null;
+	}
+	
+	/**
+	 * Get the id of the recipe with the name
+	 * @param name
+	 * @return id of recipe or when not found -1
+	 */
+	public long getRecipeId(String name) {
+		Cursor cursor = database.query(SQLiteHelper.TABLE_RECIPES,
+				SQLiteHelper.RECIPE_COLUMNS, SQLiteHelper.COLUMN_RECIPE_NAME
+						+ "=?", new String[] { "" + name }, null, null,
+				null, null);
+		if (cursor.getCount() == 1) {
+			cursor.moveToFirst();
+			return cursor.getLong(0);
+		}  
+		
+		return -1;
 	}
 
 	/**
@@ -321,7 +379,7 @@ public class SQLiteReadHelper {
 	 */
 	public boolean isInList(Item item, ShoppingList list) {
 		long itemId = item.getId() == null ? -1 : item.getId();
-		int listId = getListId(list.getName());
+		Long listId = list.getId();
 		Cursor cursor = database.query(SQLiteHelper.TABLE_ITEMTOLIST,
 				SQLiteHelper.ITEMTOLIST_COLUMNS, SQLiteHelper.COLUMN_ITEM_ID
 						+ "=? AND " + SQLiteHelper.COLUMN_LIST_ID + "=?",
@@ -330,6 +388,11 @@ public class SQLiteReadHelper {
 		return (cursor.getCount() >= 1);
 	}
 
+	/**
+	 * Check if an item is already in db (database level)
+	 * @param item
+	 * @return true if item is in db
+	 */
 	public boolean isInList(Item item) {
 		if(item.getId() == null) return false;
 		long itemId = item.getId();
@@ -339,4 +402,33 @@ public class SQLiteReadHelper {
 		return cursor.getColumnCount() >= 1;
 	}
 
+	/**
+	 * Check if an item is already in a recipe (database level)
+	 * @param item
+	 * @param id
+	 * @return true if item is in recipe
+	 */
+	public boolean isInList(Item item, Recipe recipe) {
+		if(recipe.getId() == null || item.getId() == null) return false;
+		
+		Cursor cursor = database.query(SQLiteHelper.TABLE_ITEMTORECIPE,
+				SQLiteHelper.ITEMTORECIPE_COLUMNS, SQLiteHelper.COLUMN_ITEM_ID
+						+ "=? AND " + SQLiteHelper.COLUMN_RECIPE_ID + "=?",
+				new String[] { "" + item.getId(), "" + recipe.getId() }, null, null, null, null);
+		
+		if(cursor.getCount() == 1)
+			return true;
+		if(cursor.getCount() > 1)
+			throw new IllegalStateException();
+		else
+			return false;
+	}
+
+
+	public boolean isInList(Recipe recipe) {
+		if(recipe.getId() == null) return false;
+		if(getRecipeName(recipe.getId()) == null) return false;
+		
+		return true;
+	}
 }

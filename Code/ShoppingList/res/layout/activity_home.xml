@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <!-- The main content view -->
-
+<!-- The main content view -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -29,7 +28,8 @@
     </ListView>
 
 </RelativeLayout>
-    
+
+<!-- The navigation drawer -->
 <RelativeLayout
         android:id="@+id/drawer_Linearlayout"
         android:layout_width="240dp"
@@ -37,16 +37,16 @@
         android:background="#F3F3F4"
         android:layout_gravity="start">
 
-        <!-- The navigation drawer -->
-  <ListView
+	<ListView
         android:id="@+id/left_drawer"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"
-        android:dividerHeight="1dp" ></ListView>
+        android:dividerHeight="1dp" >
+	</ListView>
     
-   <RelativeLayout
+	<RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true" >
@@ -58,10 +58,8 @@
 	        android:choiceMode="singleChoice"
 	        android:divider="@android:color/transparent"
 			android:dividerHeight="1dp" ></ListView>
-    </RelativeLayout>
-	    
-	    
+	</RelativeLayout>
+	    	    
  </RelativeLayout>
     
-
 </android.support.v4.widget.DrawerLayout>

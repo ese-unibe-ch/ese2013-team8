@@ -65,4 +65,28 @@ public class NoopPersistenceManager implements PersistenceManager {
 		return null;
 	}
 
+	@Override
+	public void save(Item item) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void remove(Item item) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<Recipe> readRecipes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void save(Recipe recipe) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

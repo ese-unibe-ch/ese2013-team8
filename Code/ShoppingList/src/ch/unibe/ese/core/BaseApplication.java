@@ -12,7 +12,7 @@ public class BaseApplication extends Application {
 	private FriendsManager friendsManager;
 	private SyncManager syncManager;
 
-	public void setSyncManager(SyncManager syncManager) {
+	void setSyncManager(SyncManager syncManager) {
 		this.syncManager = syncManager;
 	}
 
@@ -24,7 +24,7 @@ public class BaseApplication extends Application {
 		return listManager;
 	}
 
-	public void setListManager(ListManager listManager) {
+	void setListManager(ListManager listManager) {
 		this.listManager = listManager;
 	}
 
@@ -32,7 +32,7 @@ public class BaseApplication extends Application {
 		return friendsManager;
 	}
 
-	public void setFriendsManager(FriendsManager friendsManager) {
+	void setFriendsManager(FriendsManager friendsManager) {
 		this.friendsManager = friendsManager;
 	}
 }

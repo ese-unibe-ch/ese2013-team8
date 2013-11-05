@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,13 +22,17 @@ import android.widget.Toast;
 import ch.unibe.ese.core.BaseActivity;
 import ch.unibe.ese.core.Item;
 import ch.unibe.ese.core.ListManager;
+import ch.unibe.ese.core.Recipe;
 import ch.unibe.ese.core.ShoppingList;
 import ch.unibe.ese.core.sqlite.SQLiteItemAdapter;
+import ch.unibe.ese.share.SyncManager;
 import ch.unibe.ese.shoppinglist.R;
+import ch.unibe.ese.sidelist.NavigationDrawer;
 
 public class ViewListActivity extends BaseActivity {
 
 	private ListManager manager;
+	private SyncManager syncmanager;
 	private ArrayAdapter<Item> itemAdapter;
 	private ArrayAdapter<Item> itemBoughtAdapter;
 	private ArrayList<Item>	itemsList;
@@ -35,6 +40,7 @@ public class ViewListActivity extends BaseActivity {
 	private Activity viewListActivity = this;
 	private ShoppingList list;
 	private int listIndex;
+	private DrawerLayout drawMenu;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +50,11 @@ public class ViewListActivity extends BaseActivity {
 		setupActionBar();
 
 		manager = getListManager();
+		syncmanager = getSyncManager();
+		
+		// Create drawer menu
+		NavigationDrawer nDrawer = new NavigationDrawer();
+		drawMenu = nDrawer.constructNavigationDrawer(drawMenu, this);
 
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
@@ -140,6 +151,22 @@ public class ViewListActivity extends BaseActivity {
 			}
 		});
 		
+		// Add long click Listener to bought items
+		listViewBought.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				Item selectedItem = itemAdapter.getItem(arg2);
+				ViewListActivity.this
+						.startActionMode(new ShoppingListActionMode(
+								ViewListActivity.this.manager, selectedItem,
+								list, ViewListActivity.this.itemAdapter,
+								ViewListActivity.this));
+				return true;
+			}
+		});
+		
 		// Add click Listener to bought items
 		listViewBought.setOnItemClickListener(new OnItemClickListener() {
 
@@ -180,18 +207,31 @@ public class ViewListActivity extends BaseActivity {
 		String name = textName.getText().toString();
 		if (name.trim().length() == 0) {
 			Toast.makeText(this, this.getString(R.string.error_name), Toast.LENGTH_SHORT).show();
+			return;
+		} else if(name.charAt(0) == '/') {
+			ArrayList<Recipe> recipeList = (ArrayList<Recipe>) manager.getRecipes();
+			String recipeName = name.substring(1);
+			
+			for(Recipe recipe : recipeList) {
+				if(recipe.getName().equals(recipeName)) {
+					for(Item item: recipe.getItemList()) {
+						manager.addItemToList(item, list);
+						itemAdapter.add(item);
+					}
+				}
+			}
+					
 		} else {
 			Item item = new Item(name);
 			manager.addItemToList(item, list);
 
 			// refresh view
 			itemAdapter.add(item);
-
-			// remove text from field
-			textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
-			textName.setText("");
-
 		}
+
+		// remove text from field
+		textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
+		textName.setText("");
 	}
 
 	@Override
@@ -231,16 +271,19 @@ public class ViewListActivity extends BaseActivity {
             this.startActivity(intentEdit);
 			return true;
 		case R.id.action_archive:
-			// TODO: add archive function
-			Toast.makeText(this, this.getString(R.string.error_missing), Toast.LENGTH_SHORT).show();
+			// toggle archive state
+			if (list.isArchived())
+				list.setArchived(false);
+			else
+				list.setArchived(true);
+			NavUtils.navigateUpFromSameTask(this);
 			return true;
 		case R.id.action_delete:
 			manager.removeShoppingList(list);
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
 		case R.id.action_refresh:
-			// TODO: add synchronize function
-			Toast.makeText(this, this.getString(R.string.error_missing), Toast.LENGTH_SHORT).show();
+			syncmanager.synchronise();
 			return true;
 		case R.id.action_settings:
 			Intent optionsIntent = new Intent(this, OptionsActivity.class);
@@ -256,5 +299,11 @@ public class ViewListActivity extends BaseActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == 1 && resultCode == RESULT_OK) 
 				updateAdapters();
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+    	drawMenu.closeDrawers();
 	}
 }

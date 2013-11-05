@@ -18,7 +18,6 @@ public class SQLitePersistenceManagerTest extends
 
 	@Override
 	protected void setUp() throws Exception {
-		super.setUp();
 		getContext().deleteDatabase("shoppinglist.db");
 		this.manager = new SQLitePersistenceManager(getContext());
 		// Make sure there are no shopping lists in the DB.
@@ -27,7 +26,7 @@ public class SQLitePersistenceManagerTest extends
 
 	@Override
 	protected void tearDown() throws Exception {
-		super.tearDown();
+		getContext().deleteDatabase("shoppinglist.db");
 	}
 
 	public void testReadLists() {
@@ -53,5 +52,96 @@ public class SQLitePersistenceManagerTest extends
 		assertEquals(name, checkList.getName());
 		assertEquals(dueDate, checkList.getDueDate());
 		assertEquals(shop, checkList.getShop());
+	}
+	
+	public void testRemoveList() {
+		ShoppingList list1 = new ShoppingList("list1");
+		manager.save(list1);	
+		ShoppingList checkList = manager.readLists().get(0);
+		assertEquals(list1, checkList);
+		
+		manager.remove(list1);
+		assertTrue(manager.readLists().isEmpty());
+	}
+	
+	public void testAddItemToList() {
+		ShoppingList list1 = new ShoppingList("list1");
+		manager.save(list1);
+	
+		assertTrue(manager.getItems(list1).isEmpty());
+		Item item1 = new Item("item1");
+		manager.save(item1, list1);
+		assertEquals(1, manager.getItems(list1).size());
+		assertEquals(item1, manager.getItems(list1).get(0));
+	}
+	
+	public void testRemoveItemFromList() {
+		ShoppingList list1 = new ShoppingList("list1");
+		manager.save(list1);
+	
+		assertTrue(manager.getItems(list1).isEmpty());
+		Item item1 = new Item("item1");
+		manager.save(item1, list1);
+		
+		manager.remove(item1, list1);
+		assertTrue(manager.getItems(list1).isEmpty());
+	}
+	
+	public void testGetAllItems() {
+		assertTrue(manager.getAllItems().isEmpty());
+		Item item1 = new Item("item1");
+		Item item2 = new Item("item2");
+		manager.save(item1);
+		manager.save(item2);
+		assertEquals(2, manager.getAllItems().size());
+		assertEquals(item1, manager.getAllItems().get(0));
+		assertEquals(item2, manager.getAllItems().get(1));
+	}
+	
+	public void testAddItem() {
+		assertTrue(manager.getAllItems().isEmpty());
+		Item item1 = new Item("item1");
+		manager.save(item1);
+		assertEquals(1, manager.getAllItems().size());
+		assertEquals(item1, manager.getAllItems().get(0));
+	}
+	
+	public void testRemoveItem() {
+		assertTrue(manager.getAllItems().isEmpty());
+		Item item1 = new Item("item1");
+		manager.save(item1);
+		assertEquals(1, manager.getAllItems().size());
+		
+		manager.remove(item1);
+		assertTrue(manager.getAllItems().isEmpty());
+	}
+	
+	public void testReadFriends() {
+		assertTrue(manager.readFriends().isEmpty());
+		Friend friend1 = new Friend(12345678, "friend1");
+		Friend friend2 = new Friend(23456789, "friend2");
+		manager.save(friend1);
+		manager.save(friend2);
+		assertEquals(2, manager.readFriends().size());
+		assertEquals(friend1, manager.readFriends().get(0));
+		assertEquals(friend2, manager.readFriends().get(1));
+	}
+	
+	public void testSaveFriend() {
+		assertTrue(manager.readFriends().isEmpty());
+		Friend friend1 = new Friend(12345678, "friend1");
+		manager.save(friend1);
+		assertEquals(1, manager.readFriends().size());
+		assertEquals(friend1, manager.readFriends().get(0));
+	}
+	
+	public void testRemoveFriend() {
+		assertTrue(manager.readFriends().isEmpty());
+		Friend friend1 = new Friend(12345678, "friend1");
+		manager.save(friend1);
+		assertEquals(1, manager.readFriends().size());
+		
+		manager.removeFriend(friend1);
+		assertTrue(manager.readFriends().isEmpty());
 	}
 }

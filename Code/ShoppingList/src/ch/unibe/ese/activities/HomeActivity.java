@@ -1,5 +1,6 @@
 package ch.unibe.ese.activities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
@@ -33,9 +34,10 @@ public class HomeActivity extends BaseActivity {
 
 	private ListManager listmanager;
 	private SyncManager syncmanager;
+	private List<ShoppingList> shoppingLists;
+	private List<ShoppingList> shoppingListsNotArchived;
 	private ArrayAdapter<ShoppingList> shoppingListAdapter;
 	private Activity homeActivity = this;
-
 	private DrawerLayout drawMenu;
 	private ActionBarDrawerToggle drawerToggle;
 
@@ -45,8 +47,10 @@ public class HomeActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 
-		createNavigationDrawer();
-		
+		// Create drawer menu
+		NavigationDrawer nDrawer = new NavigationDrawer();
+		drawMenu = nDrawer.constructNavigationDrawer(drawMenu, this);
+		createDrawerToggle();
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
 
@@ -57,57 +61,8 @@ public class HomeActivity extends BaseActivity {
 		updateAdapter();
 
 	}
-
-	private void updateAdapter() {
-		// Get List from manager
-		List<ShoppingList> shoppingLists = listmanager.getShoppingLists();
-
-		shoppingListAdapter = new ArrayAdapter<ShoppingList>(this,
-				R.layout.shopping_list_item, shoppingLists);
-
-		ListView listView = (ListView) findViewById(R.id.ShoppingListView);
-		listView.setAdapter(shoppingListAdapter);
-
-		addListener(listView);
-	}
-
-	private void addListener(ListView listView) {
-		// Add long click Listener
-		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
-
-			// TODO: Merge those 2 Listeners together, because we dont need two
-			// seperate listeners...
-			@Override
-			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-					int arg2, long arg3) {
-				ShoppingList selectedList = shoppingListAdapter.getItem(arg2);
-				HomeActivity.this.startActionMode(new ShoppingListActionMode(
-						HomeActivity.this.listmanager, selectedList,
-						HomeActivity.this.shoppingListAdapter,
-						HomeActivity.this));
-				return true;
-			}
-		});
-
-		// Add click Listener
-		listView.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				Intent intent = new Intent(homeActivity, ViewListActivity.class);
-				intent.putExtra("selectedList", position);
-				homeActivity.startActivity(intent);
-			}
-		});
-	}
 	
-
-	private void createNavigationDrawer() {
-		// Create drawer menu
-		NavigationDrawer nDrawer = new NavigationDrawer();
-		drawMenu = nDrawer.constructNavigationDrawer(drawMenu, this);
-		
+	private void createDrawerToggle() {
 		drawerToggle = new ActionBarDrawerToggle(
                 this,                  	/* host Activity */
                 drawMenu,         		/* DrawerLayout object */
@@ -145,6 +100,61 @@ public class HomeActivity extends BaseActivity {
         super.onConfigurationChanged(newConfig);
         drawerToggle.onConfigurationChanged(newConfig);
     }
+
+	private void updateAdapter() {
+		// Get List from manager
+		shoppingLists = listmanager.getShoppingLists();
+		shoppingListsNotArchived = new ArrayList<ShoppingList>();
+		
+		// separate archived lists
+		for (ShoppingList list: shoppingLists)
+			if (!list.isArchived())
+				shoppingListsNotArchived.add(list);
+
+		shoppingListAdapter = new ArrayAdapter<ShoppingList>(this,
+				R.layout.shopping_list_item, shoppingListsNotArchived);
+
+		ListView listView = (ListView) findViewById(R.id.ShoppingListView);
+		listView.setAdapter(shoppingListAdapter);
+
+		addListener(listView);
+	}
+
+	private void addListener(ListView listView) {
+		// Add long click Listener
+		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			// TODO: Merge those 2 Listeners together, because we dont need two
+			// seperate listeners...
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				ShoppingList selectedList = shoppingListAdapter.getItem(arg2);
+				HomeActivity.this.startActionMode(new ShoppingListActionMode(
+						HomeActivity.this.listmanager, selectedList,
+						HomeActivity.this.shoppingListAdapter,
+						HomeActivity.this));
+				return true;
+			}
+		});
+
+		// Add click Listener
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Intent intent = new Intent(homeActivity, ViewListActivity.class);
+				
+				// get position in listmanager
+				ShoppingList list = shoppingListsNotArchived.get(position);
+				int listPosition = listmanager.getShoppingLists().indexOf(list);
+				
+				intent.putExtra("selectedList", listPosition);
+				homeActivity.startActivity(intent);
+			}
+		});
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -188,6 +198,7 @@ public class HomeActivity extends BaseActivity {
 	@Override
 	protected void onPause() {
 		super.onPause();
+    	drawMenu.closeDrawers();
 	}
 	
 	public void onResume(){
