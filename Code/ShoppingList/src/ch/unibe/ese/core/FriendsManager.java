@@ -8,7 +8,7 @@ public class FriendsManager {
 	
 	public FriendsManager(PersistenceManager persistenceManager){
 		this.persistenceManager = persistenceManager;
-		friendsList = persistenceManager.readFriends();
+		friendsList = persistenceManager.getFriends();
 	}
 	
 	/**

@@ -21,7 +21,7 @@ public class ListManager {
 	public ListManager(PersistenceManager persistenceManager) {
 		this.persistenceManager = persistenceManager;
 		this.listToItems = new HashMap<ShoppingList, List<Item>>();
-		shoppingLists = persistenceManager.readLists();
+		shoppingLists = persistenceManager.getLists();
 	}
 
 	/**
@@ -29,6 +29,14 @@ public class ListManager {
 	 */
 	public List<ShoppingList> getShoppingLists() {
 		return Collections.unmodifiableList(shoppingLists);
+	}
+
+	public ShoppingList getShoppingList(long id) {
+		for (ShoppingList list : shoppingLists) {
+			if (list.getId() == id)
+				return list;
+		}
+		return null;
 	}
 
 	/**
@@ -90,27 +98,29 @@ public class ListManager {
 		}
 		return Collections.unmodifiableList(items);
 	}
-	
+
 	/**
-	 * Gets all items-objects which are in the item table 
+	 * Gets all items-objects which are in the item table
+	 * 
 	 * @return ArrayList<Item>
 	 */
-	public ArrayList<Item> getAllItems(){
+	public ArrayList<Item> getAllItems() {
 		return persistenceManager.getAllItems();
 	}
-	
+
 	/**
 	 * Adds an item to the item list or updates it if it is already in the list
+	 * 
 	 * @param item
 	 */
 	public void save(Item item) {
 		persistenceManager.save(item);
 	}
-	
-	public void remove(Item item){
+
+	public void remove(Item item) {
 		persistenceManager.remove(item);
-		
-		for(ShoppingList list: shoppingLists)
+
+		for (ShoppingList list : shoppingLists)
 			removeItemFromList(item, list);
 	}
 }

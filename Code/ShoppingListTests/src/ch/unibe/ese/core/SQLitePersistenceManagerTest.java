@@ -21,7 +21,7 @@ public class SQLitePersistenceManagerTest extends
 		getContext().deleteDatabase("shoppinglist.db");
 		this.manager = new SQLitePersistenceManager(getContext());
 		// Make sure there are no shopping lists in the DB.
-		assertTrue(manager.readLists().isEmpty());
+		assertTrue(manager.getLists().isEmpty());
 	}
 
 	@Override
@@ -29,11 +29,11 @@ public class SQLitePersistenceManagerTest extends
 		getContext().deleteDatabase("shoppinglist.db");
 	}
 
-	public void testReadLists() {
+	public void testGetLists() {
 		ShoppingList list = new ShoppingList("List 1");
 		manager.save(list);
 
-		List<ShoppingList> lists = manager.readLists();
+		List<ShoppingList> lists = manager.getLists();
 		assertEquals(1, lists.size());
 		assertEquals(list, lists.get(0));
 	}
@@ -47,7 +47,7 @@ public class SQLitePersistenceManagerTest extends
 		list.setShop(shop);
 
 		manager.save(list);
-		ShoppingList checkList = manager.readLists().get(0);
+		ShoppingList checkList = manager.getLists().get(0);
 		assertEquals(list, checkList);
 		assertEquals(name, checkList.getName());
 		assertEquals(dueDate, checkList.getDueDate());
@@ -57,11 +57,11 @@ public class SQLitePersistenceManagerTest extends
 	public void testRemoveList() {
 		ShoppingList list1 = new ShoppingList("list1");
 		manager.save(list1);	
-		ShoppingList checkList = manager.readLists().get(0);
+		ShoppingList checkList = manager.getLists().get(0);
 		assertEquals(list1, checkList);
 		
 		manager.remove(list1);
-		assertTrue(manager.readLists().isEmpty());
+		assertTrue(manager.getLists().isEmpty());
 	}
 	
 	public void testAddItemToList() {
@@ -117,31 +117,31 @@ public class SQLitePersistenceManagerTest extends
 	}
 	
 	public void testReadFriends() {
-		assertTrue(manager.readFriends().isEmpty());
+		assertTrue(manager.getFriends().isEmpty());
 		Friend friend1 = new Friend(12345678, "friend1");
 		Friend friend2 = new Friend(23456789, "friend2");
 		manager.save(friend1);
 		manager.save(friend2);
-		assertEquals(2, manager.readFriends().size());
-		assertEquals(friend1, manager.readFriends().get(0));
-		assertEquals(friend2, manager.readFriends().get(1));
+		assertEquals(2, manager.getFriends().size());
+		assertEquals(friend1, manager.getFriends().get(0));
+		assertEquals(friend2, manager.getFriends().get(1));
 	}
 	
 	public void testSaveFriend() {
-		assertTrue(manager.readFriends().isEmpty());
+		assertTrue(manager.getFriends().isEmpty());
 		Friend friend1 = new Friend(12345678, "friend1");
 		manager.save(friend1);
-		assertEquals(1, manager.readFriends().size());
-		assertEquals(friend1, manager.readFriends().get(0));
+		assertEquals(1, manager.getFriends().size());
+		assertEquals(friend1, manager.getFriends().get(0));
 	}
 	
 	public void testRemoveFriend() {
-		assertTrue(manager.readFriends().isEmpty());
+		assertTrue(manager.getFriends().isEmpty());
 		Friend friend1 = new Friend(12345678, "friend1");
 		manager.save(friend1);
-		assertEquals(1, manager.readFriends().size());
+		assertEquals(1, manager.getFriends().size());
 		
 		manager.removeFriend(friend1);
-		assertTrue(manager.readFriends().isEmpty());
+		assertTrue(manager.getFriends().isEmpty());
 	}
 }

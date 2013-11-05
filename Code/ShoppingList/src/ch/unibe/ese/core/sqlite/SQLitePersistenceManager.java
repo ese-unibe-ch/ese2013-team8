@@ -50,7 +50,7 @@ public class SQLitePersistenceManager implements PersistenceManager {
 	 */
 
 	@Override
-	public List<ShoppingList> readLists() {
+	public List<ShoppingList> getLists() {
 		List<ShoppingList> lists = new ArrayList<ShoppingList>();
 
 		Cursor cursor = readHelper.getListCursor();
@@ -198,7 +198,7 @@ public class SQLitePersistenceManager implements PersistenceManager {
 	 */
 
 	@Override
-	public ArrayList<Friend> readFriends() {
+	public ArrayList<Friend> getFriends() {
 		ArrayList<Friend> list = new ArrayList<Friend>();
 
 		Cursor cursor = readHelper.getFriendCursor();

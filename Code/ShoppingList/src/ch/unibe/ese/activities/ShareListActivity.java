@@ -26,7 +26,6 @@ public class ShareListActivity extends BaseActivity {
 	private ArrayAdapter<Friend> friendsAdapter;
 	private ArrayAdapter<Friend> autocompleteAdapter;
 	private ShoppingList list;
-	private int listIndex;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +42,8 @@ public class ShareListActivity extends BaseActivity {
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
 			// Get list
-			listIndex = extras.getInt("selectedList");
-			list = manager.getShoppingLists().get(listIndex);
+			long listIndex = extras.getLong("selectedList");
+			list = manager.getShoppingList(listIndex);
 			setTitle(this.getString(R.string.share_list_title) + " "
 					+ list.getName());
 		}

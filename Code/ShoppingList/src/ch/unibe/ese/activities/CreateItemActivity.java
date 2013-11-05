@@ -23,7 +23,6 @@ public class CreateItemActivity extends BaseActivity {
 	private ListManager manager;
 	private ShoppingList list;
 	private Item item;
-	private int listIndex;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,9 +58,9 @@ public class CreateItemActivity extends BaseActivity {
 
 		// get list if available
 		if (extras != null) {
-			listIndex = extras.getInt("selectedList");
+			long listIndex = extras.getLong("selectedList");
 			if (listIndex != 0)
-				list = manager.getShoppingLists().get(listIndex);
+				list = manager.getShoppingList(listIndex);
 
 			// prepare for edit item when necessary
 			if (extras.getBoolean("editItem")) {
@@ -145,6 +144,9 @@ public class CreateItemActivity extends BaseActivity {
 			BigDecimal price = new BigDecimal(priceString);
 			item.setPrice(price);
 		}
+		
+		String quantity = getTextViewText(R.id.editTextQuantity);
+		item.setQuantity(quantity);
 
 		// save the item
 		if (list != null)

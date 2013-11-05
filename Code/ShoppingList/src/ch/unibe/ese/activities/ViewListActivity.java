@@ -38,7 +38,6 @@ public class ViewListActivity extends BaseActivity {
 	private ArrayList<Item>	itemsBoughtList;
 	private Activity viewListActivity = this;
 	private ShoppingList list;
-	private int listIndex;
 	private DrawerLayout drawMenu;
 
 	@Override
@@ -58,8 +57,8 @@ public class ViewListActivity extends BaseActivity {
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
 			// Get list
-			listIndex = extras.getInt("selectedList");
-			list = manager.getShoppingLists().get(listIndex);
+			long listIndex = extras.getLong("selectedList");
+			list = manager.getShoppingList(listIndex);
 			setTitle(list.getName());
 		}
 
@@ -196,7 +195,7 @@ public class ViewListActivity extends BaseActivity {
 		EditText textName = (EditText) findViewById(R.id.editTextName);
 		String name = textName.getText().toString();
 		intent.putExtra("Item", name);
-		intent.putExtra("selectedList", listIndex);
+		intent.putExtra("selectedList", list.getId());
 		this.startActivityForResult(intent, 1);
 	}
 

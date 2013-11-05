@@ -23,7 +23,7 @@ public interface PersistenceManager {
 	 * @return never <code>null</code>.
 	 * @throws IOException
 	 */
-	List<ShoppingList> readLists();
+	List<ShoppingList> getLists();
 	
 	/**
 	 * Saves a new created or editet list
@@ -67,7 +67,7 @@ public interface PersistenceManager {
 	 * @return never <code>null</code>.
 	 * @throws IOException
 	 */
-	ArrayList<Friend> readFriends();
+	ArrayList<Friend> getFriends();
 	
 	/**
 	 * Adds a new friend to the db

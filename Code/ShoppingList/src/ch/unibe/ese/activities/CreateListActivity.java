@@ -46,8 +46,8 @@ public class CreateListActivity extends BaseActivity {
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
 			// Get list
-			int listIndex = extras.getInt("selectedList");
-			list = manager.getShoppingLists().get(listIndex);
+			long listIndex = extras.getLong("selectedList");
+			list = manager.getShoppingList(listIndex);
 			textViewTitle = (TextView) findViewById(R.id.textViewTitle);
 			textViewTitle.setText(this.getString(R.string.edit_list_title));
 			setList();
@@ -124,8 +124,7 @@ public class CreateListActivity extends BaseActivity {
 
 		// open the created list
 		Intent intent = new Intent(this, ViewListActivity.class);
-		int position = manager.getShoppingLists().indexOf(list);
-		intent.putExtra("selectedList", position);
+		intent.putExtra("selectedList", list.getId());
 		this.startActivity(intent);
 		finish();
 	}

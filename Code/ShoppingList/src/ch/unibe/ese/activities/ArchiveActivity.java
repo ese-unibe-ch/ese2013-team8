@@ -88,9 +88,8 @@ public class ArchiveActivity extends BaseActivity {
 				
 				// get position in listmanager
 				ShoppingList list = shoppingListsArchived.get(position);
-				int listPosition = manager.getShoppingLists().indexOf(list);
 				
-				intent.putExtra("selectedList", listPosition);
+				intent.putExtra("selectedList", list.getId());
 				archiveActivity.startActivity(intent);
 			}
 		});
