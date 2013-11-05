@@ -20,6 +20,7 @@ import ch.unibe.ese.core.FriendsManager;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
 import ch.unibe.ese.share.SyncManager;
+import ch.unibe.ese.share.requests.ShareListRequest;
 import ch.unibe.ese.shoppinglist.R;
 import ch.unibe.ese.sidelist.NavigationDrawer;
 
@@ -45,6 +46,8 @@ public class ShareListActivity extends BaseActivity {
 		friendsManager = getFriendsManager();
 		friendsAdapter = new ArrayAdapter<Friend>(this,
 				R.layout.shopping_list_item, new ArrayList<Friend>());
+		
+		syncManager = getSyncManager();
 		
 		// Create drawer menu
 		NavigationDrawer nDrawer = new NavigationDrawer();
@@ -160,10 +163,14 @@ public class ShareListActivity extends BaseActivity {
 	protected void onPause() {
 		super.onPause();
     	drawMenu.closeDrawers();
-	}
-	
-	@Override
-	public void onBackPressed() {
-		this.syncManager.synchronise();
+		//Save friends here
+		if(friendsAdapter.getCount() > 0) {
+			for(int i = 0; i<friendsAdapter.getCount(); i++) {
+				//TODO paste your real number here (instead of 1234)
+				ShareListRequest slrequest = new ShareListRequest(""+796897, ""+friendsAdapter.getItem(i).getPhoneNr(), list.getId());
+				this.syncManager.addRequest(slrequest);
+			}
+			this.syncManager.synchronise();
+		}
 	}
 }
