@@ -3,6 +3,7 @@ package ch.unibe.ese.activities;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ShareActionProvider;
 import android.widget.Toast;
 import ch.unibe.ese.core.BaseActivity;
 import ch.unibe.ese.core.Item;
@@ -29,6 +31,7 @@ import ch.unibe.ese.share.SyncManager;
 import ch.unibe.ese.shoppinglist.R;
 import ch.unibe.ese.sidelist.NavigationDrawer;
 
+@SuppressLint("NewApi")
 public class ViewListActivity extends BaseActivity {
 
 	private ListManager manager;
@@ -40,6 +43,7 @@ public class ViewListActivity extends BaseActivity {
 	private Activity viewListActivity = this;
 	private ShoppingList list;
 	private DrawerLayout drawMenu;
+	private ShareActionProvider mShareActionProvider;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -237,6 +241,16 @@ public class ViewListActivity extends BaseActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.view_list, menu);
+		
+		
+	    // Locate MenuItem with ShareActionProvider
+	    MenuItem item = menu.findItem(R.id.menu_item_share);  
+	    //Fetch and store ShareActionProvider
+	    mShareActionProvider = (ShareActionProvider) item.getActionProvider();
+	    setShareIntent(createShareIntent());
+		
+	
+		
 		return true;
 	}
 
@@ -288,6 +302,9 @@ public class ViewListActivity extends BaseActivity {
 			Intent optionsIntent = new Intent(this, OptionsActivity.class);
 			this.startActivity(optionsIntent);
 			return true;
+		 case R.id.menu_item_share:
+         	createShareIntent();
+         	return true;
 		}
 		
 		
@@ -305,4 +322,38 @@ public class ViewListActivity extends BaseActivity {
 		super.onPause();
     	drawMenu.closeDrawers();
 	}
+	
+	
+	private void setShareIntent(Intent shareIntent){
+		if(mShareActionProvider != null){
+			mShareActionProvider.setShareIntent(shareIntent);
+		}
+	}
+	
+	
+	private Intent createShareIntent(){
+		Intent shareIntent = new Intent(Intent.ACTION_SEND);
+		shareIntent.setType("text/plain");
+		shareIntent.putExtra(Intent.EXTRA_TEXT, listToString());
+		return shareIntent;
+		
+	}
+	
+	
+	private String listToString(){
+		
+		String listString = list.toString()+"\n"; 
+		
+		List<Item> items = manager.getItemsFor(list);
+		
+		for (Item item: items){
+			
+			listString += item.toString()+"\n";
+		}
+		
+		return listString;
+		
+		
+	}
+
 }

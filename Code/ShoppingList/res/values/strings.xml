@@ -43,6 +43,9 @@
 
     <!-- ViewListActivity -->
     <string name="view_list_hint">Add Item</string>
+    <string name="share">Share</string>
+    <string name="menu_item_share">Shareit</string>
+    
 
     <!-- ShareListActivity -->
     <string name="share_list_title">Share</string>
