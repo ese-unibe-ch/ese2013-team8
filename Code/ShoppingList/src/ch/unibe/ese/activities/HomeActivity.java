@@ -27,6 +27,7 @@ import ch.unibe.ese.share.SyncManager;
 import ch.unibe.ese.share.requests.FriendRequest;
 import ch.unibe.ese.share.requests.RegisterRequest;
 import ch.unibe.ese.share.requests.Request;
+import ch.unibe.ese.share.requests.ShareListRequest;
 import ch.unibe.ese.shoppinglist.R;
 import ch.unibe.ese.sidelist.NavigationDrawer;
 
@@ -174,17 +175,7 @@ public class HomeActivity extends BaseActivity {
 		switch (item.getItemId()) {
 
 			case R.id.action_refresh:
-				// Test Requests added to the queue
-				TelephonyManager tMgr =(TelephonyManager)getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
-				String phoneNumber = tMgr.getLine1Number();
-				Request request2 = new FriendRequest(phoneNumber);
-				syncmanager.addRequest(request2);
-				Request request = new RegisterRequest(phoneNumber);
-				syncmanager.addRequest(request);
-				
-				// This is the only line, which is not testing :)
 				syncmanager.synchronise();
-	
 				return true;
 			case R.id.action_new:
 				Intent intent = new Intent(this, CreateListActivity.class);

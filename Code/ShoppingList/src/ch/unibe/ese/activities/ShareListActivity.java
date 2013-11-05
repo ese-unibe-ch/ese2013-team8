@@ -19,6 +19,7 @@ import ch.unibe.ese.core.Friend;
 import ch.unibe.ese.core.FriendsManager;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
+import ch.unibe.ese.share.SyncManager;
 import ch.unibe.ese.shoppinglist.R;
 import ch.unibe.ese.sidelist.NavigationDrawer;
 
@@ -26,6 +27,7 @@ public class ShareListActivity extends BaseActivity {
 
 	private ListManager manager;
 	private FriendsManager friendsManager;
+	private SyncManager syncManager;
 	private ArrayAdapter<Friend> friendsAdapter;
 	private ArrayAdapter<Friend> autocompleteAdapter;
 	private ShoppingList list;
@@ -158,5 +160,10 @@ public class ShareListActivity extends BaseActivity {
 	protected void onPause() {
 		super.onPause();
     	drawMenu.closeDrawers();
+	}
+	
+	@Override
+	public void onBackPressed() {
+		this.syncManager.synchronise();
 	}
 }

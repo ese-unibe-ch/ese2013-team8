@@ -21,14 +21,7 @@ public class FriendsManager {
 		if(checkIfDouble(friend))
 			return 1;
 		
-		// TODO
-		// You cannot wait for a network request to finish
-		// It needs to update the status of the friend (setChanged) when the
-		// result of the request is here.
-		//FriendRequest fRequest = new FriendRequest("" + friend.getPhoneNr());
-		//SyncManager.getInstance().addRequest(fRequest);
-		//SyncManager.getInstance().synchronise();
-		// \TODO
+		// Add the friend
 		friendsList.add(friend);
 		
 		//Save friend to database
