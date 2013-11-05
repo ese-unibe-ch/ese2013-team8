@@ -23,6 +23,8 @@
     <string name="title_activity_item_list">Item List</string>
     <string name="title_activity_manage_recipe">Manage Recipes</string>
  	<string name="title_activity_create_recipe">Create Recipes</string>
+ 	<string name="title_activity_archive">Archive</string>
+ 	
     
     <!-- CreateListActivity -->
     <string name="create_list_title">Add new shopping list:</string>
@@ -84,7 +86,7 @@
         <item>Settings</item>
     </string-array>
     <string-array name="navigation_sections">
-        <item>Categories</item>
+        <item>Lists</item>
         <item>Menu</item>
     </string-array>
 
@@ -110,19 +112,11 @@
         <item>sexy</item>
     </string-array>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
+
     <!-- Recipe Menu -->
 
     <string name="add_recipe">Add new recipe:</string>
     <string name="recipe_name">Name:</string>
     <string name="add_item_to_recipe">add item:</string>
-    
-=======
-    <string name="title_activity_archive">Archive</string>
->>>>>>> 1df1ae7a298953f3595f4a658b29040d45638a11
-=======
-    <string name="title_activity_archive">Archive</string>
->>>>>>> 1df1ae7a298953f3595f4a658b29040d45638a11
 
 </resources>

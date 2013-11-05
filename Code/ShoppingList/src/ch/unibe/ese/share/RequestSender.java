@@ -7,11 +7,8 @@ import java.io.StreamCorruptedException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import ch.unibe.ese.core.BaseActivity;
-import ch.unibe.ese.share.requests.Request;
-
-import android.content.Context;
 import android.os.AsyncTask;
+import ch.unibe.ese.share.requests.Request;
 
 /**
  * Is responsible to establish a connection socket to the server (hardcoded IP at the moment)
