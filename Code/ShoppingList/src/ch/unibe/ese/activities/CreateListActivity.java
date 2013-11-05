@@ -63,15 +63,13 @@ public class CreateListActivity extends BaseActivity {
 
 	private void setList() {
 		// set name
-		EditText textName = (EditText) findViewById(R.id.editTextName);
-		textName.setText(list.getName());
+		setTextViewText(R.id.editTextName, list.getName());
 
 		// set due date
-		EditText textDate = (EditText) findViewById(R.id.editTextDate);
 		Date date = list.getDueDate();
 		if (date != null) {
 			DateFormat dateFormat = SimpleDateFormat.getDateInstance();
-			textDate.setText(dateFormat.format(date));
+			setTextViewText(R.id.editTextDate, dateFormat.format(date));
 		}
 
 		// set autocompletion and former shop name
@@ -90,41 +88,40 @@ public class CreateListActivity extends BaseActivity {
 	/** Called when the user touches the save button */
 	public void saveList(View view) {
 		// get name
-		EditText textName = (EditText) findViewById(R.id.editTextName);
-		String name = textName.getText().toString();
+		String name = getTextViewText(R.id.editTextName);
 		if (name == null || name.trim().isEmpty()) {
-			Toast.makeText(this, this.getString(R.string.error_name), Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, this.getString(R.string.error_name),
+					Toast.LENGTH_SHORT).show();
 			return;
 		}
-		
+
 		if (list == null)
 			list = new ShoppingList(name);
 		else
 			list.setName(name);
 
 		// get shop
-		EditText textShop = (EditText) findViewById(R.id.editTextShop);
-		String shop = textShop.getText().toString();
+		String shop = getTextViewText(R.id.editTextShop);
 		list.setShop(shop);
 
 		// get due date
-		EditText textDate = (EditText) findViewById(R.id.editTextDate);
 		Date date;
 		try {
-			date = SimpleDateFormat.getDateInstance().parse(
-					textDate.getText().toString());
+			String textDate = getTextViewText(R.id.editTextDate);
+			date = SimpleDateFormat.getDateInstance().parse(textDate);
 			list.setDueDate(date);
 		} catch (ParseException e) {
 			// throw new IllegalStateException(e);
 		}
-		
+
 		// save the shopping list
 		manager.addShoppingList(list);
-		
-		// TODO: maybe allow user to choose in settings if new list should open after creating
+
+		// TODO: maybe allow user to choose in settings if new list should open
+		// after creating
 		// go back to home activity after editing the list
-		//NavUtils.navigateUpFromSameTask(this);
-		
+		// NavUtils.navigateUpFromSameTask(this);
+
 		// open the created list
 		Intent intent = new Intent(this, ViewListActivity.class);
 		int position = manager.getShoppingLists().indexOf(list);

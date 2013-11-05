@@ -154,6 +154,4 @@ public class ShoppingListActionMode implements Callback {
 	public void onDestroyActionMode(ActionMode mode) {
 		
 	}
-
-    
 }

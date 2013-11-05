@@ -7,6 +7,7 @@ public class Item {
 	private String name;
 	private BigDecimal price;
 	private Shop shop;
+	private String quantity;
 	private boolean bought;
 
 	public Item(String name) {
@@ -57,6 +58,14 @@ public class Item {
 
 	public void setBought(boolean bought) {
 		this.bought = bought;
+	}
+
+	public String getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(String quantity) {
+		this.quantity = quantity;
 	}
 
 	private void invariant() {

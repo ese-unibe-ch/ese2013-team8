@@ -47,8 +47,7 @@ public class CreateFriendActivity extends BaseActivity {
 		Friend friend = friendsManager.getFriendsList().get(friendIndex);
 		
 		//set name of friend
-		EditText friendName = (EditText) findViewById(R.id.edit_friend_name);
-		friendName.setText(friend.getName());
+		setTextViewText(R.id.edit_friend_name, friend.getName());
 
 		//set phoneNr but uneditable
 		EditText friendNr = (EditText) findViewById(R.id.edit_friend_phone_number);
