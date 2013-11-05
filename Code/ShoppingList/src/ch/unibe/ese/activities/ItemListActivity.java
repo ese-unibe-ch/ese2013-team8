@@ -99,7 +99,7 @@ public class ItemListActivity extends BaseActivity {
 			//
 			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
 			//
-			finish();
+			NavUtils.navigateUpFromSameTask(this);
 			return true;
 			
 		case R.id.action_new:

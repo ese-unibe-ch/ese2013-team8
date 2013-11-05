@@ -84,6 +84,7 @@
             android:completionThreshold="1"
             android:ems="10"
             android:inputType="textCapSentences">
+            <requestFocus />
         </AutoCompleteTextView>
 
 
@@ -98,7 +99,7 @@
             android:text="@string/create_item_shop"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <AutoCompleteTextView
+       <AutoCompleteTextView
             android:id="@+id/editTextShop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -109,7 +110,6 @@
             android:ems="10"
             android:completionThreshold="1"
             android:inputType="textCapSentences" >
-            <requestFocus />
         </AutoCompleteTextView>
 
         <!-- Price -->

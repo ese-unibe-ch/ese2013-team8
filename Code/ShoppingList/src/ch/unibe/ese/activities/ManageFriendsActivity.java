@@ -2,6 +2,7 @@ package ch.unibe.ese.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -104,7 +105,7 @@ public class ManageFriendsActivity extends BaseActivity {
 			//
 			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
 			//
-			finish();
+			NavUtils.navigateUpFromSameTask(this);
 			return true;
 		case R.id.action_new:
 			Intent intent = new Intent(this, CreateFriendActivity.class);
@@ -113,5 +114,11 @@ public class ManageFriendsActivity extends BaseActivity {
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+    	drawMenu.closeDrawers();
 	}
 }
