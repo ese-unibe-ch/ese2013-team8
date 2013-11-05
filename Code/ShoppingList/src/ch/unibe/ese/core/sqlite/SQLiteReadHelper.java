@@ -74,7 +74,7 @@ public class SQLiteReadHelper {
 	 * @return
 	 */
 	public Cursor getItemCursor(ShoppingList list) {
-		int listId = getListId(list.getName());
+		Long listId = list.getId();
 
 		Cursor cursor = database.rawQuery(SELECT_ITEM_DATA, new String[] { ""
 				+ listId });
@@ -134,6 +134,7 @@ public class SQLiteReadHelper {
 	 */
 	public ShoppingList cursorToShoppingList(Cursor cursor) {
 		ShoppingList list = new ShoppingList(cursor.getString(1));
+		list.setId(cursor.getLong(0));
 		list.setArchived(cursor.getInt(2) == 1);
 		if (cursor.getLong(3) > 0)
 			list.setDueDate(new Date(cursor.getLong(3)));
@@ -221,24 +222,6 @@ public class SQLiteReadHelper {
 	}
 
 	/**
-	 * Get List ID with list Name
-	 * 
-	 * @param listName
-	 * @return
-	 */
-	public int getListId(String listName) {
-		Cursor cursor = database.query(SQLiteHelper.TABLE_LISTS,
-				SQLiteHelper.LISTS_COLUMNS, SQLiteHelper.COLUMN_LIST_NAME
-						+ "=?", new String[] { listName }, null, null, null);
-		if (cursor.getCount() == 1) {
-			cursor.moveToFirst();
-			return cursor.getInt(0);
-		} else {
-			return -1;
-		}
-	}
-	
-	/**
 	 * Get Item name with item ID
 	 * 
 	 * @param itemId
@@ -322,7 +305,7 @@ public class SQLiteReadHelper {
 	 */
 	public boolean isInList(Item item, ShoppingList list) {
 		long itemId = item.getId() == null ? -1 : item.getId();
-		int listId = getListId(list.getName());
+		Long listId = list.getId();
 		Cursor cursor = database.query(SQLiteHelper.TABLE_ITEMTOLIST,
 				SQLiteHelper.ITEMTOLIST_COLUMNS, SQLiteHelper.COLUMN_ITEM_ID
 						+ "=? AND " + SQLiteHelper.COLUMN_LIST_ID + "=?",
