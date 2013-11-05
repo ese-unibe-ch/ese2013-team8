@@ -34,6 +34,8 @@ public class HomeActivity extends BaseActivity {
 
 	private ListManager listmanager;
 	private SyncManager syncmanager;
+	private List<ShoppingList> shoppingLists;
+	private List<ShoppingList> shoppingListsNotArchived;
 	private ArrayAdapter<ShoppingList> shoppingListAdapter;
 	private Activity homeActivity = this;
 	private DrawerLayout drawMenu;
@@ -101,16 +103,16 @@ public class HomeActivity extends BaseActivity {
 
 	private void updateAdapter() {
 		// Get List from manager
-		List<ShoppingList> shoppingLists = listmanager.getShoppingLists();
-		List<ShoppingList> shoppingLists2 = new ArrayList<ShoppingList>();
+		shoppingLists = listmanager.getShoppingLists();
+		shoppingListsNotArchived = new ArrayList<ShoppingList>();
 		
 		// separate archived lists
 		for (ShoppingList list: shoppingLists)
 			if (!list.isArchived())
-				shoppingLists2.add(list);
+				shoppingListsNotArchived.add(list);
 
 		shoppingListAdapter = new ArrayAdapter<ShoppingList>(this,
-				R.layout.shopping_list_item, shoppingLists2);
+				R.layout.shopping_list_item, shoppingListsNotArchived);
 
 		ListView listView = (ListView) findViewById(R.id.ShoppingListView);
 		listView.setAdapter(shoppingListAdapter);
@@ -143,7 +145,12 @@ public class HomeActivity extends BaseActivity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				Intent intent = new Intent(homeActivity, ViewListActivity.class);
-				intent.putExtra("selectedList", position);
+				
+				// get position in listmanager
+				ShoppingList list = shoppingListsNotArchived.get(position);
+				int listPosition = listmanager.getShoppingLists().indexOf(list);
+				
+				intent.putExtra("selectedList", listPosition);
 				homeActivity.startActivity(intent);
 			}
 		});
