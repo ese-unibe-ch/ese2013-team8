@@ -69,6 +69,7 @@ public class SQLiteUpdateHelper {
 		String price = item.getPrice() != null ? item.getPrice().toString()
 				: null;
 		values.put(SQLiteHelper.COLUMN_LISTPRICE, price);
+		values.put(SQLiteHelper.COLUMN_ITEM_QUANTITY, item.getQuantity());
 		return values;
 	}
 

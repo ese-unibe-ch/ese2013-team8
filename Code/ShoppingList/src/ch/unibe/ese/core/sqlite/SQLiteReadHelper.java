@@ -19,31 +19,17 @@ public class SQLiteReadHelper {
 
 	private SQLiteDatabase database;
 	private static final String SELECT_ALL_ITEM_DATA = "SELECT " //
-			+ SQLiteHelper.TABLE_ITEMS
-			+ "."
-			+ SQLiteHelper.COLUMN_ITEM_ID
-			+ ","
-			+ SQLiteHelper.TABLE_ITEMS
-			+ "."
-			+ SQLiteHelper.COLUMN_ITEM_NAME
-			+ ","
-			+ SQLiteHelper.TABLE_ITEMTOLIST
-			+ "."
-			+ SQLiteHelper.COLUMN_ITEMBOUGHT
-			+ ","
-			+ SQLiteHelper.TABLE_ITEMTOLIST
-			+ "."
-			+ SQLiteHelper.COLUMN_LISTPRICE
+			+ SQLiteHelper.TABLE_ITEMS + "." + SQLiteHelper.COLUMN_ITEM_ID + ","
+			+ SQLiteHelper.TABLE_ITEMS + "." + SQLiteHelper.COLUMN_ITEM_NAME + ","
+			+ SQLiteHelper.TABLE_ITEMTOLIST + "." + SQLiteHelper.COLUMN_ITEMBOUGHT + ","
+			+ SQLiteHelper.TABLE_ITEMTOLIST + "." + SQLiteHelper.COLUMN_LISTPRICE + ","
+			+ SQLiteHelper.TABLE_ITEMTOLIST + "." + SQLiteHelper.COLUMN_ITEM_QUANTITY
 			+ " FROM "
-			+ SQLiteHelper.TABLE_ITEMS
-			+ ","//
+			+ SQLiteHelper.TABLE_ITEMS + ","//
 			+ SQLiteHelper.TABLE_ITEMTOLIST
 			+ " WHERE "
-			+ SQLiteHelper.TABLE_ITEMS + "."
-			+ SQLiteHelper.COLUMN_ITEM_ID
-			+ " = " + SQLiteHelper.TABLE_ITEMTOLIST
-			+ "."
-			+ SQLiteHelper.COLUMN_ITEM_ID;
+			+ SQLiteHelper.TABLE_ITEMS + "." + SQLiteHelper.COLUMN_ITEM_ID
+			+ " = " + SQLiteHelper.TABLE_ITEMTOLIST + "."+ SQLiteHelper.COLUMN_ITEM_ID;
 	
 	private static final String SELECT_ITEM_DATA = SELECT_ALL_ITEM_DATA
 			+ " AND "
@@ -150,6 +136,7 @@ public class SQLiteReadHelper {
 		String price = cursor.getString(3);
 		if (price != null && !price.isEmpty())
 			item.setPrice(new BigDecimal(price));
+		item.setQuantity(cursor.getString(4));
 		return item;
 	}
 	
@@ -215,24 +202,6 @@ public class SQLiteReadHelper {
 				SQLiteHelper.LISTS_COLUMNS, SQLiteHelper.COLUMN_LIST_ID + "=?",
 				new String[] { "" + listId }, null, null, null, null);
 		if (cursor.getCount() == 1) {
-			return cursor.getString(1);
-		} else {
-			return null;
-		}
-	}
-
-	/**
-	 * Get Item name with item ID
-	 * 
-	 * @param itemId
-	 * @return
-	 */
-	public String getItemName(int itemId) {
-		Cursor cursor = database.query(SQLiteHelper.TABLE_ITEMS,
-				SQLiteHelper.ITEMS_COLUMNS, SQLiteHelper.COLUMN_ITEM_ID + "=?",
-				new String[] { "" + itemId }, null, null, null, null);
-		if (cursor.getCount() == 1) {
-			cursor.moveToFirst();
 			return cursor.getString(1);
 		} else {
 			return null;

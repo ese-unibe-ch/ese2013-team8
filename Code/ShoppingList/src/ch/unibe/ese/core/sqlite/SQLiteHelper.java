@@ -28,6 +28,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public static final String TABLE_ITEMTOLIST = "itemtolist";
 	public static final String COLUMN_LISTPRICE = "listprice";
 	public static final String COLUMN_ITEMBOUGHT = "itembought";
+	public static final String COLUMN_ITEM_QUANTITY ="quantity";
 	// Save all friends with an unique name and ID
 	public static final String TABLE_FRIENDS = "friendlist";
 	public static final String COLUMN_FRIEND_NAME = "friendname";
@@ -59,6 +60,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 			+ COLUMN_LIST_ID + " integer NOT NULL, "
 			+ COLUMN_LISTPRICE + " NUMERIC, "
 			+ COLUMN_ITEMBOUGHT + " integer, "
+			+ COLUMN_ITEM_QUANTITY + " varchar(30), "
 			+ "primary key (" + COLUMN_ITEM_ID + ", " + COLUMN_LIST_ID + ")"
 			+ ");";
 			// Create table for Shops
@@ -84,7 +86,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 			SQLiteHelper.COLUMN_ITEM_NAME };
 	public static String[] ITEMTOLIST_COLUMNS = {
 			SQLiteHelper.COLUMN_ITEM_ID, SQLiteHelper.COLUMN_LIST_ID,
-			SQLiteHelper.COLUMN_LISTPRICE };
+			SQLiteHelper.COLUMN_LISTPRICE, SQLiteHelper.COLUMN_ITEMBOUGHT, SQLiteHelper.COLUMN_ITEM_QUANTITY };
 	public static String[] FRIENDS_COLUMNS = { SQLiteHelper.COLUMN_FRIEND_PHONENR,
 			SQLiteHelper.COLUMN_FRIEND_NAME };
 

@@ -1,5 +1,6 @@
 package ch.unibe.ese.core;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import ch.unibe.ese.core.sqlite.SQLitePersistenceManager;
@@ -75,10 +76,22 @@ public class ListManagerTest extends AndroidTestCase {
 		assertEquals(list1, manager.getShoppingLists().get(0));
 
 		assertTrue(manager.getItemsFor(list1).isEmpty());
-		Item item1 = new Item("item1");
+		final String name = "item1";
+		final BigDecimal price = new BigDecimal("100.00");
+		final String quantity = "500 g";
+		Item item1 = new Item(name);
+		item1.setPrice(price);
+		item1.setQuantity(quantity);
+		manager.save(item1);
 		manager.addItemToList(item1, list1);
+
 		assertEquals(1, manager.getItemsFor(list1).size());
-		assertEquals(item1, manager.getItemsFor(list1).get(0));
+		Item testItem = manager.getItemsFor(list1).get(0);
+		assertEquals(item1, testItem);
+		assertEquals(name, testItem.getName());
+		assertEquals(price, testItem.getPrice());
+		assertEquals(quantity, testItem.getQuantity());
+		assertNull(testItem.getShop());
 	}
 
 	public void testAddItemsToList() {
@@ -120,8 +133,10 @@ public class ListManagerTest extends AndroidTestCase {
 		assertTrue(manager.getAllItems().isEmpty());
 		Item item1 = new Item("item1");
 		manager.save(item1);
+
 		assertEquals(1, manager.getAllItems().size());
-		assertEquals(item1, manager.getAllItems().get(0));
+		Item testItem = manager.getAllItems().get(0);
+		assertEquals(item1, testItem);
 	}
 
 	public void testAddItems() {

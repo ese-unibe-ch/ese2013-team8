@@ -165,6 +165,7 @@ public class SQLitePersistenceManager implements PersistenceManager {
 		}
 	}
 
+	@Override
 	public void save(Item item) {
 		ContentValues values = updateHelper.toValue(item);
 		long id = 0;
