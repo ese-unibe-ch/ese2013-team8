@@ -35,6 +35,7 @@
     <string name="create_item_name">Name</string>
     <string name="create_item_shop">Shop (optional)</string>
     <string name="create_item_price">Price (optional)</string>
+    <string name="create_item_quantity">Quantity (optional)</string>
 
     <!-- ViewListActivity -->
     <string name="view_list_hint">Add Item</string>

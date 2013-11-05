@@ -132,6 +132,27 @@
             android:layout_alignParentRight="true"
             android:ems="10"
             android:inputType="numberDecimal" />
+
+        <!-- Quantity -->
+        <TextView
+            android:id="@+id/textViewQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textViewPrice"
+            android:layout_below="@+id/textViewPrice"
+            android:layout_marginTop="26dp"
+            android:text="@string/create_item_quantity"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/editTextQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textViewQuantity"
+            android:layout_alignLeft="@+id/editTextPrice"
+            android:layout_alignParentRight="true"
+            android:ems="10"
+            android:inputType="text" />
     </RelativeLayout>
 
 </RelativeLayout>
