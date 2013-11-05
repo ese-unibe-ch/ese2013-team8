@@ -150,7 +150,7 @@ public class HomeActivity extends BaseActivity {
 				// get position in listmanager
 				ShoppingList list = shoppingListsNotArchived.get(position);
 				
-				intent.putExtra("selectedList", list.getId());
+				intent.putExtra(EXTRAS_LIST_ID, list.getId());
 				homeActivity.startActivity(intent);
 			}
 		});

@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import ch.unibe.ese.core.BaseActivity;
 import ch.unibe.ese.core.Item;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.Recipe;
@@ -74,12 +75,12 @@ public class RecipeListActionMode implements Callback {
             	
             	if(recipeAdapter != null) {
 		        	Intent editRecipeIntent = new Intent(activity, CreateRecipeActivity.class);
-		        	editRecipeIntent.putExtra("recipeIndex", recipeIndex);
+		        	editRecipeIntent.putExtra(BaseActivity.EXTRAS_RECIPE_ID, recipeIndex);
 		            activity.startActivityForResult(editRecipeIntent, 1);
             	} else {
             		Intent editItemIntent = new Intent(activity, CreateItemActivity.class);
-            		editItemIntent.putExtra("selectedItem", selectedItem.getId());
-            		editItemIntent.putExtra("editItem", true);
+            		editItemIntent.putExtra(BaseActivity.EXTRAS_ITEM_ID, selectedItem.getId());
+            		editItemIntent.putExtra(BaseActivity.EXTRAS_ITEM_EDIT, true);
 		            activity.startActivityForResult(editItemIntent, 1);	
             	}
                 return true;

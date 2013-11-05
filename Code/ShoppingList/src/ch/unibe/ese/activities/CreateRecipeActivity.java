@@ -39,7 +39,7 @@ public class CreateRecipeActivity extends BaseActivity {
 		
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
-			int recipeIndex = extras.getInt("recipeIndex");
+			int recipeIndex = extras.getInt(EXTRAS_RECIPE_ID);
 			recipe = manager.getRecipeAt(recipeIndex);
 			itemsOfRecipe = recipe.getItemList();
 			setInput(recipe);
@@ -137,7 +137,7 @@ public class CreateRecipeActivity extends BaseActivity {
 	public void finish() {
         Intent data = new Intent();
         if(recipe != null)
-        	data.putExtra("item", recipe.getId());
+        	data.putExtra(EXTRAS_RECIPE_ID, recipe.getId());
         setResult(Activity.RESULT_OK, data); 
         super.finish();
     }

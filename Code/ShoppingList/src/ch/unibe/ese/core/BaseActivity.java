@@ -12,6 +12,15 @@ import android.widget.Toast;
  */
 public class BaseActivity extends Activity {
 	
+	public static final String EXTRAS_LIST_ID = "listId";
+	public static final String EXTRAS_ITEM_ID = "itemId";
+	public static final String EXTRAS_ITEM_NAME = "itemName";
+	public static final String EXTRAS_ITEM_EDIT= "itemEdit";
+	public static final String EXTRAS_RECIPE_ID = "recipeId";
+	public static final String EXTRAS_FRIEND_ID = "friendId";
+	public static final String EXTRAS_FRIEND_NAME= "friendName";
+	
+
 	public ListManager getListManager() {
 		BaseApplication app = (BaseApplication) this.getApplication();
 		ListManager manager = app.getListManager();

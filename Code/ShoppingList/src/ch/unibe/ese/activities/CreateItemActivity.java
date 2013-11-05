@@ -40,31 +40,16 @@ public class CreateItemActivity extends BaseActivity {
 		Bundle extras = getIntent().getExtras();
 		String name = "";
 
-		if (extras != null)
-			name = extras.getString("Item");
-
-		// create autocomplete adapter for name
-		AutoCompleteTextView textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
-		SQLiteItemAdapter sqliteItemAdapter = new SQLiteItemAdapter(this,
-				android.R.layout.simple_list_item_1);
-		textName.setAdapter(sqliteItemAdapter);
-		textName.setText(name);
-
-		// Set autocompletion adapter for shop
-		AutoCompleteTextView textShop = (AutoCompleteTextView) findViewById(R.id.editTextShop);
-		SQLiteShopAdapter sqliteShopAdapter = new SQLiteShopAdapter(this,
-				android.R.layout.simple_list_item_1);
-		textShop.setAdapter(sqliteShopAdapter);
-
 		// get list if available
 		if (extras != null) {
-			long listIndex = extras.getLong("selectedList");
+			name = extras.getString(EXTRAS_ITEM_NAME);
+			long listIndex = extras.getLong(EXTRAS_LIST_ID);
 			if (listIndex != 0)
 				list = manager.getShoppingList(listIndex);
 
 			// prepare for edit item when necessary
-			if (extras.getBoolean("editItem")) {
-				long itemId = extras.getLong("selectedItem");
+			if (extras.getBoolean(EXTRAS_ITEM_EDIT)) {
+				long itemId = extras.getLong(EXTRAS_ITEM_ID);
 				for (Item it : (list == null ? manager.getAllItems() : manager
 						.getItemsFor(list))) {
 					if (it.getId() == itemId) {
@@ -77,6 +62,19 @@ public class CreateItemActivity extends BaseActivity {
 				editItem();
 			}
 		}
+
+		// create autocomplete adapter for name
+		AutoCompleteTextView textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
+		SQLiteItemAdapter sqliteItemAdapter = new SQLiteItemAdapter(this,
+				android.R.layout.simple_list_item_1);
+		textName.setAdapter(sqliteItemAdapter);
+		textName.setText(name);
+		
+		// Set autocompletion adapter for shop
+		AutoCompleteTextView textShop = (AutoCompleteTextView) findViewById(R.id.editTextShop);
+		SQLiteShopAdapter sqliteShopAdapter = new SQLiteShopAdapter(this,
+				android.R.layout.simple_list_item_1);
+		textShop.setAdapter(sqliteShopAdapter);
 	}
 
 	private void editItem() {
@@ -162,7 +160,7 @@ public class CreateItemActivity extends BaseActivity {
 	public void finish() {
 		Intent data = new Intent();
 		if (item != null)
-			data.putExtra("item", item.getId());
+			data.putExtra(EXTRAS_ITEM_ID, item.getId());
 		setResult(Activity.RESULT_OK, data);
 		super.finish();
 	}

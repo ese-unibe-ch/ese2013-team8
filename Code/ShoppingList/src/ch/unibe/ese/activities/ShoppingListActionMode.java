@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
+import ch.unibe.ese.core.BaseActivity;
 import ch.unibe.ese.core.Item;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
@@ -111,15 +112,16 @@ public class ShoppingListActionMode implements Callback {
 				mode.finish();
 				// open list edit screen
 				Intent intent = new Intent(activity, CreateListActivity.class);
-				intent.putExtra("selectedList", listIndex);
+				intent.putExtra(BaseActivity.EXTRAS_LIST_ID, listIndex);
 				activity.startActivity(intent);
 			} else {
 				itemAdapter.notifyDataSetChanged();
 				mode.finish();
 				// open item edit screen
 				Intent intent = new Intent(activity, CreateItemActivity.class);
-				intent.putExtra("selectedItem", selectedItem.getId());
-				intent.putExtra("editItem", true);
+				intent.putExtra(BaseActivity.EXTRAS_ITEM_ID,
+						selectedItem.getId());
+				intent.putExtra(BaseActivity.EXTRAS_ITEM_EDIT, true);
 				activity.startActivityForResult(intent, 1);
 			}
 			return true;
@@ -147,7 +149,7 @@ public class ShoppingListActionMode implements Callback {
 			if (isList) {
 				Intent intentShare = new Intent(activity,
 						ShareListActivity.class);
-				intentShare.putExtra("selectedList", listIndex);
+				intentShare.putExtra(BaseActivity.EXTRAS_LIST_ID, listIndex);
 				activity.startActivity(intentShare);
 				mode.finish(); // Action picked, so close the CAB
 				return true;

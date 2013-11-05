@@ -58,7 +58,7 @@ public class ViewListActivity extends BaseActivity {
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
 			// Get list
-			long listIndex = extras.getLong("selectedList");
+			long listIndex = extras.getLong(EXTRAS_LIST_ID);
 			list = manager.getShoppingList(listIndex);
 			setTitle(list.getName());
 		}
@@ -195,8 +195,8 @@ public class ViewListActivity extends BaseActivity {
 		Intent intent = new Intent(this, CreateItemActivity.class);
 		EditText textName = (EditText) findViewById(R.id.editTextName);
 		String name = textName.getText().toString();
-		intent.putExtra("Item", name);
-		intent.putExtra("selectedList", list.getId());
+		intent.putExtra(EXTRAS_ITEM_NAME, name);
+		intent.putExtra(EXTRAS_LIST_ID, list.getId());
 		this.startActivityForResult(intent, 1);
 	}
 
@@ -259,14 +259,14 @@ public class ViewListActivity extends BaseActivity {
 		// Handle presses on the action bar items
 		case R.id.action_share:
 			Intent intentShare = new Intent(this, ShareListActivity.class);
-        	intentShare.putExtra("selectedList", listIndex);
+        	intentShare.putExtra(EXTRAS_LIST_ID, listIndex);
             this.startActivity(intentShare);
 			return true;
 		
 		// Handle presses on overflow menu items
 		case R.id.action_edit_list:
         	Intent intentEdit = new Intent(this, CreateListActivity.class);
-        	intentEdit.putExtra("selectedList", listIndex);
+        	intentEdit.putExtra(EXTRAS_LIST_ID, listIndex);
             this.startActivity(intentEdit);
 			return true;
 		case R.id.action_archive:

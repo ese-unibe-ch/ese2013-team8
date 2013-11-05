@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import ch.unibe.ese.core.BaseActivity;
 import ch.unibe.ese.core.Friend;
 import ch.unibe.ese.core.FriendsManager;
 import ch.unibe.ese.shoppinglist.R;
@@ -60,7 +61,7 @@ public class FriendListActionMode implements Callback {
 	                mode.finish(); 
 	                // open list edit screen
 		        	Intent intent = new Intent(activity, CreateFriendActivity.class);
-		        	intent.putExtra("friendIndex", friendIndex);
+		        	intent.putExtra(BaseActivity.EXTRAS_FRIEND_ID, friendIndex);
 		            activity.startActivity(intent);
 
                 return true;

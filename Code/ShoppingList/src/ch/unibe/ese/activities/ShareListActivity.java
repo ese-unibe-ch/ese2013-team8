@@ -51,7 +51,7 @@ public class ShareListActivity extends BaseActivity {
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
 			// Get list
-			long listIndex = extras.getLong("selectedList");
+			long listIndex = extras.getLong(EXTRAS_LIST_ID);
 			list = manager.getShoppingList(listIndex);
 			setTitle(this.getString(R.string.share_list_title) + " "
 					+ list.getName());
@@ -96,7 +96,7 @@ public class ShareListActivity extends BaseActivity {
 		String name = getTextViewText(R.id.editTextName);
 
 		Intent intent = new Intent(this, CreateFriendActivity.class);
-		intent.putExtra("Friend", name);
+		intent.putExtra(EXTRAS_FRIEND_NAME, name);
 		startActivityForResult(intent, 0);
 
 		setTextViewText(R.id.editTextName, "");

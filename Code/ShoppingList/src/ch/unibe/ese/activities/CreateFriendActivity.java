@@ -45,7 +45,7 @@ public class CreateFriendActivity extends BaseActivity {
 		editFriend = true;
 		
 		// get friend
-		int friendIndex = extras.getInt("friendIndex");
+		int friendIndex = extras.getInt(EXTRAS_FRIEND_ID);
 		Friend friend = friendsManager.getFriendsList().get(friendIndex);
 		
 		//set name of friend
