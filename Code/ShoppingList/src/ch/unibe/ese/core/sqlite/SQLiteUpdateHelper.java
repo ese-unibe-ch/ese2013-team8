@@ -64,14 +64,14 @@ public class SQLiteUpdateHelper {
 	public ContentValues toValue(Item item, ShoppingList list) {
 		ContentValues values = new ContentValues();
 		values.put(SQLiteHelper.COLUMN_ITEM_ID, item.getId());
-		values.put(SQLiteHelper.COLUMN_LIST_ID,
-				readHelper.getListId(list.getName()));
+		values.put(SQLiteHelper.COLUMN_LIST_ID, list.getId());
 		values.put(SQLiteHelper.COLUMN_ITEMBOUGHT, item.isBought() ? 1 : 0);
-		String price = item.getPrice()!= null?item.getPrice().toString():null;
+		String price = item.getPrice() != null ? item.getPrice().toString()
+				: null;
 		values.put(SQLiteHelper.COLUMN_LISTPRICE, price);
 		return values;
 	}
-	
+
 	/**
 	 * Converts an friendto a Contentvalue (TABLE_FRIENDS)
 	 * 
@@ -80,7 +80,7 @@ public class SQLiteUpdateHelper {
 	 */
 	public ContentValues toValue(Friend friend) {
 		ContentValues values = new ContentValues();
-		//values.put(SQLiteHelper.COLUMN_FRIEND_ID, friend.getID());
+		// values.put(SQLiteHelper.COLUMN_FRIEND_ID, friend.getID());
 		values.put(SQLiteHelper.COLUMN_FRIEND_NAME, friend.getName());
 		values.put(SQLiteHelper.COLUMN_FRIEND_PHONENR, friend.getPhoneNr());
 		return values;

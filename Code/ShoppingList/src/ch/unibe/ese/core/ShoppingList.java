@@ -7,6 +7,7 @@ public class ShoppingList {
 	private Date dueDate;
 	private String shop;
 	private boolean archived;
+	private Long id;
 
 	/**
 	 * @param name
@@ -45,13 +46,25 @@ public class ShoppingList {
 	public void setShop(String shop) {
 		this.shop = shop;
 	}
-	
+
 	public boolean isArchived() {
 		return archived;
 	}
 
 	public void setArchived(boolean archived) {
 		this.archived = archived;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		if (this.id != null)
+			throw new IllegalStateException(
+					"It's not allowed to set the id twice. Old: " + this.id
+							+ "/New: " + id);
+		this.id = id;
 	}
 
 	private void invariant() {
@@ -95,8 +108,9 @@ public class ShoppingList {
 			return false;
 		return true;
 	}
-	
+
 	public String toString() {
 		return this.name;
 	}
+
 }

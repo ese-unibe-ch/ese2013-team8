@@ -36,7 +36,7 @@ public class SQLitePersistenceManager implements PersistenceManager {
 	public SQLitePersistenceManager(Context applicationContext) {
 		if (applicationContext == null)
 			throw new IllegalArgumentException("null is not allowed");
-		
+
 		this.context = applicationContext;
 		this.dbHelper = new SQLiteHelper(this.context);
 		this.database = dbHelper.getWritableDatabase();
@@ -69,21 +69,20 @@ public class SQLitePersistenceManager implements PersistenceManager {
 		// Automatically creates a new shop in the database if it doesn't exist
 		ContentValues values = updateHelper.toValue(list);
 		// If this is a new list
-		if (readHelper.getListId(list.getName()) == -1) {
-			database.insert(SQLiteHelper.TABLE_LISTS, null, values);
+		if (list.getId() == null) {
+			long id = database.insert(SQLiteHelper.TABLE_LISTS, null, values);
+			list.setId(id);
 		} else { // Else if it is an old list
-			database.update(
-					SQLiteHelper.TABLE_LISTS,
-					values,
-					SQLiteHelper.COLUMN_LIST_ID + "="
-							+ readHelper.getListId(list.getName()), null);
+			database.update(SQLiteHelper.TABLE_LISTS, values,
+					SQLiteHelper.COLUMN_LIST_ID + " = ?", new String[] { ""
+							+ list.getId() });
 		}
 	}
 
 	@Override
 	public void remove(ShoppingList list) {
-		int listId = readHelper.getListId(list.getName());
-		if (listId != -1) {
+		Long listId = list.getId();
+		if (listId != null) {
 			database.delete(SQLiteHelper.TABLE_ITEMTOLIST,
 					SQLiteHelper.COLUMN_LIST_ID + " = ?", new String[] { ""
 							+ listId });
@@ -109,9 +108,8 @@ public class SQLitePersistenceManager implements PersistenceManager {
 		cursor.close();
 		return itemList;
 	}
-	
 
-	public ArrayList<Item> getAllItems(){
+	public ArrayList<Item> getAllItems() {
 		ArrayList<Item> itemList = new ArrayList<Item>();
 		Cursor cursor = readHelper.getItemCursor();
 		while (!cursor.isAfterLast()) {
@@ -119,23 +117,22 @@ public class SQLitePersistenceManager implements PersistenceManager {
 			itemList.add(item);
 			cursor.moveToNext();
 		}
-		//TODO: Restructer database so that items can be loaded just with the code above.
+		// TODO: Restructer database so that items can be loaded just with the
+		// code above.
 		cursor = readHelper.getItemTableCursor();
-		while(!cursor.isAfterLast()) {
+		while (!cursor.isAfterLast()) {
 			Item item = readHelper.cursorToItemLite(cursor);
-			for(Item compare: itemList)
-				if(item != null)
-					if(compare.getName().equals(item.getName())) 
-					item = null;
-			if(item != null)
+			for (Item compare : itemList)
+				if (item != null)
+					if (compare.getName().equals(item.getName()))
+						item = null;
+			if (item != null)
 				itemList.add(item);
 			cursor.moveToNext();
 		}
-		
-		
+
 		cursor.close();
-		
-		
+
 		return itemList;
 	}
 
@@ -146,60 +143,55 @@ public class SQLitePersistenceManager implements PersistenceManager {
 		// Add the item to the ItemtoList Table
 		ContentValues values = updateHelper.toValue(item, list);
 		if (readHelper.isInList(item, list)) {
-			database.update(
-					SQLiteHelper.TABLE_ITEMTOLIST,
-					values,
+			Long listId = list.getId();
+			database.update(SQLiteHelper.TABLE_ITEMTOLIST, values,
 					SQLiteHelper.COLUMN_ITEM_ID + "= ? AND "
-							+ SQLiteHelper.COLUMN_LIST_ID + "=?",
-					new String[] { "" + item.getId(),
-							"" + readHelper.getListId(list.getName()) });
+							+ SQLiteHelper.COLUMN_LIST_ID + "=?", new String[] {
+							"" + item.getId(), "" + listId });
 		} else {
 			database.insert(SQLiteHelper.TABLE_ITEMTOLIST, null, values);
 		}
-		
+
 	}
 
 	@Override
 	public void remove(Item item, ShoppingList list) {
+		Long listId = list.getId();
 		if (readHelper.isInList(item, list)) {
-			database.delete(
-					SQLiteHelper.TABLE_ITEMTOLIST,
+			database.delete(SQLiteHelper.TABLE_ITEMTOLIST,
 					SQLiteHelper.COLUMN_ITEM_ID + "=? AND "
-							+ SQLiteHelper.COLUMN_LIST_ID + "=?",
-					new String[] { "" + item.getId(),
-							"" + readHelper.getListId(list.getName()) });
+							+ SQLiteHelper.COLUMN_LIST_ID + "=?", new String[] {
+							"" + item.getId(), "" + listId });
 		}
 	}
-	
-	public void save(Item item){
+
+	public void save(Item item) {
 		ContentValues values = updateHelper.toValue(item);
 		long id = 0;
-		if (readHelper.isInList(item)){
+		if (readHelper.isInList(item)) {
 			id = item.getId();
-			database.update( SQLiteHelper.TABLE_ITEMS, values, SQLiteHelper.COLUMN_ITEM_ID 
-					+ "=? ", new String[] { "" + id });
-		}
-		else {
+			database.update(SQLiteHelper.TABLE_ITEMS, values,
+					SQLiteHelper.COLUMN_ITEM_ID + "=? ",
+					new String[] { "" + id });
+		} else {
 			id = database.insert(SQLiteHelper.TABLE_ITEMS, null, values);
 			item.setId(id);
 		}
 	}
-	
+
 	@Override
 	public void remove(Item item) {
 		if (readHelper.isInList(item)) {
-			database.delete(
-					SQLiteHelper.TABLE_ITEMTOLIST,
-					SQLiteHelper.COLUMN_ITEM_ID + "=? ",
-					new String[] { "" + item.getId() });
-			
-			database.delete(SQLiteHelper.TABLE_ITEMS, 
-					SQLiteHelper.COLUMN_ITEM_ID + "=? ",
-					new String[] { "" + item.getId() });
-		} 	
+			database.delete(SQLiteHelper.TABLE_ITEMTOLIST,
+					SQLiteHelper.COLUMN_ITEM_ID + "=? ", new String[] { ""
+							+ item.getId() });
+
+			database.delete(SQLiteHelper.TABLE_ITEMS,
+					SQLiteHelper.COLUMN_ITEM_ID + "=? ", new String[] { ""
+							+ item.getId() });
+		}
 	}
-	
-	
+
 	/**
 	 * Everything for friends
 	 */
@@ -217,8 +209,7 @@ public class SQLitePersistenceManager implements PersistenceManager {
 		cursor.close();
 		return list;
 	}
-	
-	
+
 	public void save(Friend friend) {
 		// Convert the friend to a ContentValue
 		ContentValues values = updateHelper.toValue(friend);
@@ -239,9 +230,9 @@ public class SQLitePersistenceManager implements PersistenceManager {
 		int friendNr = readHelper.getFriendNr(friend.getName());
 		if (friendNr != -1) {
 			database.delete(SQLiteHelper.TABLE_FRIENDS,
-					SQLiteHelper.COLUMN_FRIEND_PHONENR + "= ?", new String[] { ""
-							+ friendNr });
+					SQLiteHelper.COLUMN_FRIEND_PHONENR + "= ?",
+					new String[] { "" + friendNr });
 		}
-		
+
 	}
 }

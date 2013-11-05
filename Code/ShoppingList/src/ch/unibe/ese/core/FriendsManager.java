@@ -2,9 +2,6 @@ package ch.unibe.ese.core;
 
 import java.util.ArrayList;
 
-import ch.unibe.ese.share.SyncManager;
-import ch.unibe.ese.share.requests.FriendRequest;
-
 public class FriendsManager {
 	private ArrayList<Friend> friendsList;
 	private PersistenceManager persistenceManager;
