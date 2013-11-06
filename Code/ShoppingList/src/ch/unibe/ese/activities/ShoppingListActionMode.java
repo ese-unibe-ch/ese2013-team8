@@ -119,6 +119,7 @@ public class ShoppingListActionMode implements Callback {
 				mode.finish();
 				// open item edit screen
 				Intent intent = new Intent(activity, CreateItemActivity.class);
+				intent.putExtra(BaseActivity.EXTRAS_LIST_ID, listIndex);
 				intent.putExtra(BaseActivity.EXTRAS_ITEM_ID,
 						selectedItem.getId());
 				intent.putExtra(BaseActivity.EXTRAS_ITEM_EDIT, true);

@@ -256,7 +256,7 @@ public class ViewListActivity extends BaseActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-    	int listIndex = manager.getShoppingLists().indexOf(list);
+    	long listIndex = list.getId();
     	
 		switch (item.getItemId()) {
 		case android.R.id.home:
