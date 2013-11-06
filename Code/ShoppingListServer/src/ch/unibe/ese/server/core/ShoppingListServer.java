@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.io.UnsupportedEncodingException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -20,8 +19,8 @@ public class ShoppingListServer {
 	/**
 	 * Configuration
 	 */
-	public static boolean WIPE_DATABSE_ON_STARTUP = false;
-	public static boolean REDIRECT_OUTPUT_TO_FILE = true;
+	public static boolean WIPE_DATABSE_ON_STARTUP = true;
+	public static boolean REDIRECT_OUTPUT_TO_FILE = false;
 	private static int PORT = 1337;
 	/**
 	 * \Configuration 
@@ -55,7 +54,7 @@ public class ShoppingListServer {
 
 	private void accept() {
 		try {
-			// Get socket from client
+			// Accept connection from client
 			Socket socket = serverSocket.accept();
 			// Start new thread to handle client request
 			new ClientThread(socket,requestHandler).start();

@@ -30,23 +30,17 @@ public class ClientThread extends Thread {
 	public void run() {
 		System.out.println("\n" + new Date() +"\n\t"+ "Client Connected from " + socket.getInetAddress() + ":" + socket.getPort());
 		ObjectInputStream in;
-		Request[] request = null;
-		// Open inputstream from socket
+		Request[] requests = null;
 		try {
 			in = new ObjectInputStream(socket.getInputStream());
-			// Get the request
-			request = (Request[]) in.readObject();
-			// Handle the request and set flags 'isHandled' and 'wasSuccessfull'
-			requestHandler.handle(request);
-			// Open outputstream from socket
+			requests = (Request[]) in.readObject();
+			requests = requestHandler.handle(requests);
 			ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-			// Send answer to client
-			out.writeObject(request);
+			out.writeObject(requests);
 			out.flush();
 			System.out.println("\tClosed Socket from " + socket.getInetAddress() + ":" + socket.getPort());
 			socket.close();
 		} catch (IOException | ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace(System.err);
 		}
 	}

@@ -156,6 +156,7 @@ public class SQLiteDatabaseManager {
 			ResultSet rs = stmt.executeQuery(selectEntryifExists);
 			if(rs.next()) {
 				System.out.println("\t:List " + serverListId + " is already shared with user " + friendId);
+				request.setHandled();
 			} else {
 				String insertSharedList = "insert into " + TABLE_SHAREDLISTS + " values (\"" + userId + "\", \"" + friendId + "\", \"" + serverListId + "\");";	
 				stmt.executeUpdate(insertSharedList);
