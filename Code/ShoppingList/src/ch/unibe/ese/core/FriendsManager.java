@@ -1,116 +1,90 @@
 package ch.unibe.ese.core;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class FriendsManager {
 	private ArrayList<Friend> friendsList;
 	private PersistenceManager persistenceManager;
-	
-	public FriendsManager(PersistenceManager persistenceManager){
+
+	public FriendsManager(PersistenceManager persistenceManager) {
 		this.persistenceManager = persistenceManager;
 		friendsList = persistenceManager.getFriends();
 	}
-	
+
 	/**
-	 * Checks if friend is on the server and adds him to the friendlist when successful
+	 * Checks if friend is on the server and adds him to the friendlist when
+	 * successful
+	 * 
 	 * @param phoneNr
 	 * @param name
 	 * @int 0 successful, >= 1 fail
 	 */
-	public int addFriend(Friend friend){
-		if(checkIfDouble(friend))
+	public int addFriend(Friend friend) {
+		// TODO this does not really work as we compare the friends id, which is null.
+		// So its possible to add a friend with same name and number multiple times.
+		// Fix this when adding select friends from phone book.
+		if (friendsList.contains(friend))
 			return 1;
-		
+
 		// Add the friend
 		friendsList.add(friend);
-		
-		//Save friend to database
+
+		// Save friend to database
 		persistenceManager.save(friend);
 		return 0;
-	}
-	
-	/**
-	 * Checks if a friend is already in the friendslist
-	 * @return true if already in list, otherwise false
-	 */
-	private boolean checkIfDouble(Friend friend) {
-		for(Friend compare: friendsList)
-			if(compare.equals(friend)) return true;
-		
-		return false;
 	}
 
 	/**
 	 * @return List of all added friends
 	 */
-	public ArrayList<Friend> getFriendsList(){
-		return new ArrayList<Friend>(friendsList);
+	public List<Friend> getFriendsList() {
+		return Collections.unmodifiableList(friendsList);
 	}
-	
+
 	/**
 	 * Permits to update the name of a friend
-	 * @param updated friend
+	 * 
+	 * @param updated
+	 *            friend
 	 */
-	public void update(Friend friend){
+	public void update(Friend friend) {
 		persistenceManager.save(friend);
-		
-		//update friendslist
-		int index = getIndex(friend);
-		updateFriendList(index, friend);
 	}
-	
-	/**
-	 * Get the index of the friend
-	 * @param friend
-	 * @return Index of friend, when no friend -1
-	 */
-	public int getIndex(Friend friend){
-		int index = -1;
-		for(Friend compare: friendsList){
-			if(friend.getPhoneNr() == compare.getPhoneNr())
-				index = friendsList.indexOf(compare);
-		}
-		
-		return index;	
-	}
-	
-	/**
-	 * updates the friendList
-	 * @param index
-	 * @param friend
-	 */
-	public void updateFriendList(int index, Friend friend){
-		friendsList.remove(index);
-		friendsList.add(index, friend);
-	}
-	
+
 	/**
 	 * Removes friend only on the phone, no access to server is needed.
-	 * @param friend to remove
+	 * 
+	 * @param friend
+	 *            to remove
 	 * @return if successful
 	 */
-	public boolean removeFriend(Friend friend){
+	public boolean removeFriend(Friend friend) {
 		persistenceManager.removeFriend(friend);
 		return friendsList.remove(friend);
-		//TODO: remove friend from database
+		// TODO: remove friend from database
 	}
-	
+
 	/**
-	 * Returns the friend to which the number belongs, if no friend found, returns null
+	 * Returns the friend to which the number belongs, if no friend found,
+	 * returns null
+	 * 
 	 * @param PhoneNr
 	 * @return
 	 */
-	public Friend getFriendFromNr(int nr){
-		for(Friend friend: friendsList){
-			if(friend.getPhoneNr() == nr) return friend;
+	public Friend getFriend(long id) {
+		for (Friend friend : friendsList) {
+			if (friend.getId() == id)
+				return friend;
 		}
 		return null;
 	}
-	
-	public String toString(){
-		String result = "";
-		for(Friend friend : friendsList)
-			result += friend.toString() + "\n";
-		return result;
-	}	
+
+	public String toString() {
+		StringBuilder result = new StringBuilder();
+		for (Friend friend : friendsList)
+			result.append(friend).append("\n");
+		return result.toString();
+	}
 }

@@ -38,7 +38,7 @@ public class ShareListActivity extends BaseActivity {
 	private ShoppingList list;
 	private DrawerLayout drawMenu;
 	private ShareActionProvider mShareActionProvider;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -50,9 +50,9 @@ public class ShareListActivity extends BaseActivity {
 		friendsManager = getFriendsManager();
 		friendsAdapter = new ArrayAdapter<Friend>(this,
 				R.layout.shopping_list_item, new ArrayList<Friend>());
-		
+
 		syncManager = getSyncManager();
-		
+
 		// Create drawer menu
 		NavigationDrawer nDrawer = new NavigationDrawer();
 		drawMenu = nDrawer.constructNavigationDrawer(drawMenu, this);
@@ -115,13 +115,13 @@ public class ShareListActivity extends BaseActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.share_list, menu);
-		
-	    // Locate MenuItem with ShareActionProvider
-	    MenuItem item = menu.findItem(R.id.menu_item_share);  
-	    //Fetch and store ShareActionProvider
-	    mShareActionProvider = (ShareActionProvider) item.getActionProvider();
-	    setShareIntent(createShareIntent());
-	    
+
+		// Locate MenuItem with ShareActionProvider
+		MenuItem item = menu.findItem(R.id.menu_item_share);
+		// Fetch and store ShareActionProvider
+		mShareActionProvider = (ShareActionProvider) item.getActionProvider();
+		setShareIntent(createShareIntent());
+
 		return true;
 	}
 
@@ -133,8 +133,8 @@ public class ShareListActivity extends BaseActivity {
 			finish();
 			return true;
 		case R.id.menu_item_share:
-		 	createShareIntent();
-		 	return true;
+			createShareIntent();
+			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -150,15 +150,15 @@ public class ShareListActivity extends BaseActivity {
 	 */
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		int phoneNr = -1;
+		long friendId = -1;
 
 		if (resultCode == RESULT_OK) {
 			Bundle korb = data.getExtras();
-			phoneNr = korb.getInt("phoneNr");
+			friendId = korb.getLong(EXTRAS_FRIEND_ID);
 		}
 
-		if (phoneNr != -1) {
-			Friend friend = friendsManager.getFriendFromNr(phoneNr);
+		if (friendId != -1) {
+			Friend friend = friendsManager.getFriend(friendId);
 			friendsAdapter.add(friend);
 			// update lists
 			updateFriendsList();
@@ -173,47 +173,46 @@ public class ShareListActivity extends BaseActivity {
 		ListView listView = (ListView) findViewById(R.id.FriendView);
 		listView.setAdapter(friendsAdapter);
 	}
-	
+
 	@Override
 	protected void onPause() {
 		super.onPause();
-    	drawMenu.closeDrawers();
-		//Save friends here
-		if(friendsAdapter.getCount() > 0) {
-			for(int i = 0; i<friendsAdapter.getCount(); i++) {
-				//TODO paste your real number here (instead of 1234)
-				ShareListRequest slrequest = new ShareListRequest(""+796897, ""+friendsAdapter.getItem(i).getPhoneNr(), list.getId());
+		drawMenu.closeDrawers();
+		// Save friends here
+		if (friendsAdapter.getCount() > 0) {
+			for (int i = 0; i < friendsAdapter.getCount(); i++) {
+				// TODO paste your real number here (instead of 1234)
+				ShareListRequest slrequest = new ShareListRequest("" + 796897,
+						"" + friendsAdapter.getItem(i).getPhoneNr(),
+						list.getId());
 				this.syncManager.addRequest(slrequest);
 			}
 			this.syncManager.synchronise();
 		}
 	}
-	
-	private void setShareIntent(Intent shareIntent){
-		if(mShareActionProvider != null){
+
+	private void setShareIntent(Intent shareIntent) {
+		if (mShareActionProvider != null) {
 			mShareActionProvider.setShareIntent(shareIntent);
 		}
 	}
-	
-	private Intent createShareIntent(){
+
+	private Intent createShareIntent() {
 		Intent shareIntent = new Intent(Intent.ACTION_SEND);
 		shareIntent.setType("text/plain");
 		shareIntent.putExtra(Intent.EXTRA_TEXT, listToString());
 		return shareIntent;
-		
+
 	}
-	
-	private String listToString(){
-		
-		String listString = list.toString()+"\n"; 
-		
+
+	private String listToString() {
 		List<Item> items = manager.getItemsFor(list);
-		
-		for (Item item: items){
-			
-			listString += "- " + item.toString()+"\n";
+		StringBuilder sb = new StringBuilder();
+		sb.append(list).append("\n");
+		for (Item item : items) {
+			sb.append(item).append("\n");
 		}
-		
-		return listString;
+
+		return sb.toString();
 	}
 }

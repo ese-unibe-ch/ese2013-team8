@@ -72,13 +72,12 @@ public class ShoppingList {
 			throw new IllegalArgumentException("name musn't be empty!");
 	}
 
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((dueDate == null) ? 0 : dueDate.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((shop == null) ? 0 : shop.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -91,20 +90,10 @@ public class ShoppingList {
 		if (getClass() != obj.getClass())
 			return false;
 		ShoppingList other = (ShoppingList) obj;
-		if (dueDate == null) {
-			if (other.dueDate != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!dueDate.equals(other.dueDate))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (shop == null) {
-			if (other.shop != null)
-				return false;
-		} else if (!shop.equals(other.shop))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}
@@ -112,5 +101,4 @@ public class ShoppingList {
 	public String toString() {
 		return this.name;
 	}
-
 }
