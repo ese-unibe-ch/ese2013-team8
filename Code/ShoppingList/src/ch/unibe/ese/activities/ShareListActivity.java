@@ -1,7 +1,9 @@
 package ch.unibe.ese.activities;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -13,9 +15,11 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
+import android.widget.ShareActionProvider;
 import ch.unibe.ese.core.BaseActivity;
 import ch.unibe.ese.core.Friend;
 import ch.unibe.ese.core.FriendsManager;
+import ch.unibe.ese.core.Item;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.ShoppingList;
 import ch.unibe.ese.share.SyncManager;
@@ -23,6 +27,7 @@ import ch.unibe.ese.share.requests.ShareListRequest;
 import ch.unibe.ese.shoppinglist.R;
 import ch.unibe.ese.sidelist.NavigationDrawer;
 
+@SuppressLint("NewApi")
 public class ShareListActivity extends BaseActivity {
 
 	private ListManager manager;
@@ -32,6 +37,7 @@ public class ShareListActivity extends BaseActivity {
 	private ArrayAdapter<Friend> autocompleteAdapter;
 	private ShoppingList list;
 	private DrawerLayout drawMenu;
+	private ShareActionProvider mShareActionProvider;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +115,13 @@ public class ShareListActivity extends BaseActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.share_list, menu);
+		
+	    // Locate MenuItem with ShareActionProvider
+	    MenuItem item = menu.findItem(R.id.menu_item_share);  
+	    //Fetch and store ShareActionProvider
+	    mShareActionProvider = (ShareActionProvider) item.getActionProvider();
+	    setShareIntent(createShareIntent());
+	    
 		return true;
 	}
 
@@ -119,6 +132,9 @@ public class ShareListActivity extends BaseActivity {
 			// Navigate back to the list
 			finish();
 			return true;
+		case R.id.menu_item_share:
+		 	createShareIntent();
+		 	return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -171,5 +187,33 @@ public class ShareListActivity extends BaseActivity {
 			}
 			this.syncManager.synchronise();
 		}
+	}
+	
+	private void setShareIntent(Intent shareIntent){
+		if(mShareActionProvider != null){
+			mShareActionProvider.setShareIntent(shareIntent);
+		}
+	}
+	
+	private Intent createShareIntent(){
+		Intent shareIntent = new Intent(Intent.ACTION_SEND);
+		shareIntent.setType("text/plain");
+		shareIntent.putExtra(Intent.EXTRA_TEXT, listToString());
+		return shareIntent;
+		
+	}
+	
+	private String listToString(){
+		
+		String listString = list.toString()+"\n"; 
+		
+		List<Item> items = manager.getItemsFor(list);
+		
+		for (Item item: items){
+			
+			listString += "- " + item.toString()+"\n";
+		}
+		
+		return listString;
 	}
 }
