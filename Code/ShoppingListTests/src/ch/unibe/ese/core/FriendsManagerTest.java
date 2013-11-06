@@ -54,6 +54,6 @@ public class FriendsManagerTest extends AndroidTestCase {
 		Friend friend1 = new Friend(12345678, "friend1");
 		manager.addFriend(friend1);
 		
-		assertEquals(friend1, manager.getFriendFromNr(12345678));
+		assertEquals(friend1, manager.getFriend(friend1.getId()));
 	}
 }

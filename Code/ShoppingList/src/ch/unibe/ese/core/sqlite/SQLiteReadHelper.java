@@ -179,7 +179,8 @@ public class SQLiteReadHelper {
 	}
 
 	public Friend cursorToFriend(Cursor cursor) {
-		Friend friend = new Friend(cursor.getInt(0), cursor.getString(1));
+		Friend friend = new Friend(cursor.getInt(1), cursor.getString(2));
+		friend.setId(cursor.getLong(0));
 		return friend;
 	}
 	
@@ -282,25 +283,6 @@ public class SQLiteReadHelper {
 		} else {
 			return null;
 		}
-	}
-
-	/**
-	 * Get Friend Nr with Friend Name
-	 * 
-	 * @param friendName
-	 * @return
-	 */
-	public int getFriendNr(String friendName) {
-		Cursor cursor = database.query(SQLiteHelper.TABLE_FRIENDS,
-				SQLiteHelper.FRIENDS_COLUMNS, SQLiteHelper.COLUMN_FRIEND_NAME
-						+ "=?", new String[] { "" + friendName }, null, null,
-				null, null);
-		if (cursor.getCount() == 1) {
-			cursor.moveToFirst();
-			return cursor.getInt(0);
-		}
-		
-		return -1;
 	}
 
 	/**

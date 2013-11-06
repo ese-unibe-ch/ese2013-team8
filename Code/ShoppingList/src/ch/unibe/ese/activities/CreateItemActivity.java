@@ -54,6 +54,7 @@ public class CreateItemActivity extends BaseActivity {
 						.getItemsFor(list))) {
 					if (it.getId() == itemId) {
 						item = it;
+						name = item.getName();
 						break;
 					}
 				}

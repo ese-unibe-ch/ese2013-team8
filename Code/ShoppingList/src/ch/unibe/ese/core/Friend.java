@@ -2,37 +2,23 @@ package ch.unibe.ese.core;
 
 /**
  * Class Friend with two values: phoneNr and name
+ * 
  * @author ESE Team 8
- *
+ * 
  */
-public class Friend {
+public class Friend extends Entity {
 	private int phoneNr;
 	private String name;
-	
-	
-	//TODO: add Image of Friend
-	public Friend(int phoneNr, String name){
+
+	// TODO: add Image of Friend
+	public Friend(int phoneNr, String name) {
 		this.phoneNr = phoneNr;
 		this.name = name;
+		invariant();
 	}
-	
-	public String toString(){
+
+	public String toString() {
 		return name + ", Phone nr: " + phoneNr;
-	}
-	
-	
-	public boolean equals(Object friend){
-		if(this == friend) 
-			return true;
-		if (friend == null) 
-			return false;
-		if (getClass() != friend.getClass())
-			return false;
-		
-		Friend other = (Friend) friend;
-		if(other.phoneNr == this.phoneNr)
-			return true;
-		return false;
 	}
 
 	public int getPhoneNr() {
@@ -41,6 +27,7 @@ public class Friend {
 
 	public void setPhoneNr(int phoneNr) {
 		this.phoneNr = phoneNr;
+		invariant();
 	}
 
 	public String getName() {
@@ -49,5 +36,14 @@ public class Friend {
 
 	public void setName(String name) {
 		this.name = name;
-	}	
+		invariant();
+	}
+
+	private void invariant() {
+		if (this.name == null || this.name.trim().isEmpty())
+			throw new IllegalStateException("Empty name is not allowed");
+		if (this.phoneNr < 0)
+			throw new IllegalStateException("Phone number must be > 0. Nr: "
+					+ phoneNr);
+	}
 }

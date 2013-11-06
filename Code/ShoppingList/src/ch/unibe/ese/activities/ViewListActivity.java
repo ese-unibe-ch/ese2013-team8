@@ -154,9 +154,9 @@ public class ViewListActivity extends BaseActivity {
 		listViewBought.setOnItemLongClickListener(new OnItemLongClickListener() {
 
 			@Override
-			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-					int arg2, long arg3) {
-				Item selectedItem = itemAdapter.getItem(arg2);
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Item selectedItem = itemAdapter.getItem(position);
 				ViewListActivity.this
 						.startActionMode(new ShoppingListActionMode(
 								ViewListActivity.this.manager, selectedItem,

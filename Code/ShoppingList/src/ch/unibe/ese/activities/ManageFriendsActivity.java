@@ -22,7 +22,6 @@ import ch.unibe.ese.sidelist.NavigationDrawer;
  * @author ESE Team 8
  *
  */
-
 public class ManageFriendsActivity extends BaseActivity {
 	
 	private FriendsManager friendsManager;
@@ -52,9 +51,7 @@ public class ManageFriendsActivity extends BaseActivity {
 	 * Set up the {@link android.app.ActionBar}.
 	 */
 	private void setupActionBar() {
-
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-
 	}
 	
 	/**
@@ -77,9 +74,6 @@ public class ManageFriendsActivity extends BaseActivity {
 				return true;
 			}
 		});
-
-
-	
 	}
 	
 	protected void onResume() {

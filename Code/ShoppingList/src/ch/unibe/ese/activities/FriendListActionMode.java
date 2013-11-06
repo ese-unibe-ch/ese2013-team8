@@ -53,15 +53,13 @@ public class FriendListActionMode implements Callback {
     // Called when the user selects a contextual menu item
     @Override
     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-    	int friendIndex = manager.getFriendsList().indexOf(selectedFriend);
-    	
         switch (item.getItemId()) {
             case R.id.action_edit:
 	                friendsAdapter.notifyDataSetChanged();
 	                mode.finish(); 
 	                // open list edit screen
 		        	Intent intent = new Intent(activity, CreateFriendActivity.class);
-		        	intent.putExtra(BaseActivity.EXTRAS_FRIEND_ID, friendIndex);
+		        	intent.putExtra(BaseActivity.EXTRAS_FRIEND_ID, selectedFriend.getId());
 		            activity.startActivity(intent);
 
                 return true;

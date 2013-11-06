@@ -53,40 +53,40 @@ public class SQLitePersistenceManagerTest extends
 		assertEquals(dueDate, checkList.getDueDate());
 		assertEquals(shop, checkList.getShop());
 	}
-	
+
 	public void testRemoveList() {
 		ShoppingList list1 = new ShoppingList("list1");
-		manager.save(list1);	
+		manager.save(list1);
 		ShoppingList checkList = manager.getLists().get(0);
 		assertEquals(list1, checkList);
-		
+
 		manager.remove(list1);
 		assertTrue(manager.getLists().isEmpty());
 	}
-	
+
 	public void testAddItemToList() {
 		ShoppingList list1 = new ShoppingList("list1");
 		manager.save(list1);
-	
+
 		assertTrue(manager.getItems(list1).isEmpty());
 		Item item1 = new Item("item1");
 		manager.save(item1, list1);
 		assertEquals(1, manager.getItems(list1).size());
 		assertEquals(item1, manager.getItems(list1).get(0));
 	}
-	
+
 	public void testRemoveItemFromList() {
 		ShoppingList list1 = new ShoppingList("list1");
 		manager.save(list1);
-	
+
 		assertTrue(manager.getItems(list1).isEmpty());
 		Item item1 = new Item("item1");
 		manager.save(item1, list1);
-		
+
 		manager.remove(item1, list1);
 		assertTrue(manager.getItems(list1).isEmpty());
 	}
-	
+
 	public void testGetAllItems() {
 		assertTrue(manager.getAllItems().isEmpty());
 		Item item1 = new Item("item1");
@@ -97,7 +97,7 @@ public class SQLitePersistenceManagerTest extends
 		assertEquals(item1, manager.getAllItems().get(0));
 		assertEquals(item2, manager.getAllItems().get(1));
 	}
-	
+
 	public void testAddItem() {
 		assertTrue(manager.getAllItems().isEmpty());
 		Item item1 = new Item("item1");
@@ -105,28 +105,41 @@ public class SQLitePersistenceManagerTest extends
 		assertEquals(1, manager.getAllItems().size());
 		assertEquals(item1, manager.getAllItems().get(0));
 	}
-	
+
 	public void testRemoveItem() {
 		assertTrue(manager.getAllItems().isEmpty());
 		Item item1 = new Item("item1");
 		manager.save(item1);
 		assertEquals(1, manager.getAllItems().size());
-		
+
 		manager.remove(item1);
 		assertTrue(manager.getAllItems().isEmpty());
 	}
-	
+
 	public void testReadFriends() {
 		assertTrue(manager.getFriends().isEmpty());
-		Friend friend1 = new Friend(12345678, "friend1");
-		Friend friend2 = new Friend(23456789, "friend2");
+		final int phoneNr1 = 12345678;
+		final int phoneNr2 = 23456789;
+		final String name1 = "friend1";
+		final String name2 = "friend2";
+		Friend friend1 = new Friend(phoneNr1, name1);
+		Friend friend2 = new Friend(phoneNr2, name2);
 		manager.save(friend1);
 		manager.save(friend2);
+
 		assertEquals(2, manager.getFriends().size());
-		assertEquals(friend1, manager.getFriends().get(0));
-		assertEquals(friend2, manager.getFriends().get(1));
+		Friend testFriend1 = manager.getFriends().get(0);
+		Friend testFriend2 = manager.getFriends().get(1);
+		assertEquals(friend1, testFriend1);
+		assertTrue(testFriend1.getId() > 0);
+		assertEquals(phoneNr1, testFriend1.getPhoneNr());
+		assertEquals(name1, testFriend1.getName());
+		assertEquals(friend2, testFriend2);
+		assertTrue(testFriend2.getId() > 0);
+		assertEquals(phoneNr2, testFriend2.getPhoneNr());
+		assertEquals(name2, testFriend2.getName());
 	}
-	
+
 	public void testSaveFriend() {
 		assertTrue(manager.getFriends().isEmpty());
 		Friend friend1 = new Friend(12345678, "friend1");
@@ -134,13 +147,13 @@ public class SQLitePersistenceManagerTest extends
 		assertEquals(1, manager.getFriends().size());
 		assertEquals(friend1, manager.getFriends().get(0));
 	}
-	
+
 	public void testRemoveFriend() {
 		assertTrue(manager.getFriends().isEmpty());
 		Friend friend1 = new Friend(12345678, "friend1");
 		manager.save(friend1);
 		assertEquals(1, manager.getFriends().size());
-		
+
 		manager.removeFriend(friend1);
 		assertTrue(manager.getFriends().isEmpty());
 	}
