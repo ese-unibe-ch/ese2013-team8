@@ -62,8 +62,8 @@ public class RequestSender extends AsyncTask<Request, Object, Boolean>{
 	 */
 	private void initSocket() {
 		try {
-//			this.socket = new Socket("matter2.nine.ch", 1337);
-			this.socket = new Socket("10.0.0.2", 1337); // Enter your local ip here
+			this.socket = new Socket("matter2.nine.ch", 1337);
+//			this.socket = new Socket("10.0.0.2", 1337); // Enter your local ip here
 		} catch (UnknownHostException e) {
 			System.err.println("Unknown Host in initSocket()");
 		} catch (IOException e) {
@@ -77,12 +77,14 @@ public class RequestSender extends AsyncTask<Request, Object, Boolean>{
 	 */
 	
 	public void send(Request... request) {
-		try {
-			this.out = new ObjectOutputStream(socket.getOutputStream());
-			out.writeObject(request);
-			out.flush();
-		} catch (IOException e) {
-			// TODO
+		if(socket != null) {
+			try {
+				this.out = new ObjectOutputStream(socket.getOutputStream());
+				out.writeObject(request);
+				out.flush();
+			} catch (IOException e) {
+				// TODO
+			}
 		}
 	}
 
