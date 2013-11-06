@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,20 +17,27 @@ import ch.unibe.ese.core.BaseActivity;
 import ch.unibe.ese.core.ListManager;
 import ch.unibe.ese.core.Recipe;
 import ch.unibe.ese.shoppinglist.R;
+import ch.unibe.ese.sidelist.NavigationDrawer;
 
 public class ManageRecipeActivity extends BaseActivity {
 	private ListManager manager; 
 	private ArrayAdapter<Recipe> recipeAdapter;
 	private ArrayList<Recipe> listOfRecipes;
-	
-	
+	private DrawerLayout drawMenu;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_manage_recipe);
+		// Show the Up button in the action bar.
+		setupActionBar();
 		
 		manager = getListManager();
+		
+		// Create drawer menu
+		NavigationDrawer nDrawer = new NavigationDrawer();
+		drawMenu = nDrawer.constructNavigationDrawer(drawMenu, this);
+				
 		updateRecipeList();
 	}
 	
@@ -60,6 +69,15 @@ public class ManageRecipeActivity extends BaseActivity {
 		if (requestCode == 1 && resultCode == RESULT_OK) 
 				updateRecipeList();
 	}
+	
+	/**
+	 * Set up the {@link android.app.ActionBar}.
+	 */
+	private void setupActionBar() {
+
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -72,6 +90,16 @@ public class ManageRecipeActivity extends BaseActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle presses on the action bar items
 		switch (item.getItemId()) {
+			case android.R.id.home:
+				// This ID represents the Home or Up button. In the case of this
+				// activity, the Up button is shown. Use NavUtils to allow users
+				// to navigate up one level in the application structure. For
+				// more details, see the Navigation pattern on Android Design:
+				//
+				// http://developer.android.com/design/patterns/navigation.html#up-vs-back
+				//
+				NavUtils.navigateUpFromSameTask(this);
+				return true;
 			case R.id.action_new:
 				Intent createRecipeIntent = new Intent(this, CreateRecipeActivity.class);
 				this.startActivityForResult(createRecipeIntent, 1);
@@ -79,5 +107,11 @@ public class ManageRecipeActivity extends BaseActivity {
 			default:
 				return super.onOptionsItemSelected(item);
 		}
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+    	drawMenu.closeDrawers();
 	}
 }
