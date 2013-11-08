@@ -29,7 +29,7 @@ public class SQLiteUpdateHelper {
 	 * database
 	 * 
 	 * @param list
-	 * @return
+	 * @return ContentValues of the input
 	 */
 	public ContentValues toValue(ShoppingList list) {
 		ContentValues values = new ContentValues();
@@ -44,10 +44,10 @@ public class SQLiteUpdateHelper {
 	}
 
 	/**
-	 * Converts an item to a Contentvalue (TABLE_ITEMS)
+	 * Converts an item to a ContentValue (TABLE_ITEMS)
 	 * 
 	 * @param item
-	 * @return
+	 * @return ContentValues of the input
 	 */
 	public ContentValues toValue(Item item) {
 		ContentValues values = new ContentValues();
@@ -60,7 +60,7 @@ public class SQLiteUpdateHelper {
 	 * 
 	 * @param item
 	 * @param list
-	 * @return
+	 * @return ContentValues of the input
 	 */
 	public ContentValues toValue(Item item, ShoppingList list) {
 		ContentValues values = new ContentValues();
@@ -75,10 +75,10 @@ public class SQLiteUpdateHelper {
 	}
 
 	/**
-	 * Converts an friend into a Contentvalue (TABLE_FRIENDS)
+	 * Converts an friend into a ContentValue (TABLE_FRIENDS)
 	 * 
 	 * @param friends
-	 * @return
+	 * @return ContentValues of the input
 	 */
 	public ContentValues toValue(Friend friend) {
 		ContentValues values = new ContentValues();
@@ -88,9 +88,22 @@ public class SQLiteUpdateHelper {
 	}
 	
 	/**
+	 * Converts an list.id and a friend.id into a ContentValue (TABLE_FRIENDSTOLIST)
+	 * @param list
+	 * @param friend
+	 * @return ContentValues of the input
+	 */
+	public ContentValues toValue(ShoppingList list, Friend friend) {
+		ContentValues values = new ContentValues();		
+		values.put(SQLiteHelper.COLUMN_LIST_ID, list.getId());
+		values.put(SQLiteHelper.COLUMN_FRIEND_ID, friend.getId());
+		return values;
+	}
+	
+	/**
 	 * Converts an recipe into a ContentValue (TABLE_RECIPE)
 	 * @param recipe
-	 * @return
+	 * @return ContentValues of the input
 	 */
 	public ContentValues toValue(Recipe recipe) {
 		ContentValues values = new ContentValues();
@@ -100,6 +113,12 @@ public class SQLiteUpdateHelper {
 		return values;
 	}
 	
+	/**
+	 * Converts an item.id and an recipe.id into a ContentValue (TABLE_ITEMTORECIPE)
+	 * @param recipe
+	 * @param item
+	 * @return ContentValues of the input
+	 */
 	public ContentValues toValue(Recipe recipe, Item item) {
 		ContentValues values = new ContentValues();
 		values.put(SQLiteHelper.COLUMN_RECIPE_ID, recipe.getId());

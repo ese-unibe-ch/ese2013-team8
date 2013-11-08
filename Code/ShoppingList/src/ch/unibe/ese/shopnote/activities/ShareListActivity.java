@@ -78,6 +78,8 @@ public class ShareListActivity extends BaseActivity {
 				Friend friend = (Friend) autocompleteAdapter.getItem(position);
 				friendsAdapter.add(friend);
 				updateFriendsList();
+				
+				friendsManager.addFriendToList(list, friend);
 
 				setTextViewText(R.id.editTextName, "");
 			}

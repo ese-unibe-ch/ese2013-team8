@@ -116,4 +116,19 @@ public interface PersistenceManager {
 	 * @param recipe
 	 */
 	void remove(Recipe recipe);
+
+	/**
+	 * saves a friend to a synchronized shopping list in the db
+	 * @param friend
+	 * @param list
+	 */
+	void save(ShoppingList list, Friend friend);
+
+	/**
+	 * removes a friend of a synchronized shopping list in the db
+	 * @param list
+	 * @param friend
+	 */
+	void remove(ShoppingList list, Friend friend);
+	
 }

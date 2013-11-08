@@ -375,11 +375,33 @@ public class SQLiteReadHelper {
 			return false;
 	}
 
-
+	/**
+	 * Checks if the db contains the entry of the recipe already
+	 * @param recipe
+	 * @return true if already in db, otherwise false
+	 */
 	public boolean isInList(Recipe recipe) {
 		if(recipe.getId() == null) return false;
 		if(getRecipeName(recipe.getId()) == null) return false;
 		
 		return true;
+	}
+
+	/**
+	 * Checks if the db contains the entry of a friend which is connected to a list
+	 * @param list
+	 * @param friend
+	 * @return true if entry exists, otherwise false
+	 */
+	public boolean isInList(ShoppingList list, Friend friend) {
+		Cursor cursor = database.query(SQLiteHelper.TABLE_FRIENDSTOLIST,
+				SQLiteHelper.FRIENDSTOLIST_COLUMNS, SQLiteHelper.COLUMN_FRIEND_ID
+				+ "=? AND " + SQLiteHelper.COLUMN_LIST_ID + "=?",
+				new String[] { "" + friend.getId(), "" + list.getId() },null, null, null, null);
+		
+		if(cursor.getCount() == 1)
+			return true;
+		
+		return false;
 	}
 }

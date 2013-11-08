@@ -227,6 +227,7 @@ public class SQLitePersistenceManager implements PersistenceManager {
 		return list;
 	}
 
+	@Override
 	public void save(Friend friend) {
 		// Convert the friend to a ContentValue
 		ContentValues values = updateHelper.toValue(friend);
@@ -243,6 +244,15 @@ public class SQLitePersistenceManager implements PersistenceManager {
 		}
 	}
 
+	@Override
+	public void save(ShoppingList list, Friend friend) {
+		ContentValues values = updateHelper.toValue(list, friend);
+		if (!readHelper.isInList(list, friend)) {
+			database.insert(SQLiteHelper.TABLE_FRIENDSTOLIST, null, values);
+		}
+	}
+
+	
 	@Override
 	public void removeFriend(Friend friend) {
 		database.delete(SQLiteHelper.TABLE_FRIENDS,
@@ -323,5 +333,12 @@ public class SQLitePersistenceManager implements PersistenceManager {
 							+ recipeNr });
 		}
 
+	}
+
+	@Override
+	public void remove(ShoppingList list, Friend friend) {
+		database.delete(SQLiteHelper.TABLE_FRIENDSTOLIST, 
+				SQLiteHelper.COLUMN_LIST_ID + "=? AND " + SQLiteHelper.COLUMN_FRIEND_ID + "=?", 
+				new String[] { "" + list.getId(), "" + friend.getId() });
 	}
 }
