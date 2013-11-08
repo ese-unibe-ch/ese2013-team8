@@ -13,13 +13,13 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name="ch.unibe.ese.core.BaseApplication"
+        android:name="ch.unibe.ese.shopnote.core.BaseApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="ch.unibe.ese.activities.HomeActivity"
+            android:name="ch.unibe.ese.shopnote.activities.HomeActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,66 +28,66 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="ch.unibe.ese.activities.CreateListActivity"
+            android:name="ch.unibe.ese.shopnote.activities.CreateListActivity"
             android:label="@string/title_activity_create_list"
-            android:parentActivityName="ch.unibe.ese.activities.HomeActivity" >
+            android:parentActivityName="ch.unibe.ese.shopnote.activities.HomeActivity" >
         </activity>
         <activity
-            android:name="ch.unibe.ese.activities.ViewListActivity"
+            android:name="ch.unibe.ese.shopnote.activities.ViewListActivity"
             android:label="@string/title_activity_view_list"
-            android:parentActivityName="ch.unibe.ese.activities.HomeActivity" >
+            android:parentActivityName="ch.unibe.ese.shopnote.activities.HomeActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ch.unibe.ese.shoppinglist.HomeActivity" />
         </activity>
         <activity
-            android:name="ch.unibe.ese.activities.CreateItemActivity"
+            android:name="ch.unibe.ese.shopnote.activities.CreateItemActivity"
             android:label="@string/title_activity_create_item"
-            android:parentActivityName="ch.unibe.ese.activities.ViewListActivity" >
+            android:parentActivityName="ch.unibe.ese.shopnote.activities.ViewListActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ch.unibe.ese.shoppinglist.ViewListActivity" />
         </activity>
         <activity
-            android:name="ch.unibe.ese.activities.OptionsActivity"
+            android:name="ch.unibe.ese.shopnote.activities.OptionsActivity"
             android:label="@string/title_activity_options"
-            android:parentActivityName="ch.unibe.ese.activities.HomeActivity" >
+            android:parentActivityName="ch.unibe.ese.shopnote.activities.HomeActivity" >
         </activity>
         <activity
-            android:name="ch.unibe.ese.activities.ManageFriendsActivity"
+            android:name="ch.unibe.ese.shopnote.activities.ManageFriendsActivity"
             android:label="@string/title_activity_manage_friends"
-            android:parentActivityName="ch.unibe.ese.activities.HomeActivity" >
+            android:parentActivityName="ch.unibe.ese.shopnote.activities.HomeActivity" >
         </activity>
         <activity
-            android:name="ch.unibe.ese.activities.ShareListActivity"
+            android:name="ch.unibe.ese.shopnote.activities.ShareListActivity"
             android:label="@string/title_activity_share_list"
-            android:parentActivityName="ch.unibe.ese.activities.ViewListActivity" >
+            android:parentActivityName="ch.unibe.ese.shopnote.activities.ViewListActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ch.unibe.ese.activities.ViewListActivity" />
         </activity>
         <activity
-            android:name="ch.unibe.ese.activities.CreateFriendActivity"
+            android:name="ch.unibe.ese.shopnote.activities.CreateFriendActivity"
             android:label="@string/title_activity_create_friend" >
         </activity>
         <activity
-            android:name="ch.unibe.ese.activities.ItemListActivity"
+            android:name="ch.unibe.ese.shopnote.activities.ItemListActivity"
             android:label="@string/title_activity_item_list"
-            android:parentActivityName="ch.unibe.ese.activities.HomeActivity" >
+            android:parentActivityName="ch.unibe.ese.shopnote.activities.HomeActivity" >
         </activity>
         <activity
-            android:name="ch.unibe.ese.activities.ManageRecipeActivity"
+            android:name="ch.unibe.ese.shopnote.activities.ManageRecipeActivity"
             android:label="@string/title_activity_manage_recipe"
-            android:parentActivityName="ch.unibe.ese.activities.HomeActivity" >
+            android:parentActivityName="ch.unibe.ese.shopnote.activities.HomeActivity" >
         </activity>
         <activity
-            android:name="ch.unibe.ese.activities.CreateRecipeActivity"
+            android:name="ch.unibe.ese.shopnote.activities.CreateRecipeActivity"
             android:label="@string/title_activity_create_recipe" >
  		</activity>
         <activity
-            android:name="ch.unibe.ese.activities.ArchiveActivity"
+            android:name="ch.unibe.ese.shopnote.activities.ArchiveActivity"
             android:label="@string/title_activity_archive"
-            android:parentActivityName="ch.unibe.ese.activities.HomeActivity" >
+            android:parentActivityName="ch.unibe.ese.shopnote.activities.HomeActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ch.unibe.ese.activities.HomeActivity" />

@@ -3,9 +3,11 @@ package ch.unibe.ese.core;
 import java.math.BigDecimal;
 import java.util.List;
 
-import ch.unibe.ese.core.sqlite.SQLitePersistenceManager;
 import android.test.AndroidTestCase;
-import ch.unibe.ese.core.ShoppingList;
+import ch.unibe.ese.shopnote.core.Item;
+import ch.unibe.ese.shopnote.core.ListManager;
+import ch.unibe.ese.shopnote.core.ShoppingList;
+import ch.unibe.ese.shopnote.core.sqlite.SQLitePersistenceManager;
 
 public class ListManagerTest extends AndroidTestCase {
 
