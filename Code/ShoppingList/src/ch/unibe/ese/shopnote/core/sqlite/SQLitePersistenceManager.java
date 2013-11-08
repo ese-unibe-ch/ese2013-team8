@@ -238,8 +238,8 @@ public class SQLitePersistenceManager implements PersistenceManager {
 			database.update(
 					SQLiteHelper.TABLE_FRIENDS,
 					values,
-					SQLiteHelper.COLUMN_FRIEND_PHONENR + "="
-							+ friend.getPhoneNr(), null);
+					SQLiteHelper.COLUMN_FRIEND_ID + "="
+							+ friend.getId(), null);
 		}
 	}
 

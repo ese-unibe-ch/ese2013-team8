@@ -79,19 +79,18 @@ public class CreateFriendActivity extends BaseActivity {
 	public void addEntryToList(View w) {
 		try {
 			String name = getTextViewText(R.id.edit_friend_name);
-			int nr = Integer.parseInt(getTextViewText(R.id.edit_friend_phone_number));
+			String nr = getTextViewText(R.id.edit_friend_phone_number);
 
-			SyncManager syncmanager = this.getSyncManager();
-			// Ask server if friend has the app
-			FriendRequest frequest = new FriendRequest("" + nr);
-			syncmanager.addRequest(frequest);
-			syncmanager.synchronise();
+			// Do we really need to contact the server again, bacause the number is not goint to be changed (not possible), only name
+//			SyncManager syncmanager = this.getSyncManager();
+//			FriendRequest frequest = new FriendRequest("" + nr);
+//			syncmanager.addRequest(frequest);
+//			syncmanager.synchronise();
 
 			if (friend == null)
 				addNewFriend(name, nr);
 			else {
 				friend.setName(name);
-				friend.setPhoneNr(nr);
 				friendsManager.update(friend);
 				finish();
 			}
@@ -102,7 +101,7 @@ public class CreateFriendActivity extends BaseActivity {
 		}
 	}
 
-	private void addNewFriend(String name, int nr) {
+	private void addNewFriend(String name, String nr) {
 		Friend friend = new Friend(nr, name);
 		int processStatus = friendsManager.addFriend(friend);
 		if (processStatus == 0) {

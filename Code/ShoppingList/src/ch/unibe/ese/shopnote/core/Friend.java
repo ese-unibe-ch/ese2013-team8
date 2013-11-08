@@ -7,11 +7,11 @@ package ch.unibe.ese.shopnote.core;
  * 
  */
 public class Friend extends Entity {
-	private int phoneNr;
+	private String phoneNr;
 	private String name;
 
 	// TODO: add Image of Friend
-	public Friend(int phoneNr, String name) {
+	public Friend(String phoneNr, String name) {
 		this.phoneNr = phoneNr;
 		this.name = name;
 		invariant();
@@ -21,14 +21,10 @@ public class Friend extends Entity {
 		return name + ", Phone nr: " + phoneNr;
 	}
 
-	public int getPhoneNr() {
+	public String getPhoneNr() {
 		return phoneNr;
 	}
 
-	public void setPhoneNr(int phoneNr) {
-		this.phoneNr = phoneNr;
-		invariant();
-	}
 
 	public String getName() {
 		return name;
@@ -42,8 +38,7 @@ public class Friend extends Entity {
 	private void invariant() {
 		if (this.name == null || this.name.trim().isEmpty())
 			throw new IllegalStateException("Empty name is not allowed");
-		if (this.phoneNr < 0)
-			throw new IllegalStateException("Phone number must be > 0. Nr: "
-					+ phoneNr);
+		if (this.name == null || this.name.trim().isEmpty())
+			throw new IllegalStateException("Empty Phone number is not allowed ");
 	}
 }

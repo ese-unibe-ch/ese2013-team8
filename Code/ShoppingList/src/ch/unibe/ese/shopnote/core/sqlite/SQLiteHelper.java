@@ -79,8 +79,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	private static final String DATABASE_CREATE_TABLE_FRIENDS =
 			"create table " + TABLE_FRIENDS +"("
 			+ COLUMN_FRIEND_ID + " integer primary key autoincrement, "
-			+ COLUMN_FRIEND_PHONENR + " integer NOT NULL, "
-			+ COLUMN_FRIEND_NAME + " varchar(30) "
+			+ COLUMN_FRIEND_PHONENR + " varchar(30) NOT NULL, "
+			+ COLUMN_FRIEND_NAME + " varchar(30) NOT NULL"
 			+ ");";
 
 	private static final String DATABASE_CREATE_TABLE_RECIPE =

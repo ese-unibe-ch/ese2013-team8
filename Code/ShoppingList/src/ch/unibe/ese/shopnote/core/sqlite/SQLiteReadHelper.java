@@ -179,7 +179,7 @@ public class SQLiteReadHelper {
 	}
 
 	public Friend cursorToFriend(Cursor cursor) {
-		Friend friend = new Friend(cursor.getInt(1), cursor.getString(2));
+		Friend friend = new Friend(cursor.getString(1), cursor.getString(2));
 		friend.setId(cursor.getLong(0));
 		return friend;
 	}
