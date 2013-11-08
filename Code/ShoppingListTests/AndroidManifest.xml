@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ch.unibe.ese.shoppinglist.test"
+    package="ch.unibe.ese.shopnote.test"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -8,7 +8,7 @@
 
     <instrumentation
         android:name="com.zutubi.android.junitreport.JUnitReportTestRunner"
-        android:targetPackage="ch.unibe.ese.shoppinglist" />
+        android:targetPackage="ch.unibe.ese.shopnote" />
 
     <application
         android:icon="@drawable/ic_launcher"

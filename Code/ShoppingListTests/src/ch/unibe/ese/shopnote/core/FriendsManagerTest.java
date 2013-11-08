@@ -1,8 +1,8 @@
-package ch.unibe.ese.core;
+package ch.unibe.ese.shopnote.core;
 
 import android.test.AndroidTestCase;
-import ch.unibe.ese.core.FriendsManager;
-import ch.unibe.ese.core.sqlite.SQLitePersistenceManager;
+import ch.unibe.ese.shopnote.core.FriendsManager;
+import ch.unibe.ese.shopnote.core.sqlite.SQLitePersistenceManager;
 
 public class FriendsManagerTest extends AndroidTestCase {
 	

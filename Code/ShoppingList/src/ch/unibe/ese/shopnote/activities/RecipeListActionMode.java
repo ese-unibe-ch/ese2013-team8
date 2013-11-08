@@ -12,7 +12,7 @@ import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.Recipe;
-import ch.unibe.ese.shoppinglist.R;
+import ch.unibe.ese.shopnote.R;
 
 /**
  * Creates the Action Bar for Friends to edit or remove them

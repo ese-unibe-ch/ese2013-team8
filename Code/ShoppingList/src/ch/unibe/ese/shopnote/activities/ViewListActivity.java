@@ -27,7 +27,7 @@ import ch.unibe.ese.shopnote.core.ShoppingList;
 import ch.unibe.ese.shopnote.core.sqlite.SQLiteItemAdapter;
 import ch.unibe.ese.shopnote.share.SyncManager;
 import ch.unibe.ese.shopnote.sidelist.NavigationDrawer;
-import ch.unibe.ese.shoppinglist.R;
+import ch.unibe.ese.shopnote.R;
 
 public class ViewListActivity extends BaseActivity {
 

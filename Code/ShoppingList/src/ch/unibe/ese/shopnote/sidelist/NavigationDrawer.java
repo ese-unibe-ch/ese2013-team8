@@ -13,7 +13,7 @@ import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
-import ch.unibe.ese.shoppinglist.R;
+import ch.unibe.ese.shopnote.R;
 
 /**
  * Creates a slide bar for an Activity with all main navigation points

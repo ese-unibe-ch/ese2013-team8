@@ -19,7 +19,7 @@ import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.Recipe;
-import ch.unibe.ese.shoppinglist.R;
+import ch.unibe.ese.shopnote.R;
 
 public class CreateRecipeActivity extends BaseActivity {
 	private ListManager manager;

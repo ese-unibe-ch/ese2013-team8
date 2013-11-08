@@ -11,7 +11,7 @@ import ch.unibe.ese.shopnote.activities.ItemListActivity;
 import ch.unibe.ese.shopnote.activities.ManageFriendsActivity;
 import ch.unibe.ese.shopnote.activities.ManageRecipeActivity;
 import ch.unibe.ese.shopnote.activities.OptionsActivity;
-import ch.unibe.ese.shoppinglist.R;
+import ch.unibe.ese.shopnote.R;
 
 /**
  * Creates a listener for the navigation drawer 

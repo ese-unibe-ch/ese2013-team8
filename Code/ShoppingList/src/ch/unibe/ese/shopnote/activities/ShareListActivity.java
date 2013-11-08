@@ -25,7 +25,7 @@ import ch.unibe.ese.shopnote.core.ShoppingList;
 import ch.unibe.ese.shopnote.share.SyncManager;
 import ch.unibe.ese.shopnote.share.requests.ShareListRequest;
 import ch.unibe.ese.shopnote.sidelist.NavigationDrawer;
-import ch.unibe.ese.shoppinglist.R;
+import ch.unibe.ese.shopnote.R;
 
 @SuppressLint("NewApi")
 public class ShareListActivity extends BaseActivity {

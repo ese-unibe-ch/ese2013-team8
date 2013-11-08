@@ -16,7 +16,7 @@ import ch.unibe.ese.shopnote.core.Shop;
 import ch.unibe.ese.shopnote.core.ShoppingList;
 import ch.unibe.ese.shopnote.core.sqlite.SQLiteItemAdapter;
 import ch.unibe.ese.shopnote.core.sqlite.SQLiteShopAdapter;
-import ch.unibe.ese.shoppinglist.R;
+import ch.unibe.ese.shopnote.R;
 
 public class CreateItemActivity extends BaseActivity {
 

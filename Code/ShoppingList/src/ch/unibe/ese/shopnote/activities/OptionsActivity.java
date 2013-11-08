@@ -6,7 +6,7 @@ import android.preference.PreferenceFragment;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import ch.unibe.ese.shoppinglist.R;
+import ch.unibe.ese.shopnote.R;
 
 public class OptionsActivity extends Activity {
 

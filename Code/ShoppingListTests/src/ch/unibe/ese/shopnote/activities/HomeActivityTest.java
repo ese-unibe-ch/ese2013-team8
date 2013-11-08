@@ -1,4 +1,4 @@
-package ch.unibe.ese.activities;
+package ch.unibe.ese.shopnote.activities;
 
 import android.app.Instrumentation.ActivityMonitor;
 import android.test.ActivityInstrumentationTestCase2;

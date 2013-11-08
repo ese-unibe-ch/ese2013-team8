@@ -17,7 +17,7 @@ import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.Recipe;
 import ch.unibe.ese.shopnote.sidelist.NavigationDrawer;
-import ch.unibe.ese.shoppinglist.R;
+import ch.unibe.ese.shopnote.R;
 
 public class ManageRecipeActivity extends BaseActivity {
 	private ListManager manager; 
