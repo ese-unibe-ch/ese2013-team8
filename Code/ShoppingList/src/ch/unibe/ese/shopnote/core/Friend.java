@@ -8,8 +8,7 @@ import java.io.Serializable;
  * @author ESE Team 8
  * 
  */
-public class Friend extends Entity implements Serializable {
-	private static final long serialVersionUID = -5410436155928264729L;
+public class Friend extends Entity {
 	private String phoneNr;
 	private String name;
 	private boolean hasTheApp;

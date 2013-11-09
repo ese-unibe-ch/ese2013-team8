@@ -97,8 +97,8 @@ public class FriendsManager {
 		persistenceManager.remove(list, friend);
 	}
 	
-	public void setFriendHasApp(Friend friend) {
-		getFriend(friend.getId()).setHasApp();
+	public void setFriendHasApp(long friendId) {
+		getFriend(friendId).setHasApp();
 	}
 	
 	public String toString() {

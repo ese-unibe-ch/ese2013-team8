@@ -29,11 +29,11 @@ public class RequestSender extends AsyncTask<Request, Void, Boolean>{
 	private Socket socket;
 	private ObjectOutputStream out;
 	private ObjectInputStream in;
-	private RequestListener listener;
+	private AnswerHandler handler;
 	private Request[] answers;
 	
-	public RequestSender(RequestListener listener) {
-		this.listener = listener;
+	public RequestSender(AnswerHandler handler) {
+		this.handler = handler;
 	}
 	
 	/**
@@ -52,7 +52,7 @@ public class RequestSender extends AsyncTask<Request, Void, Boolean>{
 	
 	@Override
 	protected void onPostExecute(Boolean a) {
-		listener.updateUI();
+		handler.updateUI();
     }
 	
 	/**
@@ -63,8 +63,7 @@ public class RequestSender extends AsyncTask<Request, Void, Boolean>{
 			this.in = new ObjectInputStream(socket.getInputStream());
 			answers = (Request[]) in.readObject();
 			socket.close();
-			AnswerHandler aHandler = new AnswerHandler(listener);
-	    	aHandler.handle(answers);
+			handler.setRequests(answers);
 		} catch (StreamCorruptedException e) {
 			System.err.println("Failed to open stream from server");
 		} catch (IOException e) {

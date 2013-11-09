@@ -30,8 +30,8 @@ public class SyncManager {
 	
 	public void synchronise(BaseActivity context) {
 		if(context.isOnline()) {
-			RequestListener listener = new RequestListener(context, rQueue.getRequests());
-			RequestSender sender = new RequestSender(listener);
+			AnswerHandler handler = new AnswerHandler(context);
+			RequestSender sender = new RequestSender(handler);
 			sender.execute(rQueue.getRequests());
 			rQueue.clear();
 		}

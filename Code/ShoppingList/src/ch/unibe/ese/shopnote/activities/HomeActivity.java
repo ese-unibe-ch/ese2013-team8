@@ -22,6 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import ch.unibe.ese.shopnote.core.BaseActivity;
+import ch.unibe.ese.shopnote.core.FriendsManager;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.ShoppingList;
 import ch.unibe.ese.shopnote.share.SyncManager;
@@ -56,6 +57,7 @@ public class HomeActivity extends BaseActivity {
         //create Managers for local lists and synch lists
 		listmanager = getListManager();
 		syncmanager = getSyncManager();	
+		getFriendsManager();
 		
 		updateAdapter();
 

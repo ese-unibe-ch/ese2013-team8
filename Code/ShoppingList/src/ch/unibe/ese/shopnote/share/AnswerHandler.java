@@ -2,33 +2,49 @@ package ch.unibe.ese.shopnote.share;
 
 import android.content.Context;
 import ch.unibe.ese.shopnote.core.BaseActivity;
+import ch.unibe.ese.shopnote.core.Friend;
+import ch.unibe.ese.shopnote.core.FriendsManager;
+import ch.unibe.ese.shopnote.share.requests.FriendRequest;
 import ch.unibe.ese.shopnote.share.requests.Request;
 
 /**
- * Handles Request-answers from the server (failure, processing, etc.)
+ * Gets passed in a RequestSender to listen to its result
  *
  */
+
 public class AnswerHandler {
+
+	private BaseActivity context;
+	private FriendsManager friendsManager;
+	private SyncManager syncManager;
 	
-	private SyncManager syncmanager;
-	private RequestListener listener;
-	
-	public AnswerHandler(RequestListener listener) {
-		this.syncmanager = SyncManager.getInstance();
-		this.listener = listener;
+	public AnswerHandler(Context context) {
+		this.context = (BaseActivity) context;
+		friendsManager = this.context.getFriendsManager();
+		syncManager = this.context.getSyncManager();
 	}
 	
-	public void handle(Request... answers) {
-		for(int c = 0; c<answers.length; c++) {
-			if(answers[c].isHandled()) {
-				listener.setHandled(c);
+	public void setRequests(Request... requests) {
+		for (Request r: requests) {
+			if(r.wasSuccessful()) {
+				setConsequences(r);
 			} else {
-				syncmanager.addRequest(answers[c]);
-			}
-			if(answers[c].wasSuccessful()) {
-				listener.setSuccessful(c);
+				syncManager.addRequest(r);
 			}
 		}
 	}
 	
+	private void setConsequences(Request request) {
+		switch (request.getType()) {
+		case Request.FRIEND_REQUEST:
+			long friendId = ((FriendRequest)request).getFriendId();
+			friendsManager.setFriendHasApp(friendId);
+		case Request.SHARELIST_REQUEST:
+			//TODO
+		}
+	}
+	
+	public void updateUI() {
+		context.refresh();
+	}
 }

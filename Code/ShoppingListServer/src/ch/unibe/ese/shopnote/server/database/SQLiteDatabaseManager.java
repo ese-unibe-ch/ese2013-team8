@@ -28,6 +28,7 @@ public class SQLiteDatabaseManager {
 	
 	public static final String TABLE_SHAREDLISTS = "sharedlists";
 	public static final String COLUMN_FRIEND_ID = "friendId";
+	public static final String COLUMN_LIST_NAME = "listname";
 	
 	// Create statements
 	public static final String CREATE_TABLE_USERS = "create table if not exists " + TABLE_USERS + "(" + 
@@ -44,6 +45,7 @@ public class SQLiteDatabaseManager {
 			COLUMN_USER_ID + " integer, " +
 			COLUMN_FRIEND_ID + " integer, " +
 			COLUMN_SERVER_LIST_ID + " integer, " +
+			COLUMN_LIST_NAME + " varchar(30), " +
 			"primary key(" + COLUMN_USER_ID + ", " + COLUMN_FRIEND_ID + ", " + COLUMN_SERVER_LIST_ID + ")" +
 			");";
 	// First dummy entry for localtoserver list id
@@ -144,6 +146,8 @@ public class SQLiteDatabaseManager {
 	public void shareList(ShareListRequest request) {
 		int userId = findUser(request);
 		int friendId = findUser(new RegisterRequest(request.getFriendNumber()));
+		String listname = request.getListName();
+		
 		if(userId == -1 || friendId == -1)
 			return;
 		long serverListId = createServerListIdifNotExists(userId, request.getListId());
@@ -160,7 +164,12 @@ public class SQLiteDatabaseManager {
 				System.out.println("\t:List " + serverListId + " is already shared with user " + friendId);
 				request.setHandled();
 			} else {
-				String insertSharedList = "insert into " + TABLE_SHAREDLISTS + " values (\"" + userId + "\", \"" + friendId + "\", \"" + serverListId + "\");";	
+				String insertSharedList = "insert into " + TABLE_SHAREDLISTS + " values (" +
+						"\"" + userId + "\", " +
+						"\"" + friendId + "\", " +
+						"\"" + serverListId + "\"," +
+						"\"" + listname + "\"" +
+						");";	
 				stmt.executeUpdate(insertSharedList);
 				System.out.println("\t:List " + serverListId + " is now shared with users " + friendId + " and " + userId);
 				request.setSuccessful();

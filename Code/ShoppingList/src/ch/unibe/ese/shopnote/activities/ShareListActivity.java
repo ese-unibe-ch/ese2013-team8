@@ -185,7 +185,7 @@ public class ShareListActivity extends BaseActivity {
 			for (int i = 0; i < friendsAdapter.getCount(); i++) {
 				ShareListRequest slrequest = new ShareListRequest(getMyPhoneNumber(),
 						"" + friendsAdapter.getItem(i).getPhoneNr(),
-						list.getId());
+						list.getId(), list.getName());
 				this.syncManager.addRequest(slrequest);
 			}
 			this.syncManager.synchronise(this);

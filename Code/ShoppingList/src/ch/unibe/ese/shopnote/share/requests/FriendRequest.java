@@ -9,11 +9,11 @@ import ch.unibe.ese.shopnote.core.Friend;
 public class FriendRequest extends Request {
 
 	private static final long serialVersionUID = -2582241373391195362L;
-	private Friend friend;
+	private Long friendId;
 
 	public FriendRequest(Friend friend) {
 		super(friend.getPhoneNr());
-		this.friend = friend;
+		this.friendId = friend.getId();
 	}
 
 	@Override
@@ -21,8 +21,8 @@ public class FriendRequest extends Request {
 		return Request.FRIEND_REQUEST;
 	}
 	
-	public Friend getFriend() {
-		return this.friend;
+	public long getFriendId() {
+		return this.friendId;
 	}
 
 	@Override
@@ -34,5 +34,4 @@ public class FriendRequest extends Request {
 		else 
 			return "Request wasn't handled";
 	}
-
 }
