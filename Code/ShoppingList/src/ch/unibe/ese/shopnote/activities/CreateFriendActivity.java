@@ -31,7 +31,6 @@ public class CreateFriendActivity extends BaseActivity {
 		getActionBar().hide();
 
 		friendsManager = getFriendsManager();
-		syncManager = getSyncManager();
 
 		// check if edit friend
 		Bundle extras = getIntent().getExtras();
@@ -101,7 +100,6 @@ public class CreateFriendActivity extends BaseActivity {
 		Friend friend = new Friend(nr, name);
 		int processStatus = friendsManager.addFriend(friend);
 		if (processStatus == 0) {
-			syncManager.addRequest(new FriendRequest(friend.getPhoneNr()));
 			finishTheActivity(friend.getId());
 		} else
 			printFailure(processStatus);
@@ -127,7 +125,7 @@ public class CreateFriendActivity extends BaseActivity {
 
 	public void goBack(View view) {
 		if(isOnline()) {
-			syncManager.synchronise();
+			syncManager.synchronise(this);
 		}
 		finish();
 	}

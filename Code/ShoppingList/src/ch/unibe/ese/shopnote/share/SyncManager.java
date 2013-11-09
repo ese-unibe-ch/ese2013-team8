@@ -1,5 +1,6 @@
 package ch.unibe.ese.shopnote.share;
 
+import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.share.requests.Request;
 
 /**
@@ -27,11 +28,13 @@ public class SyncManager {
 		return this.rQueue;
 	}
 	
-	public void synchronise() {
-		RequestListener listener = new RequestListener(rQueue.getRequests());
-		RequestSender sender = new RequestSender(listener);
-		sender.execute(rQueue.getRequests());
-		rQueue.clear();
+	public void synchronise(BaseActivity context) {
+		if(context.isOnline()) {
+			RequestListener listener = new RequestListener(context, rQueue.getRequests());
+			RequestSender sender = new RequestSender(listener);
+			sender.execute(rQueue.getRequests());
+			rQueue.clear();
+		}
 	}
 	
 	public void addRequest(Request request) {

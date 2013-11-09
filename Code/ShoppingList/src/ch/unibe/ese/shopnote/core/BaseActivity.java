@@ -2,10 +2,12 @@ package ch.unibe.ese.shopnote.core;
 
 import ch.unibe.ese.shopnote.core.sqlite.SQLitePersistenceManager;
 import ch.unibe.ese.shopnote.share.SyncManager;
+import ch.unibe.ese.shopnote.share.requests.RegisterRequest;
 import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.telephony.TelephonyManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +54,8 @@ public class BaseActivity extends Activity {
 		if (manager == null) {
 			manager = new SyncManager();
 			app.setSyncManager(manager);
+			// Dirty:
+			manager.addRequest(new RegisterRequest(getMyPhoneNumber()));
 		}
 		return manager;
 	}
@@ -105,4 +109,17 @@ public class BaseActivity extends Activity {
 	    }
 	    return false;
 	}
+	
+	public String getMyPhoneNumber() {
+		TelephonyManager tMgr =(TelephonyManager)this.getSystemService(Context.TELEPHONY_SERVICE);
+		String number = tMgr.getLine1Number();
+		return number;
+	}
+	
+	/**
+	 * Needs to be implemented by every activity
+	 * Refreshes all the content it has
+	 */
+	public void refresh() {};
+	
 }

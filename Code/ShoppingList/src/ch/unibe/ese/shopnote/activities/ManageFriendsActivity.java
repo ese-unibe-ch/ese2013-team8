@@ -11,9 +11,12 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import ch.unibe.ese.shopnote.activities.adapters.FriendsListAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Friend;
 import ch.unibe.ese.shopnote.core.FriendsManager;
+import ch.unibe.ese.shopnote.share.SyncManager;
+import ch.unibe.ese.shopnote.share.requests.FriendRequest;
 import ch.unibe.ese.shopnote.sidelist.NavigationDrawer;
 import ch.unibe.ese.shopnote.R;
 
@@ -25,6 +28,7 @@ import ch.unibe.ese.shopnote.R;
 public class ManageFriendsActivity extends BaseActivity {
 	
 	private FriendsManager friendsManager;
+	private SyncManager syncManager;
 	private ArrayAdapter<Friend> friendsAdapter;
 	private DrawerLayout drawMenu;
 
@@ -39,11 +43,12 @@ public class ManageFriendsActivity extends BaseActivity {
 		setupActionBar();
 
 		friendsManager = getFriendsManager();
+		syncManager = getSyncManager();
 		
 		// Create drawer menu
 		NavigationDrawer nDrawer = new NavigationDrawer();
 		drawMenu = nDrawer.constructNavigationDrawer(drawMenu, this);
-
+		
 		updateFriendsList();
 	}
 	
@@ -58,7 +63,7 @@ public class ManageFriendsActivity extends BaseActivity {
 	 * Updates the Viewlist, which shows all friends and adds itemclicklistener
 	 */
 	public void updateFriendsList(){
-		friendsAdapter = new ArrayAdapter<Friend>(this,
+		friendsAdapter = new FriendsListAdapter(this,
 				R.layout.shopping_list_item, friendsManager.getFriendsList());
 
 		ListView listView = (ListView) findViewById(R.id.friends_list);
@@ -78,6 +83,11 @@ public class ManageFriendsActivity extends BaseActivity {
 	
 	protected void onResume() {
 		super.onResume();
+		for(Friend f: friendsManager.getFriendsList()) {
+			FriendRequest fr = new FriendRequest(f);
+			syncManager.addRequest(fr);
+		}
+		syncManager.synchronise(this);
 		updateFriendsList();
 	}
 	
@@ -114,5 +124,10 @@ public class ManageFriendsActivity extends BaseActivity {
 	protected void onPause() {
 		super.onPause();
     	drawMenu.closeDrawers();
+	}
+	
+	@Override
+	public void refresh() {
+		updateFriendsList();
 	}
 }

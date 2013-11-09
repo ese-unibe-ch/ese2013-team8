@@ -1,5 +1,7 @@
 package ch.unibe.ese.shopnote.share;
 
+import android.content.Context;
+import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.share.requests.Request;
 
 /**
@@ -11,6 +13,7 @@ public class AnswerHandler {
 	private SyncManager syncmanager;
 	private Request[] answers;
 	private RequestListener listener;
+	private Context context;
 	
 	public AnswerHandler(RequestListener listener) {
 		this.syncmanager = SyncManager.getInstance();
@@ -29,6 +32,7 @@ public class AnswerHandler {
 				listener.setSuccessful(c);
 			}
 		}
+		listener.updateUI();
 	}
 	
 }

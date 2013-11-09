@@ -286,7 +286,7 @@ public class ViewListActivity extends BaseActivity {
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
 		case R.id.action_refresh:
-			syncmanager.synchronise();
+			syncmanager.synchronise(this);
 			return true;
 		}
 		

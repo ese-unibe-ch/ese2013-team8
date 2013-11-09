@@ -183,13 +183,12 @@ public class ShareListActivity extends BaseActivity {
 		// Save friends here
 		if (friendsAdapter.getCount() > 0) {
 			for (int i = 0; i < friendsAdapter.getCount(); i++) {
-				// TODO paste your real number here (instead of 1234)
-				ShareListRequest slrequest = new ShareListRequest("" + 796897,
+				ShareListRequest slrequest = new ShareListRequest(getMyPhoneNumber(),
 						"" + friendsAdapter.getItem(i).getPhoneNr(),
 						list.getId());
 				this.syncManager.addRequest(slrequest);
 			}
-			this.syncManager.synchronise();
+			this.syncManager.synchronise(this);
 		}
 	}
 

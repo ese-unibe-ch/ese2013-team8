@@ -272,10 +272,10 @@ public class SQLiteReadHelper {
 	 * @param itemId
 	 * @return
 	 */
-	public String getFriendName(int friendNr) {
+	public String getFriendName(String friendNr) {
 		Cursor cursor = database.query(SQLiteHelper.TABLE_FRIENDS,
 				SQLiteHelper.FRIENDS_COLUMNS, SQLiteHelper.COLUMN_FRIEND_PHONENR
-						+ "=?", new String[] { "" + friendNr }, null, null,
+						+ "=?", new String[] {friendNr }, null, null,
 				null, null);
 		if (cursor.getCount() == 1) {
 			cursor.moveToFirst();

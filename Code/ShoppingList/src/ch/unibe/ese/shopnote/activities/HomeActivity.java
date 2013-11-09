@@ -5,11 +5,13 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +25,7 @@ import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.ShoppingList;
 import ch.unibe.ese.shopnote.share.SyncManager;
+import ch.unibe.ese.shopnote.share.requests.RegisterRequest;
 import ch.unibe.ese.shopnote.sidelist.NavigationDrawer;
 import ch.unibe.ese.shopnote.R;
 
@@ -170,7 +173,7 @@ public class HomeActivity extends BaseActivity {
 
 			case R.id.action_refresh:
 				if(isOnline()) {
-					syncmanager.synchronise();
+					syncmanager.synchronise(this);
 				} else {
 					Toast.makeText(this, this.getString(R.string.no_connection),
 							Toast.LENGTH_SHORT).show();

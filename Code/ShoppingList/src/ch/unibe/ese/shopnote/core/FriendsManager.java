@@ -96,7 +96,11 @@ public class FriendsManager {
 		//(just the entry of the shared Shoppinglist, not the friend as a onject of course^^)
 		persistenceManager.remove(list, friend);
 	}
-
+	
+	public void setFriendHasApp(Friend friend) {
+		getFriend(friend.getId()).setHasApp();
+	}
+	
 	public String toString() {
 		StringBuilder result = new StringBuilder();
 		for (Friend friend : friendsList)

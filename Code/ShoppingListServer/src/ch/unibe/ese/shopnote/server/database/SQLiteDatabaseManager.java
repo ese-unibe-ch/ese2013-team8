@@ -2,8 +2,8 @@ package ch.unibe.ese.shopnote.server.database;
 
 import java.sql.*;
 
+import ch.unibe.ese.shopnote.share.requests.RegisterRequest;
 import ch.unibe.ese.shopnote.server.core.ShoppingListServer;
-import ch.unibe.ese.shopnote.share.requests.FriendRequest;
 import ch.unibe.ese.shopnote.share.requests.Request;
 import ch.unibe.ese.shopnote.share.requests.ShareListRequest;
 
@@ -141,7 +141,7 @@ public class SQLiteDatabaseManager {
 	 */
 	public void shareList(ShareListRequest request) {
 		int userId = findUser(request);
-		int friendId = findUser(new FriendRequest(request.getFriendNumber()));
+		int friendId = findUser(new RegisterRequest(request.getFriendNumber()));
 		if(userId == -1 || friendId == -1)
 			return;
 		long serverListId = getServerListId(userId, request.getListId());
