@@ -202,4 +202,9 @@ public class HomeActivity extends BaseActivity {
     	updateAdapter();
     }
 
+	@Override
+	public void refresh() {
+		updateAdapter();
+	}
+	
 }

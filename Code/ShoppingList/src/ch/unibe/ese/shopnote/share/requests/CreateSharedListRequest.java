@@ -4,7 +4,7 @@ public class CreateSharedListRequest extends Request {
 
 	private static final long serialVersionUID = 7937903634262911605L;
 	private int serverListId;
-	private int localListId;
+	private long localListId;
 	private String listname;
 	
 	public CreateSharedListRequest(String phoneNumber, int serverListId, String listname) {
@@ -22,15 +22,15 @@ public class CreateSharedListRequest extends Request {
 		return this.serverListId;
 	}
 	
-	public String getListname() {
+	public String getListName() {
 		return this.listname;
 	}
 	
-	public void setLocalListId(int id) {
+	public void setLocalListId(long id) {
 		this.localListId = id;
 	}
 	
-	public int getLocalListId() {
+	public long getLocalListId() {
 		return this.localListId;
 	}
 	

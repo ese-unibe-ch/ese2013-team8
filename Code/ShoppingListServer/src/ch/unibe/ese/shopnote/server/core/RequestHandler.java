@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import ch.unibe.ese.shopnote.server.database.NeodatisDatabaseManager;
 import ch.unibe.ese.shopnote.server.database.SQLiteDatabaseManager;
+import ch.unibe.ese.shopnote.share.requests.CreateSharedListRequest;
 import ch.unibe.ese.shopnote.share.requests.Request;
 import ch.unibe.ese.shopnote.share.requests.ShareListRequest;
 
@@ -60,6 +61,9 @@ public class RequestHandler {
 			System.out.println("\tShareList request");
 			this.dbManager.shareList((ShareListRequest)request);
 			return new Request[]{request};
+		case Request.CREATE_SHARED_LIST_REQUEST:
+			System.out.println("\tCreate Share List Request answer");
+			return new Request[]{new DummyRequest("1234")};
 		default:
 			return new Request[]{request};
 		}

@@ -49,7 +49,7 @@ public class SQLiteDatabaseManager {
 			"primary key(" + COLUMN_USER_ID + ", " + COLUMN_FRIEND_ID + ", " + COLUMN_SERVER_LIST_ID + ")" +
 			");";
 	// First dummy entry for localtoserver list id
-	public static final String INSERT_DUMMY = "insert into " + TABLE_LOCALTOSERVER_LIST_ID + " values ( -1, -1, 0);";
+	public static final String INSERT_DUMMY = "insert into " + TABLE_LOCALTOSERVER_LIST_ID + " values ( -1, -2, 0);";
 	// Drop all Tables statement
 	private static final String DROP_TABLE_USERS = "drop table if exists " + TABLE_USERS + ";";
 	private static final String DROP_TABLE_SHAREDLISTS = "drop table if exists " + TABLE_SHAREDLISTS + ";";
@@ -76,7 +76,9 @@ public class SQLiteDatabaseManager {
 			}
 			stmt.executeUpdate(CREATE_TABLE_USERS);
 			stmt.executeUpdate(CREATE_TABLE_LOCALTOSERVER_LIST_ID);
-			stmt.executeUpdate(INSERT_DUMMY);
+			if(ShoppingListServer.WIPE_DATABSE_ON_STARTUP) {
+				stmt.executeUpdate(INSERT_DUMMY);
+			}
 			stmt.executeUpdate(CREATE_TABLE_SHAREDLISTS);
 			stmt.close();
 
