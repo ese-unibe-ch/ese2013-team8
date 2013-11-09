@@ -3,6 +3,9 @@ package ch.unibe.ese.shopnote.core;
 import ch.unibe.ese.shopnote.core.sqlite.SQLitePersistenceManager;
 import ch.unibe.ese.shopnote.share.SyncManager;
 import android.app.Activity;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -86,5 +89,20 @@ public class BaseActivity extends Activity {
 	public String getTextViewText(int id) {
 		TextView textView = (TextView) findViewById(id);
 		return textView.getText().toString();
+	}
+	
+	/**
+	 * Checks if the android device has a connection to the internet
+	 * 
+	 * @return true if it is online
+	 */
+	public boolean isOnline() {
+	    ConnectivityManager cm =
+	        (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+	    NetworkInfo netInfo = cm.getActiveNetworkInfo();
+	    if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+	        return true;
+	    }
+	    return false;
 	}
 }

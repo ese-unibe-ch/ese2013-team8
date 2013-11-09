@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -17,6 +18,10 @@ import ch.unibe.ese.shopnote.share.requests.Request;
  *
  */
 public class RequestSender extends AsyncTask<Request, Object, Boolean>{
+	
+	// Server data
+	private String host = "10.0.0.2";
+	private int port = 1337;
 	
 	private Socket socket;
 	private ObjectOutputStream out;
@@ -32,9 +37,11 @@ public class RequestSender extends AsyncTask<Request, Object, Boolean>{
 	 */
 	@Override
 	protected Boolean doInBackground(Request... requests) {
-		this.initSocket();
-		this.send(requests);
-		this.waitForAnswer();
+		boolean isConnected = this.initSocket();
+		if(isConnected) {
+			this.send(requests);
+			this.waitForAnswer();
+		}
 		return true;
 	}
 	
@@ -60,15 +67,16 @@ public class RequestSender extends AsyncTask<Request, Object, Boolean>{
 	/**
 	 * Tries to open a socket on the android device to a specified Host
 	 */
-	private void initSocket() {
+	private boolean initSocket() {
 		try {
-//			this.socket = new Socket("matter2.nine.ch", 1337);
-			this.socket = new Socket("10.0.0.2", 1337); // Enter your local ip here
+			this.socket = new Socket(host, port);
+			return true;
 		} catch (UnknownHostException e) {
 			System.err.println("Unknown Host in initSocket()");
 		} catch (IOException e) {
 			System.err.println("ERROR in initSocket");
 		}
+		return false;
 	}
 	
 	/**

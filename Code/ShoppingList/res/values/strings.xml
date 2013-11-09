@@ -73,6 +73,9 @@
     <string name="error_friend">Error, friend not found</string>
     <string name="error_friend_already">Error, friend already added</string>
     <string name="error_enter">Error, please enter correct data</string>
+    
+    <!--  Synchronisation and Connection -->
+    <string name="no_connection">No internet connection available</string>
 
     <!-- The navigation drawer -->
     <string name="drawer_close">Navigationbar closed</string>

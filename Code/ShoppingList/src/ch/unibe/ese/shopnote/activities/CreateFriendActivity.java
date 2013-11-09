@@ -21,6 +21,7 @@ import ch.unibe.ese.shopnote.R;
  */
 public class CreateFriendActivity extends BaseActivity {
 	private FriendsManager friendsManager;
+	private SyncManager syncManager;
 	private Friend friend;
 
 	@Override
@@ -30,6 +31,7 @@ public class CreateFriendActivity extends BaseActivity {
 		getActionBar().hide();
 
 		friendsManager = getFriendsManager();
+		syncManager = getSyncManager();
 
 		// check if edit friend
 		Bundle extras = getIntent().getExtras();
@@ -81,12 +83,6 @@ public class CreateFriendActivity extends BaseActivity {
 			String name = getTextViewText(R.id.edit_friend_name);
 			String nr = getTextViewText(R.id.edit_friend_phone_number);
 
-			// Do we really need to contact the server again, bacause the number is not goint to be changed (not possible), only name
-//			SyncManager syncmanager = this.getSyncManager();
-//			FriendRequest frequest = new FriendRequest("" + nr);
-//			syncmanager.addRequest(frequest);
-//			syncmanager.synchronise();
-
 			if (friend == null)
 				addNewFriend(name, nr);
 			else {
@@ -105,6 +101,7 @@ public class CreateFriendActivity extends BaseActivity {
 		Friend friend = new Friend(nr, name);
 		int processStatus = friendsManager.addFriend(friend);
 		if (processStatus == 0) {
+			syncManager.addRequest(new FriendRequest(friend.getPhoneNr()));
 			finishTheActivity(friend.getId());
 		} else
 			printFailure(processStatus);
@@ -129,6 +126,9 @@ public class CreateFriendActivity extends BaseActivity {
 	}
 
 	public void goBack(View view) {
+		if(isOnline()) {
+			syncManager.synchronise();
+		}
 		finish();
 	}
 
