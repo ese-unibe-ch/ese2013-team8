@@ -22,9 +22,9 @@ import ch.unibe.ese.shopnote.core.FriendsManager;
 import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.ShoppingList;
+import ch.unibe.ese.shopnote.drawer.NavigationDrawer;
 import ch.unibe.ese.shopnote.share.SyncManager;
 import ch.unibe.ese.shopnote.share.requests.ShareListRequest;
-import ch.unibe.ese.shopnote.sidelist.NavigationDrawer;
 import ch.unibe.ese.shopnote.R;
 
 @SuppressLint("NewApi")

@@ -6,7 +6,7 @@ import java.util.List;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.ShoppingList;
-import ch.unibe.ese.shopnote.sidelist.NavigationDrawer;
+import ch.unibe.ese.shopnote.drawer.NavigationDrawer;
 import ch.unibe.ese.shopnote.R;
 import android.app.Activity;
 import android.content.Intent;

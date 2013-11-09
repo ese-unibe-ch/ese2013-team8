@@ -1,4 +1,4 @@
-package ch.unibe.ese.shopnote.activities.adapters;
+package ch.unibe.ese.shopnote.adapters;
 
 import java.util.List;
 

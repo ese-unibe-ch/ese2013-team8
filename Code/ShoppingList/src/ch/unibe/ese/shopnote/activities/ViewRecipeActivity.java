@@ -7,7 +7,7 @@ import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.Recipe;
-import ch.unibe.ese.shopnote.sidelist.NavigationDrawer;
+import ch.unibe.ese.shopnote.drawer.NavigationDrawer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;

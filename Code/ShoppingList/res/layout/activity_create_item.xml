@@ -82,7 +82,7 @@
             android:layout_marginTop="14dp"
             android:layout_toRightOf="@+id/textViewName"
             android:ems="10"
-            android:inputType="textCapSentences">
+            android:inputType="textCapSentences" >
             <requestFocus />
         </EditText>
 
@@ -148,10 +148,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/textViewQuantity"
-            android:layout_alignLeft="@+id/editTextPrice"
             android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/textViewQuantity"
+            android:layout_marginLeft="14dp"
             android:ems="10"
-            android:inputType="text" />
+            android:inputType="textCapSentences" />
+
     </RelativeLayout>
 
 </RelativeLayout>

@@ -16,7 +16,7 @@ import android.widget.ListView;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.Recipe;
-import ch.unibe.ese.shopnote.sidelist.NavigationDrawer;
+import ch.unibe.ese.shopnote.drawer.NavigationDrawer;
 import ch.unibe.ese.shopnote.R;
 
 public class ManageRecipeActivity extends BaseActivity {

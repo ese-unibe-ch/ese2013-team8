@@ -23,14 +23,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
+import ch.unibe.ese.shopnote.adapters.ItemListAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.Recipe;
 import ch.unibe.ese.shopnote.core.ShoppingList;
 import ch.unibe.ese.shopnote.core.sqlite.SQLiteItemAdapter;
+import ch.unibe.ese.shopnote.drawer.NavigationDrawer;
 import ch.unibe.ese.shopnote.share.SyncManager;
-import ch.unibe.ese.shopnote.sidelist.NavigationDrawer;
 import ch.unibe.ese.shopnote.R;
 
 public class ViewListActivity extends BaseActivity {
@@ -114,7 +115,7 @@ public class ViewListActivity extends BaseActivity {
 	}
 	
 	private ListView updateItemAdapter() {
-		itemAdapter = new ArrayAdapter<Item>(this, R.layout.shopping_list_item,
+		itemAdapter = new ItemListAdapter(this, R.layout.shopping_list_item,
 				itemsList);
 		ListView listView = (ListView) findViewById(R.id.ItemView);
 		listView.setAdapter(itemAdapter);
@@ -123,7 +124,7 @@ public class ViewListActivity extends BaseActivity {
 
 	private ListView updateItemBoughtAdapter() {
 		ListView listViewBought = (ListView) findViewById(R.id.ItemBoughtView);
-		itemBoughtAdapter = new ArrayAdapter<Item>(viewListActivity,
+		itemBoughtAdapter = new ItemListAdapter(viewListActivity,
 				R.layout.shopping_list_item, itemsBoughtList);
 		listViewBought.setAdapter(itemBoughtAdapter);
 		return listViewBought;
