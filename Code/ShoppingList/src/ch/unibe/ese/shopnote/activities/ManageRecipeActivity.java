@@ -1,7 +1,6 @@
 package ch.unibe.ese.shopnote.activities;
 
-import java.util.ArrayList;
-
+import java.util.List;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -10,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -18,11 +18,12 @@ import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.Recipe;
 import ch.unibe.ese.shopnote.sidelist.NavigationDrawer;
 import ch.unibe.ese.shopnote.R;
+import ch.unibe.ese.shopnote.ViewRecipeActivity;
 
 public class ManageRecipeActivity extends BaseActivity {
 	private ListManager manager; 
 	private ArrayAdapter<Recipe> recipeAdapter;
-	private ArrayList<Recipe> listOfRecipes;
+	private List<Recipe> recipes;
 	private DrawerLayout drawMenu;
 	
 	@Override
@@ -45,10 +46,9 @@ public class ManageRecipeActivity extends BaseActivity {
 	 * Updates the Viewlist, which shows all friends and adds itemclicklistener
 	 */
 	public void updateRecipeList(){
-		listOfRecipes = (ArrayList<Recipe>) manager.readRecipes();
-		
+		recipes = manager.getRecipes();
 		recipeAdapter = new ArrayAdapter<Recipe>(this,
-				R.layout.shopping_list_item, listOfRecipes );
+				R.layout.shopping_list_item, recipes);
 		ListView listView = (ListView) findViewById(R.id.recipe_list);
 		listView.setAdapter(recipeAdapter);
 		
@@ -60,6 +60,22 @@ public class ManageRecipeActivity extends BaseActivity {
 				ManageRecipeActivity.this.startActionMode(new RecipeListActionMode(
 						manager, selectedRecipe, recipeAdapter, ManageRecipeActivity.this));
 				return true;
+			}
+		});
+		
+		// Add click Listener
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Intent intent = new Intent(ManageRecipeActivity.this, ViewRecipeActivity.class);
+				
+				// get recipe Id
+				Recipe recipe = recipes.get(position);
+				
+				intent.putExtra(EXTRAS_RECIPE_ID, recipe.getId());
+				ManageRecipeActivity.this.startActivity(intent);
 			}
 		});
 	}

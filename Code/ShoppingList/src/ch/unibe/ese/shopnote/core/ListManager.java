@@ -127,15 +127,15 @@ public class ListManager {
 	}
 
 	/**
-	 * Returns a list of all recipes which are saved in the db
+	 * Returns a list of all recipes which are saved in the database
 	 * @return list of recipes
 	 */
-	public List<Recipe> readRecipes() {
+	public List<Recipe> getRecipes() {
 		return recipes;
 	}
 	
 	/**
-	 * Saves all Recipes to the db 
+	 * Saves all Recipes to the database 
 	 * @param recipe
 	 */
 	public void saveRecipe(Recipe recipe) {
@@ -144,7 +144,7 @@ public class ListManager {
 	}
 	
 	/**
-	 * Removes a Recipe from the db
+	 * Removes a Recipe from the database
 	 * @param recipe
 	 */
 	public void removeRecipe(Recipe recipe) {
@@ -161,7 +161,11 @@ public class ListManager {
 		return recipes.get(position);
 	}
 	
-	public List<Recipe> getRecipes() {
-		return recipes;
+	public Recipe getRecipe(long id) {
+		for (Recipe recipe : recipes) {
+			if (recipe.getId() == id)
+				return recipe;
+		}
+		return null;
 	}
 }

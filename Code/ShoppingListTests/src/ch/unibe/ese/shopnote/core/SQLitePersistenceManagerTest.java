@@ -118,8 +118,8 @@ public class SQLitePersistenceManagerTest extends
 
 	public void testReadFriends() {
 		assertTrue(manager.getFriends().isEmpty());
-		final int phoneNr1 = 12345678;
-		final int phoneNr2 = 23456789;
+		final String phoneNr1 = "12345678";
+		final String phoneNr2 = "23456789";
 		final String name1 = "friend1";
 		final String name2 = "friend2";
 		Friend friend1 = new Friend(phoneNr1, name1);
@@ -142,7 +142,7 @@ public class SQLitePersistenceManagerTest extends
 
 	public void testSaveFriend() {
 		assertTrue(manager.getFriends().isEmpty());
-		Friend friend1 = new Friend(12345678, "friend1");
+		Friend friend1 = new Friend("12345678", "friend1");
 		manager.save(friend1);
 		assertEquals(1, manager.getFriends().size());
 		assertEquals(friend1, manager.getFriends().get(0));
@@ -150,7 +150,7 @@ public class SQLitePersistenceManagerTest extends
 
 	public void testRemoveFriend() {
 		assertTrue(manager.getFriends().isEmpty());
-		Friend friend1 = new Friend(12345678, "friend1");
+		Friend friend1 = new Friend("12345678", "friend1");
 		manager.save(friend1);
 		assertEquals(1, manager.getFriends().size());
 

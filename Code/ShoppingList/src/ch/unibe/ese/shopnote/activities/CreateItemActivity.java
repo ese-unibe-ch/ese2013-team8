@@ -17,11 +17,13 @@ import ch.unibe.ese.shopnote.core.ShoppingList;
 import ch.unibe.ese.shopnote.core.sqlite.SQLiteItemAdapter;
 import ch.unibe.ese.shopnote.core.sqlite.SQLiteShopAdapter;
 import ch.unibe.ese.shopnote.R;
+import ch.unibe.ese.shopnote.core.Recipe;
 
 public class CreateItemActivity extends BaseActivity {
 
 	private ListManager manager;
 	private ShoppingList list;
+	private Recipe recipe;
 	private Item item;
 
 	@Override
@@ -46,6 +48,9 @@ public class CreateItemActivity extends BaseActivity {
 			long listIndex = extras.getLong(EXTRAS_LIST_ID);
 			if (listIndex != 0)
 				list = manager.getShoppingList(listIndex);
+			long recipeIndex = extras.getLong(EXTRAS_RECIPE_ID);
+			if (recipeIndex != 0)
+				recipe = manager.getRecipe(recipeIndex);
 
 			// prepare for edit item when necessary
 			if (extras.getBoolean(EXTRAS_ITEM_EDIT)) {
@@ -150,9 +155,14 @@ public class CreateItemActivity extends BaseActivity {
 		// save the item
 		if (list != null)
 			manager.addItemToList(item, list);
-		else
+		else if (recipe != null) {
+			recipe.addItem(item);
+			manager.save(item);
+		}
+		else {
 			// save item if called in itemlist
 			manager.save(item);
+		}
 
 		// go back to the list
 		finish();

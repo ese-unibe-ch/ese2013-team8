@@ -83,7 +83,7 @@
         <activity
             android:name="ch.unibe.ese.shopnote.activities.CreateRecipeActivity"
             android:label="@string/title_activity_create_recipe" >
- 		</activity>
+        </activity>
         <activity
             android:name="ch.unibe.ese.shopnote.activities.ArchiveActivity"
             android:label="@string/title_activity_archive"
@@ -91,6 +91,14 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ch.unibe.ese.activities.HomeActivity" />
+        </activity>
+        <activity
+            android:name="ch.unibe.ese.shopnote.ViewRecipeActivity"
+            android:label="@string/title_activity_view_recipe"
+            android:parentActivityName="ch.unibe.ese.shopnote.activities.ManageRecipeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ch.unibe.ese.shopnote.activities.ManageRecipeActivity" />
         </activity>
     </application>
 

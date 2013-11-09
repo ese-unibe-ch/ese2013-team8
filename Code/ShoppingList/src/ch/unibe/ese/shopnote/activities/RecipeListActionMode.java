@@ -15,7 +15,7 @@ import ch.unibe.ese.shopnote.core.Recipe;
 import ch.unibe.ese.shopnote.R;
 
 /**
- * Creates the Action Bar for Friends to edit or remove them
+ * Creates the Action Bar for Recipes to edit or remove them
  * @author ESE Team 8
  *
  */
@@ -67,15 +67,13 @@ public class RecipeListActionMode implements Callback {
     // Called when the user selects a contextual menu item
     @Override
     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-    	int recipeIndex = manager.getRecipes().indexOf(selectedRecipe);
-    	
-        switch (item.getItemId()) {
+    	 switch (item.getItemId()) {
             case R.id.action_edit:
             	mode.finish(); 
             	
             	if(recipeAdapter != null) {
 		        	Intent editRecipeIntent = new Intent(activity, CreateRecipeActivity.class);
-		        	editRecipeIntent.putExtra(BaseActivity.EXTRAS_RECIPE_ID, recipeIndex);
+		        	editRecipeIntent.putExtra(BaseActivity.EXTRAS_RECIPE_ID, selectedRecipe.getId());
 		            activity.startActivityForResult(editRecipeIntent, 1);
             	} else {
             		Intent editItemIntent = new Intent(activity, CreateItemActivity.class);

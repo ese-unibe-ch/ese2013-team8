@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:text="@string/add_recipe"
+            android:text="@string/create_recipe_title"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <!-- Name of recipe -->
@@ -69,7 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/editRecipeName"
             android:layout_alignLeft="@+id/textViewTitle"
-            android:text="@string/recipe_name"
+            android:text="@string/create_recipe_name"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <AutoCompleteTextView
@@ -86,46 +86,6 @@
             android:inputType="textCapSentences">
         </AutoCompleteTextView>
 
-
-        <!-- add Items to recipe -->
-        <TextView
-            android:id="@+id/addItemToRecipe"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/recipeName"
-            android:layout_below="@+id/recipeName"
-            android:layout_marginTop="26dp"
-            android:text="@string/add_item_to_recipe"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <AutoCompleteTextView
-            android:id="@+id/editAddItemToRecipe"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/addItemToRecipe"
-            android:layout_alignRight="@+id/editRecipeName"
-            android:layout_marginLeft="14dp"
-            android:layout_toRightOf="@+id/addItemToRecipe"
-            android:ems="10"
-            android:completionThreshold="1"
-            android:inputType="textCapSentences" >
-            <requestFocus />
-        </AutoCompleteTextView>
-
-       
     </RelativeLayout>
-    
-    <ListView
-        android:id="@+id/recipeListView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/relativeLayoutRecipe"
-        android:layout_marginBottom="0dp"
-        android:layout_marginTop="15dp"
-        android:background="@android:color/white"
-        android:cacheColorHint="@android:color/white"
-        android:divider="#CCCCCC"
-        android:dividerHeight="1dp" >
-    </ListView>
 
 </RelativeLayout>

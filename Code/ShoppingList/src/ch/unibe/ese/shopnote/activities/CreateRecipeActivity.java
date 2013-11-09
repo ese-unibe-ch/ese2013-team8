@@ -1,104 +1,45 @@
 package ch.unibe.ese.shopnote.activities;
 
-import java.util.ArrayList;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
-import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import ch.unibe.ese.shopnote.core.BaseActivity;
-import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.Recipe;
 import ch.unibe.ese.shopnote.R;
+import ch.unibe.ese.shopnote.ViewRecipeActivity;
 
 public class CreateRecipeActivity extends BaseActivity {
 	private ListManager manager;
 	private Recipe recipe;
-	private ArrayList<Item> itemsOfRecipe;
-	private ArrayAdapter<Item> itemAdapter;
-	ArrayAdapter<Item> autocompleteAdapter;
-	
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_recipe);
-		
 		getActionBar().hide();
+		
 		manager = getListManager();
 		
+		// Edit Recipe Name
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
-			int recipeIndex = extras.getInt(EXTRAS_RECIPE_ID);
-			recipe = manager.getRecipeAt(recipeIndex);
-			itemsOfRecipe = recipe.getItemList();
-			setInput(recipe);
-		} else
-			itemsOfRecipe = new ArrayList<Item>();
-		
-		//create or update item list
-		updateRecipeList();
-		
-		//add autocomplete items
-		createAutocomplete();		
-	}
-
-	private void updateRecipeList() {
-		// Get listOfRecipes and put it in the listview	
-		itemAdapter = new ArrayAdapter<Item>(this,
-				R.layout.shopping_list_item, itemsOfRecipe);
-		ListView listView = (ListView) findViewById(R.id.recipeListView);
-		listView.setAdapter(itemAdapter);
-		
-		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
-
-			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-					int position, long arg3) {
-				Item selectedItem = itemAdapter.getItem(position);
-				CreateRecipeActivity.this.startActionMode(new RecipeListActionMode(
-						CreateRecipeActivity.this.manager, recipe, selectedItem,
-						CreateRecipeActivity.this.itemAdapter,
-						CreateRecipeActivity.this));
-				return true;
-			}
-		});
+			long recipeIndex = extras.getLong(EXTRAS_RECIPE_ID);
+			recipe = manager.getRecipe(recipeIndex);
+			setText(recipe);
+		} 
 	}
 	
-	private AutoCompleteTextView createAutocomplete() {
-		AutoCompleteTextView addItems = (AutoCompleteTextView) findViewById(R.id.editAddItemToRecipe);
-		autocompleteAdapter = new ArrayAdapter<Item>(this,
-				android.R.layout.simple_list_item_1, manager.getAllItems());
-		addItems.setAdapter(autocompleteAdapter);
+	private void setText(Recipe recipe) {
+		// Title
+		TextView textViewTitle = (TextView) findViewById(R.id.textViewTitle);
+		textViewTitle.setText(this.getString(R.string.edit_recipe_title));
 		
-		addItems.setOnItemClickListener(new OnItemClickListener() {
-
-	        @Override
-	        public void onItemClick(AdapterView<?> parent, View arg1, int position,
-	                long id) {
-	        	Item item = (Item) autocompleteAdapter.getItem(position);
-	        	if(!itemsOfRecipe.contains(item))
-	        		itemsOfRecipe.add(item);
-	        	updateRecipeList();
-	        	
-	        	EditText addItem = (EditText) findViewById(R.id.editAddItemToRecipe);
-	        	addItem.setText("");
-	        }
-	    });
-		
-		return addItems;
-	}
-	
-	private void setInput(Recipe recipe) {
+		// Input
 		EditText recipeName = (EditText) findViewById(R.id.editRecipeName);
 		recipeName.setText(recipe.getName());
 	}
@@ -122,25 +63,25 @@ public class CreateRecipeActivity extends BaseActivity {
 			recipe = new Recipe(name);
 		else
 			recipe.setName(name);
-
-		//add items to recipe
-		recipe.setItemList(itemsOfRecipe);
 		
 		// save the item
 		manager.saveRecipe(recipe);
 		
-		// go back to the list
+		// open the created recipe
+		Intent intent = new Intent(this, ViewRecipeActivity.class);
+		intent.putExtra(EXTRAS_RECIPE_ID, recipe.getId());
+		this.startActivity(intent);
 		finish();
 	}
 	
 
-	public void finish() {
+	/*public void finish() {
         Intent data = new Intent();
         if(recipe != null)
         	data.putExtra(EXTRAS_RECIPE_ID, recipe.getId());
         setResult(Activity.RESULT_OK, data); 
         super.finish();
-    }
+    }*/
 	
 
 	@Override
