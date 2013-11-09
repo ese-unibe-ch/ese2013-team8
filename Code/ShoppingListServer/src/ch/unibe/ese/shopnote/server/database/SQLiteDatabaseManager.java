@@ -9,7 +9,6 @@ import ch.unibe.ese.shopnote.share.requests.ShareListRequest;
 
 /**
  * This Class organizes the database on the server. Can maybe be split up to some smaller classes
- * @author Stephan
  *
  */
 
@@ -38,7 +37,7 @@ public class SQLiteDatabaseManager {
 	public static final String CREATE_TABLE_LOCALTOSERVER_LIST_ID = "create table if not exists " + TABLE_LOCALTOSERVER_LIST_ID + "(" +
 			COLUMN_USER_ID + " integer, " +
 			COLUMN_LOCAL_LIST_ID + " integer, " +
-			COLUMN_SERVER_LIST_ID + " integer, " +
+			COLUMN_SERVER_LIST_ID + " integer default 0, " +
 			"primary key(" + COLUMN_USER_ID + ", " + COLUMN_LOCAL_LIST_ID + ")" +
 			");";
 	public static final String CREATE_TABLE_SHAREDLISTS = "create table if not exists " + TABLE_SHAREDLISTS + "(" +
@@ -47,10 +46,12 @@ public class SQLiteDatabaseManager {
 			COLUMN_SERVER_LIST_ID + " integer, " +
 			"primary key(" + COLUMN_USER_ID + ", " + COLUMN_FRIEND_ID + ", " + COLUMN_SERVER_LIST_ID + ")" +
 			");";
+	// First dummy entry for localtoserver list id
+	public static final String INSERT_DUMMY = "insert into " + TABLE_LOCALTOSERVER_LIST_ID + " values ( -1, -1, 0);";
 	// Drop all Tables statement
-	private static final String DROP_TABLE_USERS = "drop table " + TABLE_USERS + ";";
-	private static final String DROP_TABLE_SHAREDLISTS = "drop table " + TABLE_SHAREDLISTS + ";";
-	private static final String DROP_TABLE_LOCALTOSERVER_LIST_ID = "drop table " + TABLE_LOCALTOSERVER_LIST_ID + ";";
+	private static final String DROP_TABLE_USERS = "drop table if exists " + TABLE_USERS + ";";
+	private static final String DROP_TABLE_SHAREDLISTS = "drop table if exists " + TABLE_SHAREDLISTS + ";";
+	private static final String DROP_TABLE_LOCALTOSERVER_LIST_ID = "drop table if exists " + TABLE_LOCALTOSERVER_LIST_ID + ";";
 	
 	// instance variables
 	private Connection c;
@@ -73,6 +74,7 @@ public class SQLiteDatabaseManager {
 			}
 			stmt.executeUpdate(CREATE_TABLE_USERS);
 			stmt.executeUpdate(CREATE_TABLE_LOCALTOSERVER_LIST_ID);
+			stmt.executeUpdate(INSERT_DUMMY);
 			stmt.executeUpdate(CREATE_TABLE_SHAREDLISTS);
 			stmt.close();
 
@@ -144,7 +146,7 @@ public class SQLiteDatabaseManager {
 		int friendId = findUser(new RegisterRequest(request.getFriendNumber()));
 		if(userId == -1 || friendId == -1)
 			return;
-		long serverListId = getServerListId(userId, request.getListId());
+		long serverListId = createServerListIdifNotExists(userId, request.getListId());
 		if(serverListId == -1)
 			System.err.println("Failed to find/create global list id");
 		
@@ -152,7 +154,7 @@ public class SQLiteDatabaseManager {
 		try {
 			stmt = this.c.createStatement();
 			String selectEntryifExists = "select * from " + TABLE_SHAREDLISTS + " where " + COLUMN_USER_ID + "=\"" + userId + "\" and " + 
-					COLUMN_FRIEND_ID + "=\"" + friendId + "\";";
+					COLUMN_FRIEND_ID + "=\"" + friendId + "\" and " + COLUMN_SERVER_LIST_ID + "=\"" + serverListId + "\";";
 			ResultSet rs = stmt.executeQuery(selectEntryifExists);
 			if(rs.next()) {
 				System.out.println("\t:List " + serverListId + " is already shared with user " + friendId);
@@ -160,7 +162,7 @@ public class SQLiteDatabaseManager {
 			} else {
 				String insertSharedList = "insert into " + TABLE_SHAREDLISTS + " values (\"" + userId + "\", \"" + friendId + "\", \"" + serverListId + "\");";	
 				stmt.executeUpdate(insertSharedList);
-				System.out.println("\t:List " + serverListId + " is now shared with user " + friendId);
+				System.out.println("\t:List " + serverListId + " is now shared with users " + friendId + " and " + userId);
 				request.setSuccessful();
 			}
 
@@ -176,7 +178,7 @@ public class SQLiteDatabaseManager {
 	 * @param listId
 	 * @return serverListId
 	 */
-	private long getServerListId(int userId, long listId) {
+	private long createServerListIdifNotExists(int userId, long listId) {
 		Statement stmt;
 		try {
 			stmt = this.c.createStatement();
@@ -187,8 +189,9 @@ public class SQLiteDatabaseManager {
 			if(rs.next()) {
 				System.out.println("\t:Server List ID " + rs.getInt(COLUMN_SERVER_LIST_ID) + " is already shared");
 			} else {
-				String createEntry = "insert into " + TABLE_LOCALTOSERVER_LIST_ID + " values (\"" + userId + "\",\"" + userId + 
-						"\", (select max(" + COLUMN_SERVER_LIST_ID + ") from " + TABLE_LOCALTOSERVER_LIST_ID + ")+1);";	
+				String createEntry = "insert into " + TABLE_LOCALTOSERVER_LIST_ID + " values (\"" + userId + "\",\"" + listId + 
+						"\", (select max(" + COLUMN_SERVER_LIST_ID + ")+1 from " + TABLE_LOCALTOSERVER_LIST_ID + ")" +
+								");";	
 				stmt.executeUpdate(createEntry);
 				rs = stmt.executeQuery(selectEntryifExists);
 				System.out.println("\t:Server List ID " + rs.getInt(COLUMN_SERVER_LIST_ID) + " is a new shared list");
