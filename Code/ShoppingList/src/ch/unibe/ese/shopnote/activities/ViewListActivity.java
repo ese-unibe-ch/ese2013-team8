@@ -198,6 +198,10 @@ public class ViewListActivity extends BaseActivity {
 		intent.putExtra(EXTRAS_ITEM_NAME, name);
 		intent.putExtra(EXTRAS_LIST_ID, list.getId());
 		this.startActivityForResult(intent, 1);
+		
+		// remove text from field
+		textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
+		textName.setText("");
 	}
 
 	/** Called when the user touches the ok button */
@@ -283,10 +287,6 @@ public class ViewListActivity extends BaseActivity {
 			return true;
 		case R.id.action_refresh:
 			syncmanager.synchronise();
-			return true;
-		case R.id.action_settings:
-			Intent optionsIntent = new Intent(this, OptionsActivity.class);
-			this.startActivity(optionsIntent);
 			return true;
 		}
 		

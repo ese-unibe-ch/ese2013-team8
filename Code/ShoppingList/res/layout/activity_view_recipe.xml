@@ -12,9 +12,9 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".ViewListActivity" >
+    tools:context=".ViewRecipeActivity" >
 
-    <LinearLayout
+	<LinearLayout
         android:id="@+id/addItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
             android:layout_weight="0.70" 
 			android:inputType="textCapSentences"
 			android:completionThreshold="1"
-			android:hint="@string/view_list_hint"    
+			android:hint="@string/view_recipe_hint"    
             android:ems="10" >
         <requestFocus />
         </AutoCompleteTextView>
@@ -65,19 +65,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/addItem"
         android:layout_marginBottom="0dp"
-        android:layout_marginTop="15dp"
-        android:background="@android:color/white"
-        android:cacheColorHint="@android:color/white"
-        android:divider="#CCCCCC"
-        android:dividerHeight="1dp" >
-    </ListView>
-    
-    <ListView
-        android:id="@+id/ItemBoughtView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ItemView"
-        android:layout_marginBottom="5dp"
         android:layout_marginTop="15dp"
         android:background="@android:color/white"
         android:cacheColorHint="@android:color/white"
