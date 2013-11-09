@@ -56,8 +56,6 @@ public class BaseActivity extends Activity {
 		if (manager == null) {
 			manager = new SyncManager();
 			app.setSyncManager(manager);
-			// Dirty:
-			manager.addRequest(new RegisterRequest(getMyPhoneNumber()));
 		}
 		return manager;
 	}

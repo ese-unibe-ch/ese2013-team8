@@ -52,8 +52,7 @@ public class RequestSender extends AsyncTask<Request, Void, Boolean>{
 	
 	@Override
 	protected void onPostExecute(Boolean a) {
-		AnswerHandler aHandler = new AnswerHandler(listener);
-    	aHandler.handle(answers);
+		listener.updateUI();
     }
 	
 	/**
@@ -64,6 +63,8 @@ public class RequestSender extends AsyncTask<Request, Void, Boolean>{
 			this.in = new ObjectInputStream(socket.getInputStream());
 			answers = (Request[]) in.readObject();
 			socket.close();
+			AnswerHandler aHandler = new AnswerHandler(listener);
+	    	aHandler.handle(answers);
 		} catch (StreamCorruptedException e) {
 			System.err.println("Failed to open stream from server");
 		} catch (IOException e) {
@@ -85,7 +86,7 @@ public class RequestSender extends AsyncTask<Request, Void, Boolean>{
 		} catch (UnknownHostException e) {
 			System.err.println("Unknown Host in initSocket()");
 		} catch (IOException e) {
-			System.err.println("ERROR in initSocket");
+			System.err.println("Connection timed out");
 		}
 		return false;
 	}
