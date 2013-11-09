@@ -93,7 +93,7 @@
                 android:value="ch.unibe.ese.activities.HomeActivity" />
         </activity>
         <activity
-            android:name="ch.unibe.ese.shopnote.ViewRecipeActivity"
+            android:name="ch.unibe.ese.shopnote.activities.ViewRecipeActivity"
             android:label="@string/title_activity_view_recipe"
             android:parentActivityName="ch.unibe.ese.shopnote.activities.ManageRecipeActivity" >
             <meta-data

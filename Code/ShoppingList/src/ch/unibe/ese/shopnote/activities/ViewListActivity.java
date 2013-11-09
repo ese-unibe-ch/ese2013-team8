@@ -8,9 +8,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v4.widget.DrawerLayout;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -18,6 +20,8 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Item;
@@ -70,6 +74,18 @@ public class ViewListActivity extends BaseActivity {
 		SQLiteItemAdapter sqliteAdapter = new SQLiteItemAdapter(this,
 				android.R.layout.simple_list_item_1);
 		textName.setAdapter(sqliteAdapter);
+		
+		// Done button
+		textName.setOnEditorActionListener(new OnEditorActionListener() {
+		    @Override
+		    public boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
+		        if (actionId == EditorInfo.IME_ACTION_DONE) {
+		        	addItem(view);
+		            return true;
+		        }
+		        return false;
+		    }
+		});
 	}
 	
 	/**
@@ -293,7 +309,6 @@ public class ViewListActivity extends BaseActivity {
 		
 		return super.onOptionsItemSelected(item);
 	}
-	
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == 1 && resultCode == RESULT_OK) 

@@ -1,5 +1,6 @@
 package ch.unibe.ese.shopnote.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,7 +12,6 @@ import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.Recipe;
 import ch.unibe.ese.shopnote.R;
-import ch.unibe.ese.shopnote.ViewRecipeActivity;
 
 public class CreateRecipeActivity extends BaseActivity {
 	private ListManager manager;
@@ -32,6 +32,8 @@ public class CreateRecipeActivity extends BaseActivity {
 			recipe = manager.getRecipe(recipeIndex);
 			setText(recipe);
 		} 
+		
+		openKeyboard();
 	}
 	
 	private void setText(Recipe recipe) {
@@ -46,7 +48,7 @@ public class CreateRecipeActivity extends BaseActivity {
 	
 	/** Called when the user touches the abort button */
 	public void goBack(View view) {
-		super.finish();
+		finish();
 	}
 
 	/** Called when the user touches the save button */
@@ -74,14 +76,14 @@ public class CreateRecipeActivity extends BaseActivity {
 		finish();
 	}
 	
-
-	/*public void finish() {
+	@Override
+	public void finish() {
         Intent data = new Intent();
         if(recipe != null)
         	data.putExtra(EXTRAS_RECIPE_ID, recipe.getId());
-        setResult(Activity.RESULT_OK, data); 
+        setResult(Activity.RESULT_OK, data);   
         super.finish();
-    }*/
+    }
 	
 
 	@Override

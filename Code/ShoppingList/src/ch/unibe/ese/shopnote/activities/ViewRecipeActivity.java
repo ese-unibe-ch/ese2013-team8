@@ -1,9 +1,8 @@
-package ch.unibe.ese.shopnote;
+package ch.unibe.ese.shopnote.activities;
 
 import java.util.ArrayList;
-import ch.unibe.ese.shopnote.activities.CreateItemActivity;
-import ch.unibe.ese.shopnote.activities.CreateRecipeActivity;
-import ch.unibe.ese.shopnote.activities.RecipeListActionMode;
+
+import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ListManager;
@@ -11,17 +10,21 @@ import ch.unibe.ese.shopnote.core.Recipe;
 import ch.unibe.ese.shopnote.sidelist.NavigationDrawer;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.TextView.OnEditorActionListener;
 import android.support.v4.app.NavUtils;
 import android.support.v4.widget.DrawerLayout;
 
@@ -61,6 +64,19 @@ public class ViewRecipeActivity extends BaseActivity {
 		
 		//add autocomplete items
 		createAutocomplete();
+		
+		// Done button
+		EditText addItem = (EditText) findViewById(R.id.editTextName);
+		addItem.setOnEditorActionListener(new OnEditorActionListener() {
+		    @Override
+		    public boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
+		        if (actionId == EditorInfo.IME_ACTION_DONE) {
+		        	addItem(view);
+		            return true;
+		        }
+		        return false;
+		    }
+		});
 	}
 
 	private void updateRecipeList() {
