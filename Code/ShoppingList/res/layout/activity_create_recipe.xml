@@ -72,7 +72,7 @@
             android:text="@string/create_recipe_name"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <AutoCompleteTextView
+        <EditText
             android:id="@+id/editRecipeName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -81,10 +81,10 @@
             android:layout_marginLeft="14dp"
             android:layout_marginTop="14dp"
             android:layout_toRightOf="@+id/recipeName"
-            android:completionThreshold="1"
             android:ems="10"
             android:inputType="textCapSentences">
-        </AutoCompleteTextView>
+            <requestFocus />
+        </EditText>
 
     </RelativeLayout>
 

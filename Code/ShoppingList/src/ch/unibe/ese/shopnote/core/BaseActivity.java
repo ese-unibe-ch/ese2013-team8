@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -104,5 +105,27 @@ public class BaseActivity extends Activity {
 	        return true;
 	    }
 	    return false;
+	}
+	    
+	 /**
+	 * Force opens the soft keyboard
+	 */
+	public void openKeyboard() {
+		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+	}
+	
+	/**
+	 * Force closes the soft keyboard
+	 */
+	public void closeKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+	}
+	
+	@Override
+	public void finish() {
+		closeKeyboard();
+		super.finish();
 	}
 }

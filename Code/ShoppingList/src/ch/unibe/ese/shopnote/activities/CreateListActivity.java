@@ -52,6 +52,8 @@ public class CreateListActivity extends BaseActivity {
 			textViewTitle.setText(this.getString(R.string.edit_list_title));
 			setList();
 		}
+		
+		openKeyboard();
 	}
 
 	@Override
@@ -133,6 +135,7 @@ public class CreateListActivity extends BaseActivity {
 	 * Called when the user touches the duedate-field.
 	 */
 	public void showDatePickerDialog(View view) {
+		closeKeyboard();
 		DialogFragment newFragment = new DatePickerFragment();
 		newFragment.show(getFragmentManager(), "datePicker");
 	}

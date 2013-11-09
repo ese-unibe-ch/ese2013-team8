@@ -38,6 +38,8 @@ public class CreateFriendActivity extends BaseActivity {
 		if (extras != null) {
 			editFriend(extras);
 		}
+		
+		openKeyboard();
 	}
 
 	/**
