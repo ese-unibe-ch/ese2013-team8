@@ -19,6 +19,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
@@ -100,6 +101,7 @@ public class ViewListActivity extends BaseActivity {
 		ListView listView = updateItemAdapter();
 		ListView listViewBought = updateItemBoughtAdapter();	
 		addListeners(listView, listViewBought);
+		toggleShoppingCart();
 	}
 	
 	private void separateBoughtItems(List<Item> items) {
@@ -158,12 +160,10 @@ public class ViewListActivity extends BaseActivity {
 				Item item = itemAdapter.getItem(position);
 				item.setBought(true);
 				manager.addItemToList(item, list);
-				itemAdapter.remove(item);
 				
+				itemAdapter.remove(item);
 				itemBoughtAdapter.add(item);
-				// TODO: add striketrough to bought items
-				// TODO: set scrollbar on whole activity, not on
-
+				toggleShoppingCart();
 			}
 		});
 		
@@ -194,8 +194,8 @@ public class ViewListActivity extends BaseActivity {
 				item.setBought(false);
 				manager.addItemToList(item, list);
 				itemBoughtAdapter.remove(item);
-				
 				itemAdapter.add(item);
+				toggleShoppingCart();
 			}
 		});
 	}
@@ -320,6 +320,20 @@ public class ViewListActivity extends BaseActivity {
 	protected void onPause() {
 		super.onPause();
     	drawMenu.closeDrawers();
+	}
+	
+	private void toggleShoppingCart() {
+		// hide shopping cart image if no items bought
+		ImageView imageView = (ImageView)findViewById(R.id.imageItemsBought);
+		TextView textView = (TextView)findViewById(R.id.textItemsBought);
+		if (!itemBoughtAdapter.isEmpty()) {
+			imageView.setVisibility(View.VISIBLE);
+			textView.setVisibility(View.VISIBLE);
+		}
+		else {
+			imageView.setVisibility(View.INVISIBLE);
+			textView.setVisibility(View.INVISIBLE);
+		}
 	}
 
 }

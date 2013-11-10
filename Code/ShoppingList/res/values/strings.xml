@@ -2,9 +2,8 @@
 <resources>
 
     <!-- String insert reference -->
-    <!-- @string/name -->
-    <!-- this.getString(R.string.name) -->
-
+   		<!-- @string/name -->
+    	<!-- this.getString(R.string.name) -->
 
     <!-- Miscellaneous -->
     <string name="app_name">Shopnote</string>
@@ -52,6 +51,7 @@
 
     <!-- ViewListActivity -->
     <string name="view_list_hint">Add Item</string>
+    <string name="items_bought">Shopping Cart</string>
     <string name="share">Share</string>
     <string name="menu_item_share">Share</string>
     
