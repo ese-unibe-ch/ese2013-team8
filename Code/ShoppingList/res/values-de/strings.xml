@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- String insert reference -->
+   		<!-- @string/name -->
+    	<!-- this.getString(R.string.name) -->
+
+    <!-- Miscellaneous -->
+    <string name="app_name">Shopnote</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="btn_cancel">Abbrechen</string>
+    <string name="btn_done">Ok</string>
+
+    <!-- Default activity titles -->
+    <string name="title_activity_create_list">Liste erstellen</string>
+    <string name="title_activity_create_item">Item erstellen</string>
+    <string name="title_activity_view_list">Einkaufsliste</string>
+    <string name="title_activity_share_list">Liste teilen</string>
+    <string name="title_activity_manage_friends">Freunde</string>
+    <string name="title_activity_create_friend">Freund hinzufügen</string>
+    <string name="title_activity_item_list">Item-Liste</string>
+    <string name="title_activity_manage_recipe">Rezepte verwalten</string>
+    <string name="title_activity_create_recipe">Rezept erstellen</string>
+    <string name="title_activity_archive">Archiv</string>
+    <string name="title_activity_view_recipe">Rezept</string>
+
+    <!-- CreateListActivity -->
+    <string name="create_list_title">Neue Einkaufsliste erstellen:</string>
+    <string name="edit_list_title">Einkaufsliste bearbeiten:</string>
+    <string name="create_list_name">Name</string>
+    <string name="create_list_date">Datum (optional)</string>
+    <string name="create_list_shop">Laden (optional)</string>
+
+    <!-- CreateItemActivity -->
+    <string name="create_item_title">Neues Item erstellen:</string>
+    <string name="edit_item_title">Item bearbeiten:</string>
+    <string name="create_item_name">Name</string>
+    <string name="create_item_shop">Laden (optional)</string>
+    <string name="create_item_price">Preis (optional)</string>
+    <string name="create_item_quantity">Menge (optional)</string>
+    
+    <!-- CreateRecipeActivity -->
+    <string name="create_recipe_title">Neues Rezept erstellen:</string>
+    <string name="edit_recipe_title">Rezept bearbeiten:</string>
+    <string name="create_recipe_name">Name</string>
+    
+    <!-- CreateFriendActivity -->
+    <string name="add_friend">Freund hinzufügen:</string>
+    <string name="friend_name">Name</string>
+    <string name="friend_phone_number">Phone Nr</string>
+
+    <!-- ViewListActivity -->
+    <string name="view_list_hint">Item hinzufügen</string>
+    <string name="items_bought">Einkaufswagen</string>
+    <string name="share">Teilen</string>
+    <string name="menu_item_share">Teilen</string>
+    
+    <!-- ViewRecipeActivity -->
+    <string name="view_recipe_hint">Item hinzufügen</string>
+    <string name="view_recipe_title">Rezept für</string>
+
+    <!-- ShareListActivity -->
+    <string name="share_list_title">Teile</string>
+    <string name="share_list_hint">Freund hinzufügen</string>
+
+    <!--  ManageFriendsActivity -->
+    <string name ="friend_has_the_app_icon">Appstatus</string>    
+    
+    <!-- Buttons / Menu items -->
+    <string name="button_back">Abbrechen</string>
+    <string name="button_save">Speichern</string>
+    <string name="action_new">Neu</string>
+    <string name="action_edit">Bearbeiten</string>
+    <string name="action_remove">Löschen</string>
+    <string name="action_ok">Direkt hinzufügen</string>
+    <string name="action_refresh">Aktualisieren</string>
+    <string name="action_share">Teilen</string>
+    <string name="action_edit_list">Liste bearbeiten</string>
+    <string name="action_edit_recipe">Rezept bearbeiten</string>
+    <string name="action_archive">Archivieren</string>
+
+    <!-- Error messages -->
+    <string name="error_name">Bitte einen Namen eingeben</string>
+    <string name="error_missing">Noch nicht verfügbar</string>
+    <string name="error_friend">Fehler, Freund nicht gefunden</string>
+    <string name="error_friend_already">Fehler, Freund existiert bereits</string>
+    <string name="error_enter">Fehler, bitte korrekte Daten eingeben</string>
+    
+    <!--  Synchronisation and Connection -->
+    <string name="no_connection">Keine Verbindung zum Internet</string>
+
+    <!-- The navigation drawer -->
+    <string name="drawer_close">Navigationbar geschlossen</string>
+    <string name="drawer_open">Navigationbar offen</string>
+    <string name="navigation_bar_name">Navigator</string>
+
+    <string-array name="navigation_items">
+        <item>Alle Items anzeigen</item>
+    </string-array>
+    <string-array name="navigation_options">
+        <item>Archiv</item>
+        <item>Rezepte</item>
+        <item>Freunde</item>
+        <item>Einstellungen</item>
+    </string-array>
+    <string-array name="navigation_sections">
+        <item>Listen</item>
+        <item>Menü</item>
+    </string-array>
+
+    <!-- Options Menu -->
+    <string name="title_activity_options">Einstellungen</string>
+    <string name="general_settings">Allgemeine Einstellungen</string>
+    <string name="english">Englisch</string>
+    <string name="german">Deutsch</string>
+    <string name="language">Sprache</string>
+    <string name="language_dialog">Sprache der App ändern</string>
+
+    <string-array name="choosable_languages">
+        <item>Englisch</item>
+        <item>Deutsch</item>
+    </string-array>
+
+    <string name="theme">Design</string>
+    <string name="theme_dialog">Farben des Themes anpassen</string>
+    <string name="standard">Standard</string>
+
+    <string-array name="choosable_themes">
+        <item>Standard</item>
+        <item>Dunkel</item>
+    </string-array>
+
+</resources>

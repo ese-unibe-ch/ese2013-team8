@@ -127,7 +127,7 @@
 
     <string-array name="choosable_themes">
         <item>default</item>
-        <item>sexy</item>
+        <item>dark</item>
     </string-array>
 
 </resources>
