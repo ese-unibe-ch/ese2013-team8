@@ -24,6 +24,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
+import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.adapters.ItemListAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Item;
@@ -33,7 +34,6 @@ import ch.unibe.ese.shopnote.core.ShoppingList;
 import ch.unibe.ese.shopnote.core.sqlite.SQLiteItemAdapter;
 import ch.unibe.ese.shopnote.drawer.NavigationDrawer;
 import ch.unibe.ese.shopnote.share.SyncManager;
-import ch.unibe.ese.shopnote.R;
 
 public class ViewListActivity extends BaseActivity {
 
@@ -41,14 +41,9 @@ public class ViewListActivity extends BaseActivity {
 	private SyncManager syncmanager;
 	private ArrayAdapter<Item> itemAdapter;
 	private ArrayAdapter<Item> itemBoughtAdapter;
-<<<<<<< HEAD
 	private SQLiteItemAdapter sqliteAdapter;
 	private ArrayList<Item>	itemsList;
 	private ArrayList<Item>	itemsBoughtList;
-=======
-	private ArrayList<Item> itemsList;
-	private ArrayList<Item> itemsBoughtList;
->>>>>>> ac53ce6da7deeeeb966df258623debddd86b0b21
 	private Activity viewListActivity = this;
 	private ShoppingList list;
 	private DrawerLayout drawMenu;
@@ -78,7 +73,6 @@ public class ViewListActivity extends BaseActivity {
 		updateAdapters();
 
 		// Autocompletion
-<<<<<<< HEAD
 		AutoCompleteTextView itemName = (AutoCompleteTextView) findViewById(R.id.editTextName);
 		sqliteAdapter = new SQLiteItemAdapter(this, android.R.layout.simple_list_item_1, manager);
 		itemName.setAdapter(sqliteAdapter);
@@ -97,14 +91,9 @@ public class ViewListActivity extends BaseActivity {
 	        	addItem.setText("");
 	        }
 	    });
-=======
-		AutoCompleteTextView textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
-		SQLiteItemAdapter sqliteAdapter = new SQLiteItemAdapter(this,
-				android.R.layout.simple_list_item_1);
-		textName.setAdapter(sqliteAdapter);
 
 		// Done button
-		textName.setOnEditorActionListener(new OnEditorActionListener() {
+		itemName.setOnEditorActionListener(new OnEditorActionListener() {
 			@Override
 			public boolean onEditorAction(TextView view, int actionId,
 					KeyEvent event) {
@@ -115,7 +104,6 @@ public class ViewListActivity extends BaseActivity {
 				return false;
 			}
 		});
->>>>>>> ac53ce6da7deeeeb966df258623debddd86b0b21
 	}
 
 	/**

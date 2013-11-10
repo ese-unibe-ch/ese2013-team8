@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
@@ -27,11 +26,8 @@ import ch.unibe.ese.shopnote.core.ShoppingList;
 import ch.unibe.ese.shopnote.drawer.NavigationDrawer;
 import ch.unibe.ese.shopnote.share.SyncManager;
 import ch.unibe.ese.shopnote.share.requests.ShareListRequest;
-<<<<<<< HEAD
-import ch.unibe.ese.shopnote.sidelist.NavigationDrawer;
-=======
-import ch.unibe.ese.shopnote.R;
->>>>>>> ac53ce6da7deeeeb966df258623debddd86b0b21
+
+
 
 @SuppressLint("NewApi")
 public class ShareListActivity extends BaseActivity {
@@ -116,69 +112,69 @@ public class ShareListActivity extends BaseActivity {
 	}
 
 
-	/**
-	 * Updates the listView, which shows all friends
-	 */
-	public void updateFriendsList() {
-		sharedFriends = friendsManager.getSharedFriends(list);
-		ArrayAdapter<Friend> friendsAdapter = new ArrayAdapter<Friend>(this,
-				R.layout.shopping_list_item, sharedFriends);
-		ListView listView = (ListView) findViewById(R.id.FriendView);
-		listView.setAdapter(friendsAdapter);
-		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
-
-			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-					int position, long arg3) {
-				Friend selectedFriend = sharedFriends.get(position);
-				ShareListActivity.this.startActionMode(new FriendListActionMode(
-						friendsManager, list, selectedFriend, ShareListActivity.this));
-				return true;
-			}
-		});
-	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-		drawMenu.closeDrawers();
-		// Save friends here
-		sharedFriends = friendsManager.getSharedFriends(list);
-		if (sharedFriends.size() > 0) {
-			for (int i = 0; i < sharedFriends.size(); i++) {
-				// TODO paste your real number here (instead of 1234)
-				ShareListRequest slrequest = new ShareListRequest("" + 796897,
-						"" + sharedFriends.get(i).getPhoneNr(),
-						list.getId());
-				this.syncManager.addRequest(slrequest);
-			}
-			this.syncManager.synchronise();
-		}
-	}
-
-	private void setShareIntent(Intent shareIntent) {
-		if (mShareActionProvider != null) {
-			mShareActionProvider.setShareIntent(shareIntent);
-		}
-	}
-
-	private Intent createShareIntent() {
-		Intent shareIntent = new Intent(Intent.ACTION_SEND);
-		shareIntent.setType("text/plain");
-		shareIntent.putExtra(Intent.EXTRA_TEXT, listToString());
-		return shareIntent;
-
-	}
-
-	private String listToString() {
-		List<Item> items = manager.getItemsFor(list);
-		StringBuilder sb = new StringBuilder();
-		sb.append(list).append("\n");
-		for (Item item : items) {
-			sb.append(item).append("\n");
-		}
-
-		return sb.toString();
-	}
+//	/**
+//	 * Updates the listView, which shows all friends
+//	 */
+//	public void updateFriendsList() {
+//		sharedFriends = friendsManager.getSharedFriends(list);
+//		ArrayAdapter<Friend> friendsAdapter = new ArrayAdapter<Friend>(this,
+//				R.layout.shopping_list_item, sharedFriends);
+//		ListView listView = (ListView) findViewById(R.id.FriendView);
+//		listView.setAdapter(friendsAdapter);
+//		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
+//
+//			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+//					int position, long arg3) {
+//				Friend selectedFriend = sharedFriends.get(position);
+//				ShareListActivity.this.startActionMode(new FriendListActionMode(
+//						friendsManager, list, selectedFriend, ShareListActivity.this));
+//				return true;
+//			}
+//		});
+//	}
+//
+//	@Override
+//	protected void onPause() {
+//		super.onPause();
+//		drawMenu.closeDrawers();
+//		// Save friends here
+//		sharedFriends = friendsManager.getSharedFriends(list);
+//		if (sharedFriends.size() > 0) {
+//			for (int i = 0; i < sharedFriends.size(); i++) {
+//				// TODO paste your real number here (instead of 1234)
+//				ShareListRequest slrequest = new ShareListRequest("" + 796897,
+//						"" + sharedFriends.get(i).getPhoneNr(),
+//						list.getId(), list.getName());
+//				this.syncManager.addRequest(slrequest);
+//			}
+//			this.syncManager.synchronise(this);
+//		}
+//	}
+//
+//	private void setShareIntent(Intent shareIntent) {
+//		if (mShareActionProvider != null) {
+//			mShareActionProvider.setShareIntent(shareIntent);
+//		}
+//	}
+//
+//	private Intent createShareIntent() {
+//		Intent shareIntent = new Intent(Intent.ACTION_SEND);
+//		shareIntent.setType("text/plain");
+//		shareIntent.putExtra(Intent.EXTRA_TEXT, listToString());
+//		return shareIntent;
+//
+//	}
+//
+//	private String listToString() {
+//		List<Item> items = manager.getItemsFor(list);
+//		StringBuilder sb = new StringBuilder();
+//		sb.append(list).append("\n");
+//		for (Item item : items) {
+//			sb.append(item).append("\n");
+//		}
+//
+//		return sb.toString();
+//	}
 	
 	
 
@@ -236,15 +232,14 @@ public class ShareListActivity extends BaseActivity {
 			createAutocomplete();
 		}
 	}
-<<<<<<< HEAD
-=======
+
 
 	/**
 	 * Updates the listView, which shows all friends
 	 */
 	public void updateFriendsList() {
 		ListView listView = (ListView) findViewById(R.id.FriendView);
-		listView.setAdapter(friendsAdapter);
+		listView.setAdapter(autocompleteAdapter);
 	}
 
 	@Override
@@ -252,10 +247,10 @@ public class ShareListActivity extends BaseActivity {
 		super.onPause();
 		drawMenu.closeDrawers();
 		// Save friends here
-		if (friendsAdapter.getCount() > 0) {
-			for (int i = 0; i < friendsAdapter.getCount(); i++) {
+		if (autocompleteAdapter.getCount() > 0) {
+			for (int i = 0; i < autocompleteAdapter.getCount(); i++) {
 				ShareListRequest slrequest = new ShareListRequest(getMyPhoneNumber(),
-						"" + friendsAdapter.getItem(i).getPhoneNr(),
+						"" + autocompleteAdapter.getItem(i).getPhoneNr(),
 						list.getId(), list.getName());
 				this.syncManager.addRequest(slrequest);
 			}
@@ -287,5 +282,4 @@ public class ShareListActivity extends BaseActivity {
 
 		return sb.toString();
 	}
->>>>>>> ac53ce6da7deeeeb966df258623debddd86b0b21
 }

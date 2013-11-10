@@ -126,13 +126,13 @@ public class ManageFriendsActivity extends BaseActivity {
     	drawMenu.closeDrawers();
 	}
 	
-<<<<<<< HEAD
+	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-=======
+	}
+
 	@Override
 	public void refresh() {
->>>>>>> ac53ce6da7deeeeb966df258623debddd86b0b21
 		updateFriendsList();
 	}
 }

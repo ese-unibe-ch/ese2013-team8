@@ -9,14 +9,15 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
+import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ListManager;
+import ch.unibe.ese.shopnote.core.Recipe;
 import ch.unibe.ese.shopnote.core.Shop;
 import ch.unibe.ese.shopnote.core.ShoppingList;
+import ch.unibe.ese.shopnote.core.sqlite.SQLiteItemAdapter;
 import ch.unibe.ese.shopnote.core.sqlite.SQLiteShopAdapter;
-import ch.unibe.ese.shopnote.R;
-import ch.unibe.ese.shopnote.core.Recipe;
 
 public class CreateItemActivity extends BaseActivity {
 
@@ -46,7 +47,7 @@ public class CreateItemActivity extends BaseActivity {
 		textShop.setAdapter(sqliteShopAdapter);
 		
 		Bundle extras = getIntent().getExtras();
-		String name;
+		String name = "";
 
 		if (extras != null) {
 			// Create new item from ViewListActivity
@@ -79,7 +80,7 @@ public class CreateItemActivity extends BaseActivity {
 				editItem();
 			}
 		}
-<<<<<<< HEAD
+
 
 		// create autocomplete adapter for name
 		AutoCompleteTextView textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
@@ -89,12 +90,11 @@ public class CreateItemActivity extends BaseActivity {
 		textName.setText(name);
 		
 		// Set autocompletion adapter for shop
-		AutoCompleteTextView textShop = (AutoCompleteTextView) findViewById(R.id.editTextShop);
-		SQLiteShopAdapter sqliteShopAdapter = new SQLiteShopAdapter(this,
+		textShop = (AutoCompleteTextView) findViewById(R.id.editTextShop);
+		sqliteShopAdapter = new SQLiteShopAdapter(this,
 				android.R.layout.simple_list_item_1);
 		textShop.setAdapter(sqliteShopAdapter);
-=======
->>>>>>> ac53ce6da7deeeeb966df258623debddd86b0b21
+
 	}
 
 	private void editItem() {
