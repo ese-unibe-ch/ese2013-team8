@@ -117,7 +117,7 @@ public class CreateListActivity extends BaseActivity {
 		}
 
 		// save the shopping list
-		manager.addShoppingList(list);
+		manager.saveShoppingList(list);
 
 		// TODO: maybe allow user to choose in settings if new list should open
 		// after creating

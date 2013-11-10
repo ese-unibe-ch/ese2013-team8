@@ -45,7 +45,7 @@ public class ListManager {
 	 * @param list
 	 *            not <code>null</code>
 	 */
-	public void addShoppingList(ShoppingList list) {
+	public void saveShoppingList(ShoppingList list) {
 		if (list == null)
 			throw new IllegalArgumentException("null is not allowed");
 		if (!shoppingLists.contains(list)) {

@@ -26,7 +26,7 @@ public class ListManagerTest extends AndroidTestCase {
 
 	public void testAddShoppingList() {
 		ShoppingList list1 = new ShoppingList("list1");
-		manager.addShoppingList(list1);
+		manager.saveShoppingList(list1);
 
 		assertEquals(1, manager.getShoppingLists().size());
 		assertEquals(list1, manager.getShoppingLists().get(0));
@@ -35,8 +35,8 @@ public class ListManagerTest extends AndroidTestCase {
 	public void testAddShoppingLists() {
 		ShoppingList list1 = new ShoppingList("list1");
 		ShoppingList list2 = new ShoppingList("list2");
-		manager.addShoppingList(list1);
-		manager.addShoppingList(list2);
+		manager.saveShoppingList(list1);
+		manager.saveShoppingList(list2);
 
 		assertEquals(2, manager.getShoppingLists().size());
 		assertEquals(list1, manager.getShoppingLists().get(0));
@@ -45,7 +45,7 @@ public class ListManagerTest extends AndroidTestCase {
 
 	public void testRemoveShoppingList() {
 		ShoppingList list1 = new ShoppingList("list1");
-		manager.addShoppingList(list1);
+		manager.saveShoppingList(list1);
 		assertEquals(list1, manager.getShoppingLists().get(0));
 
 		manager.removeShoppingList(list1);
@@ -58,14 +58,14 @@ public class ListManagerTest extends AndroidTestCase {
 
 	public void testRenameShoppingList() {
 		ShoppingList list = new ShoppingList("List 1");
-		manager.addShoppingList(list);
+		manager.saveShoppingList(list);
 
 		List<ShoppingList> lists = manager.getShoppingLists();
 		assertEquals(list, lists.get(0));
 
 		final String rename = "Renamed 1";
 		list.setName(rename);
-		manager.addShoppingList(list);
+		manager.saveShoppingList(list);
 		lists = manager.getShoppingLists();
 		assertEquals(1, lists.size());
 		assertEquals(list, lists.get(0));
@@ -74,7 +74,7 @@ public class ListManagerTest extends AndroidTestCase {
 
 	public void testAddItemToList() {
 		ShoppingList list1 = new ShoppingList("list1");
-		manager.addShoppingList(list1);
+		manager.saveShoppingList(list1);
 		assertEquals(list1, manager.getShoppingLists().get(0));
 
 		assertTrue(manager.getItemsFor(list1).isEmpty());
@@ -98,7 +98,7 @@ public class ListManagerTest extends AndroidTestCase {
 
 	public void testAddItemsToList() {
 		ShoppingList list1 = new ShoppingList("list1");
-		manager.addShoppingList(list1);
+		manager.saveShoppingList(list1);
 		assertEquals(list1, manager.getShoppingLists().get(0));
 
 		assertTrue(manager.getItemsFor(list1).isEmpty());
@@ -114,7 +114,7 @@ public class ListManagerTest extends AndroidTestCase {
 
 	public void testAddItemTwice() {
 		ShoppingList list1 = new ShoppingList("list1");
-		manager.addShoppingList(list1);
+		manager.saveShoppingList(list1);
 		assertEquals(list1, manager.getShoppingLists().get(0));
 
 		assertTrue(manager.getItemsFor(list1).isEmpty());
@@ -128,7 +128,7 @@ public class ListManagerTest extends AndroidTestCase {
 
 	public void testRemoveItemFromList() {
 		ShoppingList list1 = new ShoppingList("list1");
-		manager.addShoppingList(list1);
+		manager.saveShoppingList(list1);
 		assertEquals(list1, manager.getShoppingLists().get(0));
 
 		assertTrue(manager.getItemsFor(list1).isEmpty());

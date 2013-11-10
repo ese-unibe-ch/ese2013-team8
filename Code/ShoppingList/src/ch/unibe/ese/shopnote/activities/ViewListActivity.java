@@ -297,10 +297,8 @@ public class ViewListActivity extends BaseActivity {
 			return true;
 		case R.id.action_archive:
 			// toggle archive state
-			if (list.isArchived())
-				list.setArchived(false);
-			else
-				list.setArchived(true);
+			list.setArchived(!list.isArchived());
+			manager.saveShoppingList(list);
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
 		case R.id.action_delete:

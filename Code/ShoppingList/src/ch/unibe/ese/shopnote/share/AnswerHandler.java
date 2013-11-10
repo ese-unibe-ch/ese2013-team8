@@ -49,7 +49,7 @@ public class AnswerHandler {
 			//TODO
 		case Request.CREATE_SHARED_LIST_REQUEST:
 			String listName = ((CreateSharedListRequest)request).getListName();
-			listManager.addShoppingList(new ShoppingList(listName));
+			listManager.saveShoppingList(new ShoppingList(listName));
 			ShoppingList list = listManager.getShoppingLists().get(listManager.getShoppingLists().size()-1);
 			long id = list.getId();
 			((CreateSharedListRequest)request).setLocalListId(id);
