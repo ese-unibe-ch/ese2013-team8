@@ -173,7 +173,7 @@ public class ViewListActivity extends BaseActivity {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				Item selectedItem = itemAdapter.getItem(position);
+				Item selectedItem = itemBoughtAdapter.getItem(position);
 				ViewListActivity.this
 						.startActionMode(new ShoppingListActionMode(
 								ViewListActivity.this.manager, selectedItem,
