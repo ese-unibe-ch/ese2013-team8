@@ -14,14 +14,15 @@ import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.Shop;
 import ch.unibe.ese.shopnote.core.ShoppingList;
-import ch.unibe.ese.shopnote.core.sqlite.SQLiteItemAdapter;
 import ch.unibe.ese.shopnote.core.sqlite.SQLiteShopAdapter;
 import ch.unibe.ese.shopnote.R;
+import ch.unibe.ese.shopnote.core.Recipe;
 
 public class CreateItemActivity extends BaseActivity {
 
 	private ListManager manager;
 	private ShoppingList list;
+	private Recipe recipe;
 	private Item item;
 
 	@Override
@@ -33,19 +34,35 @@ public class CreateItemActivity extends BaseActivity {
 		manager = getListManager();
 
 		setTextViews();
+		openKeyboard();
 	}
 
 	private void setTextViews() {
-		// get item name
-		Bundle extras = getIntent().getExtras();
-		String name = "";
 
-		// get list if available
+		// Set autocompletion adapter for shop
+		AutoCompleteTextView textShop = (AutoCompleteTextView) findViewById(R.id.editTextShop);
+		SQLiteShopAdapter sqliteShopAdapter = new SQLiteShopAdapter(this,
+				android.R.layout.simple_list_item_1);
+		textShop.setAdapter(sqliteShopAdapter);
+		
+		Bundle extras = getIntent().getExtras();
+		String name;
+
 		if (extras != null) {
+			// Create new item from ViewListActivity
 			name = extras.getString(EXTRAS_ITEM_NAME);
+			if ((name != null) && !name.equals("")) {
+				setTextViewText(R.id.editTextName, name);
+				// move focus to next field if name is set
+				textShop.requestFocus();
+				openKeyboard();
+			}
 			long listIndex = extras.getLong(EXTRAS_LIST_ID);
 			if (listIndex != 0)
 				list = manager.getShoppingList(listIndex);
+			long recipeIndex = extras.getLong(EXTRAS_RECIPE_ID);
+			if (recipeIndex != 0)
+				recipe = manager.getRecipe(recipeIndex);
 
 			// prepare for edit item when necessary
 			if (extras.getBoolean(EXTRAS_ITEM_EDIT)) {
@@ -54,7 +71,6 @@ public class CreateItemActivity extends BaseActivity {
 						.getItemsFor(list))) {
 					if (it.getId() == itemId) {
 						item = it;
-						name = item.getName();
 						break;
 					}
 				}
@@ -63,6 +79,7 @@ public class CreateItemActivity extends BaseActivity {
 				editItem();
 			}
 		}
+<<<<<<< HEAD
 
 		// create autocomplete adapter for name
 		AutoCompleteTextView textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
@@ -76,6 +93,8 @@ public class CreateItemActivity extends BaseActivity {
 		SQLiteShopAdapter sqliteShopAdapter = new SQLiteShopAdapter(this,
 				android.R.layout.simple_list_item_1);
 		textShop.setAdapter(sqliteShopAdapter);
+=======
+>>>>>>> ac53ce6da7deeeeb966df258623debddd86b0b21
 	}
 
 	private void editItem() {
@@ -150,9 +169,14 @@ public class CreateItemActivity extends BaseActivity {
 		// save the item
 		if (list != null)
 			manager.addItemToList(item, list);
-		else
+		else if (recipe != null) {
+			recipe.addItem(item);
+			manager.save(item);
+		}
+		else {
 			// save item if called in itemlist
 			manager.save(item);
+		}
 
 		// go back to the list
 		finish();

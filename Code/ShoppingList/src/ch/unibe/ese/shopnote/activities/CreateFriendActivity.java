@@ -19,6 +19,7 @@ import ch.unibe.ese.shopnote.core.FriendsManager;
  */
 public class CreateFriendActivity extends BaseActivity {
 	private FriendsManager friendsManager;
+	private SyncManager syncManager;
 	private Friend friend;
 
 	@Override
@@ -28,12 +29,15 @@ public class CreateFriendActivity extends BaseActivity {
 		getActionBar().hide();
 
 		friendsManager = getFriendsManager();
+		syncManager = getSyncManager();
 
 		// check if edit friend
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
 			editFriend(extras);
 		}
+		
+		openKeyboard();
 	}
 
 	/**
@@ -78,12 +82,6 @@ public class CreateFriendActivity extends BaseActivity {
 		try {
 			String name = getTextViewText(R.id.edit_friend_name);
 			String nr = getTextViewText(R.id.edit_friend_phone_number);
-
-			// Do we really need to contact the server again, bacause the number is not goint to be changed (not possible), only name
-//			SyncManager syncmanager = this.getSyncManager();
-//			FriendRequest frequest = new FriendRequest("" + nr);
-//			syncmanager.addRequest(frequest);
-//			syncmanager.synchronise();
 
 			if (friend == null)
 				addNewFriend(name, nr);

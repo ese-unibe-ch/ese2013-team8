@@ -2,9 +2,8 @@
 <resources>
 
     <!-- String insert reference -->
-    <!-- @string/name -->
-    <!-- this.getString(R.string.name) -->
-
+   		<!-- @string/name -->
+    	<!-- this.getString(R.string.name) -->
 
     <!-- Miscellaneous -->
     <string name="app_name">Shopnote</string>
@@ -21,10 +20,10 @@
     <string name="title_activity_create_friend">Add Friend</string>
     <string name="title_activity_item_list">Item List</string>
     <string name="title_activity_manage_recipe">Manage Recipes</string>
- 	<string name="title_activity_create_recipe">Create Recipes</string>
- 	<string name="title_activity_archive">Archive</string>
- 	
-    
+    <string name="title_activity_create_recipe">Create Recipes</string>
+    <string name="title_activity_archive">Archive</string>
+    <string name="title_activity_view_recipe">View Recipe</string>
+
     <!-- CreateListActivity -->
     <string name="create_list_title">Add new shopping list:</string>
     <string name="edit_list_title">Edit shopping list:</string>
@@ -39,22 +38,34 @@
     <string name="create_item_shop">Shop (optional)</string>
     <string name="create_item_price">Price (optional)</string>
     <string name="create_item_quantity">Quantity (optional)</string>
+    
+    <!-- CreateRecipeActivity -->
+    <string name="create_recipe_title">Add new recipe:</string>
+    <string name="edit_recipe_title">Edit recipe:</string>
+    <string name="create_recipe_name">Name</string>
+    
+    <!-- CreateFriendActivity -->
+    <string name="add_friend">Add a friend:</string>
+    <string name="friend_name">Name</string>
+    <string name="friend_phone_number">Phone Nr</string>
 
     <!-- ViewListActivity -->
     <string name="view_list_hint">Add Item</string>
+    <string name="items_bought">Shopping Cart</string>
     <string name="share">Share</string>
-    <string name="menu_item_share">Shareit</string>
+    <string name="menu_item_share">Share</string>
     
+    <!-- ViewRecipeActivity -->
+    <string name="view_recipe_hint">Add Item</string>
+    <string name="view_recipe_title">Recipe for</string>
 
     <!-- ShareListActivity -->
     <string name="share_list_title">Share</string>
     <string name="share_list_hint">Add Friend</string>
 
-    <!-- CreateFriendsActivity -->
-    <string name="add_friend">Add a friend:</string>
-    <string name="friend_name">Name:</string>
-    <string name="friend_phone_number">Phone Nr:</string>
-
+    <!--  ManageFriendsActivity -->
+    <string name ="friend_has_the_app_icon">Appstatus</string>    
+    
     <!-- Buttons / Menu items -->
     <string name="button_back">Abort</string>
     <string name="button_save">Save</string>
@@ -65,6 +76,7 @@
     <string name="action_refresh">Refresh</string>
     <string name="action_share">Share</string>
     <string name="action_edit_list">Edit List</string>
+    <string name="action_edit_recipe">Edit Recipe</string>
     <string name="action_archive">Archive</string>
 
     <!-- Error messages -->
@@ -73,6 +85,9 @@
     <string name="error_friend">Error, friend not found</string>
     <string name="error_friend_already">Error, friend already added</string>
     <string name="error_enter">Error, please enter correct data</string>
+    
+    <!--  Synchronisation and Connection -->
+    <string name="no_connection">No internet connection available</string>
 
     <!-- The navigation drawer -->
     <string name="drawer_close">Navigationbar closed</string>
@@ -112,14 +127,7 @@
 
     <string-array name="choosable_themes">
         <item>default</item>
-        <item>sexy</item>
+        <item>dark</item>
     </string-array>
-
-
-    <!-- Recipe Menu -->
-
-    <string name="add_recipe">Add new recipe:</string>
-    <string name="recipe_name">Name:</string>
-    <string name="add_item_to_recipe">add item:</string>
 
 </resources>

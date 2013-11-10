@@ -1,4 +1,4 @@
-package ch.unibe.ese.shopnote.sidelist;
+package ch.unibe.ese.shopnote.drawer;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

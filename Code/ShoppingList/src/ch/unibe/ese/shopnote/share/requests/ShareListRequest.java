@@ -12,11 +12,13 @@ public class ShareListRequest extends Request {
 	
 	private String friendNumber;
 	private long listId;
+	private String listname;
 
-	public ShareListRequest(String phoneNumber, String friendNumber, long listId) {
+	public ShareListRequest(String phoneNumber, String friendNumber, long listId, String listname) {
 		super(phoneNumber);
 		this.friendNumber = friendNumber;
 		this.listId = listId;
+		this.listname = listname;
 	}
 
 	public String getFriendNumber() {
@@ -25,6 +27,10 @@ public class ShareListRequest extends Request {
 	
 	public long getListId() {
 		return this.listId;
+	}
+	
+	public String getListName() {
+		return this.listname;
 	}
 	
 	public void setListId(long id) {

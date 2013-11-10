@@ -1,5 +1,7 @@
 package ch.unibe.ese.shopnote.core;
 
+import java.io.Serializable;
+
 /**
  * Class Friend with two values: phoneNr and name
  * 
@@ -9,11 +11,13 @@ package ch.unibe.ese.shopnote.core;
 public class Friend extends Entity {
 	private String phoneNr;
 	private String name;
+	private boolean hasTheApp;
 
 	// TODO: add Image of Friend
 	public Friend(String phoneNr, String name) {
 		this.phoneNr = phoneNr;
 		this.name = name;
+		this.hasTheApp = false;
 		invariant();
 	}
 
@@ -33,6 +37,18 @@ public class Friend extends Entity {
 	public void setName(String name) {
 		this.name = name;
 		invariant();
+	}
+	
+	public void setHasApp() {
+		this.hasTheApp = true;
+	}
+	
+	public void setHasNotApp()  {
+		this.hasTheApp = false;
+	}
+	
+	public boolean hasTheApp() {
+		return hasTheApp;
 	}
 
 	private void invariant() {

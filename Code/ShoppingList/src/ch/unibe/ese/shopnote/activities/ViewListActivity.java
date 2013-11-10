@@ -8,25 +8,31 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v4.widget.DrawerLayout;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
+import ch.unibe.ese.shopnote.adapters.ItemListAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.Recipe;
 import ch.unibe.ese.shopnote.core.ShoppingList;
 import ch.unibe.ese.shopnote.core.sqlite.SQLiteItemAdapter;
+import ch.unibe.ese.shopnote.drawer.NavigationDrawer;
 import ch.unibe.ese.shopnote.share.SyncManager;
-import ch.unibe.ese.shopnote.sidelist.NavigationDrawer;
 import ch.unibe.ese.shopnote.R;
 
 public class ViewListActivity extends BaseActivity {
@@ -35,9 +41,14 @@ public class ViewListActivity extends BaseActivity {
 	private SyncManager syncmanager;
 	private ArrayAdapter<Item> itemAdapter;
 	private ArrayAdapter<Item> itemBoughtAdapter;
+<<<<<<< HEAD
 	private SQLiteItemAdapter sqliteAdapter;
 	private ArrayList<Item>	itemsList;
 	private ArrayList<Item>	itemsBoughtList;
+=======
+	private ArrayList<Item> itemsList;
+	private ArrayList<Item> itemsBoughtList;
+>>>>>>> ac53ce6da7deeeeb966df258623debddd86b0b21
 	private Activity viewListActivity = this;
 	private ShoppingList list;
 	private DrawerLayout drawMenu;
@@ -51,7 +62,7 @@ public class ViewListActivity extends BaseActivity {
 
 		manager = getListManager();
 		syncmanager = getSyncManager();
-		
+
 		// Create drawer menu
 		NavigationDrawer nDrawer = new NavigationDrawer();
 		drawMenu = nDrawer.constructNavigationDrawer(drawMenu, this);
@@ -67,6 +78,7 @@ public class ViewListActivity extends BaseActivity {
 		updateAdapters();
 
 		// Autocompletion
+<<<<<<< HEAD
 		AutoCompleteTextView itemName = (AutoCompleteTextView) findViewById(R.id.editTextName);
 		sqliteAdapter = new SQLiteItemAdapter(this, android.R.layout.simple_list_item_1, manager);
 		itemName.setAdapter(sqliteAdapter);
@@ -85,8 +97,27 @@ public class ViewListActivity extends BaseActivity {
 	        	addItem.setText("");
 	        }
 	    });
+=======
+		AutoCompleteTextView textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
+		SQLiteItemAdapter sqliteAdapter = new SQLiteItemAdapter(this,
+				android.R.layout.simple_list_item_1);
+		textName.setAdapter(sqliteAdapter);
+
+		// Done button
+		textName.setOnEditorActionListener(new OnEditorActionListener() {
+			@Override
+			public boolean onEditorAction(TextView view, int actionId,
+					KeyEvent event) {
+				if (actionId == EditorInfo.IME_ACTION_DONE) {
+					addItem(view);
+					return true;
+				}
+				return false;
+			}
+		});
+>>>>>>> ac53ce6da7deeeeb966df258623debddd86b0b21
 	}
-	
+
 	/**
 	 * Updates the adapters
 	 */
@@ -96,14 +127,15 @@ public class ViewListActivity extends BaseActivity {
 		separateBoughtItems(items);
 
 		ListView listView = updateItemAdapter();
-		ListView listViewBought = updateItemBoughtAdapter();	
+		ListView listViewBought = updateItemBoughtAdapter();
 		addListeners(listView, listViewBought);
+		toggleShoppingCart();
 	}
-	
+
 	private void separateBoughtItems(List<Item> items) {
 		itemsBoughtList = new ArrayList<Item>();
 		itemsList = new ArrayList<Item>();
-		
+
 		for (Item item : items) {
 			if (item.isBought())
 				itemsBoughtList.add(item);
@@ -111,9 +143,9 @@ public class ViewListActivity extends BaseActivity {
 				itemsList.add(item);
 		}
 	}
-	
+
 	private ListView updateItemAdapter() {
-		itemAdapter = new ArrayAdapter<Item>(this, R.layout.shopping_list_item,
+		itemAdapter = new ItemListAdapter(this, R.layout.shopping_list_item,
 				itemsList);
 		ListView listView = (ListView) findViewById(R.id.ItemView);
 		listView.setAdapter(itemAdapter);
@@ -122,13 +154,13 @@ public class ViewListActivity extends BaseActivity {
 
 	private ListView updateItemBoughtAdapter() {
 		ListView listViewBought = (ListView) findViewById(R.id.ItemBoughtView);
-		itemBoughtAdapter = new ArrayAdapter<Item>(viewListActivity,
+		itemBoughtAdapter = new ItemListAdapter(viewListActivity,
 				R.layout.shopping_list_item, itemsBoughtList);
 		listViewBought.setAdapter(itemBoughtAdapter);
 		return listViewBought;
 	}
 
-	//TODO: rewrite this method-code, its not that beautiful...
+	// TODO: rewrite this method-code, its not that beautiful...
 	private void addListeners(ListView listView, ListView listViewBought) {
 		// Add long click Listener
 		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
@@ -156,31 +188,31 @@ public class ViewListActivity extends BaseActivity {
 				Item item = itemAdapter.getItem(position);
 				item.setBought(true);
 				manager.addItemToList(item, list);
+
 				itemAdapter.remove(item);
-				
 				itemBoughtAdapter.add(item);
-				// TODO: add striketrough to bought items
-				// TODO: set scrollbar on whole activity, not on
-
+				toggleShoppingCart();
 			}
 		});
-		
+
 		// Add long click Listener to bought items
-		listViewBought.setOnItemLongClickListener(new OnItemLongClickListener() {
+		listViewBought
+				.setOnItemLongClickListener(new OnItemLongClickListener() {
 
-			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				Item selectedItem = itemAdapter.getItem(position);
-				ViewListActivity.this
-						.startActionMode(new ShoppingListActionMode(
-								ViewListActivity.this.manager, selectedItem,
-								list, ViewListActivity.this.itemAdapter,
-								ViewListActivity.this));
-				return true;
-			}
-		});
-		
+					@Override
+					public boolean onItemLongClick(AdapterView<?> parent,
+							View view, int position, long id) {
+						Item selectedItem = itemBoughtAdapter.getItem(position);
+						ViewListActivity.this
+								.startActionMode(new ShoppingListActionMode(
+										ViewListActivity.this.manager,
+										selectedItem, list,
+										ViewListActivity.this.itemAdapter,
+										ViewListActivity.this));
+						return true;
+					}
+				});
+
 		// Add click Listener to bought items
 		listViewBought.setOnItemClickListener(new OnItemClickListener() {
 
@@ -192,8 +224,8 @@ public class ViewListActivity extends BaseActivity {
 				item.setBought(false);
 				manager.addItemToList(item, list);
 				itemBoughtAdapter.remove(item);
-				
 				itemAdapter.add(item);
+				toggleShoppingCart();
 			}
 		});
 	}
@@ -213,6 +245,10 @@ public class ViewListActivity extends BaseActivity {
 		intent.putExtra(EXTRAS_ITEM_NAME, name);
 		intent.putExtra(EXTRAS_LIST_ID, list.getId());
 		this.startActivityForResult(intent, 1);
+
+		// remove text from field
+		textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
+		textName.setText("");
 	}
 
 	/** Called when the user touches the ok button */
@@ -220,27 +256,29 @@ public class ViewListActivity extends BaseActivity {
 		EditText textName = (EditText) findViewById(R.id.editTextName);
 		String name = textName.getText().toString();
 		if (name.trim().length() == 0) {
-			Toast.makeText(this, this.getString(R.string.error_name), Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, this.getString(R.string.error_name),
+					Toast.LENGTH_SHORT).show();
 			return;
-		} else if(name.charAt(0) == '/') {
-			ArrayList<Recipe> recipeList = (ArrayList<Recipe>) manager.getRecipes();
+		} else if (name.charAt(0) == '/') {
+			List<Recipe> recipeList = manager.getRecipes();
 			String recipeName = name.substring(1);
-			
-			for(Recipe recipe : recipeList) {
-				if(recipe.getName().equals(recipeName)) {
-					for(Item item: recipe.getItemList()) {
+
+			for (Recipe recipe : recipeList) {
+				if (recipe.getName().equals(recipeName)) {
+					for (Item item : recipe.getItemList()) {
 						manager.addItemToList(item, list);
 						itemAdapter.add(item);
 					}
 				}
 			}
-					
+
 		} else {
 			Item item = new Item(name);
-			manager.addItemToList(item, list);
+			boolean added = manager.addItemToList(item, list);
 
-			// refresh view
-			itemAdapter.add(item);
+			if (added)
+				// refresh view
+				itemAdapter.add(item);
 		}
 
 		// remove text from field
@@ -251,14 +289,14 @@ public class ViewListActivity extends BaseActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.view_list, menu);	
+		getMenuInflater().inflate(R.menu.view_list, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-    	long listIndex = list.getId();
-    	
+		long listIndex = list.getId();
+
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			// This ID represents the Home or Up button. In the case of this
@@ -270,26 +308,24 @@ public class ViewListActivity extends BaseActivity {
 			//
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
-			
-		// Handle presses on the action bar items
+
+			// Handle presses on the action bar items
 		case R.id.action_share:
 			Intent intentShare = new Intent(this, ShareListActivity.class);
-        	intentShare.putExtra(EXTRAS_LIST_ID, listIndex);
-            this.startActivity(intentShare);
+			intentShare.putExtra(EXTRAS_LIST_ID, listIndex);
+			this.startActivity(intentShare);
 			return true;
-		
-		// Handle presses on overflow menu items
+
+			// Handle presses on overflow menu items
 		case R.id.action_edit_list:
-        	Intent intentEdit = new Intent(this, CreateListActivity.class);
-        	intentEdit.putExtra(EXTRAS_LIST_ID, listIndex);
-            this.startActivity(intentEdit);
+			Intent intentEdit = new Intent(this, CreateListActivity.class);
+			intentEdit.putExtra(EXTRAS_LIST_ID, listIndex);
+			this.startActivity(intentEdit);
 			return true;
 		case R.id.action_archive:
 			// toggle archive state
-			if (list.isArchived())
-				list.setArchived(false);
-			else
-				list.setArchived(true);
+			list.setArchived(!list.isArchived());
+			manager.saveShoppingList(list);
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
 		case R.id.action_delete:
@@ -297,28 +333,35 @@ public class ViewListActivity extends BaseActivity {
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
 		case R.id.action_refresh:
-			syncmanager.synchronise();
-			return true;
-		case R.id.action_settings:
-			Intent optionsIntent = new Intent(this, OptionsActivity.class);
-			this.startActivity(optionsIntent);
+			syncmanager.synchronise(this);
 			return true;
 		}
-		
-		
+
 		return super.onOptionsItemSelected(item);
 	}
-	
-	
+
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == 1 && resultCode == RESULT_OK) 
-				updateAdapters();
+		if (requestCode == 1 && resultCode == RESULT_OK)
+			updateAdapters();
 	}
-	
+
 	@Override
 	protected void onPause() {
 		super.onPause();
-    	drawMenu.closeDrawers();
+		drawMenu.closeDrawers();
+	}
+
+	private void toggleShoppingCart() {
+		// hide shopping cart image if no items bought
+		ImageView imageView = (ImageView) findViewById(R.id.imageItemsBought);
+		TextView textView = (TextView) findViewById(R.id.textItemsBought);
+		if (!itemBoughtAdapter.isEmpty()) {
+			imageView.setVisibility(View.VISIBLE);
+			textView.setVisibility(View.VISIBLE);
+		} else {
+			imageView.setVisibility(View.INVISIBLE);
+			textView.setVisibility(View.INVISIBLE);
+		}
 	}
 
 }

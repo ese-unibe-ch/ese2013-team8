@@ -24,9 +24,14 @@ import ch.unibe.ese.shopnote.core.FriendsManager;
 import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.ShoppingList;
+import ch.unibe.ese.shopnote.drawer.NavigationDrawer;
 import ch.unibe.ese.shopnote.share.SyncManager;
 import ch.unibe.ese.shopnote.share.requests.ShareListRequest;
+<<<<<<< HEAD
 import ch.unibe.ese.shopnote.sidelist.NavigationDrawer;
+=======
+import ch.unibe.ese.shopnote.R;
+>>>>>>> ac53ce6da7deeeeb966df258623debddd86b0b21
 
 @SuppressLint("NewApi")
 public class ShareListActivity extends BaseActivity {
@@ -231,4 +236,56 @@ public class ShareListActivity extends BaseActivity {
 			createAutocomplete();
 		}
 	}
+<<<<<<< HEAD
+=======
+
+	/**
+	 * Updates the listView, which shows all friends
+	 */
+	public void updateFriendsList() {
+		ListView listView = (ListView) findViewById(R.id.FriendView);
+		listView.setAdapter(friendsAdapter);
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		drawMenu.closeDrawers();
+		// Save friends here
+		if (friendsAdapter.getCount() > 0) {
+			for (int i = 0; i < friendsAdapter.getCount(); i++) {
+				ShareListRequest slrequest = new ShareListRequest(getMyPhoneNumber(),
+						"" + friendsAdapter.getItem(i).getPhoneNr(),
+						list.getId(), list.getName());
+				this.syncManager.addRequest(slrequest);
+			}
+			this.syncManager.synchronise(this);
+		}
+	}
+
+	private void setShareIntent(Intent shareIntent) {
+		if (mShareActionProvider != null) {
+			mShareActionProvider.setShareIntent(shareIntent);
+		}
+	}
+
+	private Intent createShareIntent() {
+		Intent shareIntent = new Intent(Intent.ACTION_SEND);
+		shareIntent.setType("text/plain");
+		shareIntent.putExtra(Intent.EXTRA_TEXT, listToString());
+		return shareIntent;
+
+	}
+
+	private String listToString() {
+		List<Item> items = manager.getItemsFor(list);
+		StringBuilder sb = new StringBuilder();
+		sb.append(list).append("\n");
+		for (Item item : items) {
+			sb.append(item).append("\n");
+		}
+
+		return sb.toString();
+	}
+>>>>>>> ac53ce6da7deeeeb966df258623debddd86b0b21
 }

@@ -1,34 +1,64 @@
 package ch.unibe.ese.shopnote.share;
 
+import android.content.Context;
+import ch.unibe.ese.shopnote.core.ShoppingList;
+import ch.unibe.ese.shopnote.core.BaseActivity;
+import ch.unibe.ese.shopnote.core.FriendsManager;
+import ch.unibe.ese.shopnote.core.ListManager;
+import ch.unibe.ese.shopnote.share.requests.CreateSharedListRequest;
+import ch.unibe.ese.shopnote.share.requests.FriendRequest;
 import ch.unibe.ese.shopnote.share.requests.Request;
 
 /**
- * Handles Request-answers from the server (failure, processing, etc.)
+ * Gets passed in a RequestSender to listen to its result
+ * Updates all neccessary information in the core and the UI
  *
  */
+
 public class AnswerHandler {
+
+	private BaseActivity context;
+	private FriendsManager friendsManager;
+	private SyncManager syncManager;
+	private ListManager listManager;
 	
-	private SyncManager syncmanager;
-	private Request[] answers;
-	private RequestListener listener;
-	
-	public AnswerHandler(RequestListener listener) {
-		this.syncmanager = SyncManager.getInstance();
-		this.listener = listener;
+	public AnswerHandler(Context context) {
+		this.context = (BaseActivity) context;
+		friendsManager = this.context.getFriendsManager();
+		syncManager = this.context.getSyncManager();
+		listManager = this.context.getListManager();
 	}
 	
-	public void handle(Request... answers) {
-		this.answers = answers;
-		for(int c = 0; c<answers.length; c++) {
-			if(answers[c].isHandled()) {
-				listener.setHandled(c);
+	public void setRequests(Request... requests) {
+		for (Request r: requests) {
+			if(r.wasSuccessful()) {
+				setConsequences(r);
 			} else {
-				syncmanager.addRequest(answers[c]);
-			}
-			if(answers[c].wasSuccessful()) {
-				listener.setSuccessful(c);
+				syncManager.addRequest(r);
 			}
 		}
 	}
 	
+	private void setConsequences(Request request) {
+		switch (request.getType()) {
+		case Request.FRIEND_REQUEST:
+			long friendId = ((FriendRequest)request).getFriendId();
+			friendsManager.setFriendHasApp(friendId);
+			return;
+		case Request.SHARELIST_REQUEST:
+			//TODO
+		case Request.CREATE_SHARED_LIST_REQUEST:
+			String listName = ((CreateSharedListRequest)request).getListName();
+			listManager.saveShoppingList(new ShoppingList(listName));
+			ShoppingList list = listManager.getShoppingLists().get(listManager.getShoppingLists().size()-1);
+			long id = list.getId();
+			((CreateSharedListRequest)request).setLocalListId(id);
+			syncManager.addRequest(request);
+			return;
+		}
+	}
+	
+	public void updateUI() {
+		context.refresh();
+	}
 }

@@ -20,7 +20,7 @@ public class FriendsManagerTest extends AndroidTestCase {
 	
 	public void testAddFriend() {
 		assertTrue(manager.getFriendsList().isEmpty());
-		Friend friend1 = new Friend(12345678, "friend1");
+		Friend friend1 = new Friend("12345678", "friend1");
 		manager.addFriend(friend1);
 		assertEquals(1, manager.getFriendsList().size());
 		assertEquals(friend1, manager.getFriendsList().get(0));
@@ -28,7 +28,7 @@ public class FriendsManagerTest extends AndroidTestCase {
 	
 	public void testRemoveFriend() {
 		assertTrue(manager.getFriendsList().isEmpty());
-		Friend friend1 = new Friend(12345678, "friend1");
+		Friend friend1 = new Friend("12345678", "friend1");
 		manager.addFriend(friend1);
 		assertEquals(1, manager.getFriendsList().size());
 		
@@ -38,7 +38,7 @@ public class FriendsManagerTest extends AndroidTestCase {
 	
 	public void testUpdateFriend() {
 		assertTrue(manager.getFriendsList().isEmpty());
-		Friend friend1 = new Friend(12345678, "friend1");
+		Friend friend1 = new Friend("12345678", "friend1");
 		manager.addFriend(friend1);
 		assertEquals(1, manager.getFriendsList().size());
 		assertEquals("friend1", manager.getFriendsList().get(0).getName());
@@ -51,7 +51,7 @@ public class FriendsManagerTest extends AndroidTestCase {
 	
 	public void testGetFriendFromNr() {
 		assertTrue(manager.getFriendsList().isEmpty());
-		Friend friend1 = new Friend(12345678, "friend1");
+		Friend friend1 = new Friend("12345678", "friend1");
 		manager.addFriend(friend1);
 		
 		assertEquals(friend1, manager.getFriend(friend1.getId()));

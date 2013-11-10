@@ -2,7 +2,14 @@ package ch.unibe.ese.shopnote.core;
 
 import ch.unibe.ese.shopnote.core.sqlite.SQLitePersistenceManager;
 import ch.unibe.ese.shopnote.share.SyncManager;
+import ch.unibe.ese.shopnote.share.requests.RegisterRequest;
 import android.app.Activity;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.telephony.TelephonyManager;
+import android.net.NetworkInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -86,5 +93,54 @@ public class BaseActivity extends Activity {
 	public String getTextViewText(int id) {
 		TextView textView = (TextView) findViewById(id);
 		return textView.getText().toString();
+	}
+	
+	/**
+	 * Checks if the android device has a connection to the internet
+	 * 
+	 * @return true if it is online
+	 */
+	public boolean isOnline() {
+	    ConnectivityManager cm =
+	        (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+	    NetworkInfo netInfo = cm.getActiveNetworkInfo();
+	    if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+	        return true;
+	    }
+	    return false;
+	}
+	
+	public String getMyPhoneNumber() {
+		TelephonyManager tMgr =(TelephonyManager)this.getSystemService(Context.TELEPHONY_SERVICE);
+		String number = tMgr.getLine1Number();
+		return number;
+	}
+	
+	/**
+	 * Needs to be implemented by every activity
+	 * Refreshes all the content it has
+	 */
+	public void refresh() {};
+	    
+	 /**
+	 * Force opens the soft keyboard
+	 */
+	public void openKeyboard() {
+		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+	}
+	
+	/**
+	 * Force closes the soft keyboard
+	 */
+	public void closeKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+	}
+	
+	@Override
+	public void finish() {
+		closeKeyboard();
+		super.finish();
 	}
 }

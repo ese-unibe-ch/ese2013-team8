@@ -5,11 +5,14 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.telephony.TelephonyManager;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,11 +21,14 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 import ch.unibe.ese.shopnote.core.BaseActivity;
+import ch.unibe.ese.shopnote.core.FriendsManager;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.ShoppingList;
+import ch.unibe.ese.shopnote.drawer.NavigationDrawer;
 import ch.unibe.ese.shopnote.share.SyncManager;
-import ch.unibe.ese.shopnote.sidelist.NavigationDrawer;
+import ch.unibe.ese.shopnote.share.requests.RegisterRequest;
 import ch.unibe.ese.shopnote.R;
 
 public class HomeActivity extends BaseActivity {
@@ -51,8 +57,9 @@ public class HomeActivity extends BaseActivity {
 
         //create Managers for local lists and synch lists
 		listmanager = getListManager();
-		syncmanager = getSyncManager();
-
+		syncmanager = getSyncManager();	
+		getFriendsManager();
+		
 		updateAdapter();
 
 	}
@@ -168,7 +175,13 @@ public class HomeActivity extends BaseActivity {
 		switch (item.getItemId()) {
 
 			case R.id.action_refresh:
-				syncmanager.synchronise();
+				if(isOnline()) {
+					syncmanager.addRequest(new RegisterRequest(getMyPhoneNumber()));
+					syncmanager.synchronise(this);
+				} else {
+					Toast.makeText(this, this.getString(R.string.no_connection),
+							Toast.LENGTH_SHORT).show();
+				}
 				return true;
 			case R.id.action_new:
 				Intent intent = new Intent(this, CreateListActivity.class);
@@ -190,4 +203,20 @@ public class HomeActivity extends BaseActivity {
     	updateAdapter();
     }
 
+	@Override
+	public void refresh() {
+		updateAdapter();
+	}
+	
+	@Override
+	public boolean onKeyDown(int keycode, KeyEvent e) {
+	    switch(keycode) {
+	        case KeyEvent.KEYCODE_MENU:
+	        	// TODO: open drawer
+	            //drawMenu.openDrawer(drawMenu);
+	            return true;
+	    }
+
+	    return super.onKeyDown(keycode, e);
+	}
 }

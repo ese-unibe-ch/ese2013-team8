@@ -4,9 +4,13 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketAddress;
 import java.net.UnknownHostException;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import ch.unibe.ese.shopnote.share.requests.Request;
 
@@ -16,27 +20,40 @@ import ch.unibe.ese.shopnote.share.requests.Request;
  * The server passes the same object back with flags 'isHandled' and 'wasSuccessful' set
  *
  */
-public class RequestSender extends AsyncTask<Request, Object, Boolean>{
+public class RequestSender extends AsyncTask<Request, Void, Boolean>{
+	
+	// Server data
+	private String host = "10.0.0.2";
+	private int port = 1337;
 	
 	private Socket socket;
 	private ObjectOutputStream out;
 	private ObjectInputStream in;
-	private RequestListener listener;
+	private AnswerHandler handler;
+	private Request[] answers;
 	
-	public RequestSender(RequestListener listener) {
-		this.listener = listener;
+	public RequestSender(AnswerHandler handler) {
+		this.handler = handler;
 	}
 	
 	/**
 	 * This method gets started as asynchronous task when you call .run()
+	 * @return 
 	 */
 	@Override
 	protected Boolean doInBackground(Request... requests) {
-		this.initSocket();
-		this.send(requests);
-		this.waitForAnswer();
+		boolean isConnected = this.initSocket();
+		if(isConnected) {
+			this.send(requests);
+			this.waitForAnswer();
+		}
 		return true;
 	}
+	
+	@Override
+	protected void onPostExecute(Boolean a) {
+		handler.updateUI();
+    }
 	
 	/**
 	 * Waits for the answer from the server and reports the result in the listener
@@ -44,10 +61,9 @@ public class RequestSender extends AsyncTask<Request, Object, Boolean>{
 	private void waitForAnswer() {
 		try {
 			this.in = new ObjectInputStream(socket.getInputStream());
-			Request[] answers = (Request[]) in.readObject();
-			AnswerHandler aHandler = new AnswerHandler(listener);
-			aHandler.handle(answers);
+			answers = (Request[]) in.readObject();
 			socket.close();
+			handler.setRequests(answers);
 		} catch (StreamCorruptedException e) {
 			System.err.println("Failed to open stream from server");
 		} catch (IOException e) {
@@ -60,15 +76,18 @@ public class RequestSender extends AsyncTask<Request, Object, Boolean>{
 	/**
 	 * Tries to open a socket on the android device to a specified Host
 	 */
-	private void initSocket() {
+	private boolean initSocket() {
 		try {
-//			this.socket = new Socket("matter2.nine.ch", 1337);
-			this.socket = new Socket("10.0.0.2", 1337); // Enter your local ip here
+			SocketAddress sockaddr = new InetSocketAddress(host, port);
+			socket = new Socket();
+			socket.connect(sockaddr, 5000);
+			return true;
 		} catch (UnknownHostException e) {
 			System.err.println("Unknown Host in initSocket()");
 		} catch (IOException e) {
-			System.err.println("ERROR in initSocket");
+			System.err.println("Connection timed out");
 		}
+		return false;
 	}
 	
 	/**

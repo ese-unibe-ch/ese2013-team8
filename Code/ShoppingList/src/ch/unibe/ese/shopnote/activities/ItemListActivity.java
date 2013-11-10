@@ -13,10 +13,11 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import ch.unibe.ese.shopnote.adapters.ItemListAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ListManager;
-import ch.unibe.ese.shopnote.sidelist.NavigationDrawer;
+import ch.unibe.ese.shopnote.drawer.NavigationDrawer;
 import ch.unibe.ese.shopnote.R;
 
 public class ItemListActivity extends BaseActivity {
@@ -52,7 +53,7 @@ public class ItemListActivity extends BaseActivity {
 	public void updateAdapter() {
 		// display items
 		itemList = manager.getAllItems();
-		itemAdapter = new ArrayAdapter<Item>(this, R.layout.shopping_list_item, itemList);
+		itemAdapter = new ItemListAdapter(this, R.layout.shopping_list_item, itemList);
 		ListView listView = (ListView) findViewById(R.id.ItemView);
 		listView.setAdapter(itemAdapter);
 		
