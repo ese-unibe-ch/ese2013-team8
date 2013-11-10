@@ -59,7 +59,17 @@ public class ListManager {
 		persistenceManager.remove(list);
 	}
 
-	public void addItemToList(Item item, ShoppingList list) {
+	/**
+	 * Fügt das Item der Shoppinglist hinzu.
+	 * 
+	 * @param item
+	 *            nicht null
+	 * @param list
+	 *            nicht null
+	 * @return true falls das Item hinzugefügt wurde, false sonst (wenn das Item
+	 *         bereits in der Liste ist).
+	 */
+	public boolean addItemToList(Item item, ShoppingList list) {
 		if (item == null || list == null)
 			throw new IllegalArgumentException("null is not allowed");
 		List<Item> items = listToItems.get(list);
@@ -69,7 +79,8 @@ public class ListManager {
 		}
 		persistenceManager.save(item, list);
 		if (!items.contains(item))
-			items.add(item);
+			return items.add(item);
+		return false;
 	}
 
 	public void removeItemFromList(Item item, ShoppingList list) {
@@ -128,23 +139,26 @@ public class ListManager {
 
 	/**
 	 * Returns a list of all recipes which are saved in the database
+	 * 
 	 * @return list of recipes
 	 */
 	public List<Recipe> getRecipes() {
 		return recipes;
 	}
-	
+
 	/**
-	 * Saves all Recipes to the database 
+	 * Saves all Recipes to the database
+	 * 
 	 * @param recipe
 	 */
 	public void saveRecipe(Recipe recipe) {
 		persistenceManager.save(recipe);
 		recipes = persistenceManager.readRecipes();
 	}
-	
+
 	/**
 	 * Removes a Recipe from the database
+	 * 
 	 * @param recipe
 	 */
 	public void removeRecipe(Recipe recipe) {
@@ -154,13 +168,14 @@ public class ListManager {
 
 	/**
 	 * Gets the Recipe at the correct position
+	 * 
 	 * @param position
 	 * @return recipe at position x
 	 */
 	public Recipe getRecipeAt(int position) {
 		return recipes.get(position);
 	}
-	
+
 	public Recipe getRecipe(long id) {
 		for (Recipe recipe : recipes) {
 			if (recipe.getId() == id)
