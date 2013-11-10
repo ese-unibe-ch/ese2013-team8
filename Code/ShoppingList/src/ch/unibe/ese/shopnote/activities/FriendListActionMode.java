@@ -8,10 +8,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Friend;
 import ch.unibe.ese.shopnote.core.FriendsManager;
-import ch.unibe.ese.shopnote.R;
+import ch.unibe.ese.shopnote.core.ShoppingList;
 
 /**
  * Creates the Action Bar for Friends to edit or remove them
@@ -21,16 +22,26 @@ import ch.unibe.ese.shopnote.R;
 
 public class FriendListActionMode implements Callback {
 
-	private FriendsManager manager;
+	private FriendsManager friendsManager;
 	private Friend selectedFriend;
 	private ArrayAdapter<Friend> friendsAdapter;
 	private Activity activity;
+	private ShoppingList list;
 	
 	public FriendListActionMode(FriendsManager manager, ArrayAdapter<Friend> friendsAdapter, Friend selectedFriend, Activity homeActivity) {
-		this.manager = manager;
+		this.friendsManager = manager;
 		this.friendsAdapter = friendsAdapter;
 		this.selectedFriend = selectedFriend;
 		this.activity = homeActivity;
+		this.list = null;
+	}
+	
+	public FriendListActionMode(FriendsManager manager, ShoppingList list, Friend selectedFriend, Activity homeActivity) {
+		this.friendsManager = manager;
+		this.friendsAdapter = null;
+		this.selectedFriend = selectedFriend;
+		this.activity = homeActivity;
+		this.list = list;
 	}
 	
 	
@@ -55,18 +66,21 @@ public class FriendListActionMode implements Callback {
     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_edit:
-	                friendsAdapter.notifyDataSetChanged();
 	                mode.finish(); 
 	                // open list edit screen
 		        	Intent intent = new Intent(activity, CreateFriendActivity.class);
 		        	intent.putExtra(BaseActivity.EXTRAS_FRIEND_ID, selectedFriend.getId());
-		            activity.startActivity(intent);
+		            activity.startActivityForResult(intent, 1);
 
                 return true;
             case R.id.action_remove:
-	            	manager.removeFriend(selectedFriend);
+            	if(list == null) {
+	            	friendsManager.removeFriend(selectedFriend);
 	            	friendsAdapter.remove(selectedFriend);
 	            	friendsAdapter.notifyDataSetChanged();
+            	} else {
+            		friendsManager.removeFriendOfList(list, selectedFriend);
+            	}
 	            	mode.finish(); // Action picked, so close the CAB
 
             	return true;

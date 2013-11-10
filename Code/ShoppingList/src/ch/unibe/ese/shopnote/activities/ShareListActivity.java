@@ -12,10 +12,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 import android.widget.ShareActionProvider;
+import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Friend;
 import ch.unibe.ese.shopnote.core.FriendsManager;
@@ -25,7 +27,6 @@ import ch.unibe.ese.shopnote.core.ShoppingList;
 import ch.unibe.ese.shopnote.share.SyncManager;
 import ch.unibe.ese.shopnote.share.requests.ShareListRequest;
 import ch.unibe.ese.shopnote.sidelist.NavigationDrawer;
-import ch.unibe.ese.shopnote.R;
 
 @SuppressLint("NewApi")
 public class ShareListActivity extends BaseActivity {
@@ -33,7 +34,7 @@ public class ShareListActivity extends BaseActivity {
 	private ListManager manager;
 	private FriendsManager friendsManager;
 	private SyncManager syncManager;
-	private ArrayAdapter<Friend> friendsAdapter;
+	private ArrayList<Friend> sharedFriends;
 	private ArrayAdapter<Friend> autocompleteAdapter;
 	private ShoppingList list;
 	private DrawerLayout drawMenu;
@@ -48,8 +49,6 @@ public class ShareListActivity extends BaseActivity {
 
 		manager = getListManager();
 		friendsManager = getFriendsManager();
-		friendsAdapter = new ArrayAdapter<Friend>(this,
-				R.layout.shopping_list_item, new ArrayList<Friend>());
 
 		syncManager = getSyncManager();
 
@@ -75,11 +74,9 @@ public class ShareListActivity extends BaseActivity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View arg1,
 					int position, long id) {
-				Friend friend = (Friend) autocompleteAdapter.getItem(position);
-				friendsAdapter.add(friend);
-				updateFriendsList();
-				
+				Friend friend = (Friend) autocompleteAdapter.getItem(position);				
 				friendsManager.addFriendToList(list, friend);
+				updateFriendsList();
 
 				setTextViewText(R.id.editTextName, "");
 			}
@@ -112,6 +109,73 @@ public class ShareListActivity extends BaseActivity {
 
 		setTextViewText(R.id.editTextName, "");
 	}
+
+
+	/**
+	 * Updates the listView, which shows all friends
+	 */
+	public void updateFriendsList() {
+		sharedFriends = friendsManager.getSharedFriends(list);
+		ArrayAdapter<Friend> friendsAdapter = new ArrayAdapter<Friend>(this,
+				R.layout.shopping_list_item, sharedFriends);
+		ListView listView = (ListView) findViewById(R.id.FriendView);
+		listView.setAdapter(friendsAdapter);
+		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+					int position, long arg3) {
+				Friend selectedFriend = sharedFriends.get(position);
+				ShareListActivity.this.startActionMode(new FriendListActionMode(
+						friendsManager, list, selectedFriend, ShareListActivity.this));
+				return true;
+			}
+		});
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		drawMenu.closeDrawers();
+		// Save friends here
+		sharedFriends = friendsManager.getSharedFriends(list);
+		if (sharedFriends.size() > 0) {
+			for (int i = 0; i < sharedFriends.size(); i++) {
+				// TODO paste your real number here (instead of 1234)
+				ShareListRequest slrequest = new ShareListRequest("" + 796897,
+						"" + sharedFriends.get(i).getPhoneNr(),
+						list.getId());
+				this.syncManager.addRequest(slrequest);
+			}
+			this.syncManager.synchronise();
+		}
+	}
+
+	private void setShareIntent(Intent shareIntent) {
+		if (mShareActionProvider != null) {
+			mShareActionProvider.setShareIntent(shareIntent);
+		}
+	}
+
+	private Intent createShareIntent() {
+		Intent shareIntent = new Intent(Intent.ACTION_SEND);
+		shareIntent.setType("text/plain");
+		shareIntent.putExtra(Intent.EXTRA_TEXT, listToString());
+		return shareIntent;
+
+	}
+
+	private String listToString() {
+		List<Item> items = manager.getItemsFor(list);
+		StringBuilder sb = new StringBuilder();
+		sb.append(list).append("\n");
+		for (Item item : items) {
+			sb.append(item).append("\n");
+		}
+
+		return sb.toString();
+	}
+	
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -161,60 +225,10 @@ public class ShareListActivity extends BaseActivity {
 
 		if (friendId != -1) {
 			Friend friend = friendsManager.getFriend(friendId);
-			friendsAdapter.add(friend);
+			friendsManager.addFriendToList(list, friend);
 			// update lists
 			updateFriendsList();
 			createAutocomplete();
 		}
-	}
-
-	/**
-	 * Updates the listView, which shows all friends
-	 */
-	public void updateFriendsList() {
-		ListView listView = (ListView) findViewById(R.id.FriendView);
-		listView.setAdapter(friendsAdapter);
-	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-		drawMenu.closeDrawers();
-		// Save friends here
-		if (friendsAdapter.getCount() > 0) {
-			for (int i = 0; i < friendsAdapter.getCount(); i++) {
-				// TODO paste your real number here (instead of 1234)
-				ShareListRequest slrequest = new ShareListRequest("" + 796897,
-						"" + friendsAdapter.getItem(i).getPhoneNr(),
-						list.getId());
-				this.syncManager.addRequest(slrequest);
-			}
-			this.syncManager.synchronise();
-		}
-	}
-
-	private void setShareIntent(Intent shareIntent) {
-		if (mShareActionProvider != null) {
-			mShareActionProvider.setShareIntent(shareIntent);
-		}
-	}
-
-	private Intent createShareIntent() {
-		Intent shareIntent = new Intent(Intent.ACTION_SEND);
-		shareIntent.setType("text/plain");
-		shareIntent.putExtra(Intent.EXTRA_TEXT, listToString());
-		return shareIntent;
-
-	}
-
-	private String listToString() {
-		List<Item> items = manager.getItemsFor(list);
-		StringBuilder sb = new StringBuilder();
-		sb.append(list).append("\n");
-		for (Item item : items) {
-			sb.append(item).append("\n");
-		}
-
-		return sb.toString();
 	}
 }

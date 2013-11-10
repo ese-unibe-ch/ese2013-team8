@@ -1,29 +1,38 @@
 package ch.unibe.ese.shopnote.core.sqlite;
 
+import java.util.ArrayList;
+
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.widget.ArrayAdapter;
+import ch.unibe.ese.shopnote.core.Item;
+import ch.unibe.ese.shopnote.core.ListManager;
 
 
-public class SQLiteItemAdapter extends ArrayAdapter<String> {
+public class SQLiteItemAdapter extends ArrayAdapter<Item> {
 
 	private Context context;
+	private ListManager manager;
 	
-	public SQLiteItemAdapter(Context context, int layout) {
+	public SQLiteItemAdapter(Context context, int layout, ListManager manager) {
 		super(context, layout);
+		this.manager = manager;
 		initializeArray();
 	}
 	
+	public SQLiteItemAdapter(Context context, int layout, ArrayList<Item> itemList) {
+		super(context, layout);
+		this.manager = null;
+		this.addAll(itemList);
+	}
+	
 	private void initializeArray() {
-		SQLiteDatabase database = SQLiteHelper.instance.getReadableDatabase();
-		Cursor cursor = database.query(SQLiteHelper.TABLE_ITEMS, new String[]{SQLiteHelper.COLUMN_ITEM_NAME}, null, null, null, null, null);
-		cursor.moveToFirst();
+		ArrayList<Item> itemList = manager.getAllItems();
 		
-		while(!cursor.isAfterLast()) {
-			this.add(cursor.getString(0));
-			cursor.moveToNext();
-		}
+		for(Item item: itemList)
+			this.add(item);
 	}
 
+	public boolean contains(Item item) {
+		return this.getPosition(item) > 0;
+	}
 }

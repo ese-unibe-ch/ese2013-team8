@@ -67,7 +67,7 @@ public class CreateItemActivity extends BaseActivity {
 		// create autocomplete adapter for name
 		AutoCompleteTextView textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
 		SQLiteItemAdapter sqliteItemAdapter = new SQLiteItemAdapter(this,
-				android.R.layout.simple_list_item_1);
+				android.R.layout.simple_list_item_1, manager);
 		textName.setAdapter(sqliteItemAdapter);
 		textName.setText(name);
 		

@@ -81,6 +81,10 @@ public class FriendsManager {
 		return null;
 	}
 	
+	public ArrayList<Friend> getSharedFriends(ShoppingList list) {
+		return persistenceManager.getSharedFriends(list);
+	}
+	
 	/**
 	 * Adds a friend to a synchronized shopping list
 	 * @param friend
@@ -91,7 +95,12 @@ public class FriendsManager {
 		persistenceManager.save(list, friend);
 	}
 	
-	public void deleteFriendToList(ShoppingList list, Friend friend) {
+	/**
+	 * Deletes a friend from a synchronized shopping list
+	 * @param list
+	 * @param friend
+	 */
+	public void removeFriendOfList(ShoppingList list, Friend friend) {
 		//TODO: send the information to the server and remove the friend on the server
 		//(just the entry of the shared Shoppinglist, not the friend as a onject of course^^)
 		persistenceManager.remove(list, friend);

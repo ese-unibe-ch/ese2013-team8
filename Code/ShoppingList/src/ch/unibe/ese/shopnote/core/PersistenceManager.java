@@ -131,4 +131,12 @@ public interface PersistenceManager {
 	 */
 	void remove(ShoppingList list, Friend friend);
 	
+	/**
+	 * Get all friends with which you shared a list
+	 * @param list
+	 * @return ArrayList of friends for a specific shared list
+	 */
+	ArrayList<Friend> getSharedFriends(ShoppingList list);
+
+	
 }

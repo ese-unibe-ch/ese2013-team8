@@ -5,6 +5,7 @@ import java.util.Date;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import ch.unibe.ese.shopnote.core.Friend;
 import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.Recipe;
@@ -94,7 +95,7 @@ public class SQLiteReadHelper {
 	
 	/**
 	 * Get a cursor on TABLE_ITEM for all items with just name ability 
-	 * @return
+	 * @return cursor on the first entry of item table
 	 */
 	public Cursor getItemTableCursor() {
 		Cursor cursor = getQueryCursor(SQLiteHelper.TABLE_ITEMS, SQLiteHelper.ITEMS_COLUMNS , null);
@@ -103,8 +104,8 @@ public class SQLiteReadHelper {
 	}
 
 	/**
-	 * Get a cursor on TABLE_FRIENDS
-	 * @return
+	 * Creates a cursor on the TABLE_FRIENDS
+	 * @return cursor on the first entry of friend table
 	 */
 	public Cursor getFriendCursor() {
 		Cursor cursor = getQueryCursor(SQLiteHelper.TABLE_FRIENDS,
@@ -114,8 +115,8 @@ public class SQLiteReadHelper {
 	}
 	
 	/**
-	 * Get the cursor to a complete recipe db
-	 * @return
+	 * Creates a cursor on the TABLE_RECIPE
+	 * @return cursor on the first entry of recipe table
 	 */
 	public Cursor getRecipeCursor() {
 		Cursor cursor = getQueryCursor(SQLiteHelper.TABLE_RECIPES,
@@ -124,6 +125,10 @@ public class SQLiteReadHelper {
 		return cursor;
 	}
 	
+	/**
+	 * Creates a cursor on the TABLE_ITEMTORECIPE
+	 * @return cursor on the first entry of itemToRecipe table
+	 */
 	public Cursor getItemToRecipeCursor() {
 		Cursor cursor = getQueryCursor(SQLiteHelper.TABLE_ITEMTORECIPE,
 				SQLiteHelper.ITEMTORECIPE_COLUMNS, null);
@@ -141,6 +146,17 @@ public class SQLiteReadHelper {
 	public Cursor getQueryCursor(String table, String[] columns, String where) {
 		Cursor cursor = database.query(table, columns, where, null, null, null,
 				null);
+		return cursor;
+	}
+	
+	/**
+	 * Creates a cursor on the TABLE_FRIENDSTOLIST
+	 * @return cursor on the first entry of friendsShared Table
+	 */
+	public Cursor getSharedFriendsCursor() {
+		Cursor cursor = getQueryCursor(SQLiteHelper.TABLE_FRIENDSTOLIST,
+				SQLiteHelper.FRIENDSTOLIST_COLUMNS, null);
+		cursor.moveToFirst();
 		return cursor;
 	}
 
@@ -161,6 +177,11 @@ public class SQLiteReadHelper {
 		return list;
 	}
 
+	/**
+	 * item of the index (of the cursor)
+	 * @param cursor
+	 * @return item of the index (of the cursor)
+	 */
 	public Item cursorToItem(Cursor cursor) {
 		Item item = new Item(cursor.getString(1));
 		item.setId(cursor.getInt(0));
@@ -172,23 +193,40 @@ public class SQLiteReadHelper {
 		return item;
 	}
 	
+	/**
+	 *  Creates a item with the cursor input (just name and id of item, no shop or date)
+	 * @param cursor
+	 * @return item of the index (of the cursor)
+	 */
 	public Item cursorToItemLite(Cursor cursor) {
 		Item item = new Item(cursor.getString(1));
 		item.setId(cursor.getInt(0));
 		return item;
 	}
 
+	/**
+	 * Creates a friend with the cursor input
+	 * @param cursor
+	 * @return friend of the index (of the cursor)
+	 */
 	public Friend cursorToFriend(Cursor cursor) {
 		Friend friend = new Friend(cursor.getString(1), cursor.getString(2));
 		friend.setId(cursor.getLong(0));
 		return friend;
 	}
 	
+	/**
+	 * Creates a recipe with the cursor input
+	 * @param cursor
+	 * @return recipe of the index (of the cursor)
+	 */
 	public Recipe cursorToRecipe(Cursor cursor) {
 		Recipe recipe = new Recipe(cursor.getString(1));
 		recipe.setId(cursor.getLong(0));
 		return recipe;
 	}
+	
+	
 
 	/**
 	 * Get Shop name with shop ID
@@ -270,7 +308,7 @@ public class SQLiteReadHelper {
 	 * Get friend name with item ID
 	 * 
 	 * @param itemId
-	 * @return
+	 * @return name of friend as a String 
 	 */
 	public String getFriendName(int friendNr) {
 		Cursor cursor = database.query(SQLiteHelper.TABLE_FRIENDS,
@@ -280,6 +318,26 @@ public class SQLiteReadHelper {
 		if (cursor.getCount() == 1) {
 			cursor.moveToFirst();
 			return cursor.getString(1);
+		} else {
+			return null;
+		}
+	}
+	
+	/**
+	 * Gets the Friend with the specific id
+	 * @param friendNr
+	 * @return Friend as a Object
+	 */
+	public Friend getFriend(long id) {
+		Cursor cursor = database.query(SQLiteHelper.TABLE_FRIENDS,
+				SQLiteHelper.FRIENDS_COLUMNS, SQLiteHelper.COLUMN_FRIEND_ID
+						+ "=?", new String[] { "" + id }, null, null,
+				null, null);
+		if (cursor.getCount() == 1) {
+			cursor.moveToFirst();
+			Friend friend = new Friend(cursor.getString(1), cursor.getString(2));
+			friend.setId(id);
+			return friend;
 		} else {
 			return null;
 		}

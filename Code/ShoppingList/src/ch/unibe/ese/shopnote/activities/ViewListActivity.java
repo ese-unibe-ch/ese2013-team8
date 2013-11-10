@@ -35,6 +35,7 @@ public class ViewListActivity extends BaseActivity {
 	private SyncManager syncmanager;
 	private ArrayAdapter<Item> itemAdapter;
 	private ArrayAdapter<Item> itemBoughtAdapter;
+	private SQLiteItemAdapter sqliteAdapter;
 	private ArrayList<Item>	itemsList;
 	private ArrayList<Item>	itemsBoughtList;
 	private Activity viewListActivity = this;
@@ -66,10 +67,24 @@ public class ViewListActivity extends BaseActivity {
 		updateAdapters();
 
 		// Autocompletion
-		AutoCompleteTextView textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
-		SQLiteItemAdapter sqliteAdapter = new SQLiteItemAdapter(this,
-				android.R.layout.simple_list_item_1);
-		textName.setAdapter(sqliteAdapter);
+		AutoCompleteTextView itemName = (AutoCompleteTextView) findViewById(R.id.editTextName);
+		sqliteAdapter = new SQLiteItemAdapter(this, android.R.layout.simple_list_item_1, manager);
+		itemName.setAdapter(sqliteAdapter);
+		
+		itemName.setOnItemClickListener(new OnItemClickListener() {
+
+	        @Override
+	        public void onItemClick(AdapterView<?> parent, View arg1, int position,
+	                long id) {
+	        	Item item = (Item) sqliteAdapter.getItem(position);
+	
+	        	manager.addItemToList(item, list);
+	        	updateAdapters();
+	        	
+	        	EditText addItem = (EditText) findViewById(R.id.editTextName);
+	        	addItem.setText("");
+	        }
+	    });
 	}
 	
 	/**

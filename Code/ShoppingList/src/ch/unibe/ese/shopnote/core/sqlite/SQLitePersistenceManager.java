@@ -243,6 +243,31 @@ public class SQLitePersistenceManager implements PersistenceManager {
 							+ friend.getId(), null);
 		}
 	}
+	
+	
+	@Override
+	public void removeFriend(Friend friend) {
+		database.delete(SQLiteHelper.TABLE_FRIENDS,
+				SQLiteHelper.COLUMN_FRIEND_ID + "=? ", new String[] { ""
+						+ friend.getId() });
+	}
+	
+	public ArrayList<Friend> getSharedFriends(ShoppingList list) {
+		ArrayList<Friend> sharedFriends = new ArrayList<Friend>();
+		
+		Cursor cursor = readHelper.getSharedFriendsCursor();
+		while (!cursor.isAfterLast()) {
+			if(cursor.getLong(0) == list.getId()) {
+				long friendId = cursor.getLong(1);
+				Friend friend = readHelper.getFriend(friendId);
+				sharedFriends.add(friend);
+			}	
+			cursor.moveToNext();
+		}
+		cursor.close();
+		return sharedFriends;
+		
+	}
 
 	@Override
 	public void save(ShoppingList list, Friend friend) {
@@ -251,14 +276,16 @@ public class SQLitePersistenceManager implements PersistenceManager {
 			database.insert(SQLiteHelper.TABLE_FRIENDSTOLIST, null, values);
 		}
 	}
-
 	
 	@Override
-	public void removeFriend(Friend friend) {
-		database.delete(SQLiteHelper.TABLE_FRIENDS,
-				SQLiteHelper.COLUMN_FRIEND_ID + "=? ", new String[] { ""
-						+ friend.getId() });
+	public void remove(ShoppingList list, Friend friend) {
+		database.delete(SQLiteHelper.TABLE_FRIENDSTOLIST, 
+				SQLiteHelper.COLUMN_LIST_ID + "=? AND " + 
+				SQLiteHelper.COLUMN_FRIEND_ID + "=?", 
+				new String[] { "" + list.getId(), "" + friend.getId() });
 	}
+
+
 
 	/**
 	 * Everything for recipes
@@ -333,12 +360,5 @@ public class SQLitePersistenceManager implements PersistenceManager {
 							+ recipeNr });
 		}
 
-	}
-
-	@Override
-	public void remove(ShoppingList list, Friend friend) {
-		database.delete(SQLiteHelper.TABLE_FRIENDSTOLIST, 
-				SQLiteHelper.COLUMN_LIST_ID + "=? AND " + SQLiteHelper.COLUMN_FRIEND_ID + "=?", 
-				new String[] { "" + list.getId(), "" + friend.getId() });
 	}
 }
