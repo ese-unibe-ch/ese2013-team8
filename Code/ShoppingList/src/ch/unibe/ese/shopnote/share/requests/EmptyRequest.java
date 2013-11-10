@@ -1,10 +1,9 @@
-package ch.unibe.ese.shopnote.server.core;
+package ch.unibe.ese.shopnote.share.requests;
 
-import ch.unibe.ese.shopnote.share.requests.Request;
 
-public class DummyRequest extends Request {
+public class EmptyRequest extends Request {
 
-	public DummyRequest(String phoneNumber) {
+	public EmptyRequest(String phoneNumber) {
 		super(phoneNumber);
 		this.setHandled();
 		this.setSuccessful();
