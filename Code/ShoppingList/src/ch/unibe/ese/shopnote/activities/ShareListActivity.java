@@ -1,6 +1,5 @@
 package ch.unibe.ese.shopnote.activities;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
@@ -36,7 +35,6 @@ public class ShareListActivity extends BaseActivity {
 	private ListManager manager;
 	private FriendsManager friendsManager;
 	private SyncManager syncManager;
-	private ArrayList<Friend> sharedFriends;
 	private ArrayAdapter<Friend> autocompleteAdapter;
 	private ShoppingList list;
 	private DrawerLayout drawMenu;
@@ -111,72 +109,6 @@ public class ShareListActivity extends BaseActivity {
 
 		setTextViewText(R.id.editTextName, "");
 	}
-
-
-//	/**
-//	 * Updates the listView, which shows all friends
-//	 */
-//	public void updateFriendsList() {
-//		sharedFriends = friendsManager.getSharedFriends(list);
-//		ArrayAdapter<Friend> friendsAdapter = new ArrayAdapter<Friend>(this,
-//				R.layout.shopping_list_item, sharedFriends);
-//		ListView listView = (ListView) findViewById(R.id.FriendView);
-//		listView.setAdapter(friendsAdapter);
-//		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
-//
-//			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-//					int position, long arg3) {
-//				Friend selectedFriend = sharedFriends.get(position);
-//				ShareListActivity.this.startActionMode(new FriendListActionMode(
-//						friendsManager, list, selectedFriend, ShareListActivity.this));
-//				return true;
-//			}
-//		});
-//	}
-//
-//	@Override
-//	protected void onPause() {
-//		super.onPause();
-//		drawMenu.closeDrawers();
-//		// Save friends here
-//		sharedFriends = friendsManager.getSharedFriends(list);
-//		if (sharedFriends.size() > 0) {
-//			for (int i = 0; i < sharedFriends.size(); i++) {
-//				// TODO paste your real number here (instead of 1234)
-//				ShareListRequest slrequest = new ShareListRequest("" + 796897,
-//						"" + sharedFriends.get(i).getPhoneNr(),
-//						list.getId(), list.getName());
-//				this.syncManager.addRequest(slrequest);
-//			}
-//			this.syncManager.synchronise(this);
-//		}
-//	}
-//
-//	private void setShareIntent(Intent shareIntent) {
-//		if (mShareActionProvider != null) {
-//			mShareActionProvider.setShareIntent(shareIntent);
-//		}
-//	}
-//
-//	private Intent createShareIntent() {
-//		Intent shareIntent = new Intent(Intent.ACTION_SEND);
-//		shareIntent.setType("text/plain");
-//		shareIntent.putExtra(Intent.EXTRA_TEXT, listToString());
-//		return shareIntent;
-//
-//	}
-//
-//	private String listToString() {
-//		List<Item> items = manager.getItemsFor(list);
-//		StringBuilder sb = new StringBuilder();
-//		sb.append(list).append("\n");
-//		for (Item item : items) {
-//			sb.append(item).append("\n");
-//		}
-//
-//		return sb.toString();
-//	}
-	
 	
 
 	@Override

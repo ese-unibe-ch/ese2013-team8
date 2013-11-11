@@ -17,13 +17,13 @@ public class ListManager {
 	private final List<ShoppingList> shoppingLists;
 	private final PersistenceManager persistenceManager;
 	private final Map<ShoppingList, List<Item>> listToItems;
-	private List<Recipe> recipes;
+	private List<Recipe> recipeList;
 
 	public ListManager(PersistenceManager persistenceManager) {
 		this.persistenceManager = persistenceManager;
 		this.listToItems = new HashMap<ShoppingList, List<Item>>();
 		this.shoppingLists = persistenceManager.getLists();
-		this.recipes = persistenceManager.readRecipes();
+		this.recipeList = persistenceManager.readRecipes();
 	}
 
 	/**
@@ -60,13 +60,13 @@ public class ListManager {
 	}
 
 	/**
-	 * Fügt das Item der Shoppinglist hinzu.
+	 * Fuegt das Item der Shoppinglist hinzu.
 	 * 
 	 * @param item
 	 *            nicht null
 	 * @param list
 	 *            nicht null
-	 * @return true falls das Item hinzugefügt wurde, false sonst (wenn das Item
+	 * @return true falls das Item hinzugefuegt wurde, false sonst (wenn das Item
 	 *         bereits in der Liste ist).
 	 */
 	public boolean addItemToList(Item item, ShoppingList list) {
@@ -129,7 +129,19 @@ public class ListManager {
 	public void save(Item item) {
 		persistenceManager.save(item);
 	}
+	
+	public Item getItem(Long id) {
+		ArrayList<Item> listOfItems = persistenceManager.getAllItems();
+		for(Item item: listOfItems) {
+			if(item.getId() == id) return item;
+		}
+		return null;
+	}
 
+	/**
+	 * Removes an specific item from the db
+	 * @param item
+	 */
 	public void remove(Item item) {
 		persistenceManager.remove(item);
 
@@ -143,7 +155,7 @@ public class ListManager {
 	 * @return list of recipes
 	 */
 	public List<Recipe> getRecipes() {
-		return recipes;
+		return recipeList;
 	}
 
 	/**
@@ -153,7 +165,7 @@ public class ListManager {
 	 */
 	public void saveRecipe(Recipe recipe) {
 		persistenceManager.save(recipe);
-		recipes = persistenceManager.readRecipes();
+		recipeList = persistenceManager.readRecipes();
 	}
 
 	/**
@@ -162,7 +174,7 @@ public class ListManager {
 	 * @param recipe
 	 */
 	public void removeRecipe(Recipe recipe) {
-		recipes.remove(recipe);
+		recipeList.remove(recipe);
 		persistenceManager.remove(recipe);
 	}
 
@@ -172,12 +184,18 @@ public class ListManager {
 	 * @param position
 	 * @return recipe at position x
 	 */
-	public Recipe getRecipeAt(int position) {
-		return recipes.get(position);
+	public Recipe getRecipeAt(Long id) {
+		for(Recipe recipe: recipeList)
+			if(recipe.getId() == id) return recipe;
+		return null;
 	}
 
+	public Recipe getRecipeAt(int position) {
+		return recipeList.get(position);
+	}
+	
 	public Recipe getRecipe(long id) {
-		for (Recipe recipe : recipes) {
+		for (Recipe recipe : recipeList) {
 			if (recipe.getId() == id)
 				return recipe;
 		}

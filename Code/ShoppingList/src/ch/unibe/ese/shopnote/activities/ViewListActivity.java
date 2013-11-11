@@ -28,6 +28,7 @@ import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.adapters.ItemListAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Item;
+import ch.unibe.ese.shopnote.core.ItemRecipeAdapter;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.Recipe;
 import ch.unibe.ese.shopnote.core.ShoppingList;
@@ -82,9 +83,18 @@ public class ViewListActivity extends BaseActivity {
 	        @Override
 	        public void onItemClick(AdapterView<?> parent, View arg1, int position,
 	                long id) {
-	        	Item item = (Item) sqliteAdapter.getItem(position);
+	        	ItemRecipeAdapter entry = (ItemRecipeAdapter) sqliteAdapter.getItem(position);
 	
-	        	manager.addItemToList(item, list);
+	        	if(entry.isItem()) {
+	        		Item item = manager.getItem(entry.getId());
+	        		manager.addItemToList(item, list);
+	        	} else {
+	        		Recipe recipe = manager.getRecipeAt(entry.getId());
+	        		for (Item item : recipe.getItemList()) {
+						manager.addItemToList(item, list);
+						itemAdapter.add(item);
+					}
+	        	}
 	        	updateAdapters();
 	        	
 	        	EditText addItem = (EditText) findViewById(R.id.editTextName);
@@ -249,10 +259,10 @@ public class ViewListActivity extends BaseActivity {
 			return;
 		} else if (name.charAt(0) == '/') {
 			List<Recipe> recipeList = manager.getRecipes();
-			String recipeName = name.substring(1);
+			String recipeName = name.toLowerCase();
 
 			for (Recipe recipe : recipeList) {
-				if (recipe.getName().equals(recipeName)) {
+				if (recipe.getName().toLowerCase().equals(recipeName)) {
 					for (Item item : recipe.getItemList()) {
 						manager.addItemToList(item, list);
 						itemAdapter.add(item);
