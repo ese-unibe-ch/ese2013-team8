@@ -30,6 +30,7 @@ public class ListManager {
 	 * @return unmodifiable list
 	 */
 	public List<ShoppingList> getShoppingLists() {
+		Collections.sort(shoppingLists, Comparators.LIST_COMPARATOR);
 		return Collections.unmodifiableList(shoppingLists);
 	}
 
@@ -109,6 +110,7 @@ public class ListManager {
 			items = persistenceManager.getItems(list);
 			listToItems.put(list, items);
 		}
+		Collections.sort(items, Comparators.ITEM_COMPARATOR);
 		return Collections.unmodifiableList(items);
 	}
 
@@ -117,8 +119,10 @@ public class ListManager {
 	 * 
 	 * @return ArrayList<Item>
 	 */
-	public ArrayList<Item> getAllItems() {
-		return persistenceManager.getAllItems();
+	public List<Item> getAllItems() {
+		List<Item> items = persistenceManager.getAllItems();
+		Collections.sort(items, Comparators.ITEM_COMPARATOR);
+		return items;
 	}
 
 	/**
@@ -131,7 +135,7 @@ public class ListManager {
 	}
 	
 	public Item getItem(Long id) {
-		ArrayList<Item> listOfItems = persistenceManager.getAllItems();
+		List<Item> listOfItems = persistenceManager.getAllItems();
 		for(Item item: listOfItems) {
 			if(item.getId() == id) return item;
 		}
@@ -155,7 +159,8 @@ public class ListManager {
 	 * @return list of recipes
 	 */
 	public List<Recipe> getRecipes() {
-		return recipeList;
+		Collections.sort(recipeList, Comparators.RECIPE_COMPARATOR);
+		return Collections.unmodifiableList(recipeList);
 	}
 
 	/**

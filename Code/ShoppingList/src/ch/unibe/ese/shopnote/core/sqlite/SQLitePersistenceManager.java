@@ -252,7 +252,7 @@ public class SQLitePersistenceManager implements PersistenceManager {
 						+ friend.getId() });
 	}
 	
-	public ArrayList<Friend> getSharedFriends(ShoppingList list) {
+	public List<Friend> getSharedFriends(ShoppingList list) {
 		ArrayList<Friend> sharedFriends = new ArrayList<Friend>();
 		
 		Cursor cursor = readHelper.getSharedFriendsCursor();

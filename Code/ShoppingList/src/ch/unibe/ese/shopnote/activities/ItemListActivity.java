@@ -1,6 +1,6 @@
 package ch.unibe.ese.shopnote.activities;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,7 +24,7 @@ public class ItemListActivity extends BaseActivity {
 	
 	
 	private ListManager manager;
-	private ArrayList<Item> itemList;
+	private List<Item> itemList;
 	private ArrayAdapter<Item> itemAdapter;
 	private DrawerLayout drawMenu;
 

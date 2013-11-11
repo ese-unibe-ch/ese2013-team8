@@ -1,11 +1,10 @@
 package ch.unibe.ese.shopnote.core;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class FriendsManager {
-	private ArrayList<Friend> friendsList;
+	private List<Friend> friendsList;
 	private PersistenceManager persistenceManager;
 
 	public FriendsManager(PersistenceManager persistenceManager) {
@@ -40,6 +39,7 @@ public class FriendsManager {
 	 * @return List of all added friends
 	 */
 	public List<Friend> getFriendsList() {
+		Collections.sort(friendsList, Comparators.FRIEND_COMPARATOR);
 		return Collections.unmodifiableList(friendsList);
 	}
 
@@ -81,7 +81,7 @@ public class FriendsManager {
 		return null;
 	}
 	
-	public ArrayList<Friend> getSharedFriends(ShoppingList list) {
+	public List<Friend> getSharedFriends(ShoppingList list) {
 		return persistenceManager.getSharedFriends(list);
 	}
 	

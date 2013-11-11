@@ -54,7 +54,9 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 			+ COLUMN_LIST_NAME + " text NOT NULL, " //
 			+ COLUMN_LIST_ARCHIVED + " integer NOT NULL, "
 			+ COLUMN_LIST_DUEDATE + " integer, " //
-			+ COLUMN_SHOP_ID + " integer" //
+			+ COLUMN_SHOP_ID + " integer, " //
+			+ "FOREIGN KEY ("+COLUMN_SHOP_ID + ") REFERENCES "
+			+ TABLE_SHOPS + "(" + COLUMN_SHOP_ID + ")"
 			+ ");";
 	// Create table for items
 	private static final String DATABASE_CREATE_TABLE_ITEMS = 
@@ -70,7 +72,11 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 			+ COLUMN_LISTPRICE + " NUMERIC, "
 			+ COLUMN_ITEMBOUGHT + " integer, "
 			+ COLUMN_ITEM_QUANTITY + " varchar(30), "
-			+ "primary key (" + COLUMN_ITEM_ID + ", " + COLUMN_LIST_ID + ")"
+			+ "PRIMARY KEY (" + COLUMN_ITEM_ID + ", " + COLUMN_LIST_ID + "), "
+			+ "FOREIGN KEY (" + COLUMN_ITEM_ID + ") REFERENCES "
+			+ TABLE_ITEMS + "("+COLUMN_ITEM_ID+"), "
+			+ "FOREIGN KEY (" + COLUMN_LIST_ID+ ") REFERENCES "
+			+ TABLE_LISTS+ "("+COLUMN_LIST_ID+")"
 			+ ");";
 	// Create table for Shops
 	private static final String DATABASE_CREATE_TABLE_SHOPS =
@@ -89,7 +95,11 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	private static final String DATABASE_CREATE_TABLE_FRIENDSTOLIST =
 			"create table " + TABLE_FRIENDSTOLIST +"("
 			+ COLUMN_LIST_ID + " integer NOT NULL, "
-			+ COLUMN_FRIEND_ID + " integer NOT NULL "
+			+ COLUMN_FRIEND_ID + " integer NOT NULL, "
+			+ "FOREIGN KEY (" + COLUMN_LIST_ID + ") REFERENCES "
+			+ TABLE_LISTS + "("+ COLUMN_LIST_ID + "), "
+			+ "FOREIGN KEY (" + COLUMN_FRIEND_ID + ") REFERENCES "
+			+ TABLE_FRIENDS +"("+ COLUMN_FRIEND_ID + ") "
 			+ ");";
 
 	private static final String DATABASE_CREATE_TABLE_RECIPE =
@@ -100,7 +110,11 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	private static final String DATABASE_CREATE_TABLE_ITEMTORECIPE =
 			"create table " + TABLE_ITEMTORECIPE + "("
 			+ COLUMN_RECIPE_ID + " integer NOT NULL, "
-			+ COLUMN_ITEM_ID + " integer NOT NULL"
+			+ COLUMN_ITEM_ID + " integer NOT NULL, "
+			+ "FOREIGN KEY (" + COLUMN_RECIPE_ID + ") REFERENCES "
+			+ TABLE_RECIPES + "("+ COLUMN_RECIPE_ID +"), "
+			+ "FOREIGN KEY (" + COLUMN_ITEM_ID + ") REFERENCES "
+			+ TABLE_ITEMS +"("+ COLUMN_ITEM_ID + ") "
 			+ ");";
 
 	public static String[] LISTS_COLUMNS = { SQLiteHelper.COLUMN_LIST_ID,
@@ -129,10 +143,10 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase database) {
+		database.execSQL(DATABASE_CREATE_TABLE_SHOPS);
 		database.execSQL(DATABASE_CREATE_TABLE_LISTS);
 		database.execSQL(DATABASE_CREATE_TABLE_ITEMS);
 		database.execSQL(DATABASE_CREATE_TABLE_ITEMTOLIST);
-		database.execSQL(DATABASE_CREATE_TABLE_SHOPS);
 		database.execSQL(DATABASE_CREATE_TABLE_FRIENDS);
 		database.execSQL(DATABASE_CREATE_TABLE_FRIENDSTOLIST);
 		database.execSQL(DATABASE_CREATE_TABLE_RECIPE);
