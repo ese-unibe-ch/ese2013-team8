@@ -18,6 +18,7 @@ public class NeodatisDatabaseManager {
 	public NeodatisDatabaseManager(SQLiteDatabaseManager sqliteManager) {
 		this.sqliteManager = sqliteManager;
 		database = ODBFactory.open("shoppinglist.odb");
+		System.out.println("Openend Neodatis Database Successful");
 	}
 	
 	public void storeRequest(Request... requests) {

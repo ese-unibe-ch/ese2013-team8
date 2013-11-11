@@ -50,29 +50,38 @@ public class RequestHandler {
 	 */
 	public Request[] handle(Request request) {
 		switch (request.getType()) {
+		
 		case Request.REGISTER_REQUEST:
 			System.out.println("\tRegister request");
 			this.dbManager.addUser(request);
 			return new Request[]{request};
+			
 		case Request.FRIEND_REQUEST:
 			System.out.println("\tFriend request");
 			if(this.dbManager.findUser(request)>-1)
 				request.setSuccessful();
 			return new Request[]{request};
+			
 		case Request.SHARELIST_REQUEST:
 			System.out.println("\tShareList request");
 			this.dbManager.shareList((ShareListRequest)request);
 			return new Request[]{request};
+			
 		case Request.UNSHARELIST_REQUEST:
 			System.out.println("\tUnShareList request");
 			this.dbManager.unShareList((UnShareListRequest)request);
 			return new Request[]{request};
+			
 		case Request.CREATE_SHARED_LIST_REQUEST:
 			System.out.println("\tCreate Share List Request answer");
-			// Nothing to do here
+			this.dbManager.assignLocalToServerListId((CreateSharedListRequest)request);
 			return new Request[]{new EmptyRequest("")};
-		case Request.RENAME_LIST_REQUEST:
-			System.out.println("\tRename List Request");
+			
+		case Request.LIST_CHANGE_REQUEST:
+			System.out.println("\tGeneral list change requests");
+			odbManager.storeRequest(request);
+			return new Request[]{new EmptyRequest("")};
+			
 		default:
 			return new Request[]{request};
 		}
