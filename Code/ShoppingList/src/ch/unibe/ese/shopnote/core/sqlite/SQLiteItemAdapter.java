@@ -1,6 +1,6 @@
 package ch.unibe.ese.shopnote.core.sqlite;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Context;
 import android.widget.ArrayAdapter;
@@ -19,14 +19,14 @@ public class SQLiteItemAdapter extends ArrayAdapter<Item> {
 		initializeArray();
 	}
 	
-	public SQLiteItemAdapter(Context context, int layout, ArrayList<Item> itemList) {
+	public SQLiteItemAdapter(Context context, int layout, List<Item> itemList) {
 		super(context, layout);
 		this.manager = null;
 		this.addAll(itemList);
 	}
 	
 	private void initializeArray() {
-		ArrayList<Item> itemList = manager.getAllItems();
+		List<Item> itemList = manager.getAllItems();
 		
 		for(Item item: itemList)
 			this.add(item);

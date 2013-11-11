@@ -27,6 +27,7 @@ import android.widget.Toast;
 import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.adapters.ItemListAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
+import ch.unibe.ese.shopnote.core.Comparators;
 import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.Recipe;
@@ -264,9 +265,10 @@ public class ViewListActivity extends BaseActivity {
 			Item item = new Item(name);
 			boolean added = manager.addItemToList(item, list);
 
-			if (added)
-				// refresh view
+			if (added) {	// refresh view
 				itemAdapter.add(item);
+				itemAdapter.sort(Comparators.ITEM_COMPARATOR);
+			}
 		}
 
 		// remove text from field
