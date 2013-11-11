@@ -25,6 +25,7 @@ public class CreateItemActivity extends BaseActivity {
 	private ShoppingList list;
 	private Recipe recipe;
 	private Item item;
+	private boolean editItem;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +69,7 @@ public class CreateItemActivity extends BaseActivity {
 			// prepare for edit item when necessary
 			if (extras.getBoolean(EXTRAS_ITEM_EDIT)) {
 				long itemId = extras.getLong(EXTRAS_ITEM_ID);
+				editItem = true;
 				for (Item it : (list == null ? manager.getAllItems() : manager
 						.getItemsFor(list))) {
 					if (it.getId() == itemId) {
@@ -81,13 +83,15 @@ public class CreateItemActivity extends BaseActivity {
 			}
 		}
 
-
-		// create autocomplete adapter for name
-		AutoCompleteTextView textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
-		SQLiteItemAdapter sqliteItemAdapter = new SQLiteItemAdapter(this,
-				android.R.layout.simple_list_item_1, manager);
-		textName.setAdapter(sqliteItemAdapter);
-		textName.setText(name);
+		// Autocomplete only if adding a new item
+		if (!editItem) {
+			// create autocomplete adapter for name
+			AutoCompleteTextView textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
+			SQLiteItemAdapter sqliteItemAdapter = new SQLiteItemAdapter(this,
+					android.R.layout.simple_list_item_1, manager);
+			textName.setAdapter(sqliteItemAdapter);
+			textName.setText(name);
+		}
 		
 		// Set autocompletion adapter for shop
 		textShop = (AutoCompleteTextView) findViewById(R.id.editTextShop);
