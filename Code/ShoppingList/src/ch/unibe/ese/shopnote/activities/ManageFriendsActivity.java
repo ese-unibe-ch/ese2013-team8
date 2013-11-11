@@ -1,5 +1,8 @@
 package ch.unibe.ese.shopnote.activities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -63,8 +66,9 @@ public class ManageFriendsActivity extends BaseActivity {
 	 * Updates the Viewlist, which shows all friends and adds itemclicklistener
 	 */
 	public void updateFriendsList(){
+		List<Friend> friendsList = new ArrayList<Friend>(friendsManager.getFriendsList());
 		friendsAdapter = new FriendsListAdapter(this,
-				R.layout.shopping_list_item, friendsManager.getFriendsList());
+				R.layout.shopping_list_item, friendsList);
 
 		ListView listView = (ListView) findViewById(R.id.friends_list);
 		listView.setAdapter(friendsAdapter);
