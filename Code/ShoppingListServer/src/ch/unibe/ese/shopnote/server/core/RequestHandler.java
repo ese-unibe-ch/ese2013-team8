@@ -58,7 +58,7 @@ public class RequestHandler {
 			System.out.println("\tFriend request");
 			if(this.dbManager.findUser(request)>-1)
 				request.setSuccessful();
-			return returnRequests(request);
+			return new Request[]{request};
 			
 		case Request.SHARELIST_REQUEST:
 			System.out.println("\tShareList request");

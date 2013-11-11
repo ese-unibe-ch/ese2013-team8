@@ -1,9 +1,0 @@
-Opened database successfully
-
-Wed Nov 06 17:47:05 CET 2013
-	Client Connected from /10.0.0.2:53173
-	Closed Socket from /10.0.0.2:53173
-
-Wed Nov 06 17:47:33 CET 2013
-	Client Connected from /10.0.0.2:53181
-	Closed Socket from /10.0.0.2:53181
