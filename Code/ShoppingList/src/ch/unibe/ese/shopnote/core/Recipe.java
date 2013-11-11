@@ -21,7 +21,7 @@ public class Recipe extends Entity {
 	}
 
 	public String toString() {
-		return name;
+		return name.replace("/", "");
 	}
 
 	public String getName() {
