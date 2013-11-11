@@ -8,7 +8,6 @@ Code/ShoppingList/bin/
 Code/ShoppingListTests/gen/
 Code/ShoppingListTests/bin/
 local.properties
-Code/ShoppingListServer/shoppinglist.db
 
 # eclipse and setting files
 */eclipse
@@ -38,3 +37,6 @@ Desktop.ini
 .directory
 
 *.db
+*.odb
+*.transaction
+serverlog.txt

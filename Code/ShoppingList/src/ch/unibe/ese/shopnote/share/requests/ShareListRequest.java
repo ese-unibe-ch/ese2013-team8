@@ -1,7 +1,5 @@
 package ch.unibe.ese.shopnote.share.requests;
 
-import ch.unibe.ese.shopnote.core.ShoppingList;
-
 /**
  * Asks the server to share the {@link ch.unibe.ese.shopnote.core.ShoppingList} specified by {@link ch.unibe.ese.core.ShoppingList.getId()} 
  * with ONE friend. If you want to share it with multiple friends, you need to send multiple {@link ShareListRequest} 
@@ -44,16 +42,6 @@ public class ShareListRequest extends Request {
 	@Override
 	public int getType() {
 		return Request.SHARELIST_REQUEST;
-	}
-	
-	@Override
-	public String toString() {
-		if(this.wasSuccessful()) 
-			return "Shared List with friend";
-		if(this.isHandled())
-			return "List is already shared";
-		else 
-			return "Request wasn't handled";
 	}
 
 }

@@ -67,7 +67,7 @@ public interface PersistenceManager {
 	 * @return never <code>null</code>.
 	 * @throws IOException
 	 */
-	ArrayList<Friend> getFriends();
+	List<Friend> getFriends();
 	
 	/**
 	 * Adds a new friend to the db
@@ -85,7 +85,7 @@ public interface PersistenceManager {
 	 * Get all items which are saved in the db
 	 * @return List<Item> of all Items in db
 	 */
-	ArrayList<Item> getAllItems();
+	List<Item> getAllItems();
 	
 	/**
 	 * Saves item to the db where all items are saved.
@@ -136,7 +136,7 @@ public interface PersistenceManager {
 	 * @param list
 	 * @return ArrayList of friends for a specific shared list
 	 */
-	ArrayList<Friend> getSharedFriends(ShoppingList list);
+	List<Friend> getSharedFriends(ShoppingList list);
 
 	
 }

@@ -4,13 +4,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
 import java.net.UnknownHostException;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import ch.unibe.ese.shopnote.share.requests.Request;
 

@@ -21,14 +21,4 @@ public class RegisterRequest extends Request {
 		return Request.REGISTER_REQUEST;
 	}
 
-	@Override
-	public String toString() {
-		if(this.wasSuccessful()) 
-			return "Registered on the Server";
-		if(this.isHandled())
-			return "You already have an account";
-		else 
-			return "Request wasn't handled";
-	}
-
 }
