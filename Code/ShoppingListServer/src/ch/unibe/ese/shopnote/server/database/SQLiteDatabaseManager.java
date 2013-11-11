@@ -61,9 +61,14 @@ public class SQLiteDatabaseManager {
 	
 	// instance variables
 	private Connection c;
+	private NeodatisDatabaseManager odbManager;
 	
 	public SQLiteDatabaseManager() {
 		this.onCreate();
+	}
+	
+	public void setOdbManager(NeodatisDatabaseManager odbManager) {
+		this.odbManager = odbManager;
 	}
 
 	private void onCreate() {
@@ -110,6 +115,7 @@ public class SQLiteDatabaseManager {
 				rs = stmt.executeQuery(selectUserifExists);
 				System.out.println("\t:Added user: " + rs.getString(COLUMN_USER_PHONENUMBER));
 				request.setSuccessful();
+				odbManager.addContainer(findUser(request));
 			} else {
 				System.out.println("\t:User " + rs.getString(COLUMN_USER_PHONENUMBER) + " already existed");
 			}
@@ -132,7 +138,6 @@ public class SQLiteDatabaseManager {
 			String selectUserifExists = "select * from " + TABLE_USERS + " where " + COLUMN_USER_PHONENUMBER + "=\"" + phoneNumber + "\";";
 			ResultSet rs = stmt.executeQuery(selectUserifExists);
 			if(rs.next()) {
-				System.out.println("\t:User " + rs.getString(COLUMN_USER_PHONENUMBER) + " does exist in Database");
 				request.setHandled();
 				return rs.getInt(COLUMN_USER_ID);
 			} else {

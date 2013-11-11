@@ -4,11 +4,10 @@ import java.util.ArrayList;
 
 import ch.unibe.ese.shopnote.server.database.NeodatisDatabaseManager;
 import ch.unibe.ese.shopnote.server.database.SQLiteDatabaseManager;
-import ch.unibe.ese.shopnote.share.requests.CreateSharedListRequest;
-import ch.unibe.ese.shopnote.share.requests.EmptyRequest;
 import ch.unibe.ese.shopnote.share.requests.Request;
 import ch.unibe.ese.shopnote.share.requests.ShareListRequest;
 import ch.unibe.ese.shopnote.share.requests.UnShareListRequest;
+import ch.unibe.ese.shopnote.share.requests.CreateSharedListRequest;
 
 /**
  * Forwarding and filtering of Requests
@@ -20,10 +19,9 @@ public class RequestHandler {
 	private NeodatisDatabaseManager odbManager;
 	
 	public RequestHandler() {
-		// Manages users and connections between users
 		this.dbManager = new SQLiteDatabaseManager();
-		// Manages requests (objects)
 		this.odbManager = new NeodatisDatabaseManager(dbManager);
+		dbManager.setOdbManager(odbManager);
 	}
 	
 	/**
@@ -54,37 +52,44 @@ public class RequestHandler {
 		case Request.REGISTER_REQUEST:
 			System.out.println("\tRegister request");
 			this.dbManager.addUser(request);
-			return new Request[]{request};
+			return returnRequests(request);
 			
 		case Request.FRIEND_REQUEST:
 			System.out.println("\tFriend request");
 			if(this.dbManager.findUser(request)>-1)
 				request.setSuccessful();
-			return new Request[]{request};
+			return returnRequests(request);
 			
 		case Request.SHARELIST_REQUEST:
 			System.out.println("\tShareList request");
 			this.dbManager.shareList((ShareListRequest)request);
-			return new Request[]{request};
+			return returnRequests(request);
 			
 		case Request.UNSHARELIST_REQUEST:
 			System.out.println("\tUnShareList request");
 			this.dbManager.unShareList((UnShareListRequest)request);
-			return new Request[]{request};
+			return returnRequests(request);
 			
 		case Request.CREATE_SHARED_LIST_REQUEST:
 			System.out.println("\tCreate Share List Request answer");
 			this.dbManager.assignLocalToServerListId((CreateSharedListRequest)request);
-			return new Request[]{new EmptyRequest("")};
+			return returnRequests(request);
 			
 		case Request.LIST_CHANGE_REQUEST:
 			System.out.println("\tGeneral list change requests");
 			odbManager.storeRequest(request);
-			return new Request[]{new EmptyRequest("")};
+			return returnRequests(request);
 			
 		default:
-			return new Request[]{request};
+			return returnRequests(request);
 		}
+	}
+	
+	public Request[] returnRequests(Request request) {
+		int userId = dbManager.findUser(request);
+		ArrayList<Request> requests = odbManager.getRequestsForUser(userId);
+		requests.add(request);
+		return requests.toArray(new Request[requests.size()]);
 	}
 
 }

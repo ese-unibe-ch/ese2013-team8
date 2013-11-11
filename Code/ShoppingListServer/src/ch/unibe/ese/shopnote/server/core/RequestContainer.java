@@ -33,18 +33,18 @@ public class RequestContainer {
 	 * Get all requests from the container without deleting them
 	 * @return
 	 */
-	public Request[] getRequests() {
-		return requests.toArray(new Request[requests.size()]);
+	public ArrayList<Request> getRequests() {
+		return requests;
 	}
 	
 	/**
 	 * Get and delete all requests from the container
 	 * @return
 	 */
-	public Request[] popRequests() {
-		Request[] requests = getRequests();
+	public ArrayList<Request> popRequests() {
+		ArrayList<Request> temp = getRequests();
 		cleanContainer();
-		return requests;
+		return temp;
 	}
 	
 	/**
