@@ -1,6 +1,5 @@
 package ch.unibe.ese.shopnote.core;
 
-import java.io.Serializable;
 
 /**
  * Class Friend with two values: phoneNr and name

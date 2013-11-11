@@ -1,17 +1,15 @@
 package ch.unibe.ese.shopnote.core;
 
-import ch.unibe.ese.shopnote.core.sqlite.SQLitePersistenceManager;
-import ch.unibe.ese.shopnote.share.SyncManager;
-import ch.unibe.ese.shopnote.share.requests.RegisterRequest;
 import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
-import android.net.NetworkInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
+import ch.unibe.ese.shopnote.core.sqlite.SQLitePersistenceManager;
+import ch.unibe.ese.shopnote.share.SyncManager;
 
 /**
  * Extension of {@link Activity} that allows easy access to the global managers
