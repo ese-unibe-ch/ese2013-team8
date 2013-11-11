@@ -42,4 +42,16 @@ public class Comparators {
 			return lhs.getName().compareToIgnoreCase(rhs.getName());
 		}
 	};
+	/**
+	 * Comparator für {@link Recipe}.
+	 * <p>
+	 * Sortiert anhand {@link Recipe#getName() Name} aufsteigend.
+	 */
+	public static final Comparator<Recipe> RECIPE_COMPARATOR = new Comparator<Recipe>() {
+		
+		@Override
+		public int compare(Recipe lhs, Recipe rhs) {
+			return lhs.getName().compareToIgnoreCase(rhs.getName());
+		}
+	};
 }

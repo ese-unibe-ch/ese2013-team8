@@ -6,10 +6,13 @@ import ch.unibe.ese.shopnote.share.requests.RegisterRequest;
 import ch.unibe.ese.shopnote.server.core.ShoppingListServer;
 import ch.unibe.ese.shopnote.share.requests.Request;
 import ch.unibe.ese.shopnote.share.requests.ShareListRequest;
+import ch.unibe.ese.shopnote.share.requests.UnShareListRequest;
 
 /**
- * This Class organizes the database on the server. Can maybe be split up to some smaller classes
- *
+ * This Class organizes the database on the server.
+ * It directly processes the requests on the database concerning Users and the IDs of the shared lists
+ * <p>
+ * Every Request that has to do with list or item updates goes to the {@link NeodatisDatabaseManager} (object database)
  */
 
 public class SQLiteDatabaseManager {
@@ -182,6 +185,44 @@ public class SQLiteDatabaseManager {
 		}
 		
 	}
+	
+	/**
+	 * Removes an entry in sharedlists
+	 * @param request
+	 */
+	public void unShareList(UnShareListRequest request) {
+		int userId = findUser(request);
+		int friendId = findUser(new RegisterRequest(request.getFriendNumber()));
+		long serverListId = getServerListId(userId, request.getListId());
+		
+		if(userId <= -1 || friendId <= -1)
+			return;
+		if(serverListId <= -1)
+			System.err.println("Failed to find/create global list id");
+		
+		Statement stmt;
+		try {
+			stmt = this.c.createStatement();
+			String selectEntryifExists = "select * from " + TABLE_SHAREDLISTS + " where " + COLUMN_USER_ID + "=\"" + userId + "\" and " + 
+					COLUMN_FRIEND_ID + "=\"" + friendId + "\" and " + COLUMN_SERVER_LIST_ID + "=\"" + serverListId + "\";";
+			ResultSet rs = stmt.executeQuery(selectEntryifExists);
+			if(rs.next()) {
+				String deleteFriendfromList = "delete from " + TABLE_SHAREDLISTS + " where " +
+						COLUMN_USER_ID + "=" + userId + " and " +
+						COLUMN_FRIEND_ID + "=" + friendId + " and " +
+						COLUMN_SERVER_LIST_ID + "=" + serverListId + ";";
+				stmt.executeUpdate(deleteFriendfromList);
+				System.out.println("\t:List " + serverListId + " is no longer shared with " + friendId);
+				request.setSuccessful();
+			} else {
+				System.out.println("\t:List " + serverListId + " is not shared with user " + friendId);
+				request.setHandled();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace(System.err);
+		}
+		
+	}
 
 	/**
 	 * Converts an userID and local ListId to the global list id (which is used by the server)
@@ -190,28 +231,50 @@ public class SQLiteDatabaseManager {
 	 * @return serverListId
 	 */
 	private long createServerListIdifNotExists(int userId, long listId) {
+		long serverListId = getServerListId(userId, listId);
+		if (serverListId > -1) {
+			return serverListId;
+		} else {
+			try {
+				Statement stmt = this.c.createStatement();
+				String createEntry = "insert into "
+						+ TABLE_LOCALTOSERVER_LIST_ID + " values (\"" + userId
+						+ "\",\"" + listId + "\", (select max("
+						+ COLUMN_SERVER_LIST_ID + ")+1 from "
+						+ TABLE_LOCALTOSERVER_LIST_ID + ")" + ");";
+				stmt.executeUpdate(createEntry);
+			} catch (SQLException e) {
+				e.printStackTrace(System.err);
+			}
+		}
+		serverListId = getServerListId(userId, listId);
+		if(serverListId <=-1) {
+			throw new IllegalStateException();
+		}
+		return getServerListId(userId, listId);
+	}
+	
+	/**
+	 * Gets the serverlistId that is identified by the userId and his local listId
+	 * @param userId
+	 * @param listId
+	 * @return serverListId
+	 */
+	private long getServerListId(int userId, long listId) {
+		long serverId = -1;
 		Statement stmt;
 		try {
 			stmt = this.c.createStatement();
 			String selectEntryifExists = "select * from " + TABLE_LOCALTOSERVER_LIST_ID + " where " + COLUMN_USER_ID + "=\"" + userId + "\" and " +
-			COLUMN_LOCAL_LIST_ID + "=\"" + listId + "\";";
-			
+					COLUMN_LOCAL_LIST_ID + "=\"" + listId + "\";";
 			ResultSet rs = stmt.executeQuery(selectEntryifExists);
 			if(rs.next()) {
-				System.out.println("\t:Server List ID " + rs.getInt(COLUMN_SERVER_LIST_ID) + " is already shared");
-			} else {
-				String createEntry = "insert into " + TABLE_LOCALTOSERVER_LIST_ID + " values (\"" + userId + "\",\"" + listId + 
-						"\", (select max(" + COLUMN_SERVER_LIST_ID + ")+1 from " + TABLE_LOCALTOSERVER_LIST_ID + ")" +
-								");";	
-				stmt.executeUpdate(createEntry);
-				rs = stmt.executeQuery(selectEntryifExists);
-				System.out.println("\t:Server List ID " + rs.getInt(COLUMN_SERVER_LIST_ID) + " is a new shared list");
+				serverId = rs.getInt(COLUMN_SERVER_LIST_ID);
 			}
-			return rs.getInt(COLUMN_SERVER_LIST_ID);
 		} catch (SQLException e) {
 			e.printStackTrace(System.err);
 		}
-		return -1;
+		return serverId;
 	}
 
 }

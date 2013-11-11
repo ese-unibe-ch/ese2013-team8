@@ -14,10 +14,19 @@ public abstract class Request implements Serializable {
 	private static final long serialVersionUID = 8753041839526964200L;
 	
 	// Define an integer for every Type of request you implement
+	// Server organization requests
 	public static final int REGISTER_REQUEST = 1;
 	public static final int FRIEND_REQUEST = 2;
 	public static final int SHARELIST_REQUEST = 3;
-	public static final int CREATE_SHARED_LIST_REQUEST = 4;
+	public static final int UNSHARELIST_REQUEST = 4;
+	public static final int CREATE_SHARED_LIST_REQUEST = 5;
+	// Client organisation requests
+	public static final int RENAME_LIST_REQUEST = 6;
+	public static final int ADD_ITEM_REQUEST = 7;
+	public static final int REMOVE_ITEM_REQUEST = 8;
+	public static final int SET_ITEM_BOUGHT_REQUEST = 9;
+	public static final int SET_ITEM_UNBOUGHT_REQUEST = 10;
+	public static final int RENAME_ITEM_REQUEST = 11;
 	
 	// Phone Number is always passed with the request
 	private String phoneNumber;
@@ -66,6 +75,7 @@ public abstract class Request implements Serializable {
 	 */
 	public void setSuccessful() {
 		this.wasSuccessful = true;
+		this.setHandled();
 	}
 	
 	/**
