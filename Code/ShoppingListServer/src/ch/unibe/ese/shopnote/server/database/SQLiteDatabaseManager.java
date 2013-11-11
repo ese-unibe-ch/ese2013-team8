@@ -4,6 +4,7 @@ import java.sql.*;
 
 import ch.unibe.ese.shopnote.share.requests.RegisterRequest;
 import ch.unibe.ese.shopnote.server.core.ShoppingListServer;
+import ch.unibe.ese.shopnote.share.requests.CreateSharedListRequest;
 import ch.unibe.ese.shopnote.share.requests.Request;
 import ch.unibe.ese.shopnote.share.requests.ShareListRequest;
 import ch.unibe.ese.shopnote.share.requests.UnShareListRequest;
@@ -89,7 +90,7 @@ public class SQLiteDatabaseManager {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 		}
-		System.out.println("Opened database successfully");
+		System.out.println("Opened SQLite database successfully");
 	}
 
 	/**
@@ -252,6 +253,36 @@ public class SQLiteDatabaseManager {
 			throw new IllegalStateException();
 		}
 		return getServerListId(userId, listId);
+	}
+	
+	/**
+	 * Assign a Local list Id to a global server list id (as a response to a CreateShareListRequest)
+	 * @param request
+	 */
+	public void assignLocalToServerListId(CreateSharedListRequest request) {
+		int userId = findUser(request);
+		assignLocalToServerListId(userId, request.getLocalListId(), request.getServerListid());
+	}
+	
+	/**
+	 * Assign a Local list Id to a global server list id (as a response to a CreateShareListRequest)
+	 * @param request
+	 */
+	public void assignLocalToServerListId(int userId, long localListId, long serverListId) {
+		// Check if there's already an entry for this list (it shouldn't)
+		long maybeServerListId = getServerListId(userId, localListId);
+		if(maybeServerListId >-1) {
+			return;
+		}
+		try {
+			Statement stmt = this.c.createStatement();
+			String createEntry = "insert into "
+					+ TABLE_LOCALTOSERVER_LIST_ID + " values (\"" + userId
+					+ "\",\"" + localListId + "\",\"" + serverListId + ");";
+			stmt.executeUpdate(createEntry);
+		} catch (SQLException e) {
+			e.printStackTrace(System.err);
+		}
 	}
 	
 	/**

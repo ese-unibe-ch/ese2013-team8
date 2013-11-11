@@ -34,11 +34,4 @@ public class CreateSharedListRequest extends Request {
 		return this.localListId;
 	}
 	
-	
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return "";
-	}
-	
 }

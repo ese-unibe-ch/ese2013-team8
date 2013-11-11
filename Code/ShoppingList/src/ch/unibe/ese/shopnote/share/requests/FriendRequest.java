@@ -24,14 +24,4 @@ public class FriendRequest extends Request {
 	public long getFriendId() {
 		return this.friendId;
 	}
-
-	@Override
-	public String toString() {
-		if(this.wasSuccessful()) 
-			return "Your friend has the app";
-		if(this.isHandled())
-			return "Your friend does not have the app";
-		else 
-			return "Request wasn't handled";
-	}
 }
