@@ -33,6 +33,9 @@ public class AnswerHandler {
 		for (Request r: requests) {
 			if(r.wasSuccessful()) {
 				setConsequences(r);
+			}
+			if(r.isHandled()) {
+				// Do something
 			} else {
 				syncManager.addRequest(r);
 			}

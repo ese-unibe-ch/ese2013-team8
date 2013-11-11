@@ -17,6 +17,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 import android.widget.ShareActionProvider;
 import ch.unibe.ese.shopnote.R;
+import ch.unibe.ese.shopnote.adapters.FriendsListAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Friend;
 import ch.unibe.ese.shopnote.core.FriendsManager;
@@ -92,7 +93,7 @@ public class ShareListActivity extends BaseActivity {
 	 */
 	private AutoCompleteTextView createAutocomplete() {
 		AutoCompleteTextView textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
-		autocompleteAdapter = new ArrayAdapter<Friend>(this,
+		autocompleteAdapter = new FriendsListAdapter(this,
 				android.R.layout.simple_list_item_1,
 				friendsManager.getFriendsList());
 		textName.setAdapter(autocompleteAdapter);
@@ -281,5 +282,10 @@ public class ShareListActivity extends BaseActivity {
 		}
 
 		return sb.toString();
+	}
+	
+	@Override
+	public void refresh() {
+		this.updateFriendsList();
 	}
 }
