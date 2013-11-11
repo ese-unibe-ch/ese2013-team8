@@ -54,7 +54,7 @@ public class ViewRecipeActivity extends BaseActivity {
 			long recipeIndex = extras.getLong(EXTRAS_RECIPE_ID);
 			recipe = manager.getRecipe(recipeIndex);
 			itemsOfRecipe = recipe.getItemList();
-			setTitle(this.getString(R.string.view_recipe_title) + " " + recipe.getName());
+			setTitle(this.getString(R.string.view_recipe_title) + " " + recipe.toString());
 		} 
 		else
 			itemsOfRecipe = new ArrayList<Item>();

@@ -36,7 +36,7 @@ public class FriendsManager {
 	}
 
 	/**
-	 * @return List of all added friends
+	 * @return List of all added friends, unmodifiable
 	 */
 	public List<Friend> getFriendsList() {
 		Collections.sort(friendsList, Comparators.FRIEND_COMPARATOR);
