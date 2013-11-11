@@ -60,6 +60,8 @@ public class CreateRecipeActivity extends BaseActivity {
 			Toast.makeText(this, this.getString(R.string.error_name), Toast.LENGTH_SHORT).show();
 			return;
 		}
+		if (name.charAt(0) != '/')
+			name = "/" + name;
 
 		if (recipe == null)
 			recipe = new Recipe(name);

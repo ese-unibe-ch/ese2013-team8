@@ -13,7 +13,10 @@ public class Recipe extends Entity {
 	private ArrayList<Item> itemList;
 
 	public Recipe(String name) {
+		if(name.charAt(0) != '/')
+			name = "/" + name;
 		this.name = name;
+		
 		itemList = new ArrayList<Item>();
 	}
 
