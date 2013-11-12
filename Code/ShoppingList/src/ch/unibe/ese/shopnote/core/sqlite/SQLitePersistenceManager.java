@@ -112,21 +112,17 @@ public class SQLitePersistenceManager implements PersistenceManager {
 
 	public ArrayList<Item> getAllItems() {
 		ArrayList<Item> itemList = new ArrayList<Item>();
-		Cursor cursor = readHelper.getItemCursor();
-		while (!cursor.isAfterLast()) {
-			Item item = readHelper.cursorToItem(cursor);
-			itemList.add(item);
-			cursor.moveToNext();
-		}
+//		Cursor cursor = readHelper.getItemCursor();
+//		while (!cursor.isAfterLast()) {
+//			Item item = readHelper.cursorToItem(cursor);
+//			itemList.add(item);
+//			cursor.moveToNext();
+//		}
 		// TODO: Restructer database so that items can be loaded just with the
 		// code above.
-		cursor = readHelper.getItemTableCursor();
+		Cursor cursor = readHelper.getItemTableCursor();
 		while (!cursor.isAfterLast()) {
 			Item item = readHelper.cursorToItemLite(cursor);
-			for (Item compare : itemList)
-				if (item != null)
-					if (compare.getName().equals(item.getName()))
-						item = null;
 			if (item != null)
 				itemList.add(item);
 			cursor.moveToNext();

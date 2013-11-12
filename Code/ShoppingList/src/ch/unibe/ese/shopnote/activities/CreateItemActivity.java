@@ -26,6 +26,7 @@ public class CreateItemActivity extends BaseActivity {
 	private Recipe recipe;
 	private Item item;
 	private boolean editItem;
+	private boolean itemListView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,7 @@ public class CreateItemActivity extends BaseActivity {
 		textShop.setAdapter(sqliteShopAdapter);
 		
 		Bundle extras = getIntent().getExtras();
+		itemListView = extras.getBoolean(BaseActivity.EXTRAS_ITEM_EDIT); // to edit itemlistview
 		String name = "";
 
 		if (extras != null) {
@@ -98,7 +100,6 @@ public class CreateItemActivity extends BaseActivity {
 		sqliteShopAdapter = new SQLiteShopAdapter(this,
 				android.R.layout.simple_list_item_1);
 		textShop.setAdapter(sqliteShopAdapter);
-
 	}
 
 	private void editItem() {
@@ -120,11 +121,21 @@ public class CreateItemActivity extends BaseActivity {
 		// } else
 		if (item.getShop() != null)
 			setTextViewText(R.id.editTextShop, item.getShop().toString());
-
+		
 		if (item.getPrice() != null)
 			setTextViewText(R.id.editTextPrice, item.getPrice().toString());
 
 		setTextViewText(R.id.editTextQuantity, item.getQuantity());
+		
+		//if ListView mode, make last 3 input uneditable
+		if(itemListView){
+			findViewById(R.id.editTextShop).setEnabled(false);
+			setTextViewText(R.id.editTextShop, "Not editable in this view");
+			findViewById(R.id.editTextPrice).setEnabled(false);
+			setTextViewText(R.id.editTextPrice, "Not editable in this view");
+			findViewById(R.id.editTextQuantity).setEnabled(false);
+			setTextViewText(R.id.editTextQuantity, "Not editable in this view");
+		}
 	}
 
 	@Override
