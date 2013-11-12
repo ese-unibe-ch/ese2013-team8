@@ -56,7 +56,6 @@ public class HomeActivity extends BaseActivity {
         //create Managers for local lists and synch lists
 		listmanager = getListManager();
 		syncmanager = getSyncManager();
-		syncmanager.addRequest(new RegisterRequest(getMyPhoneNumber()));
 		getFriendsManager();
 		
 		updateAdapter();

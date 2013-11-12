@@ -17,6 +17,7 @@ import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.Recipe;
 import ch.unibe.ese.shopnote.drawer.NavigationDrawer;
+import ch.unibe.ese.shopnote.share.requests.RegisterRequest;
 import ch.unibe.ese.shopnote.R;
 
 public class ManageRecipeActivity extends BaseActivity {
@@ -33,6 +34,10 @@ public class ManageRecipeActivity extends BaseActivity {
 		setupActionBar();
 		
 		manager = getListManager();
+		
+		//TODO
+		// Is here for testing purposes
+		getSyncManager().addRequest(new RegisterRequest(getMyPhoneNumber()));
 		
 		// Create drawer menu
 		NavigationDrawer nDrawer = new NavigationDrawer();

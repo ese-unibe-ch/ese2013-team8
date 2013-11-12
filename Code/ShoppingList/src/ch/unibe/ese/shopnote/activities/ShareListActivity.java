@@ -26,6 +26,7 @@ import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.ShoppingList;
 import ch.unibe.ese.shopnote.drawer.NavigationDrawer;
 import ch.unibe.ese.shopnote.share.SyncManager;
+import ch.unibe.ese.shopnote.share.requests.FriendRequest;
 import ch.unibe.ese.shopnote.share.requests.ShareListRequest;
 
 
@@ -79,7 +80,9 @@ public class ShareListActivity extends BaseActivity {
 				Friend friend = (Friend) autocompleteAdapter.getItem(position);				
 				friendsManager.addFriendToList(list, friend);
 				updateFriendsList();
-
+				ShareListRequest slrequest = new ShareListRequest(getMyPhoneNumber(),
+						friend.getPhoneNr(), list.getId(), list.getName());
+				syncManager.addRequest(slrequest);
 				setTextViewText(R.id.editTextName, "");
 			}
 		});
@@ -128,6 +131,8 @@ public class ShareListActivity extends BaseActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
+			// Try to sync with server
+			syncManager.synchronise(this);
 			// Navigate back to the list
 			finish();
 			return true;
@@ -139,6 +144,11 @@ public class ShareListActivity extends BaseActivity {
 	}
 
 	protected void onResume() {
+		for(Friend f: friendsManager.getFriendsList()) {
+			FriendRequest fr = new FriendRequest(f);
+			syncManager.addRequest(fr);
+		}
+		syncManager.synchronise(this);
 		super.onResume();
 		updateFriendsList();
 	}
@@ -173,16 +183,6 @@ public class ShareListActivity extends BaseActivity {
 	protected void onPause() {
 		super.onPause();
 		drawMenu.closeDrawers();
-		// Save friends here
-		if (autocompleteAdapter.getCount() > 0) {
-			for (int i = 0; i < autocompleteAdapter.getCount(); i++) {
-				ShareListRequest slrequest = new ShareListRequest(getMyPhoneNumber(),
-						"" + autocompleteAdapter.getItem(i).getPhoneNr(),
-						list.getId(), list.getName());
-				this.syncManager.addRequest(slrequest);
-			}
-			this.syncManager.synchronise(this);
-		}
 	}
 
 	private void setShareIntent(Intent shareIntent) {
@@ -231,7 +231,9 @@ public class ShareListActivity extends BaseActivity {
 		if (friendId != -1) {
 			Friend friend = friendsManager.getFriend(friendId);
 			friendsManager.addFriendToList(list, friend);
-			
+			ShareListRequest slrequest = new ShareListRequest(getMyPhoneNumber(),
+					friend.getPhoneNr(), list.getId(), list.getName());
+			syncManager.addRequest(slrequest);
 		}
 		
 		// update lists
