@@ -2,7 +2,6 @@ package ch.unibe.ese.shopnote.activities;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -18,11 +17,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import ch.unibe.ese.shopnote.R;
+import ch.unibe.ese.shopnote.adapters.ShoppingListAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
+import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.ShoppingList;
 import ch.unibe.ese.shopnote.drawer.NavigationDrawer;
@@ -35,7 +35,7 @@ public class HomeActivity extends BaseActivity {
 	private SyncManager syncmanager;
 	private List<ShoppingList> shoppingLists;
 	private List<ShoppingList> shoppingListsNotArchived;
-	private ArrayAdapter<ShoppingList> shoppingListAdapter;
+	private ShoppingListAdapter shoppingListAdapter;
 	private Activity homeActivity = this;
 	private DrawerLayout drawMenu;
 	private ActionBarDrawerToggle drawerToggle;
@@ -111,8 +111,11 @@ public class HomeActivity extends BaseActivity {
 			if (!list.isArchived())
 				shoppingListsNotArchived.add(list);
 
-		shoppingListAdapter = new ArrayAdapter<ShoppingList>(this,
+		shoppingListAdapter = new ShoppingListAdapter(this,
 				R.layout.shopping_list_item, shoppingListsNotArchived);
+		
+		// calculate boughtItems/totalItems count
+		calculateItemCount();
 
 		ListView listView = (ListView) findViewById(R.id.ShoppingListView);
 		listView.setAdapter(shoppingListAdapter);
@@ -186,6 +189,28 @@ public class HomeActivity extends BaseActivity {
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
+		}
+	}
+	
+	/**
+	 * Calculates the number of bought items and the total number of items in a shopping list
+	 */
+	private void calculateItemCount() {
+		for (ShoppingList list: shoppingListsNotArchived) {
+			List<Item> items = listmanager.getItemsFor(list);
+			
+			int boughtItems = 0;
+			int totalItems = 0;
+			
+			if (items != null) {
+				for (Item item: items) {
+					if (item.isBought())
+						boughtItems++;			
+				}
+				totalItems = items.size();
+			}
+			
+			shoppingListAdapter.setCount(boughtItems, totalItems);
 		}
 	}
 
