@@ -258,7 +258,6 @@ public class SQLiteReadHelper {
 				SQLiteHelper.SHOPS_COLUMNS, SQLiteHelper.COLUMN_SHOP_NAME
 						+ "=?", new String[] { shopName }, null, null, null,
 				null);
-		System.err.println("count: " + cursor.getCount());
 		if (cursor.getCount() == 1) {
 			cursor.moveToFirst();
 			return cursor.getInt(0);

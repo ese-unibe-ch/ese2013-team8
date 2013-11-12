@@ -46,7 +46,7 @@ public class FriendsListAdapter extends ArrayAdapter<Friend> {
 		holder.name.setText(friend.getName());
 		holder.phonenumber.setText(friend.getPhoneNr());
 		if(friend.hasTheApp()) {
-			holder.hasTheAppIcon.setImageResource(R.drawable.ic_launcher);
+			holder.hasTheAppIcon.setImageResource(R.drawable.ic_action_ok);
 		} else {
 			holder.hasTheAppIcon.setImageResource(R.drawable.ic_action_abort);
 		}

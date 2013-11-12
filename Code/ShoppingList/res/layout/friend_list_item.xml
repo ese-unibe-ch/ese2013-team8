@@ -1,31 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:gravity="center_vertical"
     android:orientation="horizontal" >
 
-    <TextView
-        android:id="@+id/friend_list_item_name"
-        android:layout_width="97dp"
-        android:layout_height="32dp"
-        android:gravity="center_vertical" />
+	<TextView
+		android:id="@+id/friend_list_item_name"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:padding="10dp"
+		android:textSize="16sp" >
+	</TextView>
+    
+	<TextView
+		android:id="@+id/friend_list_phonenumber"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:textColor="@color/gray"
+		android:paddingTop="10dp"
+		android:paddingRight="80dp"
+		android:textSize="16sp"
+		android:gravity="right" >
+	</TextView>
 
-    <TextView
-        android:id="@+id/friend_list_phonenumber"
-        android:layout_width="97dp"
-        android:layout_height="32dp"
-        android:gravity="center_vertical" />
+	<ImageView
+		android:id="@+id/friend_list_item_hasTheAppIcon"
+		android:layout_width="32dp"
+		android:layout_height="32dp"
+		android:paddingTop="10dp"
+		android:paddingRight="10dp"
+		android:layout_alignParentRight="true" >
+	</ImageView>
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
-    <ImageView
-        android:id="@+id/friend_list_item_hasTheAppIcon"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_gravity="right" />
-
-</LinearLayout>
+</RelativeLayout>

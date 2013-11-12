@@ -49,6 +49,19 @@ public class NeodatisDatabaseManager {
 		RequestContainer container = getRequestContainer(userId);
 		container.addRequest(request);
 		database.store(container);
+		database.commit();
+	}
+	
+	/**
+	 * Stores a request into the container of a user specified by userId
+	 * @param request
+	 * @param userId
+	 */
+	public void storeRequest(Request request, int userId) {
+		RequestContainer container = getRequestContainer(userId);
+		container.addRequest(request);
+		database.store(container);
+		database.commit();
 	}
 	
 	/**
@@ -60,6 +73,7 @@ public class NeodatisDatabaseManager {
 		RequestContainer container = getRequestContainer(userId);
 		ArrayList<Request> requests = container.popRequests();
 		database.store(container);
+		database.commit();
 		return requests;
 	}
 	
@@ -84,6 +98,7 @@ public class NeodatisDatabaseManager {
 	public void addContainer(int userId) {
 		RequestContainer container = new RequestContainer(userId);
 		database.store(container);
+		database.commit();
 	}
 	
 }

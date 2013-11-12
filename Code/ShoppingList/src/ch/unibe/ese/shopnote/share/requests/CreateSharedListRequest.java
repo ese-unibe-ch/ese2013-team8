@@ -3,14 +3,15 @@ package ch.unibe.ese.shopnote.share.requests;
 public class CreateSharedListRequest extends Request {
 
 	private static final long serialVersionUID = 7937903634262911605L;
-	private int serverListId;
+	private long serverListId;
 	private long localListId;
 	private String listname;
 	
-	public CreateSharedListRequest(String phoneNumber, int serverListId, String listname) {
+	public CreateSharedListRequest(String phoneNumber, long serverListId, String listname) {
 		super(phoneNumber);
 		this.serverListId = serverListId;
 		this.listname = listname;
+		this.setSuccessful();
 	}
 
 	@Override
@@ -18,7 +19,7 @@ public class CreateSharedListRequest extends Request {
 		return Request.CREATE_SHARED_LIST_REQUEST;
 	}
 
-	public int getServerListid() {
+	public long getServerListid() {
 		return this.serverListId;
 	}
 	

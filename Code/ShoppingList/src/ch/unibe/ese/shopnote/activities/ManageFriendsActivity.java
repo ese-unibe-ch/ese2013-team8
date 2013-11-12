@@ -139,6 +139,7 @@ public class ManageFriendsActivity extends BaseActivity {
 	}
 
 
+
 	@Override
 	public void refresh() {
 		updateFriendsList();
