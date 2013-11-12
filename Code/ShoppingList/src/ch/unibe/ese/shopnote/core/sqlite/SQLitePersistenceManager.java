@@ -232,8 +232,11 @@ public class SQLitePersistenceManager implements PersistenceManager {
 		// Convert the friend to a ContentValue
 		ContentValues values = updateHelper.toValue(friend);
 		// If this is a new friend
-		if (friend.getId() == null) {
+		if (friend.getId() == null && !readHelper.isInList(friend)) {
 			long id = database.insert(SQLiteHelper.TABLE_FRIENDS, null, values);
+			friend.setId(id);
+		} else if(friend.getId() == null) {
+			long id = readHelper.getFriendId(friend.getPhoneNr());
 			friend.setId(id);
 		} else { // Else if it is an old friend
 			database.update(
@@ -251,6 +254,9 @@ public class SQLitePersistenceManager implements PersistenceManager {
 		database.delete(SQLiteHelper.TABLE_FRIENDS,
 				SQLiteHelper.COLUMN_FRIEND_ID + "=? ", new String[] { ""
 						+ friend.getId() });
+		database.delete(SQLiteHelper.TABLE_FRIENDSTOLIST, 
+				SQLiteHelper.COLUMN_FRIEND_ID + "=?", new String[] { "" 
+						+friend.getId() });
 	}
 	
 	public List<Friend> getSharedFriends(ShoppingList list) {
@@ -261,7 +267,8 @@ public class SQLitePersistenceManager implements PersistenceManager {
 			if(cursor.getLong(0) == list.getId()) {
 				long friendId = cursor.getLong(1);
 				Friend friend = readHelper.getFriend(friendId);
-				sharedFriends.add(friend);
+				if(friend != null)
+					sharedFriends.add(friend);
 			}	
 			cursor.moveToNext();
 		}

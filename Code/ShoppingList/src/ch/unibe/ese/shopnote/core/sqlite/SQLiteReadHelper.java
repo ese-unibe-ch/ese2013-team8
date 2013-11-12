@@ -340,6 +340,23 @@ public class SQLiteReadHelper {
 			return null;
 		}
 	}
+	
+	/**
+	 * Get the id of the friend by the phoneNr
+	 * @param phoneNr
+	 * @return id of friend to which phoneNr belongs, if not found returns -1
+	 */
+	public long getFriendId(String phoneNr) {
+		Cursor cursor = database.query(SQLiteHelper.TABLE_FRIENDS,
+				SQLiteHelper.FRIENDS_COLUMNS, SQLiteHelper.COLUMN_FRIEND_PHONENR
+						+ "=?", new String[] { "" + phoneNr }, null, null,
+				null, null);
+		if (cursor.getCount() >= 1) {
+			cursor.moveToFirst();
+			return cursor.getLong(0);
+		}  
+		return -1l;
+	}
 
 	/**
 	 * Get the name of the recipe with the id
@@ -460,4 +477,16 @@ public class SQLiteReadHelper {
 		
 		return false;
 	}
+
+
+	public boolean isInList(Friend friend) {
+		Cursor cursor = database.query(SQLiteHelper.TABLE_FRIENDS,
+				SQLiteHelper.FRIENDS_COLUMNS, SQLiteHelper.COLUMN_FRIEND_PHONENR
+				+ "=? ",
+				new String[] { "" + friend.getPhoneNr() },null, null, null, null);
+		
+			return cursor.getCount() >= 1;
+	}
+
+
 }

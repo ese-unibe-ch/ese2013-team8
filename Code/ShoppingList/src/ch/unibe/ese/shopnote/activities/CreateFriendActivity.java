@@ -15,7 +15,6 @@ import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Friend;
 import ch.unibe.ese.shopnote.core.FriendsManager;
-import ch.unibe.ese.shopnote.share.SyncManager;
 
 /**
  * Creates a frame to create new friends or edit them if the intent has a extra
@@ -138,10 +137,9 @@ public class CreateFriendActivity extends BaseActivity {
 	private void addNewFriend(String name, String nr) {
 		friend = new Friend(nr, name);
 		long id = friendsManager.addFriend(friend);
-		if (id >= 0) {
-			finishTheActivity(id);
-		} else
-			throw new IllegalStateException("Id error, illegal id for item");
+		Log.w("ID: ", "" + id);
+		
+		finishTheActivity(id);
 	}
 	
 

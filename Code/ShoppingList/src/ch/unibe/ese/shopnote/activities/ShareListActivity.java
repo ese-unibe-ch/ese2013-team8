@@ -223,7 +223,6 @@ public class ShareListActivity extends BaseActivity {
 		super.onActivityResult(requestCode, resultCode, data);
 		long friendId = -1;
 	
-
 		if (resultCode == RESULT_OK) {
 			Bundle korb = data.getExtras();
 			friendId = korb.getLong(EXTRAS_FRIEND_ID);

@@ -21,17 +21,20 @@ public class FriendsManager {
 	 * @return id of friend in long, -1 when failure 
 	 */
 	public long addFriend(Friend friend) {
-		// TODO this does not really work as we compare the friends id, which is null.
-		// So its possible to add a friend with same name and number multiple times.
-		// Fix this when adding select friends from phone book.
-		if (friendsList.contains(friend))
-			return -1l;
-
+		long id = checkIfDouble(friend);
+		if (id >= 0) return id;
+		
 		// Add the friend
 		friendsList.add(friend);
 
 		// Save friend to database
 		return persistenceManager.save(friend);
+	}
+
+	private long checkIfDouble(Friend friend) {
+		for(Friend compare: friendsList) 
+			if(compare.getPhoneNr().equals(friend.getPhoneNr())) return compare.getId();
+		return -1l;
 	}
 
 	/**
