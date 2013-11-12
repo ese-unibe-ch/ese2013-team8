@@ -228,7 +228,7 @@ public class SQLitePersistenceManager implements PersistenceManager {
 	}
 
 	@Override
-	public void save(Friend friend) {
+	public long save(Friend friend) {
 		// Convert the friend to a ContentValue
 		ContentValues values = updateHelper.toValue(friend);
 		// If this is a new friend
@@ -242,6 +242,7 @@ public class SQLitePersistenceManager implements PersistenceManager {
 					SQLiteHelper.COLUMN_FRIEND_ID + "="
 							+ friend.getId(), null);
 		}
+		return friend.getId();
 	}
 	
 	
@@ -279,7 +280,8 @@ public class SQLitePersistenceManager implements PersistenceManager {
 	
 	@Override
 	public void remove(ShoppingList list, Friend friend) {
-		database.delete(SQLiteHelper.TABLE_FRIENDSTOLIST, 
+		if (readHelper.isInList(list, friend))
+			database.delete(SQLiteHelper.TABLE_FRIENDSTOLIST, 
 				SQLiteHelper.COLUMN_LIST_ID + "=? AND " + 
 				SQLiteHelper.COLUMN_FRIEND_ID + "=?", 
 				new String[] { "" + list.getId(), "" + friend.getId() });

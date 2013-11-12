@@ -120,6 +120,11 @@
         <item>Englisch</item>
         <item>Deutsch</item>
     </string-array>
+    
+    <string-array name="choosable_languages_keys">
+        <item>english</item>
+        <item>german</item>
+    </string-array>
 
     <string name="theme">Design</string>
     <string name="theme_dialog">Farben des Themes anpassen</string>
@@ -129,5 +134,7 @@
         <item>Standard</item>
         <item>Dunkel</item>
     </string-array>
+    
+
 
 </resources>

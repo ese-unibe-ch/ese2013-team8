@@ -1,21 +1,32 @@
 package ch.unibe.ese.shopnote.activities;
 
-import android.app.Activity;
+import java.util.Locale;
+
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import ch.unibe.ese.shopnote.R;
 
-public class OptionsActivity extends Activity {
-
+public class SettingsActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {	
+	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 		// Show the Up button in the action bar.
 		setupActionBar();
-
+		
+		//set Listener
+		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+		sharedPrefs.registerOnSharedPreferenceChangeListener(this);
+		
         // Display the fragment as the main content.
         getFragmentManager().beginTransaction()
                 .replace(android.R.id.content, new SettingsFragment())
@@ -52,8 +63,44 @@ public class OptionsActivity extends Activity {
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
 		}
+		
+		
+		
+		
+		
 		return super.onOptionsItemSelected(item);
 	}
+
+	/**
+	 * If user changes a option, this function is called to initialize all need steps which are required by the options
+	 */
+	@Override
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+		if (key.equals("language")) {
+			String newLanguage = sharedPreferences.getString("language", null);
+			Configuration config = new Configuration();
+			
+			Locale locale = config.locale;
+			Log.w("Sprache: ", newLanguage);
+			
+			if(newLanguage.equals("english")) {
+				locale = Locale.ENGLISH; 
+				Log.w("Sprache: ", "ENGLISCH");
+			}
+			else if(newLanguage.equals("german")) {
+				locale = Locale.GERMANY;
+				Log.w("Sprache: ", "DEUTSCH");
+			}
+			
+            Locale.setDefault(locale);
+            config.locale = locale;
+            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+            
+            //refresh interface
+            NavUtils.navigateUpFromSameTask(this);
+            startActivity(getIntent());
+        }
+}
 }
 
 class SettingsFragment extends PreferenceFragment {
@@ -63,5 +110,6 @@ class SettingsFragment extends PreferenceFragment {
 
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.preferences);
+        
     }
 }

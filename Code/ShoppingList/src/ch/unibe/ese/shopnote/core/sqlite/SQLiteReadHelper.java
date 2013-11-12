@@ -325,7 +325,7 @@ public class SQLiteReadHelper {
 	/**
 	 * Gets the Friend with the specific id
 	 * @param friendNr
-	 * @return Friend as a Object
+	 * @return Friend as a Object, if not found null
 	 */
 	public Friend getFriend(long id) {
 		Cursor cursor = database.query(SQLiteHelper.TABLE_FRIENDS,

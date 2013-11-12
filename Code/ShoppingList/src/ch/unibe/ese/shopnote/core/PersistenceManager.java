@@ -1,7 +1,6 @@
 package ch.unibe.ese.shopnote.core;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -73,7 +72,7 @@ public interface PersistenceManager {
 	 * Adds a new friend to the db
 	 * @param Friend
 	 */
-	void save(Friend friend);
+	long save(Friend friend);
 
 	/**
 	 * Removes an already existing friend from the db

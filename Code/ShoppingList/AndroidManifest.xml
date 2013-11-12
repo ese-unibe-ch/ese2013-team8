@@ -50,7 +50,7 @@
                 android:value="ch.unibe.ese.shoppinglist.ViewListActivity" />
         </activity>
         <activity
-            android:name="ch.unibe.ese.shopnote.activities.OptionsActivity"
+            android:name="ch.unibe.ese.shopnote.activities.SettingsActivity"
             android:label="@string/title_activity_options"
             android:parentActivityName="ch.unibe.ese.shopnote.activities.HomeActivity" >
         </activity>

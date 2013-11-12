@@ -10,7 +10,7 @@ import ch.unibe.ese.shopnote.activities.ArchiveActivity;
 import ch.unibe.ese.shopnote.activities.ItemListActivity;
 import ch.unibe.ese.shopnote.activities.ManageFriendsActivity;
 import ch.unibe.ese.shopnote.activities.ManageRecipeActivity;
-import ch.unibe.ese.shopnote.activities.OptionsActivity;
+import ch.unibe.ese.shopnote.activities.SettingsActivity;
 import ch.unibe.ese.shopnote.R;
 
 /**
@@ -70,7 +70,7 @@ public class DrawerItemClickListener implements OnItemClickListener {
 			break;
 		case 4:
 			//start Options
-			Intent optionsIntent = new Intent(activity, OptionsActivity.class);
+			Intent optionsIntent = new Intent(activity, SettingsActivity.class);
 			activity.startActivity(optionsIntent);
 			break;
 		

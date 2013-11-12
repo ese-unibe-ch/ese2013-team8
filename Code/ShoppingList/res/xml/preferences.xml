@@ -10,9 +10,10 @@
 	        android:title="@string/language"
 	        android:dialogTitle="@string/language_dialog"
 	        android:entries="@array/choosable_languages"
-	        android:entryValues="@array/choosable_languages"
+	        android:entryValues="@array/choosable_languages_keys"
 	        android:defaultValue="@string/english" />
-	
+
+		    <!-- Theme still not integrated
 		<ListPreference
 	        android:key="theme"
 	        android:title="@string/theme"
@@ -20,6 +21,8 @@
 	        android:entries="@array/choosable_themes"
 	        android:entryValues="@array/choosable_themes"
 	        android:defaultValue="@string/standard" />
+	        
+	        -->
 	    
 	</PreferenceCategory>
 		

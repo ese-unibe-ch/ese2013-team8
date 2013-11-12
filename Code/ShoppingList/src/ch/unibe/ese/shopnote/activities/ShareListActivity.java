@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
@@ -36,6 +37,7 @@ public class ShareListActivity extends BaseActivity {
 	private FriendsManager friendsManager;
 	private SyncManager syncManager;
 	private ArrayAdapter<Friend> autocompleteAdapter;
+	private FriendsListAdapter adapter;
 	private ShoppingList list;
 	private DrawerLayout drawMenu;
 	private ShareActionProvider mShareActionProvider;
@@ -101,11 +103,8 @@ public class ShareListActivity extends BaseActivity {
 
 	/** Called when the user touches the create button */
 	public void addFriend(View view) {
-		String name = getTextViewText(R.id.editTextName);
-
 		Intent intent = new Intent(this, CreateFriendActivity.class);
-		intent.putExtra(EXTRAS_FRIEND_NAME, name);
-		startActivityForResult(intent, 0);
+		startActivityForResult(intent, 1);
 
 		setTextViewText(R.id.editTextName, "");
 	}
@@ -145,34 +144,29 @@ public class ShareListActivity extends BaseActivity {
 	}
 
 	/**
-	 * Get the result from the CreateFriendsActivity (when a new friend is
-	 * added) and add it to the list
-	 */
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		long friendId = -1;
-
-		if (resultCode == RESULT_OK) {
-			Bundle korb = data.getExtras();
-			friendId = korb.getLong(EXTRAS_FRIEND_ID);
-		}
-
-		if (friendId != -1) {
-			Friend friend = friendsManager.getFriend(friendId);
-			friendsManager.addFriendToList(list, friend);
-			// update lists
-			updateFriendsList();
-			createAutocomplete();
-		}
-	}
-
-
-	/**
 	 * Updates the listView, which shows all friends
 	 */
 	public void updateFriendsList() {
 		ListView listView = (ListView) findViewById(R.id.FriendView);
-		listView.setAdapter(autocompleteAdapter);
+		adapter = new FriendsListAdapter(this,
+				android.R.layout.simple_list_item_1,
+				friendsManager.getSharedFriends(list));
+		listView.setAdapter(adapter);
+		
+		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+					int position, long id) {
+				Friend friend = adapter.getItem(position);				
+				ShareListActivity.this.startActionMode(new ShareListActionMode(
+								ShareListActivity.this.friendsManager, friend,
+								list, ShareListActivity.this));
+
+				setTextViewText(R.id.editTextName, "");
+				return true;
+			}
+		});
 	}
 
 	@Override
@@ -220,4 +214,30 @@ public class ShareListActivity extends BaseActivity {
 	public void refresh() {
 		this.updateFriendsList();
 	}
+	
+	/**
+	 * Get the result from the CreateFriendsActivity (when a new friend is
+	 * added) and add it to the list
+	 */
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		long friendId = -1;
+	
+
+		if (resultCode == RESULT_OK) {
+			Bundle korb = data.getExtras();
+			friendId = korb.getLong(EXTRAS_FRIEND_ID);
+		}
+		
+		if (friendId != -1) {
+			Friend friend = friendsManager.getFriend(friendId);
+			friendsManager.addFriendToList(list, friend);
+			
+		}
+		
+		// update lists
+		updateFriendsList();
+		createAutocomplete();
+	}
+
 }

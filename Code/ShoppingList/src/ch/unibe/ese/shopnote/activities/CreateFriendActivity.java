@@ -1,7 +1,12 @@
 package ch.unibe.ese.shopnote.activities;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
@@ -19,26 +24,27 @@ import ch.unibe.ese.shopnote.share.SyncManager;
  * 
  */
 public class CreateFriendActivity extends BaseActivity {
+	private static final int PICK_CONTACT = 2110;
 	private FriendsManager friendsManager;
-	private SyncManager syncManager;
 	private Friend friend;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_create_friend);
-		getActionBar().hide();
-
+		
 		friendsManager = getFriendsManager();
-		syncManager = getSyncManager();
-
-		// check if edit friend
+	
+		// check if friend edited, if not, open address book
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
+			setContentView(R.layout.activity_create_friend);
+			getActionBar().hide();
+
 			editFriend(extras);
+		} else {
+			Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+            startActivityForResult(intent, PICK_CONTACT);		
 		}
-		
-		openKeyboard();
 	}
 
 	/**
@@ -82,15 +88,10 @@ public class CreateFriendActivity extends BaseActivity {
 	public void addEntryToList(View w) {
 		try {
 			String name = getTextViewText(R.id.edit_friend_name);
-			String nr = getTextViewText(R.id.edit_friend_phone_number);
 
-			if (friend == null)
-				addNewFriend(name, nr);
-			else {
-				friend.setName(name);
-				friendsManager.update(friend);
-				finish();
-			}
+			friend.setName(name);
+			friendsManager.update(friend);
+			finish();
 
 		} catch (Exception e) {
 			Toast.makeText(this, this.getString(R.string.error_enter),
@@ -98,47 +99,63 @@ public class CreateFriendActivity extends BaseActivity {
 		}
 	}
 
-	private void addNewFriend(String name, String nr) {
-		Friend friend = new Friend(nr, name);
-		int processStatus = friendsManager.addFriend(friend);
-		if (processStatus == 0) {
-			finishTheActivity(friend.getId());
-		} else
-			printFailure(processStatus);
-	}
-
-	/**
-	 * prints the failure created by adding a friend
-	 * 
-	 * @param failureNumber
-	 */
-	private void printFailure(int failure) {
-		switch (failure) {
-		case 1:
-			Toast.makeText(this, this.getString(R.string.error_friend_already),
-					Toast.LENGTH_SHORT).show();
-			break;
-		case 2:
-			Toast.makeText(this, this.getString(R.string.error_name),
-					Toast.LENGTH_SHORT).show();
-			break;
-		}
-	}
-
 	public void goBack(View view) {
 		finish();
 	}
+
+	
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		
+		if (resultCode == Activity.RESULT_OK && requestCode == PICK_CONTACT) 
+				addChosenFriend(data);
+	}
+
+	/**
+	 * Extracts the Contact from data and adds it to the db
+	 * @param data
+	 */
+	private void addChosenFriend(Intent data) {
+		Uri contactData = data.getData();
+		Cursor cursor = managedQuery(contactData, null, null, null, null);
+	     
+		 if (cursor.moveToFirst()) {
+			  String id = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts._ID));
+			  String hasPhone = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
+	
+			  if (hasPhone.equalsIgnoreCase("1")) {
+				  Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null, 
+						  ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = "+ id,null, null);
+				  phones.moveToFirst();
+				  String cNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+				  String cName = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+				  
+				  addNewFriend(cName, cNumber);
+			  }	
+	     }
+	}
+	
+	private void addNewFriend(String name, String nr) {
+		friend = new Friend(nr, name);
+		long id = friendsManager.addFriend(friend);
+		if (id >= 0) {
+			finishTheActivity(id);
+		} else
+			throw new IllegalStateException("Id error, illegal id for item");
+	}
+	
 
 	/**
 	 * finishs the program with no result when called from ManageFriendsActivity
 	 * or with result when called by ShareListActivity
 	 */
 	private void finishTheActivity(long id) {
-		if (getIntent().getExtras() != null) {
+		if (friend != null) {
 			Intent intent = new Intent();
 			intent.putExtra(EXTRAS_FRIEND_ID, id);
 			setResult(RESULT_OK, intent);
 		}
 		finish();
 	}
+	
 }

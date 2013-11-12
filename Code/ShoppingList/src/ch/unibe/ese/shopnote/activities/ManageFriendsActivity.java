@@ -3,12 +3,9 @@ package ch.unibe.ese.shopnote.activities;
 
 import java.util.ArrayList;
 import java.util.List;
-import android.app.Activity;
+
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v4.app.NavUtils;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
@@ -34,7 +31,6 @@ import ch.unibe.ese.shopnote.share.requests.FriendRequest;
  */
 public class ManageFriendsActivity extends BaseActivity {
 	
-	private static final int PICK_CONTACT = 2;
 	private FriendsManager friendsManager;
 	private SyncManager syncManager;
 	private ArrayAdapter<Friend> friendsAdapter;
@@ -121,11 +117,8 @@ public class ManageFriendsActivity extends BaseActivity {
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
 		case R.id.action_new:
-//			Intent intent = new Intent(this, CreateFriendActivity.class);
-//			this.startActivity(intent);
-			Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
-            startActivityForResult(intent, PICK_CONTACT);
-			
+			Intent intent = new Intent(this, CreateFriendActivity.class);
+			this.startActivity(intent);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -142,35 +135,9 @@ public class ManageFriendsActivity extends BaseActivity {
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		
-		if (resultCode == Activity.RESULT_OK && requestCode == PICK_CONTACT) 
-				addChosenFriend(data);
+		updateFriendsList();
 	}
 
-	/**
-	 * Extracts the Contact from data and adds it to the db
-	 * @param data
-	 */
-	private void addChosenFriend(Intent data) {
-		Uri contactData = data.getData();
-		Cursor cursor = managedQuery(contactData, null, null, null, null);
-	     
-		 if (cursor.moveToFirst()) {
-			  String id = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts._ID));
-			  String hasPhone = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
-	
-			  if (hasPhone.equalsIgnoreCase("1")) {
-				  Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null, 
-						  ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = "+ id,null, null);
-				  phones.moveToFirst();
-				  String cNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-				  String cName = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
-				  
-				Friend friend = new Friend(cNumber, cName);
-				friendsManager.addFriend(friend);
-			  }	
-	     }
-	}
 
 	@Override
 	public void refresh() {
