@@ -10,6 +10,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/**
+ *	Modified ArrayAdapter to display the drawer menu items including their icons
+ */
 public class DrawerAdapter extends ArrayAdapter<String> {
 	
 	private Context context;
@@ -69,7 +72,4 @@ public class DrawerAdapter extends ArrayAdapter<String> {
 		
 		return convertView;
 	}
-	
-
-
 }

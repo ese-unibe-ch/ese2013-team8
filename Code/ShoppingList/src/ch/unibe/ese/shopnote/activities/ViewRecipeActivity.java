@@ -28,6 +28,9 @@ import android.widget.TextView.OnEditorActionListener;
 import android.support.v4.app.NavUtils;
 import android.support.v4.widget.DrawerLayout;
 
+/**
+ *	Displays a single recipe including the items
+ */
 public class ViewRecipeActivity extends BaseActivity {
 	private ListManager manager;
 	private Recipe recipe;

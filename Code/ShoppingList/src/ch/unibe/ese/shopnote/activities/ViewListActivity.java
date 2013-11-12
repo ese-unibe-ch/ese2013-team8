@@ -37,6 +37,9 @@ import ch.unibe.ese.shopnote.core.sqlite.SQLiteItemAdapter;
 import ch.unibe.ese.shopnote.drawer.NavigationDrawer;
 import ch.unibe.ese.shopnote.share.SyncManager;
 
+/**
+ *	Displays a single shopping list including the (bought) items
+ */
 public class ViewListActivity extends BaseActivity {
 
 	private ListManager manager;
@@ -352,6 +355,9 @@ public class ViewListActivity extends BaseActivity {
 		drawMenu.closeDrawers();
 	}
 
+	/**
+	 *	Hide the shopping cart if it is empty
+	 */
 	private void toggleShoppingCart() {
 		// hide shopping cart image if no items bought
 		ImageView imageView = (ImageView) findViewById(R.id.imageItemsBought);

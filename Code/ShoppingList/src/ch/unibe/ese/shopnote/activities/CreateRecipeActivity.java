@@ -13,6 +13,9 @@ import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.Recipe;
 import ch.unibe.ese.shopnote.R;
 
+/**
+ * 	Creates a frame to create new recipes or edit them if the intent has an extra
+ */
 public class CreateRecipeActivity extends BaseActivity {
 	private ListManager manager;
 	private Recipe recipe;
@@ -36,6 +39,9 @@ public class CreateRecipeActivity extends BaseActivity {
 		openKeyboard();
 	}
 	
+	/**
+	 * enter recipe data in edittext fields if editing a recipe
+	 */
 	private void setText(Recipe recipe) {
 		// Title
 		TextView textViewTitle = (TextView) findViewById(R.id.textViewTitle);

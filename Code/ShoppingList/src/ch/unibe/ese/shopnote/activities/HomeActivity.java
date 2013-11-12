@@ -29,6 +29,9 @@ import ch.unibe.ese.shopnote.drawer.NavigationDrawer;
 import ch.unibe.ese.shopnote.share.SyncManager;
 import ch.unibe.ese.shopnote.share.requests.RegisterRequest;
 
+/**
+ *	The main activity of the app, which displays an overview of the shopping lists
+ */
 public class HomeActivity extends BaseActivity {
 
 	private ListManager listmanager;

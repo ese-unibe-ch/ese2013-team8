@@ -20,6 +20,9 @@ import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.drawer.NavigationDrawer;
 import ch.unibe.ese.shopnote.R;
 
+/**
+ * 	Displays all Items in the database
+ */
 public class ItemListActivity extends BaseActivity {
 	
 	

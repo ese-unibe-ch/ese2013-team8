@@ -22,6 +22,9 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.support.v4.app.NavUtils;
 import android.support.v4.widget.DrawerLayout;
 
+/**
+ *	Displays the archived shopping lists
+ */
 public class ArchiveActivity extends BaseActivity {
 	
 	private ListManager manager;

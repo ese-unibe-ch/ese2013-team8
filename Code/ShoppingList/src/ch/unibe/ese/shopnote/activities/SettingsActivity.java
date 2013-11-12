@@ -15,6 +15,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import ch.unibe.ese.shopnote.R;
 
+/**
+ *	Activity to change the settings of the app
+ */
 public class SettingsActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {	
 	
 	@Override
@@ -64,10 +67,6 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 			return true;
 		}
 		
-		
-		
-		
-		
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -100,7 +99,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
             NavUtils.navigateUpFromSameTask(this);
             startActivity(getIntent());
         }
-}
+	}
 }
 
 class SettingsFragment extends PreferenceFragment {

@@ -27,6 +27,9 @@ import ch.unibe.ese.shopnote.core.ShoppingList;
 import ch.unibe.ese.shopnote.core.sqlite.SQLiteShopAdapter;
 import ch.unibe.ese.shopnote.R;
 
+/**
+ * 	Creates a frame to create new shopping lists or edit them if the intent has an extra
+ */
 public class CreateListActivity extends BaseActivity {
 
 	private ListManager manager;
@@ -63,6 +66,9 @@ public class CreateListActivity extends BaseActivity {
 		return true;
 	}
 
+	/**
+	 * Enter list data in edittext fields if editing a list
+	 */
 	private void setList() {
 		// set name
 		setTextViewText(R.id.editTextName, list.getName());
@@ -139,7 +145,10 @@ public class CreateListActivity extends BaseActivity {
 		DialogFragment newFragment = new DatePickerFragment();
 		newFragment.show(getFragmentManager(), "datePicker");
 	}
-
+	
+	/**
+	 * The date picker to set the due date of a shopping list
+	 */
 	@SuppressLint("ValidFragment")
 	private class DatePickerFragment extends DialogFragment {
 

@@ -17,10 +17,7 @@ import ch.unibe.ese.shopnote.core.Friend;
 import ch.unibe.ese.shopnote.core.FriendsManager;
 
 /**
- * Creates a frame to create new friends or edit them if the intent has a extra
- * 
- * @author ESE Team 8
- * 
+ * 	Creates a frame to create new friends or edit them if the intent has an extra
  */
 public class CreateFriendActivity extends BaseActivity {
 	private static final int PICK_CONTACT = 2110;
@@ -82,7 +79,6 @@ public class CreateFriendActivity extends BaseActivity {
 	 * Reads the input and tries to creates a friend with it or edits an old one
 	 * 
 	 * @param View
-	 *            v
 	 */
 	public void addEntryToList(View w) {
 		try {
@@ -111,7 +107,8 @@ public class CreateFriendActivity extends BaseActivity {
 	}
 
 	/**
-	 * Extracts the Contact from data and adds it to the db
+	 * Extracts the Contact from data and adds it to the database
+	 * 
 	 * @param data
 	 */
 	private void addChosenFriend(Intent data) {
@@ -145,7 +142,7 @@ public class CreateFriendActivity extends BaseActivity {
 	
 
 	/**
-	 * finishs the program with no result when called from ManageFriendsActivity
+	 * finishes the program with no result when called from ManageFriendsActivity
 	 * or with result when called by ShareListActivity
 	 */
 	private void finishTheActivity(long id) {
