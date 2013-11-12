@@ -5,13 +5,11 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Toast;
 import ch.unibe.ese.shopnote.activities.ArchiveActivity;
 import ch.unibe.ese.shopnote.activities.ItemListActivity;
 import ch.unibe.ese.shopnote.activities.ManageFriendsActivity;
 import ch.unibe.ese.shopnote.activities.ManageRecipeActivity;
 import ch.unibe.ese.shopnote.activities.SettingsActivity;
-import ch.unibe.ese.shopnote.R;
 
 /**
  * Creates a listener for the navigation drawer 
@@ -21,61 +19,42 @@ import ch.unibe.ese.shopnote.R;
 
 public class DrawerItemClickListener implements OnItemClickListener {
 	private Activity activity;
-	private int id;
-
-    
+ 
 	public DrawerItemClickListener(Activity activity, int id){
 		this.activity = activity;
-		this.id = id;
 	}
 	
-	
+	/**
+	 * Selects the position of a drawer menu item based on the order of the strings
+	 */
+	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long idNumber) {
-		if(this.id == R.id.left_drawer)  selectMenuItem(position);
-		if(this.id == R.id.left_drawer_options)  selectOptionsItem(position);
-    }
-
-	private void selectMenuItem(int position) {
-		switch(position){
-			case 1:
-				//start itemList
-				Intent itemListIntent = new Intent(activity, ItemListActivity.class);
-				activity.startActivity(itemListIntent);
-				break;
-			case 2:
-				Toast.makeText(activity, activity.getString(R.string.error_missing), Toast.LENGTH_SHORT).show();
-				break;
-			case 3:
-				Toast.makeText(activity, activity.getString(R.string.error_missing), Toast.LENGTH_SHORT).show();
-				break;
-		}	
-	}
-
-	private void selectOptionsItem(int position) {
-		switch(position){
-		case 1: 
-			//start Archive
-			Intent archiveIntent = new Intent(activity, ArchiveActivity.class);
-			activity.startActivity(archiveIntent);
+		switch(position+1){
+		case 1:
+			// start ItemList activity
+			Intent itemListIntent = new Intent(activity, ItemListActivity.class);
+			activity.startActivity(itemListIntent);
 			break;
 		case 2:
-			//start RecipeActivity
+			// start Recipe activity
 			Intent recipeActivity = new Intent(activity, ManageRecipeActivity.class);
 			activity.startActivity(recipeActivity);
 			break;
 		case 3:
-			//start Friendscreen
+			// start Friends activity
 			Intent friendsIntent = new Intent(activity, ManageFriendsActivity.class);
 			activity.startActivity(friendsIntent);
 			break;
-		case 4:
-			//start Options
+		case 4: 
+			// start Archive activity
+			Intent archiveIntent = new Intent(activity, ArchiveActivity.class);
+			activity.startActivity(archiveIntent);
+			break;
+		case 5:
+			// start Settings activity
 			Intent optionsIntent = new Intent(activity, SettingsActivity.class);
 			activity.startActivity(optionsIntent);
-			break;
-		
+			break;	
 		}
-		
 	}
-	
 }

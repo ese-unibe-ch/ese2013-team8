@@ -90,22 +90,12 @@
     <string name="no_connection">Keine Verbindung zum Internet</string>
 
     <!-- The navigation drawer -->
-    <string name="drawer_close">Navigationbar geschlossen</string>
-    <string name="drawer_open">Navigationbar offen</string>
-    <string name="navigation_bar_name">Navigator</string>
-
     <string-array name="navigation_items">
-        <item>Alle Items anzeigen</item>
-    </string-array>
-    <string-array name="navigation_options">
-        <item>Archiv</item>
+        <item>Item-Liste</item>
         <item>Rezepte</item>
         <item>Freunde</item>
+        <item>Archiv</item>
         <item>Einstellungen</item>
-    </string-array>
-    <string-array name="navigation_sections">
-        <item>Listen</item>
-        <item>Menü</item>
     </string-array>
 
     <!-- Options Menu -->

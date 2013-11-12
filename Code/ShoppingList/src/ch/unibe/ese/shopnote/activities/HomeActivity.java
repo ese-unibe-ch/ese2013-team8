@@ -67,8 +67,8 @@ public class HomeActivity extends BaseActivity {
                 this,                  	/* host Activity */
                 drawMenu,         		/* DrawerLayout object */
                 R.drawable.ic_drawer,  	/* nav drawer icon to replace 'Up' caret */
-                R.string.drawer_open,  	/* "open drawer" description */
-                R.string.drawer_close  	/* "close drawer" description */
+                R.string.app_name,  	/* "open drawer" description */
+                R.string.app_name  	/* "close drawer" description */
                 ) {
 
 			// At the moment the following two methods are useless, but maybe 
