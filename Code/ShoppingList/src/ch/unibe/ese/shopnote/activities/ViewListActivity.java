@@ -265,6 +265,7 @@ public class ViewListActivity extends BaseActivity {
 			for (Recipe recipe : recipeList) {
 				if (recipe.getName().toLowerCase().equals(recipeName)) {
 					for (Item item : recipe.getItemList()) {
+						item.setBought(false);
 						manager.addItemToList(item, list);
 						itemAdapter.add(item);
 					}

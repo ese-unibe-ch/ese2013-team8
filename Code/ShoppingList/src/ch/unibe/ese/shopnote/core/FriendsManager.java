@@ -65,7 +65,6 @@ public class FriendsManager {
 	public boolean removeFriend(Friend friend) {
 		persistenceManager.removeFriend(friend);
 		return friendsList.remove(friend);
-		// TODO: remove friend from database
 	}
 
 	/**

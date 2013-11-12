@@ -116,7 +116,7 @@ public class CreateFriendActivity extends BaseActivity {
 	 */
 	private void addChosenFriend(Intent data) {
 		Uri contactData = data.getData();
-		Cursor cursor = managedQuery(contactData, null, null, null, null);
+		Cursor cursor = getContentResolver().query(contactData, null, null, null, null);
 	     
 		 if (cursor.moveToFirst()) {
 			  String id = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts._ID));
