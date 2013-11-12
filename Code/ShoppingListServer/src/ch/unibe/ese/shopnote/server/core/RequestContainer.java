@@ -6,7 +6,7 @@ import ch.unibe.ese.shopnote.share.requests.EmptyRequest;
 import ch.unibe.ese.shopnote.share.requests.Request;
 
 /**
- * This class contains all requests for a specific user specified by the userId;
+ * This class contains all requests for one user specified by the userId;
  * It gets stored in the Neodatis object database
  */
 public class RequestContainer {
@@ -52,6 +52,7 @@ public class RequestContainer {
 	 */
 	public void cleanContainer() {
 		this.requests.clear();
+		this.requests.add(new EmptyRequest(""));
 	}
 	
 	/**

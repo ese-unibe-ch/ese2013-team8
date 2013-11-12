@@ -165,7 +165,8 @@ public class ManageFriendsActivity extends BaseActivity {
 				  phones.moveToFirst();
 				  String cNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
 				  String cName = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
-				  
+				  //Remove all non numeric characters
+				  cNumber = cNumber.replaceAll("[^0-9]", "");
 				Friend friend = new Friend(cNumber, cName);
 				friendsManager.addFriend(friend);
 			  }	

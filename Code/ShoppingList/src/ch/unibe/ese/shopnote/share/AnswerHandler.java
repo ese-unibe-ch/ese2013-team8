@@ -50,6 +50,7 @@ public class AnswerHandler {
 			return;
 		case Request.SHARELIST_REQUEST:
 			//TODO
+			return;
 		case Request.CREATE_SHARED_LIST_REQUEST:
 			String listName = ((CreateSharedListRequest)request).getListName();
 			listManager.saveShoppingList(new ShoppingList(listName));
