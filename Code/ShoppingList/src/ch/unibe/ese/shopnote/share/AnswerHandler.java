@@ -37,7 +37,8 @@ public class AnswerHandler {
 				setConsequences(r);
 			}
 			if(r.isHandled()) {
-				// Do something
+				// Maybe there will be a future need 
+				// to report unsuccessful synchronisation
 			} else {
 				syncManager.addRequest(r);
 			}

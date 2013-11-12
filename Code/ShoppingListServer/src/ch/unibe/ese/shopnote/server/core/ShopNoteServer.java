@@ -13,12 +13,12 @@ import java.net.Socket;
  * It just waits for connections and refers them to new ClientThreads which can be handled in parallel
  *
  */
-public class ShoppingListServer {
+public class ShopNoteServer {
 
 	/**
 	 * Configuration
 	 */
-	public static boolean WIPE_DATABSE_ON_STARTUP = true;
+	public static boolean WIPE_DATABSE_ON_STARTUP = false;
 	public static boolean REDIRECT_OUTPUT_TO_FILE = false;
 	private static int PORT = 1337;
 	/**
@@ -28,7 +28,7 @@ public class ShoppingListServer {
 	private ServerSocket serverSocket;
 	private RequestHandler requestHandler;
 	
-	public ShoppingListServer() {
+	public ShopNoteServer() {
 		if(REDIRECT_OUTPUT_TO_FILE) {
 			try {
 				FileOutputStream f = new FileOutputStream("serverlog.txt");
@@ -78,7 +78,7 @@ public class ShoppingListServer {
 	}
 	
 	public static void main(String[] args) {
-		new ShoppingListServer();
+		new ShopNoteServer();
 	}
 	
 }

@@ -125,7 +125,8 @@ public class CreateFriendActivity extends BaseActivity {
 				  phones.moveToFirst();
 				  String cNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
 				  String cName = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
-				  
+				  // Remove all unneccessary characters
+				  cNumber = cNumber.replaceAll("[^0-9]", "");
 				  addNewFriend(cName, cNumber);
 			  }	
 	     }

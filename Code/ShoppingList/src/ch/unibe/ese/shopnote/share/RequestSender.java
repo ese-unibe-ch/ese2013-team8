@@ -44,8 +44,10 @@ public class RequestSender extends AsyncTask<Request, Void, Boolean>{
 		if(isConnected) {
 			this.send(requests);
 			this.waitForAnswer();
+		} else {
+			handler.setRequests(requests);
 		}
-		return true;
+		return isConnected;
 	}
 	
 	@Override

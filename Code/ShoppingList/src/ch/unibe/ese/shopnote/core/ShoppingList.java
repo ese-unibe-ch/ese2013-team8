@@ -7,6 +7,7 @@ public class ShoppingList extends Entity{
 	private Date dueDate;
 	private String shop;
 	private boolean archived;
+	private boolean shared;
 
 	/**
 	 * @param name
@@ -52,6 +53,14 @@ public class ShoppingList extends Entity{
 
 	public void setArchived(boolean archived) {
 		this.archived = archived;
+	}
+	
+	public boolean isShared() {
+		return shared;
+	}
+	
+	public void setShared(boolean shared) {
+		this.shared = shared;
 	}
 
 	private void invariant() {

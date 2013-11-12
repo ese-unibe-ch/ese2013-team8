@@ -13,6 +13,7 @@ import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Friend;
 import ch.unibe.ese.shopnote.core.FriendsManager;
 import ch.unibe.ese.shopnote.core.ShoppingList;
+import ch.unibe.ese.shopnote.share.requests.UnShareListRequest;
 
 /**
  * 	Creates the Action Bar for Friends to edit or remove them
@@ -82,6 +83,9 @@ public class FriendListActionMode implements Callback {
 	            	friendsAdapter.notifyDataSetChanged();
             	} else {
             		friendsManager.removeFriendOfList(list, selectedFriend);
+            		UnShareListRequest uslrequest = new UnShareListRequest(((BaseActivity)activity).getMyPhoneNumber(), 
+            				selectedFriend.getPhoneNr(), list.getId());
+            		((BaseActivity)activity).getSyncManager().addRequest(uslrequest);
             	}
 	            	mode.finish(); // Action picked, so close the CAB
 
