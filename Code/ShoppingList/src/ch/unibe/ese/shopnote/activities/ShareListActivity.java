@@ -144,11 +144,6 @@ public class ShareListActivity extends BaseActivity {
 	}
 
 	protected void onResume() {
-		for(Friend f: friendsManager.getFriendsList()) {
-			FriendRequest fr = new FriendRequest(f);
-			syncManager.addRequest(fr);
-		}
-		syncManager.synchronise(this);
 		super.onResume();
 		updateFriendsList();
 	}

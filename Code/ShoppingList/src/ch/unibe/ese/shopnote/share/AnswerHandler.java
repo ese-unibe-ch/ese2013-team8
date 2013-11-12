@@ -10,6 +10,7 @@ import ch.unibe.ese.shopnote.share.requests.FriendRequest;
 import ch.unibe.ese.shopnote.share.requests.ListChangeRequest;
 import ch.unibe.ese.shopnote.share.requests.RenameListRequest;
 import ch.unibe.ese.shopnote.share.requests.Request;
+import ch.unibe.ese.shopnote.share.requests.ShareListRequest;
 
 /**
  * Gets passed in a RequestSender to listen to its result
@@ -52,13 +53,20 @@ public class AnswerHandler {
 			friendsManager.setFriendHasApp(friendId);
 			return;
 		case Request.SHARELIST_REQUEST:
-			//TODO set the list shared flag on true
+			ShoppingList list = listManager.getShoppingList(((ShareListRequest)request).getListId());
+			list.setShared(true);
+			return;
+		case Request.UNSHARELIST_REQUEST:
+			ShoppingList list2 = listManager.getShoppingList(((ShareListRequest)request).getListId());
+			if(friendsManager.getSharedFriends(list2).isEmpty()) {
+				list2.setShared(false);
+			}
 			return;
 		case Request.CREATE_SHARED_LIST_REQUEST:
 			String listName = ((CreateSharedListRequest)request).getListName();
 			listManager.saveShoppingList(new ShoppingList(listName));
-			ShoppingList list = listManager.getShoppingLists().get(listManager.getShoppingLists().size()-1);
-			long id = list.getId();
+			ShoppingList list3 = listManager.getShoppingLists().get(listManager.getShoppingLists().size()-1);
+			long id = list3.getId();
 			((CreateSharedListRequest)request).setLocalListId(id);
 			syncManager.addRequest(request);
 			return;
