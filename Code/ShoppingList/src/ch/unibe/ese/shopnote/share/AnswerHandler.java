@@ -7,6 +7,8 @@ import ch.unibe.ese.shopnote.core.FriendsManager;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.share.requests.CreateSharedListRequest;
 import ch.unibe.ese.shopnote.share.requests.FriendRequest;
+import ch.unibe.ese.shopnote.share.requests.ListChangeRequest;
+import ch.unibe.ese.shopnote.share.requests.RenameListRequest;
 import ch.unibe.ese.shopnote.share.requests.Request;
 
 /**
@@ -49,7 +51,7 @@ public class AnswerHandler {
 			friendsManager.setFriendHasApp(friendId);
 			return;
 		case Request.SHARELIST_REQUEST:
-			//TODO
+			//TODO set the list shared flag on true
 			return;
 		case Request.CREATE_SHARED_LIST_REQUEST:
 			String listName = ((CreateSharedListRequest)request).getListName();
@@ -59,9 +61,21 @@ public class AnswerHandler {
 			((CreateSharedListRequest)request).setLocalListId(id);
 			syncManager.addRequest(request);
 			return;
+		case Request.LIST_CHANGE_REQUEST:
+			processListChangeRequest((ListChangeRequest)request);
 		}
 	}
 	
+	private void processListChangeRequest(ListChangeRequest request) {
+		ShoppingList list = listManager.getShoppingList(request.getLocalListId());
+		switch (request.getType()) {
+		case ListChangeRequest.RENAME_LIST_REQUEST:
+			list.setName(((RenameListRequest)request).getNewName());
+			listManager.saveShoppingList(list);
+			return;
+		}
+	}
+
 	public void updateUI() {
 		context.refresh();
 	}

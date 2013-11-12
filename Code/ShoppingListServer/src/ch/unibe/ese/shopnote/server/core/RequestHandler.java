@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import ch.unibe.ese.shopnote.server.database.NeodatisDatabaseManager;
 import ch.unibe.ese.shopnote.server.database.SQLiteDatabaseManager;
+import ch.unibe.ese.shopnote.share.requests.EmptyRequest;
+import ch.unibe.ese.shopnote.share.requests.ListChangeRequest;
 import ch.unibe.ese.shopnote.share.requests.Request;
 import ch.unibe.ese.shopnote.share.requests.ShareListRequest;
 import ch.unibe.ese.shopnote.share.requests.UnShareListRequest;
@@ -49,35 +51,56 @@ public class RequestHandler {
 	public Request[] handle(Request request) {
 		switch (request.getType()) {
 		
+		// User registers itself on the server
+		// Responsible: SQLiteDatabaseManager for creating a userId
+		//		NeodtaisDatabaseManager for creating a new user container
 		case Request.REGISTER_REQUEST:
 			System.out.println("\tRegister request");
 			this.dbManager.addUser(request);
 			return returnRequests(request);
-			
+		
+		// User asks if friend has the app
+		// Responsible: SQLiteDatabaseManager
 		case Request.FRIEND_REQUEST:
 			System.out.println("\tFriend request");
 			if(this.dbManager.findUser(request)>-1)
 				request.setSuccessful();
 			return new Request[]{request};
 			
+		// User wants to share a list with his friend
+		// Responsible: SQLiteDatabaseManager for creating new entries in the sharedList table
+		// 		NeodatisDatabaseManager for putting a new Create shared list to the friends container
 		case Request.SHARELIST_REQUEST:
 			System.out.println("\tShareList request");
 			this.dbManager.shareList((ShareListRequest)request);
 			return returnRequests(request);
 			
+		// User wants to remove a friend from a shared list
+		// Responsible: SQLiteDatabaseManager to remove him from the list
 		case Request.UNSHARELIST_REQUEST:
 			System.out.println("\tUnShareList request");
 			this.dbManager.unShareList((UnShareListRequest)request);
 			return returnRequests(request);
-			
+		
+		// A user shared a list and the NeodatisDatabaseManager put a request in his friends container
+		// This is the answer of the friend: he created a list and sends his localListId to the server
+		// Responsible: SQLiteDatabaseManager to match his local list id with the server list id for 
+		// further ListChangeRequests
 		case Request.CREATE_SHARED_LIST_REQUEST:
 			System.out.println("\tCreate Share List Request answer");
 			this.dbManager.assignLocalToServerListId((CreateSharedListRequest)request);
-			return returnRequests(request);
-			
+			return new Request[]{new EmptyRequest("")};
+		
+		// This are general Requests that ask the user to rename his shopping list, add a new Item, ...
+		// They don't need to be processed by the server, but he needs to translate the localListId of 
+		//	the sending user to the LocalListId of the receiving users
 		case Request.LIST_CHANGE_REQUEST:
 			System.out.println("\tGeneral list change requests");
-			odbManager.storeRequest(request);
+			ArrayList<User> sharedwith = dbManager.getSharedUsers((ListChangeRequest)request);
+			for(User u:sharedwith) {
+				((ListChangeRequest)request).setLocaListId(u.getLocalListid());
+				odbManager.storeRequest(request, u.getUserId());
+			}
 			return returnRequests(request);
 			
 		default:
@@ -85,10 +108,16 @@ public class RequestHandler {
 		}
 	}
 	
+	/**
+	 * Returns all requests for the author of the input paramter request (everything from his container)
+	 * @param request
+	 * @return all requests in the users container
+	 */
 	public Request[] returnRequests(Request request) {
 		int userId = dbManager.findUser(request);
 		ArrayList<Request> requests = odbManager.getRequestsForUser(userId);
 		requests.add(request);
+		System.out.println("\tUser received " + requests.size() + " answers");
 		return requests.toArray(new Request[requests.size()]);
 	}
 

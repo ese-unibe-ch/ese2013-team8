@@ -54,7 +54,8 @@ public class HomeActivity extends BaseActivity {
 
         //create Managers for local lists and synch lists
 		listmanager = getListManager();
-		syncmanager = getSyncManager();	
+		syncmanager = getSyncManager();
+		syncmanager.addRequest(new RegisterRequest(getMyPhoneNumber()));
 		getFriendsManager();
 		
 		updateAdapter();
@@ -173,7 +174,6 @@ public class HomeActivity extends BaseActivity {
 
 			case R.id.action_refresh:
 				if(isOnline()) {
-					syncmanager.addRequest(new RegisterRequest(getMyPhoneNumber()));
 					syncmanager.synchronise(this);
 				} else {
 					Toast.makeText(this, this.getString(R.string.no_connection),

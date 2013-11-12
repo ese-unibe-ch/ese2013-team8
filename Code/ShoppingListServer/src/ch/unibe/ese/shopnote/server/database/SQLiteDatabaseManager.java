@@ -1,9 +1,11 @@
 package ch.unibe.ese.shopnote.server.database;
 
 import java.sql.*;
+import java.util.ArrayList;
 
+import ch.unibe.ese.shopnote.server.core.User;
+import ch.unibe.ese.shopnote.share.requests.ListChangeRequest;
 import ch.unibe.ese.shopnote.share.requests.RegisterRequest;
-import ch.unibe.ese.shopnote.server.core.ShoppingListServer;
 import ch.unibe.ese.shopnote.share.requests.CreateSharedListRequest;
 import ch.unibe.ese.shopnote.share.requests.Request;
 import ch.unibe.ese.shopnote.share.requests.ShareListRequest;
@@ -18,6 +20,7 @@ import ch.unibe.ese.shopnote.share.requests.UnShareListRequest;
 
 public class SQLiteDatabaseManager {
 	// Name definitions
+	
 	// User Table
 	// All users of the app are registered here
 	public static final String TABLE_USERS = "users";
@@ -53,11 +56,7 @@ public class SQLiteDatabaseManager {
 			"primary key(" + COLUMN_USER_ID + ", " + COLUMN_FRIEND_ID + ", " + COLUMN_SERVER_LIST_ID + ")" +
 			");";
 	// First dummy entry for localtoserver list id
-	public static final String INSERT_DUMMY = "insert into " + TABLE_LOCALTOSERVER_LIST_ID + " values ( -1, -2, 0);";
-	// Drop all Tables statement
-	private static final String DROP_TABLE_USERS = "drop table if exists " + TABLE_USERS + ";";
-	private static final String DROP_TABLE_SHAREDLISTS = "drop table if exists " + TABLE_SHAREDLISTS + ";";
-	private static final String DROP_TABLE_LOCALTOSERVER_LIST_ID = "drop table if exists " + TABLE_LOCALTOSERVER_LIST_ID + ";";
+	public static final String INSERT_DUMMY = "insert or replace into " + TABLE_LOCALTOSERVER_LIST_ID + " values ( -1, -2, 0);";
 	
 	// instance variables
 	private Connection c;
@@ -71,6 +70,10 @@ public class SQLiteDatabaseManager {
 		this.odbManager = odbManager;
 	}
 
+	/**
+	 * Opens database file and 
+	 * creates all tables if they don't exist yet
+	 */
 	private void onCreate() {
 		Statement stmt = null;
 		try {
@@ -78,16 +81,9 @@ public class SQLiteDatabaseManager {
 			this.c = DriverManager.getConnection("jdbc:sqlite:shoppinglist.db");
 			
 			stmt = this.c.createStatement();
-			if(ShoppingListServer.WIPE_DATABSE_ON_STARTUP) {
-				stmt.executeUpdate(DROP_TABLE_USERS);
-				stmt.executeUpdate(DROP_TABLE_SHAREDLISTS);
-				stmt.executeUpdate(DROP_TABLE_LOCALTOSERVER_LIST_ID);
-			}
 			stmt.executeUpdate(CREATE_TABLE_USERS);
 			stmt.executeUpdate(CREATE_TABLE_LOCALTOSERVER_LIST_ID);
-			if(ShoppingListServer.WIPE_DATABSE_ON_STARTUP) {
-				stmt.executeUpdate(INSERT_DUMMY);
-			}
+			stmt.executeUpdate(INSERT_DUMMY);
 			stmt.executeUpdate(CREATE_TABLE_SHAREDLISTS);
 			stmt.close();
 
@@ -183,6 +179,9 @@ public class SQLiteDatabaseManager {
 						");";	
 				stmt.executeUpdate(insertSharedList);
 				System.out.println("\t:List " + serverListId + " is now shared with users " + friendId + " and " + userId);
+				
+				odbManager.storeRequest(new CreateSharedListRequest(request.getFriendNumber(), serverListId, listname));
+				
 				request.setSuccessful();
 			}
 
@@ -204,7 +203,7 @@ public class SQLiteDatabaseManager {
 		if(userId <= -1 || friendId <= -1)
 			return;
 		if(serverListId <= -1)
-			System.err.println("Failed to find/create global list id");
+			System.err.println("Failed to find global list id");
 		
 		Statement stmt;
 		try {
@@ -283,7 +282,7 @@ public class SQLiteDatabaseManager {
 			Statement stmt = this.c.createStatement();
 			String createEntry = "insert into "
 					+ TABLE_LOCALTOSERVER_LIST_ID + " values (\"" + userId
-					+ "\",\"" + localListId + "\",\"" + serverListId + ");";
+					+ "\",\"" + localListId + "\",\"" + serverListId + "\");";
 			stmt.executeUpdate(createEntry);
 		} catch (SQLException e) {
 			e.printStackTrace(System.err);
@@ -311,6 +310,58 @@ public class SQLiteDatabaseManager {
 			e.printStackTrace(System.err);
 		}
 		return serverId;
+	}
+	
+	/**
+	 * Translates the server list id to a local list id on the users phone
+	 * @param userId
+	 * @param serverId
+	 * @return localListId
+	 */
+	private long getLocalListId(int userId, long serverId) {
+		long localId = -1;
+		Statement stmt;
+		try {
+			stmt = this.c.createStatement();
+			String selectEntryifExists = "select * from " + TABLE_LOCALTOSERVER_LIST_ID + " where " + COLUMN_USER_ID + "=\"" + userId + "\" and " +
+					COLUMN_SERVER_LIST_ID + "=\"" + serverId + "\";";
+			ResultSet rs = stmt.executeQuery(selectEntryifExists);
+			if(rs.next()) {
+				localId = rs.getInt(COLUMN_LOCAL_LIST_ID);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace(System.err);
+		}
+		return localId;
+	}
+
+	/**
+	 * Returns all userIds and their localListId
+	 * which belong to this shared list
+	 * @param userId
+	 * @param localListId
+	 * @return array if userIds
+	 */
+	public ArrayList<User> getSharedUsers(ListChangeRequest request) {
+		int userId = findUser(request);
+		long localListId = request.getLocalListId();
+		long serverListId = getServerListId(userId, localListId);
+		Statement stmt;
+		ArrayList<User> userList = new ArrayList<User>();
+		try {
+			stmt = this.c.createStatement();
+			String selectUsers = "select " + COLUMN_USER_ID + "," + COLUMN_LOCAL_LIST_ID + " from " + TABLE_LOCALTOSERVER_LIST_ID +
+					" where " + COLUMN_SERVER_LIST_ID + "=\"" + serverListId + "\";";
+			ResultSet rs = stmt.executeQuery(selectUsers);
+			while(rs.next()) {
+				User user = new User(rs.getInt(COLUMN_USER_ID));
+				user.setLocalListId(rs.getInt(COLUMN_LOCAL_LIST_ID));
+				userList.add(user);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace(System.err);
+		}
+		return userList;
 	}
 
 }

@@ -17,8 +17,6 @@ public class RequestContainer {
 	public RequestContainer(int userId) {
 		this.userId = userId;
 		this.requests = new ArrayList<Request>();
-		// Make sure the list is never empty
-		requests.add(new EmptyRequest(""));
 	}
 	
 	/**
@@ -51,8 +49,7 @@ public class RequestContainer {
 	 * Delete all requests from the container
 	 */
 	public void cleanContainer() {
-		this.requests.clear();
-		this.requests.add(new EmptyRequest(""));
+		this.requests = new ArrayList<Request>();
 	}
 	
 	/**

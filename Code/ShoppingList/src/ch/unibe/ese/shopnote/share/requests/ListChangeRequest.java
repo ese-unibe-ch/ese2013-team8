@@ -7,6 +7,8 @@ package ch.unibe.ese.shopnote.share.requests;
 public abstract class ListChangeRequest extends Request {
 
 	private static final long serialVersionUID = -8582076542699084542L;
+
+	public static final int RENAME_LIST_REQUEST = 100;
 	
 	private long localListId;
 	

@@ -1,6 +1,7 @@
 package ch.unibe.ese.shopnote.share;
 
 import ch.unibe.ese.shopnote.core.BaseActivity;
+import ch.unibe.ese.shopnote.share.requests.EmptyRequest;
 import ch.unibe.ese.shopnote.share.requests.Request;
 
 /**
@@ -30,6 +31,9 @@ public class SyncManager {
 	
 	public void synchronise(BaseActivity context) {
 		if(context.isOnline()) {
+			if(rQueue.getRequests().length == 0) {
+				rQueue.addRequest(new EmptyRequest(context.getMyPhoneNumber()));
+			}
 			AnswerHandler handler = new AnswerHandler(context);
 			RequestSender sender = new RequestSender(handler);
 			sender.execute(rQueue.getRequests());

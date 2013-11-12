@@ -1,5 +1,6 @@
 package ch.unibe.ese.shopnote.server.core;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -10,8 +11,6 @@ import java.net.Socket;
 /**
  * Driver for the shopping list server
  * It just waits for connections and refers them to new ClientThreads which can be handled in parallel
- * Note: conflicts can occur if you do it in parallel
- * @author Stephan
  *
  */
 public class ShoppingListServer {
@@ -19,7 +18,7 @@ public class ShoppingListServer {
 	/**
 	 * Configuration
 	 */
-	public static boolean WIPE_DATABSE_ON_STARTUP = false;
+	public static boolean WIPE_DATABSE_ON_STARTUP = true;
 	public static boolean REDIRECT_OUTPUT_TO_FILE = false;
 	private static int PORT = 1337;
 	/**
@@ -39,6 +38,12 @@ public class ShoppingListServer {
 			} catch (FileNotFoundException e) {
 				System.err.println("Failed to open serverlog.txt");
 			}
+		}
+		if(WIPE_DATABSE_ON_STARTUP) {
+			File file = new File("shoppinglist.db");
+			file.delete();
+			file = new File("shoppinglist.odb");
+			file.delete();
 		}
 		this.requestHandler = new RequestHandler();
 		this.initServerSocket();
