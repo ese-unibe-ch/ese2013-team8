@@ -19,6 +19,9 @@ import ch.unibe.ese.shopnote.core.Recipe;
 import ch.unibe.ese.shopnote.drawer.NavigationDrawer;
 import ch.unibe.ese.shopnote.R;
 
+/**
+ *	Creates a frame which enlists all recipes and the possibility to manage them
+ */
 public class ManageRecipeActivity extends BaseActivity {
 	private ListManager manager; 
 	private ArrayAdapter<Recipe> recipeAdapter;

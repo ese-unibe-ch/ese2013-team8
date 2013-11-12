@@ -25,9 +25,7 @@ import ch.unibe.ese.shopnote.share.SyncManager;
 import ch.unibe.ese.shopnote.share.requests.FriendRequest;
 
 /**
- * Creates a frame which enlists all friends and the possibility to manage them
- * @author ESE Team 8
- *
+ *	Creates a frame which enlists all friends and the possibility to manage them
  */
 public class ManageFriendsActivity extends BaseActivity {
 	
@@ -125,20 +123,17 @@ public class ManageFriendsActivity extends BaseActivity {
 		}
 	}
 	
-	
 	@Override
 	protected void onPause() {
 		super.onPause();
     	drawMenu.closeDrawers();
 	}
 	
-	
+	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		updateFriendsList();
 	}
-
-
 
 	@Override
 	public void refresh() {

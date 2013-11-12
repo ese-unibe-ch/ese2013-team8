@@ -28,8 +28,9 @@ import ch.unibe.ese.shopnote.drawer.NavigationDrawer;
 import ch.unibe.ese.shopnote.share.SyncManager;
 import ch.unibe.ese.shopnote.share.requests.ShareListRequest;
 
-
-
+/**
+ *	Allows to share/synchronize lists with friends or send them as text message
+ */
 @SuppressLint("NewApi")
 public class ShareListActivity extends BaseActivity {
 
@@ -87,9 +88,7 @@ public class ShareListActivity extends BaseActivity {
 	}
 
 	/**
-	 * creates or updates the autocreation textfield
-	 * 
-	 * @return
+	 *	Creates or updates the autocreation textfield
 	 */
 	private AutoCompleteTextView createAutocomplete() {
 		AutoCompleteTextView textName = (AutoCompleteTextView) findViewById(R.id.editTextName);

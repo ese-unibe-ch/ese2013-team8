@@ -19,6 +19,9 @@ import ch.unibe.ese.shopnote.core.ShoppingList;
 import ch.unibe.ese.shopnote.core.sqlite.SQLiteItemAdapter;
 import ch.unibe.ese.shopnote.core.sqlite.SQLiteShopAdapter;
 
+/**
+ * 	Creates a frame to create new items or edit them if the intent has an extra
+ */
 public class CreateItemActivity extends BaseActivity {
 
 	private ListManager manager;
@@ -40,8 +43,10 @@ public class CreateItemActivity extends BaseActivity {
 		openKeyboard();
 	}
 
+	/**
+	 * Set the values of the textview fields if editing an item
+	 */
 	private void setTextViews() {
-
 		// Set autocompletion adapter for shop
 		AutoCompleteTextView textShop = (AutoCompleteTextView) findViewById(R.id.editTextShop);
 		SQLiteShopAdapter sqliteShopAdapter = new SQLiteShopAdapter(this,
@@ -102,6 +107,9 @@ public class CreateItemActivity extends BaseActivity {
 		textShop.setAdapter(sqliteShopAdapter);
 	}
 
+	/**
+	 * enter item data in edittext fields if editing an item
+	 */
 	private void editItem() {
 		// set name
 		setTextViewText(R.id.editTextName, item.getName());
@@ -127,7 +135,7 @@ public class CreateItemActivity extends BaseActivity {
 
 		setTextViewText(R.id.editTextQuantity, item.getQuantity());
 		
-		//if ListView mode, make last 3 input uneditable
+		// if ListView mode, make last 3 input uneditable as a temporary fix
 		if(itemListView){
 			findViewById(R.id.editTextShop).setEnabled(false);
 			setTextViewText(R.id.editTextShop, "Not editable in this view");
