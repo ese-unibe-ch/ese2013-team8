@@ -10,6 +10,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.view.ActionMode;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -59,7 +60,6 @@ public class HomeActivity extends BaseActivity {
 		getFriendsManager();
 		
 		updateAdapter();
-
 	}
 	
 	private void createDrawerToggle() {
@@ -195,10 +195,17 @@ public class HomeActivity extends BaseActivity {
     	drawMenu.closeDrawers();
 	}
 	
+	@Override
 	public void onResume(){
     	super.onResume();
     	updateAdapter();
     }
+	
+	@Override
+	public void onActionModeFinished(ActionMode mode) {
+		super.onActionModeFinished(mode);
+		updateAdapter();
+	}
 
 	@Override
 	public void refresh() {
