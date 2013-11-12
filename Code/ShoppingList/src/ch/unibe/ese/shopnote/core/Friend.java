@@ -21,7 +21,7 @@ public class Friend extends Entity {
 	}
 
 	public String toString() {
-		return name + ", Phone nr: " + phoneNr;
+		return name + ", " + phoneNr;
 	}
 
 	public String getPhoneNr() {

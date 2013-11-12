@@ -93,7 +93,7 @@ public class ShareListActivity extends BaseActivity {
 	 */
 	private AutoCompleteTextView createAutocomplete() {
 		AutoCompleteTextView textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
-		autocompleteAdapter = new FriendsListAdapter(this,
+		autocompleteAdapter = new ArrayAdapter<Friend>(this,
 				android.R.layout.simple_list_item_1,
 				friendsManager.getFriendsList());
 		textName.setAdapter(autocompleteAdapter);
@@ -204,7 +204,7 @@ public class ShareListActivity extends BaseActivity {
 		StringBuilder sb = new StringBuilder();
 		sb.append(list).append("\n");
 		for (Item item : items) {
-			sb.append(item).append("\n");
+			sb.append("- ").append(item).append("\n");
 		}
 
 		return sb.toString();
