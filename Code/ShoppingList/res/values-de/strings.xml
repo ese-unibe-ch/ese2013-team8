@@ -23,6 +23,7 @@
     <string name="title_activity_create_recipe">Rezept erstellen</string>
     <string name="title_activity_archive">Archiv</string>
     <string name="title_activity_view_recipe">Rezept</string>
+    <string name="title_activity_settings">Einstellungen</string>
 
     <!-- CreateListActivity -->
     <string name="create_list_title">Neue Einkaufsliste erstellen:</string>

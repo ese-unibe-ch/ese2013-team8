@@ -26,7 +26,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		// Show the Up button in the action bar.
 		setupActionBar();
 		
-		//set Listener
+		// set Listener
 		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 		sharedPrefs.registerOnSharedPreferenceChangeListener(this);
 		
@@ -34,6 +34,8 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
         getFragmentManager().beginTransaction()
                 .replace(android.R.id.content, new SettingsFragment())
                 .commit();
+        
+        setTitle(this.getString(R.string.title_activity_settings));
     }
 	
 	/**

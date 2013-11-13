@@ -23,6 +23,7 @@
     <string name="title_activity_create_recipe">Create Recipes</string>
     <string name="title_activity_archive">Archive</string>
     <string name="title_activity_view_recipe">View Recipe</string>
+    <string name="title_activity_settings">Settings</string>
 
     <!-- CreateListActivity -->
     <string name="create_list_title">Add new shopping list:</string>
@@ -103,12 +104,12 @@
     <string name="general_settings">General Settings</string>
     <string name="english">English</string>
     <string name="german">German</string>
-    <string name="language">language</string>
-    <string name="language_dialog">Change the language of the program</string>
+    <string name="language">Language</string>
+    <string name="language_dialog">Change the language of the app</string>
 
     <string-array name="choosable_languages">
-        <item>english</item>
-        <item>german</item>
+        <item>English</item>
+        <item>German</item>
     </string-array>
 
    	<string-array name="choosable_languages_keys">
