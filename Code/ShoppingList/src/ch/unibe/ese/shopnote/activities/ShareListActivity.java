@@ -137,6 +137,7 @@ public class ShareListActivity extends BaseActivity {
 			} else {
 				list.setShared(true);
 			}
+			manager.saveShoppingList(list);
 			// Navigate back to the list
 			finish();
 			return true;
