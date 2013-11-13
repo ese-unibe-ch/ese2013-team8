@@ -13,8 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 /**
- * Adapter for the layout of the ItemList
- *
+ *	Modified ArrayAdapter to display the items including the name, quantity and price (if defined)
  */
 public class ItemListAdapter extends ArrayAdapter<Item> {
 

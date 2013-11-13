@@ -13,10 +13,8 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 /**
- * LayoutAdapter for Shopping lists in {@link HomeActivity}
- *
+ *	Modified ArrayAdapter to display the shopping lists including the (bought) item count
  */
-
 public class ShoppingListAdapter extends ArrayAdapter<ShoppingList> {
 	
 	private List<ShoppingList> shoppingLists;
@@ -62,6 +60,13 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingList> {
 		return convertView;
 	}
 	
+	/**
+	 * Used to display the bought items and total number of items in a shopping
+	 * list on the overview screen.
+	 * 
+	 * @param boughtItems
+	 * @param totalItems
+	 */
 	public void setCount (int boughtItems, int totalItems) {
 		boughtItemCount.add(boughtItems);
 		totalItemCount.add(totalItems);
