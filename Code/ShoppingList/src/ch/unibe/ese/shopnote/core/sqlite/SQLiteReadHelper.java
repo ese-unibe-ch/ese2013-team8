@@ -410,6 +410,24 @@ public class SQLiteReadHelper {
 				null);
 		return (cursor.getCount() >= 1);
 	}
+	
+	/**
+	 * Check if an item is already in a list by using its name (database level)
+	 * 
+	 * @param item
+	 * @param list
+	 * @return true if item is in list
+	 */
+	public boolean isInListByName(Item item, ShoppingList list) {
+		String itemName = item.getName();
+		Long listId = list.getId();
+		Cursor cursor = database.query(SQLiteHelper.TABLE_ITEMTOLIST,
+				SQLiteHelper.ITEMTOLIST_COLUMNS, SQLiteHelper.COLUMN_ITEM_NAME
+						+ "=? AND " + SQLiteHelper.COLUMN_LIST_ID + "=?",
+				new String[] { "" + itemName, "" + listId }, null, null, null,
+				null);
+		return (cursor.getCount() >= 1);
+	}
 
 	/**
 	 * Check if an item is already in db (database level)

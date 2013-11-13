@@ -120,7 +120,7 @@ public class AnswerHandler {
 		// One of your sharing partners has added/changed an item in the lsit
 		case ListChangeRequest.ITEM_REQUEST:
 			if(((ItemRequest)request).isDeleted()) {
-				listManager.removeItemFromList(((ItemRequest)request).getItem(), list);
+				listManager.removeItemFromListByName(((ItemRequest)request).getItem(), list);
 			} else {
 				listManager.addItemToList(((ItemRequest)request).getItem(), list);
 			}

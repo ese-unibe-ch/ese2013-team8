@@ -17,6 +17,7 @@ public class ItemRequest extends ListChangeRequest {
 	public ItemRequest(String phoneNumber, long localListId, Item item) {
 		super(phoneNumber, localListId);
 		this.item = item;
+		this.delete = false;
 	}
 	
 	public Item getItem() {

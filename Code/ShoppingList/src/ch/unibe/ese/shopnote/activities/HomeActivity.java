@@ -60,7 +60,7 @@ public class HomeActivity extends BaseActivity {
 		listmanager = getListManager();
 		syncmanager = getSyncManager();
 		getFriendsManager();
-		
+		syncmanager.addRequest(new RegisterRequest(getMyPhoneNumber()));
 		updateAdapter();
 	}
 	
