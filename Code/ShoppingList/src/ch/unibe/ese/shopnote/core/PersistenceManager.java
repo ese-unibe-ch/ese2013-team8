@@ -52,14 +52,6 @@ public interface PersistenceManager {
 	 * @throws IOException
 	 */
 	void remove(Item item, ShoppingList list);
-	
-	/**
-	 * Removes an already existing item from a list by using its name (unsafe)
-	 * @param item
-	 * @param list
-	 * @throws IOException
-	 */
-	void removeByName(Item item, ShoppingList list);
 
 	/**
 	 * Returns all Items in list

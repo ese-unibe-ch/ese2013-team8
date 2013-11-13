@@ -104,17 +104,6 @@ public class ListManager {
 		items.remove(item);
 		persistenceManager.remove(item, list);
 	}
-	
-	public void removeItemFromListByName(Item item, ShoppingList list) {
-		if (item == null || list == null)
-			throw new IllegalArgumentException("null is not allowed");
-		List<Item> items = listToItems.get(list);
-		for(Item i:items) {
-			if(i.getName() == item.getName())
-				items.remove(i);
-		}
-		persistenceManager.removeByName(item, list);
-	}
 
 	/**
 	 * Gets all Items from this shopping list.

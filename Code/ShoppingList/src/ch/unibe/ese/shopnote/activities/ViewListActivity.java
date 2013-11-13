@@ -93,12 +93,12 @@ public class ViewListActivity extends BaseActivity {
 	        	if(entry.isItem()) {
 	        		Item item = manager.getItem(entry.getId());
 	        		manager.addItemToList(item, list);
-	        		addItemRequestIfShared(item);
+	        		addItemRequestIfShared(item, false);
 	        	} else {
 	        		Recipe recipe = manager.getRecipeAt(entry.getId());
 	        		for (Item item : recipe.getItemList()) {
 						manager.addItemToList(item, list);
-						addItemRequestIfShared(item);
+						addItemRequestIfShared(item, false);
 						itemAdapter.add(item);
 					}
 	        	}
@@ -193,7 +193,7 @@ public class ViewListActivity extends BaseActivity {
 				Item item = itemAdapter.getItem(position);
 				item.setBought(true);
 				manager.addItemToList(item, list);
-				addItemRequestIfShared(item);
+				addItemRequestIfShared(item, true);
 
 				itemAdapter.remove(item);
 				itemBoughtAdapter.add(item);
@@ -229,7 +229,7 @@ public class ViewListActivity extends BaseActivity {
 				Item item = itemBoughtAdapter.getItem(position);
 				item.setBought(false);
 				manager.addItemToList(item, list);
-				addItemRequestIfShared(item);
+				addItemRequestIfShared(item, false);
 				itemBoughtAdapter.remove(item);
 				itemAdapter.add(item);
 				toggleShoppingCart();
@@ -275,7 +275,7 @@ public class ViewListActivity extends BaseActivity {
 					for (Item item : recipe.getItemList()) {
 						item.setBought(false);
 						manager.addItemToList(item, list);
-						addItemRequestIfShared(item);
+						addItemRequestIfShared(item, false);
 						itemAdapter.add(item);
 					}
 				}
@@ -284,7 +284,7 @@ public class ViewListActivity extends BaseActivity {
 		} else {
 			Item item = new Item(name);
 			boolean added = manager.addItemToList(item, list);
-			addItemRequestIfShared(item);
+			addItemRequestIfShared(item, false);
 
 			if (added) {	// refresh view
 				itemAdapter.add(item);
@@ -364,6 +364,12 @@ public class ViewListActivity extends BaseActivity {
 		super.onPause();
 		drawMenu.closeDrawers();
 	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		refresh();
+	}
 
 	/**
 	 *	Hide the shopping cart if it is empty
@@ -381,9 +387,10 @@ public class ViewListActivity extends BaseActivity {
 		}
 	}
 	
-	private void addItemRequestIfShared(Item item) {
+	private void addItemRequestIfShared(Item item, boolean isBought) {
 		if (list.isShared()){
 			ItemRequest irequest = new ItemRequest(getMyPhoneNumber(), list.getId(), item.copy());
+			irequest.setBought(isBought);
 			syncmanager.addRequest(irequest);
 			syncmanager.synchronise(this);
 		}

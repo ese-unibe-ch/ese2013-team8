@@ -150,17 +150,6 @@ public class SQLitePersistenceManager implements PersistenceManager {
 							"" + item.getId(), "" + listId });
 		}
 	}
-	
-	@Override
-	public void removeByName(Item item, ShoppingList list) {
-		Long listId = list.getId();
-		if (readHelper.isInListByName(item, list)) {
-			database.delete(SQLiteHelper.TABLE_ITEMTOLIST,
-					SQLiteHelper.COLUMN_ITEM_NAME + "=? AND "
-							+ SQLiteHelper.COLUMN_LIST_ID + "=?", new String[] {
-							"" + item.getName(), "" + listId });
-		}
-	}
 
 	@Override
 	public void save(Item item) {

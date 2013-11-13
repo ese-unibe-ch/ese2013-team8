@@ -12,12 +12,14 @@ public class ItemRequest extends ListChangeRequest {
 	private static final long serialVersionUID = 7044889552973885929L;
 	
 	private Item item;
-	private boolean delete;
-	
+	private boolean isDeleted;
+	private boolean isBought;
+
 	public ItemRequest(String phoneNumber, long localListId, Item item) {
 		super(phoneNumber, localListId);
 		this.item = item;
-		this.delete = false;
+		this.isDeleted = false;
+		this.isBought = false;
 	}
 	
 	public Item getItem() {
@@ -25,11 +27,19 @@ public class ItemRequest extends ListChangeRequest {
 	}
 	
 	public void setDelete(boolean isDeleted) {
-		this.delete = isDeleted;
+		this.isDeleted = isDeleted;
 	}
 	
 	public boolean isDeleted() {
-		return delete;
+		return isDeleted;
+	}
+	
+	public boolean isBought() {
+		return isBought;
+	}
+
+	public void setBought(boolean isBought) {
+		this.isBought = isBought;
 	}
 
 	@Override

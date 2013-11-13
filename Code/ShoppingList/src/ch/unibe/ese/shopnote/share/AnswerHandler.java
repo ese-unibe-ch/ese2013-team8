@@ -1,6 +1,9 @@
 package ch.unibe.ese.shopnote.share;
 
+import java.util.List;
+
 import android.content.Context;
+import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ShoppingList;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.FriendsManager;
@@ -93,6 +96,7 @@ public class AnswerHandler {
 			long id = list3.getId();
 			((CreateSharedListRequest)request).setLocalListId(id);
 			syncManager.addRequest(request);
+			syncManager.synchronise(context);
 			return;
 			
 		// Those are the general requests concerning the content of a list (name, items, ...)
@@ -119,11 +123,28 @@ public class AnswerHandler {
 			
 		// One of your sharing partners has added/changed an item in the lsit
 		case ListChangeRequest.ITEM_REQUEST:
-			if(((ItemRequest)request).isDeleted()) {
-				listManager.removeItemFromListByName(((ItemRequest)request).getItem(), list);
-			} else {
-				listManager.addItemToList(((ItemRequest)request).getItem(), list);
+			List<Item> itemlist = listManager.getItemsFor(list);
+			Item receivedItem = ((ItemRequest)request).getItem();
+			Item localItem = new Item("dummy");
+			for(Item i: itemlist) {
+				if(i.getName().equals(receivedItem.getName())) {
+					localItem = i;
+					break;
+				}
 			}
+			if (localItem.getName().equals("dummy")) {
+				localItem = ((ItemRequest) request).getItem();
+				listManager.addItemToList(((ItemRequest) request).getItem(),
+						list);
+			}
+			if (((ItemRequest) request).isDeleted()) {
+				listManager.remove(localItem);
+			}
+			if (((ItemRequest) request).isBought()) {
+				localItem.setBought(true);
+				listManager.addItemToList(localItem, list);
+			}
+
 			return;
 		}
 	}
