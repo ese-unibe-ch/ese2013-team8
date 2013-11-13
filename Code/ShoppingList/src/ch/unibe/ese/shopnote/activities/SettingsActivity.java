@@ -10,7 +10,6 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import ch.unibe.ese.shopnote.R;
@@ -78,29 +77,31 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 		if (key.equals("language")) {
-			String newLanguage = sharedPreferences.getString("language", null);
-			Configuration config = new Configuration();
-			
-			Locale locale = config.locale;
-			Log.w("Sprache: ", newLanguage);
-			
-			if(newLanguage.equals("english")) {
-				locale = Locale.ENGLISH; 
-				Log.w("Sprache: ", "ENGLISCH");
-			}
-			else if(newLanguage.equals("german")) {
-				locale = Locale.GERMANY;
-				Log.w("Sprache: ", "DEUTSCH");
-			}
-			
-            Locale.setDefault(locale);
-            config.locale = locale;
-            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+			updateLanguage(sharedPreferences);
             
             //refresh interface
             NavUtils.navigateUpFromSameTask(this);
+            finish();
             startActivity(getIntent());
         }
+	}
+
+	private void updateLanguage(SharedPreferences sharedPreferences) {
+		String newLanguage = sharedPreferences.getString("language", null);
+		Configuration config = new Configuration();
+		
+		Locale locale = config.locale;
+		
+		if(newLanguage.equals("english")) {
+			locale = Locale.ENGLISH; 
+		}
+		else if(newLanguage.equals("german")) {
+			locale = Locale.GERMANY;
+		}
+		
+		Locale.setDefault(locale);
+		config.locale = locale;
+		getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
 	}
 }
 

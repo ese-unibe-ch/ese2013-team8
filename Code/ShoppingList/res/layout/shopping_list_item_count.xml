@@ -7,12 +7,21 @@
 
 	<TextView
 	    android:id="@+id/shopping_list_name"
-	    android:layout_width="fill_parent"
-	    android:layout_height="fill_parent"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
 	    android:onClick="onClick"
 	    android:padding="10dp"
 	    android:textSize="16sp" >
 	</TextView>
+	
+	<ImageView
+		android:id="@+id/shopping_list_isShared"
+		android:layout_width="20dp"
+		android:layout_height="20dp"
+		android:layout_marginTop="12dp"
+	    android:layout_marginLeft="-4dp" 
+	    android:layout_toRightOf="@+id/shopping_list_name" >
+	</ImageView>   
 	
 	<TextView
 	    android:id="@+id/shopping_list_count"

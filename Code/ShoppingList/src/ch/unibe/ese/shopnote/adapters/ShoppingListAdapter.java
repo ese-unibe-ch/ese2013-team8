@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -30,6 +31,7 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingList> {
 	
 	private class ListHolder {
 		TextView name;
+		ImageView isShared;
 		TextView count;
 	}
 	
@@ -42,6 +44,7 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingList> {
 			convertView = mInflater.inflate(R.layout.shopping_list_item_count, null);
 			holder = new ListHolder();
 			holder.name = (TextView) convertView.findViewById(R.id.shopping_list_name);
+			holder.isShared = (ImageView) convertView.findViewById(R.id.shopping_list_isShared);
 			holder.count = (TextView) convertView.findViewById(R.id.shopping_list_count);
 			convertView.setTag(holder);
 		} else {
@@ -50,6 +53,10 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingList> {
 		
 		// set name
 		holder.name.setText(list.toString());
+		
+		// set shared icon
+		if (list.isShared())
+			holder.isShared.setImageResource(R.drawable.ic_action_share);
 
 		//set count
 		if (totalItemCount.get(position) != 0)

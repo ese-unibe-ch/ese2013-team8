@@ -2,15 +2,18 @@ package ch.unibe.ese.shopnote.activities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -48,6 +51,12 @@ public class HomeActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+        //create xml-settings and set values
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, true);
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        updateLanguage(sharedPrefs);
+        
 		setContentView(R.layout.activity_home);
 
 		// Create drawer menu
@@ -56,9 +65,6 @@ public class HomeActivity extends BaseActivity {
 		createDrawerToggle();
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
-        
-        //create xml and default values
-        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
         //create Managers for local lists and synch lists
 		listmanager = getListManager();
@@ -231,5 +237,27 @@ public class HomeActivity extends BaseActivity {
 	    }
 
 	    return super.onKeyDown(keycode, e);
+	}
+	
+	/**
+	 * Sets the language which is chosen by the user in the xml.preferences file
+	 * @param sharedPreferences
+	 */
+	private void updateLanguage(SharedPreferences sharedPreferences) {
+		String newLanguage = sharedPreferences.getString("language", null);
+		Configuration config = new Configuration();
+		
+		Locale locale = config.locale;
+		Log.w("language", newLanguage);
+		if(newLanguage.equals("english")) {
+			locale = Locale.ENGLISH; 
+		}
+		else if(newLanguage.equals("german")) {
+			locale = Locale.GERMANY;
+		}
+		Log.w("language", locale.getLanguage());
+		Locale.setDefault(locale);
+		config.locale = locale;
+		getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
 	}
 }

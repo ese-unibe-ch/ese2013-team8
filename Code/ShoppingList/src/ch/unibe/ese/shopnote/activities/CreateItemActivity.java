@@ -18,7 +18,6 @@ import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.Recipe;
 import ch.unibe.ese.shopnote.core.Shop;
 import ch.unibe.ese.shopnote.core.ShoppingList;
-import ch.unibe.ese.shopnote.share.requests.listchange.ItemRequest;
 
 /**
  * 	Creates a frame to create new items or edit them if the intent has an extra
