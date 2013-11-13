@@ -2,7 +2,7 @@ package ch.unibe.ese.shopnote.activities;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import ch.unibe.ese.shopnote.adapters.ShoppingListAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.ShoppingList;
@@ -15,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -28,9 +27,9 @@ import android.support.v4.widget.DrawerLayout;
 public class ArchiveActivity extends BaseActivity {
 	
 	private ListManager manager;
-	private ArrayAdapter<ShoppingList> listAdapter;
-	List<ShoppingList> shoppingLists;
-	List<ShoppingList> shoppingListsArchived;
+	private ShoppingListAdapter listAdapter;
+	private List<ShoppingList> shoppingLists;
+	private List<ShoppingList> shoppingListsArchived;
 	private Activity archiveActivity = this;
 	private DrawerLayout drawMenu;
 
@@ -63,8 +62,12 @@ public class ArchiveActivity extends BaseActivity {
 			if (list.isArchived())
 				shoppingListsArchived.add(list);
 		
-		listAdapter = new ArrayAdapter<ShoppingList>(this, R.layout.shopping_list_item, shoppingListsArchived);
-		ListView listView = (ListView) findViewById(R.id.ListView);
+		listAdapter = new ShoppingListAdapter(this, R.layout.shopping_list_item, shoppingListsArchived);
+		
+		// calculate boughtItems/totalItems count
+		calculateItemCount(shoppingListsArchived, listAdapter);
+		
+		ListView listView = (ListView) findViewById(R.id.ListView);	
 		listView.setAdapter(listAdapter);
 		
 		addListener(listView);

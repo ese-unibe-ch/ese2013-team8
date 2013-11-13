@@ -1,5 +1,7 @@
 package ch.unibe.ese.shopnote.core;
 
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -8,6 +10,7 @@ import android.telephony.TelephonyManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
+import ch.unibe.ese.shopnote.adapters.ShoppingListAdapter;
 import ch.unibe.ese.shopnote.core.sqlite.SQLitePersistenceManager;
 import ch.unibe.ese.shopnote.share.SyncManager;
 
@@ -162,5 +165,27 @@ public class BaseActivity extends Activity {
 	public void finish() {
 		closeKeyboard();
 		super.finish();
+	}
+	
+	/**
+	 * Calculates the number of bought items and the total number of items in a shopping list
+	 */
+	public void calculateItemCount(List<ShoppingList> lists, ShoppingListAdapter adapter) {
+		for (ShoppingList list: lists) {
+			List<Item> items = getListManager().getItemsFor(list);
+			
+			int boughtItems = 0;
+			int totalItems = 0;
+			
+			if (items != null) {
+				for (Item item: items) {
+					if (item.isBought())
+						boughtItems++;			
+				}
+				totalItems = items.size();
+			}
+			
+			adapter.setCount(boughtItems, totalItems);
+		}
 	}
 }

@@ -19,7 +19,7 @@
 		android:layout_height="fill_parent"
 		android:textColor="@color/gray"
 		android:paddingTop="10dp"
-		android:paddingRight="80dp"
+		android:paddingRight="65dp"
 		android:textSize="16sp"
 		android:gravity="right" >
 	</TextView>
