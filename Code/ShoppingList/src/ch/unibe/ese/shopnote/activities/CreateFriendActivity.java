@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
@@ -135,7 +134,6 @@ public class CreateFriendActivity extends BaseActivity {
 	private void addNewFriend(String name, String nr) {
 		friend = new Friend(nr, name);
 		long id = friendsManager.addFriend(friend);
-		Log.w("ID: ", "" + id);
 		
 		finishTheActivity(id);
 	}

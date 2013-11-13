@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.ActionMode;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -247,15 +246,13 @@ public class HomeActivity extends BaseActivity {
 		String newLanguage = sharedPreferences.getString("language", null);
 		Configuration config = new Configuration();
 		
-		Locale locale = config.locale;
-		Log.w("language", newLanguage);
+		Locale locale = Locale.ENGLISH;
 		if(newLanguage.equals("english")) {
 			locale = Locale.ENGLISH; 
 		}
 		else if(newLanguage.equals("german")) {
 			locale = Locale.GERMANY;
 		}
-		Log.w("language", locale.getLanguage());
 		Locale.setDefault(locale);
 		config.locale = locale;
 		getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
