@@ -30,7 +30,6 @@ public class CreateItemActivity extends BaseActivity {
 	private Recipe recipe;
 	private Item item;
 	private boolean editItem;
-	private boolean itemListView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -164,23 +163,24 @@ public class CreateItemActivity extends BaseActivity {
 			item = new Item(name);
 		else
 			item.setName(name);
-
-		// get shop and set it if necessary
-		String shopName = getTextViewText(R.id.editTextShop);
-		if (!shopName.isEmpty()) {
-			Shop shop = new Shop(shopName);
-			item.setShop(shop);
+		if(list != null) {
+			// get shop and set it if necessary
+			String shopName = getTextViewText(R.id.editTextShop);
+			if (!shopName.isEmpty()) {
+				Shop shop = new Shop(shopName);
+				item.setShop(shop);
+			}
+	
+			// get price and set it if necessary
+			String priceString = getTextViewText(R.id.editTextPrice);
+			if (!priceString.isEmpty()) {
+				BigDecimal price = new BigDecimal(priceString);
+				item.setPrice(price);
+			}
+			
+			String quantity = getTextViewText(R.id.editTextQuantity);
+			item.setQuantity(quantity);	
 		}
-
-		// get price and set it if necessary
-		String priceString = getTextViewText(R.id.editTextPrice);
-		if (!priceString.isEmpty()) {
-			BigDecimal price = new BigDecimal(priceString);
-			item.setPrice(price);
-		}
-		
-		String quantity = getTextViewText(R.id.editTextQuantity);
-		item.setQuantity(quantity);
 
 		// save the item
 		if (list != null) {

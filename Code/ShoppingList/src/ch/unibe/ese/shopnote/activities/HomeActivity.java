@@ -2,11 +2,13 @@ package ch.unibe.ese.shopnote.activities;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.ActionMode;
@@ -54,6 +56,9 @@ public class HomeActivity extends BaseActivity {
 		createDrawerToggle();
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
+        
+        //create xml and default values
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
         //create Managers for local lists and synch lists
 		listmanager = getListManager();
