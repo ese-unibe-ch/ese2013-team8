@@ -38,7 +38,7 @@ public class CreateFriendActivity extends BaseActivity {
 			editFriend(extras);
 		} else {
 			Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
-            startActivityForResult(intent, PICK_CONTACT);		
+            startActivityForResult(intent, PICK_CONTACT);
 		}
 	}
 
@@ -103,6 +103,8 @@ public class CreateFriendActivity extends BaseActivity {
 		
 		if (resultCode == Activity.RESULT_OK && requestCode == PICK_CONTACT) 
 				addChosenFriend(data);
+		else
+			finish();
 	}
 
 	/**
