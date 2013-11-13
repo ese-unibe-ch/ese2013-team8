@@ -124,25 +124,19 @@ public class AnswerHandler {
 		// One of your sharing partners has added/changed an item in the lsit
 		case ListChangeRequest.ITEM_REQUEST:
 			List<Item> itemlist = listManager.getItemsFor(list);
-			Item receivedItem = ((ItemRequest)request).getItem();
-			Item localItem = new Item("dummy");
+			Item receivedItem = ((ItemRequest)request).getItem().copy();
+			Item localItem = receivedItem;
 			for(Item i: itemlist) {
 				if(i.getName().equals(receivedItem.getName())) {
 					localItem = i;
-					break;
 				}
 			}
-			if (localItem.getName().equals("dummy")) {
-				localItem = ((ItemRequest) request).getItem();
-				listManager.addItemToList(((ItemRequest) request).getItem(),
-						list);
-			}
+			System.err.println("isdeleted: " + ((ItemRequest) request).isDeleted());
 			if (((ItemRequest) request).isDeleted()) {
-				listManager.remove(localItem);
-			}
-			if (((ItemRequest) request).isBought()) {
-				localItem.setBought(true);
-				listManager.addItemToList(localItem, list);
+				listManager.removeItemFromList(localItem,list);
+			} else {
+				localItem.setBought(((ItemRequest) request).isBought());
+				listManager.addItemToList(localItem,list);
 			}
 
 			return;
