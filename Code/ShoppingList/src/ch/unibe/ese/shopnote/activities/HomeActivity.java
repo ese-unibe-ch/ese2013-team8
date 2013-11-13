@@ -246,13 +246,18 @@ public class HomeActivity extends BaseActivity {
 		String newLanguage = sharedPreferences.getString("language", null);
 		Configuration config = new Configuration();
 		
-		Locale locale = Locale.ENGLISH;
+		Locale locale; // = Locale.ENGLISH;
+
 		if(newLanguage.equals("english")) {
 			locale = Locale.ENGLISH; 
 		}
 		else if(newLanguage.equals("german")) {
 			locale = Locale.GERMANY;
 		}
+		// detect system language if not set by user
+		else
+			locale = Locale.getDefault();
+			
 		Locale.setDefault(locale);
 		config.locale = locale;
 		getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
