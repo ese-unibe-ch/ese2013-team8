@@ -74,6 +74,9 @@ public class NeodatisDatabaseManager {
 		ArrayList<Request> requests = container.popRequests();
 		database.store(container);
 		database.commit();
+		for(Request r: requests) {
+			r.setSuccessful();
+		}
 		return requests;
 	}
 	

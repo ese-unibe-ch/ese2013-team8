@@ -1,4 +1,4 @@
-package ch.unibe.ese.shopnote.core.sqlite;
+package ch.unibe.ese.shopnote.adapters;
 
 import java.util.List;
 
@@ -9,14 +9,17 @@ import ch.unibe.ese.shopnote.core.ItemRecipeAdapter;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.Recipe;
 
-
-public class SQLiteItemAdapter extends ArrayAdapter<ItemRecipeAdapter> {
+/**
+ * Adapter for autocompletion when you want to add an Item
+ *
+ */
+public class ItemAutocompleteAdapter extends ArrayAdapter<ItemRecipeAdapter> {
 
         private Context context;
         private ListManager manager;
 
         
-        public SQLiteItemAdapter(Context context, int layout, ListManager manager) {
+        public ItemAutocompleteAdapter(Context context, int layout, ListManager manager) {
                 super(context, layout);
                 this.manager = manager;
                 initializeArray();

@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 import ch.unibe.ese.shopnote.R;
+import ch.unibe.ese.shopnote.adapters.ItemAutocompleteAdapter;
 import ch.unibe.ese.shopnote.adapters.ItemListAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Comparators;
@@ -33,9 +34,9 @@ import ch.unibe.ese.shopnote.core.ItemRecipeAdapter;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.Recipe;
 import ch.unibe.ese.shopnote.core.ShoppingList;
-import ch.unibe.ese.shopnote.core.sqlite.SQLiteItemAdapter;
 import ch.unibe.ese.shopnote.drawer.NavigationDrawer;
 import ch.unibe.ese.shopnote.share.SyncManager;
+import ch.unibe.ese.shopnote.share.requests.listchange.ItemRequest;
 
 /**
  *	Displays a single shopping list including the (bought) items
@@ -46,7 +47,7 @@ public class ViewListActivity extends BaseActivity {
 	private SyncManager syncmanager;
 	private ArrayAdapter<Item> itemAdapter;
 	private ArrayAdapter<Item> itemBoughtAdapter;
-	private SQLiteItemAdapter sqliteAdapter;
+	private ItemAutocompleteAdapter sqliteAdapter;
 	private ArrayList<Item>	itemsList;
 	private ArrayList<Item>	itemsBoughtList;
 	private Activity viewListActivity = this;
@@ -79,7 +80,7 @@ public class ViewListActivity extends BaseActivity {
 
 		// Autocompletion
 		AutoCompleteTextView itemName = (AutoCompleteTextView) findViewById(R.id.editTextName);
-		sqliteAdapter = new SQLiteItemAdapter(this, android.R.layout.simple_list_item_1, manager);
+		sqliteAdapter = new ItemAutocompleteAdapter(this, android.R.layout.simple_list_item_1, manager);
 		itemName.setAdapter(sqliteAdapter);
 		
 		itemName.setOnItemClickListener(new OnItemClickListener() {
@@ -92,10 +93,12 @@ public class ViewListActivity extends BaseActivity {
 	        	if(entry.isItem()) {
 	        		Item item = manager.getItem(entry.getId());
 	        		manager.addItemToList(item, list);
+	        		addItemRequestIfShared(item);
 	        	} else {
 	        		Recipe recipe = manager.getRecipeAt(entry.getId());
 	        		for (Item item : recipe.getItemList()) {
 						manager.addItemToList(item, list);
+						addItemRequestIfShared(item);
 						itemAdapter.add(item);
 					}
 	        	}
@@ -190,6 +193,7 @@ public class ViewListActivity extends BaseActivity {
 				Item item = itemAdapter.getItem(position);
 				item.setBought(true);
 				manager.addItemToList(item, list);
+				addItemRequestIfShared(item);
 
 				itemAdapter.remove(item);
 				itemBoughtAdapter.add(item);
@@ -225,6 +229,7 @@ public class ViewListActivity extends BaseActivity {
 				Item item = itemBoughtAdapter.getItem(position);
 				item.setBought(false);
 				manager.addItemToList(item, list);
+				addItemRequestIfShared(item);
 				itemBoughtAdapter.remove(item);
 				itemAdapter.add(item);
 				toggleShoppingCart();
@@ -270,6 +275,7 @@ public class ViewListActivity extends BaseActivity {
 					for (Item item : recipe.getItemList()) {
 						item.setBought(false);
 						manager.addItemToList(item, list);
+						addItemRequestIfShared(item);
 						itemAdapter.add(item);
 					}
 				}
@@ -278,6 +284,7 @@ public class ViewListActivity extends BaseActivity {
 		} else {
 			Item item = new Item(name);
 			boolean added = manager.addItemToList(item, list);
+			addItemRequestIfShared(item);
 
 			if (added) {	// refresh view
 				itemAdapter.add(item);
@@ -310,6 +317,9 @@ public class ViewListActivity extends BaseActivity {
 			//
 			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
 			//
+			if(list.isShared()) {
+				getSyncManager().synchronise(this);
+			}
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
 
@@ -369,6 +379,19 @@ public class ViewListActivity extends BaseActivity {
 			imageView.setVisibility(View.INVISIBLE);
 			textView.setVisibility(View.INVISIBLE);
 		}
+	}
+	
+	private void addItemRequestIfShared(Item item) {
+		if (list.isShared()){
+			ItemRequest irequest = new ItemRequest(getMyPhoneNumber(), list.getId(), item.copy());
+			syncmanager.addRequest(irequest);
+			syncmanager.synchronise(this);
+		}
+	}
+	
+	@Override
+	public void refresh() {
+		this.updateAdapters();
 	}
 
 }

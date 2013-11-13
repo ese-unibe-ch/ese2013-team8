@@ -13,8 +13,6 @@ import ch.unibe.ese.shopnote.core.ShoppingList;
 /**
  * This Class provides usefull functions for reading the database
  * 
- * @author Stephan
- * 
  */
 public class SQLiteReadHelper {
 
@@ -169,6 +167,7 @@ public class SQLiteReadHelper {
 		ShoppingList list = new ShoppingList(cursor.getString(1));
 		list.setId(cursor.getLong(0));
 		list.setArchived(cursor.getInt(2) == 1);
+		list.setShared(cursor.getInt(5) == 1);
 		if (cursor.getLong(3) > 0)
 			list.setDueDate(new Date(cursor.getLong(3)));
 		
@@ -478,7 +477,11 @@ public class SQLiteReadHelper {
 		return false;
 	}
 
-
+	/**
+	 * Checks if a friend is already registered in the local database
+	 * @param friend
+	 * @return
+	 */
 	public boolean isInList(Friend friend) {
 		Cursor cursor = database.query(SQLiteHelper.TABLE_FRIENDS,
 				SQLiteHelper.FRIENDS_COLUMNS, SQLiteHelper.COLUMN_FRIEND_PHONENR

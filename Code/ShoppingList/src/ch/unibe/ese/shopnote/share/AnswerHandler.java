@@ -7,10 +7,12 @@ import ch.unibe.ese.shopnote.core.FriendsManager;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.share.requests.CreateSharedListRequest;
 import ch.unibe.ese.shopnote.share.requests.FriendRequest;
-import ch.unibe.ese.shopnote.share.requests.ListChangeRequest;
-import ch.unibe.ese.shopnote.share.requests.RenameListRequest;
 import ch.unibe.ese.shopnote.share.requests.Request;
 import ch.unibe.ese.shopnote.share.requests.ShareListRequest;
+import ch.unibe.ese.shopnote.share.requests.UnShareListRequest;
+import ch.unibe.ese.shopnote.share.requests.listchange.ItemRequest;
+import ch.unibe.ese.shopnote.share.requests.listchange.ListChangeRequest;
+import ch.unibe.ese.shopnote.share.requests.listchange.RenameListRequest;
 
 /**
  * Gets passed in a RequestSender to listen to its result
@@ -32,59 +34,105 @@ public class AnswerHandler {
 		listManager = this.context.getListManager();
 	}
 	
+	/**
+	 * Sets answers to requests and tells the Handler to handle them accordingly
+	 * @param requests
+	 */
 	public void setRequests(Request... requests) {
 		for (Request r: requests) {
 			if(r.wasSuccessful()) {
 				setConsequences(r);
 			}
 			if(r.isHandled()) {
-				// Maybe there will be a future need 
-				// to report unsuccessful synchronisation
+				// This will be used for error reporting
+				// i.e. Reporting to the user something went wrong (Handled but not successful)
 			} else {
 				syncManager.addRequest(r);
 			}
 		}
 	}
 	
+	/**
+	 * Set consequences for answers on requests
+	 * @param request
+	 */
 	private void setConsequences(Request request) {
 		switch (request.getType()) {
+		
+		// Empty requests are like pings, just say "hello"
+		case Request.EMPTY_REQUEST:
+			return;
+		
+		// Sent a FriendRequest to the server and got the answer if my friend is registered with the app
 		case Request.FRIEND_REQUEST:
 			long friendId = ((FriendRequest)request).getFriendId();
 			friendsManager.setFriendHasApp(friendId);
 			return;
+			
+		// ShareListRequest => List has been successfully shared with my friend
 		case Request.SHARELIST_REQUEST:
 			ShoppingList list = listManager.getShoppingList(((ShareListRequest)request).getListId());
 			list.setShared(true);
 			return;
+			
+		// UnshareListRequest => My friend has been successfully deleted from the sharing list on the server
 		case Request.UNSHARELIST_REQUEST:
-			ShoppingList list2 = listManager.getShoppingList(((ShareListRequest)request).getListId());
+			ShoppingList list2 = listManager.getShoppingList(((UnShareListRequest)request).getListId());
 			if(friendsManager.getSharedFriends(list2).isEmpty()) {
 				list2.setShared(false);
 			}
 			return;
+			
+		// The server asks me to create a new shared list (one that has been shared by another user)
 		case Request.CREATE_SHARED_LIST_REQUEST:
 			String listName = ((CreateSharedListRequest)request).getListName();
-			listManager.saveShoppingList(new ShoppingList(listName));
+			ShoppingList newList = new ShoppingList(listName);
+			newList.setShared(true);
+			listManager.saveShoppingList(newList);
 			ShoppingList list3 = listManager.getShoppingLists().get(listManager.getShoppingLists().size()-1);
 			long id = list3.getId();
 			((CreateSharedListRequest)request).setLocalListId(id);
 			syncManager.addRequest(request);
 			return;
+			
+		// Those are the general requests concerning the content of a list (name, items, ...)
+		// See processListChangeRequest() for further details on how to handle them
 		case Request.LIST_CHANGE_REQUEST:
 			processListChangeRequest((ListChangeRequest)request);
+			return;
 		}
 	}
 	
+	/**
+	 * This method processes all requests that want to change the content or the name of a list
+	 * @param request
+	 */
 	private void processListChangeRequest(ListChangeRequest request) {
 		ShoppingList list = listManager.getShoppingList(request.getLocalListId());
-		switch (request.getType()) {
+		switch (request.getSubType()) {
+		
+		// One of your sharing partners has changed the name of the list
 		case ListChangeRequest.RENAME_LIST_REQUEST:
 			list.setName(((RenameListRequest)request).getNewName());
 			listManager.saveShoppingList(list);
 			return;
+			
+		// One of your sharing partners has added/changed an item in the lsit
+		case ListChangeRequest.ITEM_REQUEST:
+			if(((ItemRequest)request).isDeleted()) {
+				listManager.removeItemFromList(((ItemRequest)request).getItem(), list);
+			} else {
+				listManager.addItemToList(((ItemRequest)request).getItem(), list);
+			}
+			return;
 		}
 	}
 
+	/**
+	 * Calls the refresh method on the activity
+	 * If the activity is already destroyed it simply does nothing (except a little memory leak)
+	 * This is the only method which is called on the UI thread after the communication with the server
+	 */
 	public void updateUI() {
 		context.refresh();
 	}

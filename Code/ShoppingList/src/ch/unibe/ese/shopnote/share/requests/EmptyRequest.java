@@ -1,5 +1,9 @@
 package ch.unibe.ese.shopnote.share.requests;
 
+/**
+ * This request is like a ping, just to say hello
+ *
+ */
 
 public class EmptyRequest extends Request {
 

@@ -21,10 +21,10 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import ch.unibe.ese.shopnote.adapters.ShopAutocompleteAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.ShoppingList;
-import ch.unibe.ese.shopnote.core.sqlite.SQLiteShopAdapter;
 import ch.unibe.ese.shopnote.R;
 
 /**
@@ -82,7 +82,7 @@ public class CreateListActivity extends BaseActivity {
 
 		// set autocompletion and former shop name
 		AutoCompleteTextView textShop = (AutoCompleteTextView) findViewById(R.id.editTextShop);
-		SQLiteShopAdapter sqliteAdapter = new SQLiteShopAdapter(this,
+		ShopAutocompleteAdapter sqliteAdapter = new ShopAutocompleteAdapter(this,
 				android.R.layout.simple_list_item_1);
 		textShop.setAdapter(sqliteAdapter);
 		textShop.setText(list.getShop());

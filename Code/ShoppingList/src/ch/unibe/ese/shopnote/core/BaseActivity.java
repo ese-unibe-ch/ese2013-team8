@@ -25,7 +25,10 @@ public class BaseActivity extends Activity {
 	public static final String EXTRAS_FRIEND_ID = "friendId";
 	public static final String EXTRAS_FRIEND_NAME= "friendName";
 	
-
+	/**
+	 * Returns the singleton ListManager which is responsible for all the shopping lists
+	 * @return ListManager
+	 */
 	public ListManager getListManager() {
 		BaseApplication app = (BaseApplication) this.getApplication();
 		ListManager manager = app.getListManager();
@@ -37,6 +40,10 @@ public class BaseActivity extends Activity {
 		return manager;
 	}
 
+	/**
+	 * Returns the singleton FriendsManager which is responsible for the friends
+	 * @return FriendsManager
+	 */
 	public FriendsManager getFriendsManager() {
 		BaseApplication app = (BaseApplication) this.getApplication();
 		FriendsManager manager = app.getFriendsManager();
@@ -48,6 +55,10 @@ public class BaseActivity extends Activity {
 		return manager;
 	}
 
+	/**
+	 * Returns the singleton SyncManager which is responsible for the communication between app and server
+	 * @return
+	 */
 	public SyncManager getSyncManager() {
 		BaseApplication app = (BaseApplication) this.getApplication();
 		SyncManager manager = app.getSyncManager();
@@ -58,6 +69,10 @@ public class BaseActivity extends Activity {
 		return manager;
 	}
 
+	/**
+	 * Shortcut to display a toast on an activity
+	 * @param text
+	 */
 	public void showToast(String text) {
 		Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
 	}
@@ -108,6 +123,10 @@ public class BaseActivity extends Activity {
 	    return false;
 	}
 	
+	/**
+	 * Shortcut to get the phonenumber of the current device
+	 * @return Phonenumber as String (Or empty String, if it is not supported by your phone)
+	 */
 	public String getMyPhoneNumber() {
 		TelephonyManager tMgr =(TelephonyManager)this.getSystemService(Context.TELEPHONY_SERVICE);
 		String number = tMgr.getLine1Number();
@@ -136,6 +155,9 @@ public class BaseActivity extends Activity {
         imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
 	}
 	
+	/**
+	 * Closes the keyboard and finishes the current activity
+	 */
 	@Override
 	public void finish() {
 		closeKeyboard();

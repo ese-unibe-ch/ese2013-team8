@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import ch.unibe.ese.shopnote.server.database.NeodatisDatabaseManager;
 import ch.unibe.ese.shopnote.server.database.SQLiteDatabaseManager;
 import ch.unibe.ese.shopnote.share.requests.EmptyRequest;
-import ch.unibe.ese.shopnote.share.requests.ListChangeRequest;
 import ch.unibe.ese.shopnote.share.requests.Request;
 import ch.unibe.ese.shopnote.share.requests.ShareListRequest;
 import ch.unibe.ese.shopnote.share.requests.UnShareListRequest;
 import ch.unibe.ese.shopnote.share.requests.CreateSharedListRequest;
+import ch.unibe.ese.shopnote.share.requests.listchange.ListChangeRequest;
 
 /**
  * Forwarding and filtering of Requests
@@ -50,6 +50,9 @@ public class RequestHandler {
 	 */
 	public Request[] handle(Request request) {
 		switch (request.getType()) {
+		// Empty requests are like a ping, they have no real purpose, it's just a "hello"
+		case Request.EMPTY_REQUEST:
+			return returnRequests(request);
 		
 		// User registers itself on the server
 		// Responsible: SQLiteDatabaseManager for creating a userId
@@ -89,23 +92,28 @@ public class RequestHandler {
 		case Request.CREATE_SHARED_LIST_REQUEST:
 			System.out.println("\tCreate Share List Request answer");
 			this.dbManager.assignLocalToServerListId((CreateSharedListRequest)request);
-			return new Request[]{new EmptyRequest("")};
-		
+			return returnRequests(new EmptyRequest(request.getPhoneNumber()));
+			
 		// This are general Requests that ask the user to rename his shopping list, add a new Item, ...
 		// They don't need to be processed by the server, but he needs to translate the localListId of 
 		//	the sending user to the LocalListId of the receiving users
 		case Request.LIST_CHANGE_REQUEST:
 			System.out.println("\tGeneral list change requests");
+			int senderId = dbManager.findUser(request);
 			ArrayList<User> sharedwith = dbManager.getSharedUsers((ListChangeRequest)request);
 			for(User u:sharedwith) {
-				((ListChangeRequest)request).setLocaListId(u.getLocalListid());
-				odbManager.storeRequest(request, u.getUserId());
+				// Cannot send requests to myself
+				if(u.getUserId() != senderId) {
+					((ListChangeRequest)request).setLocaListId(u.getLocalListid());
+					odbManager.storeRequest(request, u.getUserId());
+				}
 			}
-			return returnRequests(request);
+			return returnRequests(new EmptyRequest(request.getPhoneNumber()));
 			
 		default:
-			return returnRequests(request);
+			return returnRequests(new EmptyRequest(request.getPhoneNumber()));
 		}
+
 	}
 	
 	/**

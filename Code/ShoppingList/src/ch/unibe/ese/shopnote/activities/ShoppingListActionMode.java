@@ -13,6 +13,7 @@ import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.ShoppingList;
+import ch.unibe.ese.shopnote.share.requests.listchange.ItemRequest;
 import ch.unibe.ese.shopnote.R;
 
 public class ShoppingListActionMode implements Callback {
@@ -142,6 +143,13 @@ public class ShoppingListActionMode implements Callback {
 			} else {
 				if (selectedList != null) {
 					manager.removeItemFromList(selectedItem, selectedList);
+					// Share the deletion if neccessary
+					if (selectedList.isShared()) {
+						ItemRequest irequest = new ItemRequest(((BaseActivity)activity).getMyPhoneNumber(), selectedList.getId(), selectedItem);
+						irequest.setDelete(true);
+						((BaseActivity)activity).getSyncManager().addRequest(irequest);
+						((BaseActivity)activity).getSyncManager().synchronise((BaseActivity)activity);
+					}
 					ViewListActivity viewListActivity = (ViewListActivity) activity;
 					viewListActivity.updateAdapters();
 				} else {

@@ -1,8 +1,16 @@
 package ch.unibe.ese.shopnote.core;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Item  extends Entity{
+/**
+ * Items can be stored in shopping lists
+ *
+ */
+public class Item  extends Entity implements Serializable {
+
+	private static final long serialVersionUID = -6167160984174824511L;
+	
 	private String name;
 	private BigDecimal price;
 	private Shop shop;
@@ -64,4 +72,14 @@ public class Item  extends Entity{
 	public String toString() {
 		return this.name;
 	}
+
+	public Item copy() {
+		Item copy = new Item(this.name);
+		copy.setBought(this.isBought());
+		copy.setPrice(this.price);
+		copy.setShop(this.shop);
+		copy.setQuantity(this.quantity);
+		return copy;
+	}
+	
 }

@@ -12,6 +12,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+/**
+ * Adapter for the layout of the ItemList
+ *
+ */
 public class ItemListAdapter extends ArrayAdapter<Item> {
 
 private Context context;

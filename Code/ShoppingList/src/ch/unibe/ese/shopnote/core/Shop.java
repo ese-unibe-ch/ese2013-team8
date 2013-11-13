@@ -1,5 +1,9 @@
 package ch.unibe.ese.shopnote.core;
 
+/**
+ * This class represents a shop
+ * Basically it holds just a name
+ */
 public class Shop {
 	private String name;
 

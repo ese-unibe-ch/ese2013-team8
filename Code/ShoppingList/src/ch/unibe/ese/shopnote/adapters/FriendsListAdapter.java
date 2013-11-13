@@ -13,6 +13,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/**
+ * Provides the layout for the friendslist
+ */
 public class FriendsListAdapter extends ArrayAdapter<Friend> {
 
 	private Context context;

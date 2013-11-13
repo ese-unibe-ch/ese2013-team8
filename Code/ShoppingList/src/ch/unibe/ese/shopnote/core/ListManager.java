@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-// TODO: prevent duplicated list names
 
 /**
  * The ListManager is responsible for access to all {@link ShoppingList
@@ -34,6 +33,11 @@ public class ListManager {
 		return Collections.unmodifiableList(shoppingLists);
 	}
 
+	/**
+	 * Get a specific shopping list with unique id
+	 * @param id
+	 * @return Shopping list with id
+	 */
 	public ShoppingList getShoppingList(long id) {
 		for (ShoppingList list : shoppingLists) {
 			if (list.getId() == id)
@@ -61,14 +65,13 @@ public class ListManager {
 	}
 
 	/**
-	 * Fuegt das Item der Shoppinglist hinzu.
+	 * Adds the item to the shoppinglist
 	 * 
 	 * @param item
-	 *            nicht null
+	 *            not null
 	 * @param list
-	 *            nicht null
-	 * @return true falls das Item hinzugefuegt wurde, false sonst (wenn das Item
-	 *         bereits in der Liste ist).
+	 *            not null
+	 * @return true if the item was added (false if it only was updated or not changed at all)
 	 */
 	public boolean addItemToList(Item item, ShoppingList list) {
 		if (item == null || list == null)
@@ -84,6 +87,12 @@ public class ListManager {
 		return false;
 	}
 
+	/**
+	 * Removes an item from this shopping list
+	 * 
+	 * @param item
+	 * @param list
+	 */
 	public void removeItemFromList(Item item, ShoppingList list) {
 		if (item == null || list == null)
 			throw new IllegalArgumentException("null is not allowed");
@@ -134,6 +143,11 @@ public class ListManager {
 		persistenceManager.save(item);
 	}
 	
+	/**
+	 * Get a specific item with unique id
+	 * @param id
+	 * @return item with id
+	 */
 	public Item getItem(Long id) {
 		List<Item> listOfItems = persistenceManager.getAllItems();
 		for(Item item: listOfItems) {

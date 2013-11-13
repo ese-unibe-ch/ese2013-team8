@@ -5,8 +5,6 @@ import java.util.ArrayList;
 /**
  * Class which is used to combine different Items to a recipe
  * 
- * @author ESE TEAM 8
- * 
  */
 public class Recipe extends Entity {
 	private String name;

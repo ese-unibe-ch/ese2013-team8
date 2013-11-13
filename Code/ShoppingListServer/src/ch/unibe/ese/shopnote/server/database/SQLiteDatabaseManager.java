@@ -4,12 +4,12 @@ import java.sql.*;
 import java.util.ArrayList;
 
 import ch.unibe.ese.shopnote.server.core.User;
-import ch.unibe.ese.shopnote.share.requests.ListChangeRequest;
 import ch.unibe.ese.shopnote.share.requests.RegisterRequest;
 import ch.unibe.ese.shopnote.share.requests.CreateSharedListRequest;
 import ch.unibe.ese.shopnote.share.requests.Request;
 import ch.unibe.ese.shopnote.share.requests.ShareListRequest;
 import ch.unibe.ese.shopnote.share.requests.UnShareListRequest;
+import ch.unibe.ese.shopnote.share.requests.listchange.ListChangeRequest;
 
 /**
  * This Class organizes the database on the server.
@@ -128,6 +128,8 @@ public class SQLiteDatabaseManager {
 	 */
 	public int findUser(Request request) {
 		String phoneNumber = request.getPhoneNumber();
+		if (phoneNumber.length()<=0)
+			return -1;
 		Statement stmt;
 		try {
 			stmt = this.c.createStatement();
@@ -153,11 +155,15 @@ public class SQLiteDatabaseManager {
 	public void shareList(ShareListRequest request) {
 		int userId = findUser(request);
 		int friendId = findUser(new RegisterRequest(request.getFriendNumber()));
+		// Cannot share a list with yourself
+		if(friendId == userId)
+			return;
 		String listname = request.getListName();
-		
+		// Cannot share a list with inexistent user
 		if(userId == -1 || friendId == -1)
 			return;
 		long serverListId = createServerListIdifNotExists(userId, request.getListId());
+		// Cannot share a list without global list ID
 		if(serverListId == -1)
 			System.err.println("Failed to find/create global list id");
 		
@@ -199,11 +205,16 @@ public class SQLiteDatabaseManager {
 		int userId = findUser(request);
 		int friendId = findUser(new RegisterRequest(request.getFriendNumber()));
 		long serverListId = getServerListId(userId, request.getListId());
-		
-		if(userId <= -1 || friendId <= -1)
+		// Cannot unshare a list which is shared between inexistent users
+		if(userId <= -1 || friendId <= -1) {
+			System.err.println("Cannot unshare List with non existent users");
 			return;
-		if(serverListId <= -1)
+		}
+		// Cannot unshare a list which is not existent
+		if(serverListId <= -1) {
 			System.err.println("Failed to find global list id");
+			return;
+		}
 		
 		Statement stmt;
 		try {
@@ -236,6 +247,8 @@ public class SQLiteDatabaseManager {
 	 * @return serverListId
 	 */
 	private long createServerListIdifNotExists(int userId, long listId) {
+		if(userId <= -1)
+			throw new IllegalStateException("userId <=-1 not allowed");
 		long serverListId = getServerListId(userId, listId);
 		if (serverListId > -1) {
 			return serverListId;

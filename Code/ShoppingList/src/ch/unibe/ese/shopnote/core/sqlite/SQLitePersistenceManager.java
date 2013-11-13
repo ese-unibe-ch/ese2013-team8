@@ -14,10 +14,8 @@ import ch.unibe.ese.shopnote.core.Recipe;
 import ch.unibe.ese.shopnote.core.ShoppingList;
 
 /**
- * This class provides function to save all lists / items / shops to a SQLite
+ * This class provides function to save all lists / items / shops / recipes to a SQLite
  * database
- * 
- * @author Stephan
  * 
  */
 
@@ -112,14 +110,6 @@ public class SQLitePersistenceManager implements PersistenceManager {
 
 	public ArrayList<Item> getAllItems() {
 		ArrayList<Item> itemList = new ArrayList<Item>();
-//		Cursor cursor = readHelper.getItemCursor();
-//		while (!cursor.isAfterLast()) {
-//			Item item = readHelper.cursorToItem(cursor);
-//			itemList.add(item);
-//			cursor.moveToNext();
-//		}
-		// TODO: Restructer database so that items can be loaded just with the
-		// code above.
 		Cursor cursor = readHelper.getItemTableCursor();
 		while (!cursor.isAfterLast()) {
 			Item item = readHelper.cursorToItemLite(cursor);

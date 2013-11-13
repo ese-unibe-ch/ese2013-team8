@@ -10,8 +10,6 @@ import android.database.sqlite.SQLiteDatabase;
 /**
  * This class provides useful functions for updating the database
  * 
- * @author Stephan
- * 
  */
 public class SQLiteUpdateHelper {
 
@@ -35,6 +33,7 @@ public class SQLiteUpdateHelper {
 		ContentValues values = new ContentValues();
 		values.put(SQLiteHelper.COLUMN_LIST_NAME, list.getName());
 		values.put(SQLiteHelper.COLUMN_LIST_ARCHIVED, list.isArchived() ? 1 : 0);
+		values.put(SQLiteHelper.COLUMN_LIST_SHARED, list.isShared() ? 1 : 0);
 		values.put(SQLiteHelper.COLUMN_LIST_DUEDATE,
 				list.getDueDate() != null ? list.getDueDate().getTime() : null);
 		this.addShopIfNotExistent(list.getShop());
@@ -107,8 +106,6 @@ public class SQLiteUpdateHelper {
 	 */
 	public ContentValues toValue(Recipe recipe) {
 		ContentValues values = new ContentValues();
-//		if(recipe.getId() != null)
-//			values.put(SQLiteHelper.COLUMN_RECIPE_ID, recipe.getId());
 		values.put(SQLiteHelper.COLUMN_RECIPE_NAME, recipe.getName());
 		return values;
 	}

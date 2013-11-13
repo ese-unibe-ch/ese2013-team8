@@ -5,6 +5,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+/**
+ * All SQL definitions of the database (create statements) can be found in this class
+ * It also takes the responsibility to open the database and update it if neccessary
+ */
 public class SQLiteHelper extends SQLiteOpenHelper {
 
 	public static SQLiteHelper instance;
@@ -15,6 +19,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public static final String COLUMN_LIST_NAME = "listname";
 	public static final String COLUMN_LIST_ARCHIVED = "archived";
 	public static final String COLUMN_LIST_DUEDATE = "duedate";
+	public static final String COLUMN_LIST_SHARED = "shared";
 	// Save all Items with an unique name and ID
 	public static final String TABLE_ITEMS = "items";
 	public static final String COLUMN_ITEM_ID = "itemid";
@@ -44,7 +49,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public static final String TABLE_ITEMTORECIPE = "itemtorecipe";
 
 	private static final String DATABASE_NAME = "shoppinglist.db";
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 2;
 
 	// Database creation sql statement
 	// create table for lists
@@ -55,6 +60,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 			+ COLUMN_LIST_ARCHIVED + " integer NOT NULL, "
 			+ COLUMN_LIST_DUEDATE + " integer, " //
 			+ COLUMN_SHOP_ID + " integer, " //
+			+ COLUMN_LIST_SHARED + " integer NOT NULL, "
 			+ "FOREIGN KEY ("+COLUMN_SHOP_ID + ") REFERENCES "
 			+ TABLE_SHOPS + "(" + COLUMN_SHOP_ID + ")"
 			+ ");";
@@ -119,7 +125,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
 	public static String[] LISTS_COLUMNS = { SQLiteHelper.COLUMN_LIST_ID,
 			SQLiteHelper.COLUMN_LIST_NAME, SQLiteHelper.COLUMN_LIST_ARCHIVED,
-			SQLiteHelper.COLUMN_LIST_DUEDATE, SQLiteHelper.COLUMN_SHOP_ID };
+			SQLiteHelper.COLUMN_LIST_DUEDATE, SQLiteHelper.COLUMN_SHOP_ID,
+			SQLiteHelper.COLUMN_LIST_SHARED};
 	public static String[] SHOPS_COLUMNS = { SQLiteHelper.COLUMN_SHOP_ID,
 			SQLiteHelper.COLUMN_SHOP_NAME };
 	public static String[] ITEMS_COLUMNS = { SQLiteHelper.COLUMN_ITEM_ID,
@@ -159,6 +166,13 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 				+ oldVersion + " to " + newVersion
 				+ ", which will destroy all old data");
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_LISTS);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_ITEMS);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_SHOPS);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_ITEMTOLIST);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_FRIENDS);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_FRIENDSTOLIST);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_RECIPES);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_ITEMTORECIPE);
 		onCreate(db);
 	}
 

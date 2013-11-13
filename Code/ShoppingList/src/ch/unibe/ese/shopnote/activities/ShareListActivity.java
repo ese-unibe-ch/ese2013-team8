@@ -26,7 +26,6 @@ import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.ShoppingList;
 import ch.unibe.ese.shopnote.drawer.NavigationDrawer;
 import ch.unibe.ese.shopnote.share.SyncManager;
-import ch.unibe.ese.shopnote.share.requests.FriendRequest;
 import ch.unibe.ese.shopnote.share.requests.ShareListRequest;
 
 /**
@@ -132,6 +131,12 @@ public class ShareListActivity extends BaseActivity {
 		case android.R.id.home:
 			// Try to sync with server
 			syncManager.synchronise(this);
+			// Set the list on shared if there's an entry in the list
+			if(adapter.isEmpty()) {
+				list.setShared(false);
+			} else {
+				list.setShared(true);
+			}
 			// Navigate back to the list
 			finish();
 			return true;

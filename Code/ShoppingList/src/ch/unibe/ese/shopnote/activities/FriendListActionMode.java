@@ -83,9 +83,6 @@ public class FriendListActionMode implements Callback {
 	            	friendsAdapter.notifyDataSetChanged();
             	} else {
             		friendsManager.removeFriendOfList(list, selectedFriend);
-            		UnShareListRequest uslrequest = new UnShareListRequest(((BaseActivity)activity).getMyPhoneNumber(), 
-            				selectedFriend.getPhoneNr(), list.getId());
-            		((BaseActivity)activity).getSyncManager().addRequest(uslrequest);
             	}
 	            	mode.finish(); // Action picked, so close the CAB
 

@@ -12,6 +12,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+/**
+ * LayoutAdapter for Shopping lists in {@link HomeActivity}
+ *
+ */
+
 public class ShoppingListAdapter extends ArrayAdapter<ShoppingList> {
 	
 	private List<ShoppingList> shoppingLists;

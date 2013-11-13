@@ -1,5 +1,10 @@
 package ch.unibe.ese.shopnote.share.requests;
 
+/**
+ * Do the reverse of the ShareListRequest: <br>
+ * Ask the server to delete the entry where your friend is matched to your shopping list
+ *
+ */
 public class UnShareListRequest extends Request {
 
 	private static final long serialVersionUID = 3578967523359694420L;

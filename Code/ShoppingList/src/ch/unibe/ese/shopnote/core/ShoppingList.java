@@ -2,6 +2,12 @@ package ch.unibe.ese.shopnote.core;
 
 import java.util.Date;
 
+/**
+ * This class represents the ShoppingList with it's attributes <br>
+ * It knows nothing about the item it contains. This knowledge is stored in the Listmanager.
+ *
+ */
+
 public class ShoppingList extends Entity{
 	private String name;
 	private Date dueDate;

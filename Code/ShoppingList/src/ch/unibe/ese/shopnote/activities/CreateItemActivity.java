@@ -10,14 +10,15 @@ import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 import ch.unibe.ese.shopnote.R;
+import ch.unibe.ese.shopnote.adapters.ItemAutocompleteAdapter;
+import ch.unibe.ese.shopnote.adapters.ShopAutocompleteAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.Recipe;
 import ch.unibe.ese.shopnote.core.Shop;
 import ch.unibe.ese.shopnote.core.ShoppingList;
-import ch.unibe.ese.shopnote.core.sqlite.SQLiteItemAdapter;
-import ch.unibe.ese.shopnote.core.sqlite.SQLiteShopAdapter;
+import ch.unibe.ese.shopnote.share.requests.listchange.ItemRequest;
 
 /**
  * 	Creates a frame to create new items or edit them if the intent has an extra
@@ -49,7 +50,7 @@ public class CreateItemActivity extends BaseActivity {
 	private void setTextViews() {
 		// Set autocompletion adapter for shop
 		AutoCompleteTextView textShop = (AutoCompleteTextView) findViewById(R.id.editTextShop);
-		SQLiteShopAdapter sqliteShopAdapter = new SQLiteShopAdapter(this,
+		ShopAutocompleteAdapter sqliteShopAdapter = new ShopAutocompleteAdapter(this,
 				android.R.layout.simple_list_item_1);
 		textShop.setAdapter(sqliteShopAdapter);
 		
@@ -94,7 +95,7 @@ public class CreateItemActivity extends BaseActivity {
 		if (!editItem) {
 			// create autocomplete adapter for name
 			AutoCompleteTextView textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
-			SQLiteItemAdapter sqliteItemAdapter = new SQLiteItemAdapter(this,
+			ItemAutocompleteAdapter sqliteItemAdapter = new ItemAutocompleteAdapter(this,
 					android.R.layout.simple_list_item_1, manager);
 			textName.setAdapter(sqliteItemAdapter);
 			textName.setText(name);
@@ -102,7 +103,7 @@ public class CreateItemActivity extends BaseActivity {
 		
 		// Set autocompletion adapter for shop
 		textShop = (AutoCompleteTextView) findViewById(R.id.editTextShop);
-		sqliteShopAdapter = new SQLiteShopAdapter(this,
+		sqliteShopAdapter = new ShopAutocompleteAdapter(this,
 				android.R.layout.simple_list_item_1);
 		textShop.setAdapter(sqliteShopAdapter);
 	}
@@ -114,19 +115,6 @@ public class CreateItemActivity extends BaseActivity {
 		// set name
 		setTextViewText(R.id.editTextName, item.getName());
 
-		// set shop (the one from the list has higher priority
-		// Fail with commented code:
-		// I Add shop to one list
-		// I Add Milk to this list
-		// I create new list with other shop
-		// I Add Milk to this list too
-		// Milk gets assigned the shop of the older list => THERE'S SOMETHING
-		// WRONG (maybe the wrong list was passed to the CreateItemActivity?)
-		// if (list.getShop() != null) {
-		// TextView textShop = (TextView) findViewById(R.id.editTextShop);
-		// textShop.setText(list.getShop().toString());
-		// textShop.setEnabled(false);
-		// } else
 		if (item.getShop() != null)
 			setTextViewText(R.id.editTextShop, item.getShop().toString());
 		
@@ -190,8 +178,9 @@ public class CreateItemActivity extends BaseActivity {
 		item.setQuantity(quantity);
 
 		// save the item
-		if (list != null)
+		if (list != null) {
 			manager.addItemToList(item, list);
+		}
 		else if (recipe != null) {
 			recipe.addItem(item);
 			manager.save(item);

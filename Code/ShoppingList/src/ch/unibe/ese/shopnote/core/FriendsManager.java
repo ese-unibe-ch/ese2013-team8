@@ -3,6 +3,11 @@ package ch.unibe.ese.shopnote.core;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * The FriendsManager provides all information about Friends locally stored on your phone<br>
+ * He knows which friend is assigned to which shoppinglist.
+ *
+ */
 public class FriendsManager {
 	private List<Friend> friendsList;
 	private PersistenceManager persistenceManager;
@@ -82,6 +87,11 @@ public class FriendsManager {
 		return null;
 	}
 	
+	/**
+	 * Get all friends which are assigned to this shoppinglist
+	 * @param list
+	 * @return
+	 */
 	public List<Friend> getSharedFriends(ShoppingList list) {
 		return persistenceManager.getSharedFriends(list);
 	}
@@ -107,6 +117,10 @@ public class FriendsManager {
 		persistenceManager.remove(list, friend);
 	}
 	
+	/**
+	 * Mark a friend as app-owner (used by the Syncmanager)
+	 * @param friendId
+	 */
 	public void setFriendHasApp(long friendId) {
 		getFriend(friendId).setHasApp();
 	}

@@ -1,16 +1,21 @@
-package ch.unibe.ese.shopnote.core.sqlite;
+package ch.unibe.ese.shopnote.adapters;
 
+import ch.unibe.ese.shopnote.core.sqlite.SQLiteHelper;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.widget.ArrayAdapter;
 
+/**
+ * AutocompleteAdapter for shops
+ *
+ */
 
-public class SQLiteShopAdapter extends ArrayAdapter<String> {
+public class ShopAutocompleteAdapter extends ArrayAdapter<String> {
 
 	private Context context;
 	
-	public SQLiteShopAdapter(Context context, int layout) {
+	public ShopAutocompleteAdapter(Context context, int layout) {
 		super(context, layout);
 		initializeArray();
 	}

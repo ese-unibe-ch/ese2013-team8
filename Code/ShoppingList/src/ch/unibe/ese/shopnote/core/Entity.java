@@ -1,5 +1,9 @@
 package ch.unibe.ese.shopnote.core;
 
+/**
+ * Base class for everything that gets stored in the SQLite database.
+ *
+ */
 public abstract class Entity {
 	private Long id;
 
@@ -7,6 +11,10 @@ public abstract class Entity {
 		return id;
 	}
 
+	/**
+	 * The ID of each object can only be set once (best time: on creation)
+	 * @param id
+	 */
 	public void setId(long id) {
 		if (this.id != null)
 			throw new IllegalArgumentException(
