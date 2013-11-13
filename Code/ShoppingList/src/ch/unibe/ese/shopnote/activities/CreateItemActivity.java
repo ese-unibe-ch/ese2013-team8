@@ -41,6 +41,7 @@ public class CreateItemActivity extends BaseActivity {
 		manager = getListManager();
 
 		setTextViews();
+		setNotEditable();
 		openKeyboard();
 	}
 
@@ -55,10 +56,10 @@ public class CreateItemActivity extends BaseActivity {
 		textShop.setAdapter(sqliteShopAdapter);
 		
 		Bundle extras = getIntent().getExtras();
-		itemListView = extras.getBoolean(BaseActivity.EXTRAS_ITEM_EDIT); // to edit itemlistview
 		String name = "";
 
 		if (extras != null) {
+			//itemListView = extras.getBoolean(BaseActivity.EXTRAS_ITEM_EDIT); // to edit itemlistview
 			// Create new item from ViewListActivity
 			name = extras.getString(EXTRAS_ITEM_NAME);
 			if ((name != null) && !name.equals("")) {
@@ -107,6 +108,20 @@ public class CreateItemActivity extends BaseActivity {
 				android.R.layout.simple_list_item_1);
 		textShop.setAdapter(sqliteShopAdapter);
 	}
+	
+	/**
+	 * make last 3 input uneditable as a temporary fix if called from ItremList
+	 */
+	private void setNotEditable() {
+		if (list == null) {
+			findViewById(R.id.editTextShop).setEnabled(false);
+			setTextViewText(R.id.editTextShop, "Not editable in this view");
+			findViewById(R.id.editTextPrice).setEnabled(false);
+			setTextViewText(R.id.editTextPrice, "Not editable in this view");
+			findViewById(R.id.editTextQuantity).setEnabled(false);
+			setTextViewText(R.id.editTextQuantity, "Not editable in this view");
+		}
+	}
 
 	/**
 	 * enter item data in edittext fields if editing an item
@@ -122,16 +137,6 @@ public class CreateItemActivity extends BaseActivity {
 			setTextViewText(R.id.editTextPrice, item.getPrice().toString());
 
 		setTextViewText(R.id.editTextQuantity, item.getQuantity());
-		
-		// if ListView mode, make last 3 input uneditable as a temporary fix
-		if(itemListView){
-			findViewById(R.id.editTextShop).setEnabled(false);
-			setTextViewText(R.id.editTextShop, "Not editable in this view");
-			findViewById(R.id.editTextPrice).setEnabled(false);
-			setTextViewText(R.id.editTextPrice, "Not editable in this view");
-			findViewById(R.id.editTextQuantity).setEnabled(false);
-			setTextViewText(R.id.editTextQuantity, "Not editable in this view");
-		}
 	}
 
 	@Override
