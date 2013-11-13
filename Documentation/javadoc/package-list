@@ -1,0 +1,10 @@
+ch.unibe.ese.shopnote.activities
+ch.unibe.ese.shopnote.adapters
+ch.unibe.ese.shopnote.core
+ch.unibe.ese.shopnote.core.sqlite
+ch.unibe.ese.shopnote.drawer
+ch.unibe.ese.shopnote.server.core
+ch.unibe.ese.shopnote.server.database
+ch.unibe.ese.shopnote.share
+ch.unibe.ese.shopnote.share.requests
+ch.unibe.ese.shopnote.share.requests.listchange
