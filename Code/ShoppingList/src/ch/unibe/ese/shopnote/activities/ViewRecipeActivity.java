@@ -88,6 +88,7 @@ public class ViewRecipeActivity extends BaseActivity {
 				R.layout.shopping_list_item, itemsOfRecipe);
 		ListView listView = (ListView) findViewById(R.id.ItemView);
 		listView.setAdapter(itemAdapter);
+		manager.saveRecipe(recipe);
 		
 		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
 
