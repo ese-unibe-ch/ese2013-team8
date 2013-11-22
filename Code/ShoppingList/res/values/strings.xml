@@ -2,8 +2,9 @@
 <resources>
 
     <!-- String insert reference -->
-   		<!-- @string/name -->
-    	<!-- this.getString(R.string.name) -->
+    <!-- @string/name -->
+    <!-- this.getString(R.string.name) -->
+
 
     <!-- Miscellaneous -->
     <string name="app_name">Shopnote</string>
@@ -39,12 +40,12 @@
     <string name="create_item_shop">Shop (optional)</string>
     <string name="create_item_price">Price (optional)</string>
     <string name="create_item_quantity">Quantity (optional)</string>
-    
+
     <!-- CreateRecipeActivity -->
     <string name="create_recipe_title">Add new recipe:</string>
     <string name="edit_recipe_title">Edit recipe:</string>
     <string name="create_recipe_name">Name</string>
-    
+
     <!-- CreateFriendActivity -->
     <string name="add_friend">Add a friend:</string>
     <string name="friend_name">Name</string>
@@ -55,7 +56,7 @@
     <string name="items_bought">Shopping Cart</string>
     <string name="share">Share</string>
     <string name="menu_item_share">Share</string>
-    
+
     <!-- ViewRecipeActivity -->
     <string name="view_recipe_hint">Add Item</string>
     <string name="view_recipe_title">Recipe for</string>
@@ -64,8 +65,15 @@
     <string name="share_list_title">Share</string>
     <string name="share_list_hint">Add Friend</string>
 
-    <!--  ManageFriendsActivity -->
-    <string name ="friend_has_the_app_icon">Appstatus</string>    
+    <!-- ManageFriendsActivity -->
+    <string name="friend_has_the_app_icon">Appstatus</string>
+    
+    <!-- VerifyNumberActivity -->
+    <string name="verify_number_info">In order to use the synchronisation you need to verify your phonenumber. 
+        \nShopNote will send a one time SMS to your phone.
+        \n(Carrier SMS charges may apply)</string>
+    <string name="verify_number_hint">your phonenumber</string>
+    <string name="verify_number_send">verify</string>
     
     <!-- Buttons / Menu items -->
     <string name="button_back">Abort</string>
@@ -86,8 +94,8 @@
     <string name="error_friend">Error, friend not found</string>
     <string name="error_friend_already">Error, friend already added</string>
     <string name="error_enter">Error, please enter correct data</string>
-    
-    <!--  Synchronisation and Connection -->
+
+    <!-- Synchronisation and Connection -->
     <string name="no_connection">No internet connection available</string>
 
     <!-- The navigation drawer -->
@@ -111,12 +119,11 @@
         <item>English</item>
         <item>German</item>
     </string-array>
-
-   	<string-array name="choosable_languages_keys">
+    <string-array name="choosable_languages_keys">
         <item>english</item>
         <item>german</item>
     </string-array>
-    
+
     <string name="theme">Theme</string>
     <string name="theme_dialog">Change the colors of the interface</string>
     <string name="standard">standard</string>
@@ -125,5 +132,8 @@
         <item>default</item>
         <item>dark</item>
     </string-array>
+
+    <string name="title_activity_verify_numer">VerifyNumerActivity</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>
