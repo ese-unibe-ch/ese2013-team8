@@ -20,6 +20,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public static final String COLUMN_LIST_ARCHIVED = "archived";
 	public static final String COLUMN_LIST_DUEDATE = "duedate";
 	public static final String COLUMN_LIST_SHARED = "shared";
+	public static final String COLUMN_LIST_CHANGESCOUNT = "changescount";
 	// Save all Items with an unique name and ID
 	public static final String TABLE_ITEMS = "items";
 	public static final String COLUMN_ITEM_ID = "itemid";
@@ -61,6 +62,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 			+ COLUMN_LIST_DUEDATE + " integer, " //
 			+ COLUMN_SHOP_ID + " integer, " //
 			+ COLUMN_LIST_SHARED + " integer NOT NULL, "
+			+ COLUMN_LIST_CHANGESCOUNT + " integer NOT NULL, "
 			+ "FOREIGN KEY ("+COLUMN_SHOP_ID + ") REFERENCES "
 			+ TABLE_SHOPS + "(" + COLUMN_SHOP_ID + ")"
 			+ ");";
@@ -126,7 +128,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public static String[] LISTS_COLUMNS = { SQLiteHelper.COLUMN_LIST_ID,
 			SQLiteHelper.COLUMN_LIST_NAME, SQLiteHelper.COLUMN_LIST_ARCHIVED,
 			SQLiteHelper.COLUMN_LIST_DUEDATE, SQLiteHelper.COLUMN_SHOP_ID,
-			SQLiteHelper.COLUMN_LIST_SHARED};
+			SQLiteHelper.COLUMN_LIST_SHARED, SQLiteHelper.COLUMN_LIST_CHANGESCOUNT};
 	public static String[] SHOPS_COLUMNS = { SQLiteHelper.COLUMN_SHOP_ID,
 			SQLiteHelper.COLUMN_SHOP_NAME };
 	public static String[] ITEMS_COLUMNS = { SQLiteHelper.COLUMN_ITEM_ID,

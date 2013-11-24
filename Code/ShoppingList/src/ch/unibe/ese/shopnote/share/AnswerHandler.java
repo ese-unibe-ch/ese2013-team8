@@ -147,6 +147,7 @@ public class AnswerHandler {
 			}
 			
 			list.setChangesCount(changesCount);
+			listManager.saveShoppingList(list);
 
 			return;
 		}

@@ -124,6 +124,7 @@ public class ViewListActivity extends BaseActivity {
 		
 		// reset change count notification
 		list.setChangesCount(0);
+		manager.saveShoppingList(list);
 	}
 
 	/**
@@ -350,7 +351,7 @@ public class ViewListActivity extends BaseActivity {
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
 		case R.id.action_refresh:
-			syncmanager.synchronise(this);
+			syncmanager.synchronise(this);	
 			return true;
 		}
 
