@@ -121,7 +121,7 @@ public class AnswerHandler {
 			listManager.saveShoppingList(list);
 			return;
 			
-		// One of your sharing partners has added/changed an item in the lsit
+		// One of your sharing partners has added/changed an item in the list
 		case ListChangeRequest.ITEM_REQUEST:
 			List<Item> itemlist = listManager.getItemsFor(list);
 			Item receivedItem = ((ItemRequest)request).getItem().copy();
@@ -132,12 +132,21 @@ public class AnswerHandler {
 				}
 			}
 			System.err.println("isdeleted: " + ((ItemRequest) request).isDeleted());
+			
+			// set change notification count
+			int changesCount = list.getChangesCount();
+			
 			if (((ItemRequest) request).isDeleted()) {
 				listManager.removeItemFromList(localItem,list);
-			} else {
+				changesCount++;
+			} 
+			else {
 				localItem.setBought(((ItemRequest) request).isBought());
 				listManager.addItemToList(localItem,list);
+				changesCount++;
 			}
+			
+			list.setChangesCount(changesCount);
 
 			return;
 		}

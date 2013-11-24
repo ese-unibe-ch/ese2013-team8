@@ -121,6 +121,9 @@ public class ViewListActivity extends BaseActivity {
 				return false;
 			}
 		});
+		
+		// reset change count notification
+		list.setChangesCount(0);
 	}
 
 	/**

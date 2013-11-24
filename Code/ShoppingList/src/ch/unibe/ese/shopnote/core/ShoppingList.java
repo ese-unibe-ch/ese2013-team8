@@ -14,6 +14,7 @@ public class ShoppingList extends Entity{
 	private String shop;
 	private boolean archived;
 	private boolean shared;
+	private int changesCount;
 
 	/**
 	 * @param name
@@ -67,6 +68,14 @@ public class ShoppingList extends Entity{
 	
 	public void setShared(boolean shared) {
 		this.shared = shared;
+	}
+	
+	public int getChangesCount() {
+		return changesCount;
+	}
+	
+	public void setChangesCount(int changesCount) {
+		this.changesCount = changesCount;
 	}
 
 	private void invariant() {

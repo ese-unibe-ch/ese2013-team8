@@ -27,11 +27,23 @@
 	    android:id="@+id/shopping_list_count"
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent"
-	    android:onClick="onClick"
 	    android:textColor="@color/gray"
+	    android:layout_toLeftOf="@+id/shopping_list_notification"
 	    android:gravity="right"
 	    android:padding="10dp"
 	    android:textSize="16sp" >
+	</TextView>
+	
+	<TextView
+	    android:id="@+id/shopping_list_notification"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:textColor="@color/white"
+	    android:background="@color/androidgreen"
+	    android:layout_alignParentRight="true"
+	    android:padding="10dp"
+	    android:textSize="16sp"
+	    android:visibility="gone" >
 	</TextView>
 	
 </RelativeLayout>
