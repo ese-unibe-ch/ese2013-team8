@@ -6,7 +6,7 @@
     	<!-- this.getString(R.string.name) -->
 
     <!-- Miscellaneous -->
-    <string name="app_name">Shopnote</string>
+    <string name="app_name">ShopNote</string>
     <string name="action_settings">Einstellungen</string>
     <string name="btn_cancel">Abbrechen</string>
     <string name="btn_done">Ok</string>
@@ -92,6 +92,7 @@
 
     <!-- The navigation drawer -->
     <string-array name="navigation_items">
+        <item>Übersicht</item>
         <item>Item-Liste</item>
         <item>Rezepte</item>
         <item>Freunde</item>

@@ -46,22 +46,26 @@ public class DrawerAdapter extends ArrayAdapter<String> {
 		
 		switch(position+1){
 		case 1:
+			// set Home icon
+			holder.icon.setImageResource(R.drawable.ic_action_home);
+			break;
+		case 2:
 			// set ItemList icon
 			holder.icon.setImageResource(R.drawable.ic_action_list);
 			break;
-		case 2:
+		case 3:
 			// set Recipe icon
 			holder.icon.setImageResource(R.drawable.ic_action_favorite);
 			break;
-		case 3:
+		case 4:
 			// set Friends icon
 			holder.icon.setImageResource(R.drawable.ic_action_friends);
 			break;
-		case 4: 
+		case 5: 
 			// set Archive icon
 			holder.icon.setImageResource(R.drawable.ic_action_archive);
 			break;
-		case 5:
+		case 6:
 			// set Settings icon
 			holder.icon.setImageResource(R.drawable.ic_action_settings);
 			break;	

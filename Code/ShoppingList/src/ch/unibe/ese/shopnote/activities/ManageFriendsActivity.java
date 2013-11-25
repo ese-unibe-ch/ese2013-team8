@@ -1,13 +1,9 @@
 package ch.unibe.ese.shopnote.activities;
 
-
 import java.util.ArrayList;
 import java.util.List;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,7 +16,6 @@ import ch.unibe.ese.shopnote.adapters.FriendsListAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Friend;
 import ch.unibe.ese.shopnote.core.FriendsManager;
-import ch.unibe.ese.shopnote.drawer.NavigationDrawer;
 import ch.unibe.ese.shopnote.share.SyncManager;
 import ch.unibe.ese.shopnote.share.requests.FriendRequest;
 
@@ -32,7 +27,6 @@ public class ManageFriendsActivity extends BaseActivity {
 	private FriendsManager friendsManager;
 	private SyncManager syncManager;
 	private ArrayAdapter<Friend> friendsAdapter;
-	private DrawerLayout drawMenu;
 
 	@Override
 	/**
@@ -48,10 +42,12 @@ public class ManageFriendsActivity extends BaseActivity {
 		syncManager = getSyncManager();
 		
 		// Create drawer menu
-		NavigationDrawer nDrawer = new NavigationDrawer();
-		drawMenu = nDrawer.constructNavigationDrawer(drawMenu, this);
+		createDrawerMenu();
+		createDrawerToggle();
 		
 		updateFriendsList();
+		
+		setTitle(this.getString(R.string.title_activity_manage_friends));
 	}
 	
 	/**
@@ -102,18 +98,13 @@ public class ManageFriendsActivity extends BaseActivity {
 	}
 	
 	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Pass the event to ActionBarDrawerToggle, if it returns
+	    // true, then it has handled the app icon touch event
+	    if (drawerToggle.onOptionsItemSelected(item))
+	    	return true;
+	    
 		// Handle presses on the action bar items
 		switch (item.getItemId()) {
-		case android.R.id.home:
-			// This ID represents the Home or Up button. In the case of this
-			// activity, the Up button is shown. Use NavUtils to allow users
-			// to navigate up one level in the application structure. For
-			// more details, see the Navigation pattern on Android Design:
-			//
-			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
-			//
-			NavUtils.navigateUpFromSameTask(this);
-			return true;
 		case R.id.action_new:
 			Intent intent = new Intent(this, CreateFriendActivity.class);
 			this.startActivity(intent);
