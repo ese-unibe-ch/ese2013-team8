@@ -74,13 +74,12 @@
 
         <EditText
             android:id="@+id/editTextName"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/textViewTitle"
-            android:layout_marginLeft="14dp"
+            android:layout_marginLeft="70dp"
             android:layout_marginTop="14dp"
-            android:layout_toRightOf="@+id/textViewName"
             android:ems="10"
             android:inputType="textCapSentences" >
             <requestFocus />
@@ -99,15 +98,16 @@
 
         <EditText
             android:id="@+id/editTextDate"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/textViewDate"
-            android:layout_alignRight="@+id/editTextName"
-            android:layout_marginLeft="14dp"
-            android:layout_toRightOf="@+id/textViewDate"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/editTextName"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="14dp"
             android:ems="10"
             android:focusable="false"
             android:inputType="date"
+            android:hint="@string/create_optional_hint"
             android:onClick="showDatePickerDialog" />
 
         <!-- Shop -->
@@ -123,13 +123,15 @@
         
         <AutoCompleteTextView
             android:id="@+id/editTextShop"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/textViewShop"
-            android:layout_alignLeft="@+id/editTextDate"
             android:layout_alignParentRight="true"
+            android:layout_below="@+id/editTextDate"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="14dp"
             android:ems="10"
             android:inputType="textCapSentences"
+            android:hint="@string/create_optional_hint"
             android:completionThreshold="1" />
 
     </RelativeLayout>

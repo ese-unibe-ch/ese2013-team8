@@ -74,13 +74,12 @@
 
         <EditText
             android:id="@+id/editRecipeName"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/textViewTitle"
-            android:layout_marginLeft="14dp"
+            android:layout_marginLeft="70dp"
             android:layout_marginTop="14dp"
-            android:layout_toRightOf="@+id/recipeName"
             android:ems="10"
             android:inputType="textCapSentences">
             <requestFocus />

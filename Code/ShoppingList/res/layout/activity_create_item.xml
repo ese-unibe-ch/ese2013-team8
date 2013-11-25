@@ -74,19 +74,17 @@
 
         <AutoCompleteTextView
             android:id="@+id/editTextName"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/textViewTitle"
-            android:layout_marginLeft="14dp"
+            android:layout_marginLeft="70dp"
             android:layout_marginTop="14dp"
-            android:layout_toRightOf="@+id/textViewName"
             android:ems="10"
             android:completionThreshold="1"
             android:inputType="textCapSentences" >
             <requestFocus />
         </AutoCompleteTextView>
-
 
         <!-- Shop -->
         <TextView
@@ -99,16 +97,17 @@
             android:text="@string/create_item_shop"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-       <AutoCompleteTextView
+        <AutoCompleteTextView
             android:id="@+id/editTextShop"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/textViewShop"
-            android:layout_alignRight="@+id/editTextName"
-            android:layout_marginLeft="14dp"
-            android:layout_toRightOf="@+id/textViewShop"
+			android:layout_alignParentRight="true"
+            android:layout_below="@+id/editTextName"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="14dp"
             android:ems="10"
             android:completionThreshold="1"
+            android:hint="@string/create_optional_hint"
             android:inputType="textCapSentences" >
         </AutoCompleteTextView>
 
@@ -125,12 +124,14 @@
 
         <EditText
             android:id="@+id/editTextPrice"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/textViewPrice"
-            android:layout_alignLeft="@+id/editTextShop"
-            android:layout_alignParentRight="true"
+			android:layout_alignParentRight="true"
+            android:layout_below="@+id/editTextShop"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="14dp"
             android:ems="10"
+            android:hint="@string/create_optional_hint"
             android:inputType="numberDecimal" />
 
         <!-- Quantity -->
@@ -146,13 +147,14 @@
 
         <EditText
             android:id="@+id/editTextQuantity"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/textViewQuantity"
-            android:layout_alignParentRight="true"
-            android:layout_toRightOf="@+id/textViewQuantity"
-            android:layout_marginLeft="14dp"
+			android:layout_alignParentRight="true"
+            android:layout_below="@+id/editTextPrice"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="14dp"
             android:ems="10"
+            android:hint="@string/create_optional_hint"
             android:inputType="textCapSentences" />
 
     </RelativeLayout>
