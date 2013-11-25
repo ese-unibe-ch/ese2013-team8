@@ -41,7 +41,7 @@ public class HomeActivity extends BaseActivity {
 	private ShoppingListAdapter shoppingListAdapter;
 	private Activity homeActivity = this;
 
-	@SuppressLint("NewApi") // TODO: check "problem"
+	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

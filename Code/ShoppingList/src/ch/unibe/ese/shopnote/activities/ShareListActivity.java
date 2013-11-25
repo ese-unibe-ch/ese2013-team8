@@ -54,6 +54,8 @@ public class ShareListActivity extends BaseActivity {
 
 		// Create drawer menu
 		createDrawerMenu();
+		createDrawerToggle(); //to change the title
+		drawerToggle.setDrawerIndicatorEnabled(false);
 
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
@@ -230,5 +232,4 @@ public class ShareListActivity extends BaseActivity {
 		updateFriendsList();
 		createAutocomplete();
 	}
-
 }

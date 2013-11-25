@@ -24,8 +24,7 @@
         
         <AutoCompleteTextView
             android:id="@+id/editTextName"
-            android:layout_marginTop="12dp"
-			android:layout_marginLeft="12dp"
+	    	android:padding="10dp"
             android:background="@android:color/white"
          	android:cacheColorHint="@android:color/white"
             android:layout_width="0dp"          
@@ -59,19 +58,64 @@
             android:src="@drawable/ic_action_ok" />
 
     </LinearLayout>
+    
+	<TextView
+	    android:id="@+id/textItems"
+	    android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:layout_below="@+id/addItem"
+    	android:textColor="@color/gray"
+    	android:layout_marginTop="15dp"
+    	android:layout_marginBottom="2dp"
+	    android:layout_marginLeft="5dp"
+	    android:textSize="16sp" 
+	    android:visibility="gone"
+	    android:text="@string/view_recipe_items" >
+    </TextView>
 
     <ListView
         android:id="@+id/ItemView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/addItem"
+        android:layout_below="@+id/textItems"
         android:layout_marginBottom="0dp"
-        android:layout_marginTop="15dp"
         android:background="@android:color/white"
         android:cacheColorHint="@android:color/white"
         android:divider="#CCCCCC"
         android:dividerHeight="1dp" >
     </ListView>
+    
+    <TextView
+	    android:id="@+id/textNotes"
+	    android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:layout_below="@+id/ItemView"
+    	android:textColor="@color/gray"
+    	android:layout_marginTop="15dp"
+    	android:layout_marginBottom="2dp"
+	    android:layout_marginLeft="5dp"
+	    android:textSize="16sp" 
+	    android:visibility="visible"
+	    android:text="@string/view_recipe_notes" >
+    </TextView>
+	
+    <!-- TODO: Add line background -->
+    <EditText
+        android:id="@+id/editTextNotes"
+	    android:inputType="textMultiLine|textCapSentences"
+	    android:lines="10"
+	    android:minLines="3"
+	    android:gravity="top|left"
+	    android:maxLines="10"
+	    android:layout_height="wrap_content"
+	    android:layout_width="fill_parent"
+	    android:scrollbars="vertical"
+	    android:background="@android:color/white"
+	    android:padding="10dp"
+	    android:layout_marginBottom="0dp"
+	    android:layout_below="@+id/textNotes" 
+	    android:ems="10" >
+    </EditText>
 
 </RelativeLayout>
 

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class Recipe extends Entity {
 	private String name;
 	private ArrayList<Item> itemList;
+	private String notes;
 
 	public Recipe(String name) {
 		if(name.charAt(0) != '/')
@@ -38,7 +39,15 @@ public class Recipe extends Entity {
 	public void setItemList(ArrayList<Item> list) {
 		this.itemList = list;
 	}
+	
+	public String getNotes() {
+		return notes;
+	}
 
+	public void setNotes(String notes) {
+		this.notes = notes;
+	}
+	
 	public void addItem(Item item) {
 		if (!itemList.contains(item))
 			itemList.add(item);
