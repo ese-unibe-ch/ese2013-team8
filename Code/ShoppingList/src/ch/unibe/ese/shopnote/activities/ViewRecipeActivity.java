@@ -6,6 +6,7 @@ import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.Recipe;
+import ch.unibe.ese.shopnote.core.Utility;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -103,6 +104,9 @@ public class ViewRecipeActivity extends BaseActivity {
 				return true;
 			}
 		});
+		
+		// Bugfix, allows to put a ListView in a ScrollView with other objects
+		Utility.setListViewHeightBasedOnChildren(listView);
 	}
 	
 	private AutoCompleteTextView createAutocomplete() {

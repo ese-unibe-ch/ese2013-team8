@@ -35,6 +35,7 @@ import ch.unibe.ese.shopnote.core.ItemRecipeAdapter;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.Recipe;
 import ch.unibe.ese.shopnote.core.ShoppingList;
+import ch.unibe.ese.shopnote.core.Utility;
 import ch.unibe.ese.shopnote.drawer.NavigationDrawer;
 import ch.unibe.ese.shopnote.share.SyncManager;
 import ch.unibe.ese.shopnote.share.requests.listchange.ItemRequest;
@@ -53,7 +54,8 @@ public class ViewListActivity extends BaseActivity {
 	private ArrayList<Item>	itemsBoughtList;
 	private Activity viewListActivity = this;
 	private ShoppingList list;
-	private DrawerLayout drawMenu;
+	private ListView listView;
+	private ListView listViewBought;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +117,7 @@ public class ViewListActivity extends BaseActivity {
 					KeyEvent event) {
 				if (actionId == EditorInfo.IME_ACTION_DONE) {
 					addItem(view);
+					updateAdapters();
 					return true;
 				}
 				return false;
@@ -134,10 +137,14 @@ public class ViewListActivity extends BaseActivity {
 		List<Item> items = manager.getItemsFor(list);
 		separateBoughtItems(items);
 
-		ListView listView = updateItemAdapter();
-		ListView listViewBought = updateItemBoughtAdapter();
+		listView = updateItemAdapter();
+		listViewBought = updateItemBoughtAdapter();
 		addListeners(listView, listViewBought);
 		toggleShoppingCart();
+		
+		// Bugfix, allows to put a ListView in a ScrollView with other objects
+		Utility.setListViewHeightBasedOnChildren(listView);
+		Utility.setListViewHeightBasedOnChildren(listViewBought);
 	}
 
 	private void separateBoughtItems(List<Item> items) {
@@ -182,6 +189,7 @@ public class ViewListActivity extends BaseActivity {
 								ViewListActivity.this.manager, selectedItem,
 								list, ViewListActivity.this.itemAdapter,
 								ViewListActivity.this));
+				updateAdapters();
 				return true;
 			}
 		});
@@ -200,7 +208,7 @@ public class ViewListActivity extends BaseActivity {
 
 				itemAdapter.remove(item);
 				itemBoughtAdapter.add(item);
-				toggleShoppingCart();
+				updateAdapters();
 			}
 		});
 
@@ -218,6 +226,7 @@ public class ViewListActivity extends BaseActivity {
 										selectedItem, list,
 										ViewListActivity.this.itemAdapter,
 										ViewListActivity.this));
+						updateAdapters();
 						return true;
 					}
 				});
@@ -235,7 +244,7 @@ public class ViewListActivity extends BaseActivity {
 				addItemRequestIfShared(item, false);
 				itemBoughtAdapter.remove(item);
 				itemAdapter.add(item);
-				toggleShoppingCart();
+				updateAdapters();
 			}
 		});
 	}
@@ -339,7 +348,7 @@ public class ViewListActivity extends BaseActivity {
 				NavUtils.navigateUpFromSameTask(this);
 				return true;
 			case R.id.action_refresh:
-				syncmanager.synchronise(this);	
+				syncmanager.synchronise(this);
 				return true;
 		}
 
