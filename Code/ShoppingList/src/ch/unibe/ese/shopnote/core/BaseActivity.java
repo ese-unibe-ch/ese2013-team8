@@ -37,6 +37,7 @@ public class BaseActivity extends Activity {
 	protected DrawerLayout drawMenu;
 	protected ActionBarDrawerToggle drawerToggle;
 	private boolean drawerToggleCreated;
+	private String title;
 	
 	/**
 	 * Returns the singleton ListManager which is responsible for all the shopping lists
@@ -213,16 +214,15 @@ public class BaseActivity extends Activity {
                 R.string.app_name  		/* "close drawer" description */
                 ) {
 
-			// At the moment the following two methods are useless, but maybe 
-			// we will want to add stuff later
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
-                //getActionBar().setTitle(R.string.app_name);
+                getActionBar().setTitle(title);
             }
 
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
-                //getActionBar().setTitle(R.string.app_name);
+            	title = (String) getActionBar().getTitle();
+                getActionBar().setTitle(R.string.app_name);
             }
         };
         
