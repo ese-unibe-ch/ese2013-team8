@@ -82,6 +82,7 @@
     <string name="action_edit_list">Liste bearbeiten</string>
     <string name="action_edit_recipe">Rezept bearbeiten</string>
     <string name="action_archive">Archivieren</string>
+    <string name="action_notes">Notizen</string>
 
     <!-- Error messages -->
     <string name="error_name">Bitte einen Namen eingeben</string>

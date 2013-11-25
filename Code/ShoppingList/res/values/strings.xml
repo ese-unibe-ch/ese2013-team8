@@ -90,6 +90,7 @@
     <string name="action_edit_list">Edit List</string>
     <string name="action_edit_recipe">Edit Recipe</string>
     <string name="action_archive">Archive</string>
+    <string name="action_notes">Notes</string>
 
     <!-- Error messages -->
     <string name="error_name">Please enter a name</string>

@@ -199,6 +199,14 @@ public class ViewRecipeActivity extends BaseActivity {
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
 			
+		// Handle presses on the action bar items
+		case R.id.action_notes:
+			// toggle notes visibility state
+			recipe.setNotesVisible(!recipe.isNotesVisible());
+			manager.saveRecipe(recipe);
+			toggleDescription();
+			return true;
+			
 		// Handle presses on overflow menu items
 		case R.id.action_edit_recipe:
         	Intent intentEdit = new Intent(this, CreateRecipeActivity.class);
@@ -219,6 +227,7 @@ public class ViewRecipeActivity extends BaseActivity {
 	private void toggleDescription() {
 		TextView textItems = (TextView) findViewById(R.id.textItems);
 		TextView textNotes = (TextView) findViewById(R.id.textNotes);
+		EditText editTextNotes = (EditText) findViewById(R.id.editTextNotes);
 		
 		// toggle ingredients description text
 		if (!itemAdapter.isEmpty())
@@ -226,8 +235,15 @@ public class ViewRecipeActivity extends BaseActivity {
 		else
 			textItems.setVisibility(View.GONE);
 		
-		// toggle notes description text
-			// TODO
+		// toggle notes description and field
+		if (recipe.isNotesVisible()) {
+			textNotes.setVisibility(View.VISIBLE);
+			editTextNotes.setVisibility(View.VISIBLE);
+		}
+		else {
+			textNotes.setVisibility(View.GONE);
+			editTextNotes.setVisibility(View.GONE);
+		}
 	}
 	
 	@Override

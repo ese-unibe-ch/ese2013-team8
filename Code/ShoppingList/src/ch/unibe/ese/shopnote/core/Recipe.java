@@ -10,6 +10,7 @@ public class Recipe extends Entity {
 	private String name;
 	private ArrayList<Item> itemList;
 	private String notes;
+	private boolean showNotes;
 
 	public Recipe(String name) {
 		if(name.charAt(0) != '/')
@@ -46,6 +47,14 @@ public class Recipe extends Entity {
 
 	public void setNotes(String notes) {
 		this.notes = notes;
+	}
+	
+	public boolean isNotesVisible() {
+		return showNotes;
+	}
+
+	public void setNotesVisible(boolean showNotes) {
+		this.showNotes = showNotes;
 	}
 	
 	public void addItem(Item item) {

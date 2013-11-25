@@ -221,6 +221,8 @@ public class SQLiteReadHelper {
 	public Recipe cursorToRecipe(Cursor cursor) {
 		Recipe recipe = new Recipe(cursor.getString(1));
 		recipe.setId(cursor.getLong(0));
+		recipe.setNotes(cursor.getString(2));
+		recipe.setNotesVisible(cursor.getInt(3) == 1);
 		return recipe;
 	}
 	

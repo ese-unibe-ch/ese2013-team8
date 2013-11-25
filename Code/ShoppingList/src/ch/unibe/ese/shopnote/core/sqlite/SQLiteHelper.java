@@ -41,11 +41,12 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public static final String COLUMN_FRIEND_PHONENR = "friendphonenr";
 	// Save friends to synch lists
 	public static final String TABLE_FRIENDSTOLIST = "friendstolist";
-
 	// Save all recipes with an unique id and name
 	public static final String TABLE_RECIPES = "recipelist";
 	public static final String COLUMN_RECIPE_ID = "recipeid";
 	public static final String COLUMN_RECIPE_NAME = "recipename";
+	public static final String COLUMN_RECIPE_NOTES = "recipenotes";
+	public static final String COLUMN_RECIPE_SHOWNOTES = "recipeshownotes";
 	// Save all items to recipeid of a recipe
 	public static final String TABLE_ITEMTORECIPE = "itemtorecipe";
 
@@ -113,7 +114,9 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	private static final String DATABASE_CREATE_TABLE_RECIPE =
 			"create table " + TABLE_RECIPES + "("
 			+ COLUMN_RECIPE_ID + " integer primary key autoincrement, "
-			+ COLUMN_RECIPE_NAME + " text NOT NULL "
+			+ COLUMN_RECIPE_NAME + " text NOT NULL, "
+			+ COLUMN_RECIPE_NOTES + " text, "
+			+ COLUMN_RECIPE_SHOWNOTES + " integer NOT NULL "
 			+ ");";
 	private static final String DATABASE_CREATE_TABLE_ITEMTORECIPE =
 			"create table " + TABLE_ITEMTORECIPE + "("
@@ -141,7 +144,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public static String[] FRIENDSTOLIST_COLUMNS = {SQLiteHelper.COLUMN_LIST_ID,
 			SQLiteHelper.COLUMN_FRIEND_ID};
 	public static String[] RECIPE_COLUMNS = { SQLiteHelper.COLUMN_RECIPE_ID,
-			SQLiteHelper.COLUMN_RECIPE_NAME };
+			SQLiteHelper.COLUMN_RECIPE_NAME, SQLiteHelper.COLUMN_RECIPE_NOTES,
+			SQLiteHelper.COLUMN_RECIPE_SHOWNOTES};
 	public static String[] ITEMTORECIPE_COLUMNS = {
 			SQLiteHelper.COLUMN_RECIPE_ID, SQLiteHelper.COLUMN_ITEM_ID };
 

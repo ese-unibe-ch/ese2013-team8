@@ -108,6 +108,8 @@ public class SQLiteUpdateHelper {
 	public ContentValues toValue(Recipe recipe) {
 		ContentValues values = new ContentValues();
 		values.put(SQLiteHelper.COLUMN_RECIPE_NAME, recipe.getName());
+		values.put(SQLiteHelper.COLUMN_RECIPE_NOTES, recipe.getNotes());
+		values.put(SQLiteHelper.COLUMN_RECIPE_SHOWNOTES, recipe.isNotesVisible());
 		return values;
 	}
 	

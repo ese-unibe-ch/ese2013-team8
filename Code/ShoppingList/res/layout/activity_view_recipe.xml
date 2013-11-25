@@ -122,6 +122,7 @@
 			    android:padding="10dp"
 			    android:layout_marginBottom="10dp"
 			    android:layout_below="@+id/textNotes" 
+			    android:visibility="visible"
 			    android:ems="10" >
 		    </EditText>
 		    
