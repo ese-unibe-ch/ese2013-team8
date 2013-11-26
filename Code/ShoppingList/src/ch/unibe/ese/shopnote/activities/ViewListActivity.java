@@ -300,6 +300,7 @@ public class ViewListActivity extends BaseActivity {
 		// remove text from field
 		textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
 		textName.setText("");
+		updateAdapters();
 	}
 
 	@Override
@@ -349,6 +350,9 @@ public class ViewListActivity extends BaseActivity {
 				return true;
 			case R.id.action_refresh:
 				syncmanager.synchronise(this);
+				// reset change count notification
+				list.setChangesCount(0);
+				manager.saveShoppingList(list);
 				return true;
 		}
 
