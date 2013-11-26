@@ -1,14 +1,5 @@
 package ch.unibe.ese.shopnote.activities;
 
-import com.google.i18n.phonenumbers.NumberParseException;
-import com.google.i18n.phonenumbers.PhoneNumberUtil;
-import com.google.i18n.phonenumbers.PhoneNumberUtil.PhoneNumberFormat;
-import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
-
-import ch.unibe.ese.shopnote.R;
-import ch.unibe.ese.shopnote.core.BaseActivity;
-import ch.unibe.ese.shopnote.share.smsverify.SmsReceiver;
-import ch.unibe.ese.shopnote.share.smsverify.SmsSender;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -19,6 +10,15 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import ch.unibe.ese.shopnote.R;
+import ch.unibe.ese.shopnote.core.BaseActivity;
+import ch.unibe.ese.shopnote.share.smsverify.SmsReceiver;
+import ch.unibe.ese.shopnote.share.smsverify.SmsSender;
+
+import com.google.i18n.phonenumbers.NumberParseException;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.PhoneNumberUtil.PhoneNumberFormat;
+import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
 
 public class VerifyNumberActivity extends BaseActivity {
 
