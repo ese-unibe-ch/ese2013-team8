@@ -12,8 +12,9 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".ViewListActivity" >
-
+    tools:context=".ViewListActivity" 
+    style="@style/BackGroundStandardStyle" >
+    
     <LinearLayout
         android:id="@+id/addItem"
         android:layout_width="match_parent"
@@ -58,6 +59,7 @@
             android:src="@drawable/ic_action_ok" />
 
     </LinearLayout>
+
 
     <ScrollView
 	    android:layout_marginTop="65dp"
@@ -127,8 +129,8 @@
         android:id="@+id/drawer_Linearlayout"
         android:layout_width="240dp"
         android:layout_height="fill_parent"
-        android:background="@color/lightgray"
-        android:layout_gravity="start">
+        android:layout_gravity="start"
+        style="@style/NavigationDrawerStandardStyle" >
 
 	<ListView
         android:id="@+id/left_drawer"

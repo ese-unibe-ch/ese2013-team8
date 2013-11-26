@@ -1,7 +1,7 @@
 package ch.unibe.ese.shopnote.core;
 
-import ch.unibe.ese.shopnote.share.SyncManager;
 import android.app.Application;
+import ch.unibe.ese.shopnote.share.SyncManager;
 
 /**
  * Extension of {@link Application} that provides different managers for the

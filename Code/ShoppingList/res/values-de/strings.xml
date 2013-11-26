@@ -111,6 +111,7 @@
     <string name="german">Deutsch</string>
     <string name="language">Sprache</string>
     <string name="language_dialog">Sprache der App ändern</string>
+    
 
     <string-array name="choosable_languages">
         <item>Englisch</item>
@@ -122,8 +123,9 @@
         <item>german</item>
     </string-array>
 
-    <string name="theme">Design</string>
-    <string name="theme_dialog">Farben des Themes anpassen</string>
+    <string name="theme_settings">Design</string>
+    <string name="color_setting">Farbe</string>
+    <string name="color_dialog">Farben des Themes anpassen</string>
     <string name="standard">Standard</string>
 
     <string-array name="choosable_themes">

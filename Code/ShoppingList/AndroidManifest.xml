@@ -61,7 +61,8 @@
         <activity
             android:name="ch.unibe.ese.shopnote.activities.SettingsActivity"
             android:label="@string/title_activity_options"
-            android:parentActivityName="ch.unibe.ese.shopnote.activities.HomeActivity" >
+            android:parentActivityName="ch.unibe.ese.shopnote.activities.HomeActivity" 
+            android:theme="@style/BackGroundSettingStandardStyle" >
         </activity>
         <activity
             android:name="ch.unibe.ese.shopnote.activities.ManageFriendsActivity"
