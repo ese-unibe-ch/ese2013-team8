@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.adapters.ItemAutocompleteAdapter;
@@ -35,6 +36,10 @@ public class CreateItemActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_item);
+        //set chosen color theme
+		RelativeLayout lo = (RelativeLayout) findViewById(R.id.relativeLayoutCreateItem);
+		updateTheme(lo);
+		
 		// Show the Up button in the action bar.
 		getActionBar().hide();
 		manager = getListManager();

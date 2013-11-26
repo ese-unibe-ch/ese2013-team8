@@ -3,8 +3,6 @@ package ch.unibe.ese.shopnote.core;
 import java.util.Collections;
 import java.util.List;
 
-import android.app.Dialog;
-import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.share.SyncManager;
 import ch.unibe.ese.shopnote.share.requests.FriendRequest;
 
@@ -39,16 +37,20 @@ public class FriendsManager {
 		long id = checkIfDouble(friend);
 		if (id >= 0) return id;
 		
-		//check if friend on server
-		FriendRequest fr = new FriendRequest(friend);
-		syncManager.addRequest(fr);	
-		syncManager.synchronise(baseActivity);
+		if(baseActivity != null)
+			checkIfFriendHasApp(friend);
 		
 		// Add the friend
 		friendsList.add(friend);
 
 		// Save friend to database
 		return persistenceManager.save(friend);
+	}
+
+	private void checkIfFriendHasApp(Friend friend) {
+		FriendRequest fr = new FriendRequest(friend);
+		syncManager.addRequest(fr);	
+		syncManager.synchronise(baseActivity);
 	}
 
 	private long checkIfDouble(Friend friend) {

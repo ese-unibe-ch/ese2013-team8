@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
@@ -40,6 +41,11 @@ public class ViewRecipeActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_recipe);
+        
+		//set chosen color theme
+		RelativeLayout lo = (RelativeLayout) findViewById(R.id.RelativeLayoutViewRecipe);
+		updateTheme(lo);
+		
 		// Show the Up button in the action bar.
 		setupActionBar();
 		

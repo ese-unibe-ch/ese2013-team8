@@ -9,6 +9,7 @@ import android.provider.ContactsContract;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.core.BaseActivity;
@@ -33,6 +34,12 @@ public class CreateFriendActivity extends BaseActivity {
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
 			setContentView(R.layout.activity_create_friend);
+	       
+			//set chosen color theme
+			RelativeLayout lo = (RelativeLayout) findViewById(R.id.relativeLayoutCreateFriend);
+			updateTheme(lo);
+//			this.getCurrentFocus().setBackgroundColor(getResources().getColor(R.color.yellow));
+			
 			getActionBar().hide();
 
 			editFriend(extras);

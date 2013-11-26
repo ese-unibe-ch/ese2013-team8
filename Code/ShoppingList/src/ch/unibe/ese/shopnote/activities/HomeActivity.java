@@ -21,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.adapters.ShoppingListAdapter;
@@ -52,7 +53,11 @@ public class HomeActivity extends BaseActivity {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         updateLanguage(sharedPrefs);
         
-		setContentView(R.layout.activity_home);	
+        //set chosen color theme
+		setContentView(R.layout.activity_home);
+		RelativeLayout lo = (RelativeLayout) findViewById(R.id.RelativeLayoutHome);
+		updateTheme(lo);
+	
 		
 		// Create drawer menu
 		createDrawerMenu();

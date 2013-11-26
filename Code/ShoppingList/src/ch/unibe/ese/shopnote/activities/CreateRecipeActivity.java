@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import ch.unibe.ese.shopnote.core.BaseActivity;
@@ -24,6 +25,10 @@ public class CreateRecipeActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_recipe);
+        //set chosen color theme
+		RelativeLayout lo = (RelativeLayout) findViewById(R.id.relativeLayoutRecipe);
+		updateTheme(lo);
+		
 		getActionBar().hide();
 		
 		manager = getListManager();

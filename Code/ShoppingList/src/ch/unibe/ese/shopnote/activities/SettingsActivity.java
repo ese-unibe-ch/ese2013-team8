@@ -15,6 +15,7 @@ import android.preference.PreferenceScreen;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.RelativeLayout;
 import ch.unibe.ese.shopnote.R;
 
 /**
@@ -80,24 +81,19 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 	 */
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-		if (key.equals("language")) 
+		if (key.equals("language")) {
 			updateLanguage(sharedPreferences);
-		else if(key.equals("color_setting"))
-			updateColor(sharedPreferences);
+		}
+		else if(key.equals("color_setting")) {
+			
+		}   
 		
-            
-            //refresh interface
-            NavUtils.navigateUpFromSameTask(this);
-            finish();
-            startActivity(getIntent());
-        
+		//refresh interface
+        NavUtils.navigateUpFromSameTask(this);
+        finish();
+        startActivity(getIntent());
 	}
 
-	private void updateColor(SharedPreferences sharedPreferences) {
-		String newLanguage = sharedPreferences.getString("color_setting", null);
-	
-		
-	}
 
 	private void updateLanguage(SharedPreferences sharedPreferences) {
 		String newLanguage = sharedPreferences.getString("language", null);

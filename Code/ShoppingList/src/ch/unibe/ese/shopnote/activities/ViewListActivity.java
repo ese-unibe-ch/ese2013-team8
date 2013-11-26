@@ -22,6 +22,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
@@ -61,7 +62,11 @@ public class ViewListActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_list);
-
+       
+		//set chosen color theme
+		RelativeLayout lo = (RelativeLayout) findViewById(R.id.RelativeLayoutViewList);
+		updateTheme(lo);
+		
 		manager = getListManager();
 		syncmanager = getSyncManager();
 
