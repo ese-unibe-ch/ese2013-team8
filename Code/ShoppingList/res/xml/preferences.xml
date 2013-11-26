@@ -31,4 +31,11 @@
         
 	
 	</PreferenceCategory> 
+<!--     
+	<CheckBoxPreference 
+	    android:title="phonenumberapproved" 
+	    android:defaultValue="false"
+	    android:visibility="gone">
+     </CheckBoxPreference>
+-->	      
 </PreferenceScreen>

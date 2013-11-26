@@ -70,7 +70,6 @@ public class HomeActivity extends BaseActivity {
 		listmanager = getListManager();
 		syncmanager = getSyncManager();
 		getFriendsManager();
-		syncmanager.addRequest(new RegisterRequest(getMyPhoneNumber()));
 		updateAdapter();
 	}
 	
@@ -150,6 +149,7 @@ public class HomeActivity extends BaseActivity {
 
 			case R.id.action_refresh:
 				if(isOnline()) {
+					syncmanager.addRequest(new RegisterRequest(getMyPhoneNumber()));
 					syncmanager.synchronise(this);
 				} else {
 					Toast.makeText(this, this.getString(R.string.no_connection),

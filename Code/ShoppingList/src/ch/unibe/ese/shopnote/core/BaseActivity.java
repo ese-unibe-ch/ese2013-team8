@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -13,14 +14,13 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
-import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import ch.unibe.ese.shopnote.R;
+import ch.unibe.ese.shopnote.activities.VerifyNumberActivity;
 import ch.unibe.ese.shopnote.adapters.ShoppingListAdapter;
 import ch.unibe.ese.shopnote.core.sqlite.SQLitePersistenceManager;
 import ch.unibe.ese.shopnote.drawer.NavigationDrawer;
@@ -147,9 +147,14 @@ public class BaseActivity extends Activity {
 	 * @return Phonenumber as String (Or empty String, if it is not supported by your phone)
 	 */
 	public String getMyPhoneNumber() {
-		TelephonyManager tMgr =(TelephonyManager)this.getSystemService(Context.TELEPHONY_SERVICE);
-		String number = tMgr.getLine1Number();
-		return number;
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+		boolean phoneNumberApproved = settings.getBoolean("phonenumberapproved", false);
+		if(!phoneNumberApproved) {
+			Intent intent = new Intent(this, VerifyNumberActivity.class);
+			startActivity(intent);
+		}
+		String phoneNumber = settings.getString("phonenumber", "-1");
+		return phoneNumber;
 	}
 	
 	/**
@@ -261,7 +266,6 @@ public class BaseActivity extends Activity {
 	protected void updateTheme(RelativeLayout layout) {
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 		String colorString = sharedPref.getString("color_setting", "#FFFFFF");
-		Log.w("Color number" , colorString);
 		int color = Color.parseColor(colorString);
 		if(color != -1)
 			layout.setBackgroundColor(color);

@@ -6,9 +6,12 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.preference.PreferenceScreen;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,6 +39,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
                 .commit();
         
         setTitle(this.getString(R.string.title_activity_settings));
+        
     }
 	
 	/**

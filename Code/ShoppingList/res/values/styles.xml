@@ -42,7 +42,7 @@
    
     <!-- NavigationDrawer theme. -->
    <style name="NavigationDrawerStandardStyle" parent="AppBaseTheme" >
-       <item name="android:background">@color/white</item>
+       <item name="android:background">@color/lightgray</item>
    </style>
     
 

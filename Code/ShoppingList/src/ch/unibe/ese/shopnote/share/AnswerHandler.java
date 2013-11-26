@@ -131,7 +131,6 @@ public class AnswerHandler {
 					localItem = i;
 				}
 			}
-			System.err.println("isdeleted: " + ((ItemRequest) request).isDeleted());
 			
 			// set change notification count
 			int changesCount = list.getChangesCount();

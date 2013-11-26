@@ -122,6 +122,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 			"create table " + TABLE_ITEMTORECIPE + "("
 			+ COLUMN_RECIPE_ID + " integer NOT NULL, "
 			+ COLUMN_ITEM_ID + " integer NOT NULL, "
+			+ "PRIMARY KEY (" + COLUMN_RECIPE_ID + ", " + COLUMN_ITEM_ID + "), "
 			+ "FOREIGN KEY (" + COLUMN_RECIPE_ID + ") REFERENCES "
 			+ TABLE_RECIPES + "("+ COLUMN_RECIPE_ID +"), "
 			+ "FOREIGN KEY (" + COLUMN_ITEM_ID + ") REFERENCES "
