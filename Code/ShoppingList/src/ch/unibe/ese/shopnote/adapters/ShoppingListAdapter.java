@@ -57,20 +57,30 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingList> {
 		holder.name.setText(list.toString());
 		
 		// set shared icon
-		if (list.isShared())
+		if (list.isShared()) {
+			holder.isShared.setVisibility(View.VISIBLE);
 			holder.isShared.setImageResource(R.drawable.ic_action_share);
+		}
+		else
+			holder.isShared.setVisibility(View.GONE);	
 
 		// set count
-		if (totalItemCount.get(position) != 0)
+		if (totalItemCount.get(position) != 0) {
+			holder.count.setVisibility(View.VISIBLE);
 			holder.count.setText(
 					boughtItemCount.get(position) + " / " + 
 					totalItemCount.get(position));
+		}
+		else
+			holder.count.setVisibility(View.GONE);
 		
 		// set notification count
 		if (list.getChangesCount() != 0) {
 			holder.notification.setText("" + list.getChangesCount());
 			holder.notification.setVisibility(View.VISIBLE);
 		}
+		else
+			holder.notification.setVisibility(View.GONE);
 		
 		return convertView;
 	}
