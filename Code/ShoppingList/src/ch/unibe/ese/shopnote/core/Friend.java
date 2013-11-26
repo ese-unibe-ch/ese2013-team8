@@ -1,5 +1,10 @@
 package ch.unibe.ese.shopnote.core;
 
+import com.google.i18n.phonenumbers.NumberParseException;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.PhoneNumberUtil.PhoneNumberFormat;
+import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
+
 
 /**
  * Class Friend with two values: phoneNr and name
@@ -14,7 +19,7 @@ public class Friend extends Entity {
 
 	// TODO: add Image of Friend
 	public Friend(String phoneNr, String name) {
-		this.phoneNr = phoneNr;
+		this.phoneNr = formatPhoneNumber(phoneNr);
 		this.name = name;
 		this.hasTheApp = false;
 		invariant();
@@ -56,4 +61,19 @@ public class Friend extends Entity {
 		if (this.name == null || this.name.trim().isEmpty())
 			throw new IllegalStateException("Empty Phone number is not allowed ");
 	}
+	
+	private String formatPhoneNumber(String phoneNr) {
+		PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
+		PhoneNumber phoneNumber = new PhoneNumber();
+		try {
+			phoneNumber = phoneUtil.parse(phoneNr, "CH");
+		} catch (NumberParseException e) {
+			e.printStackTrace();
+		}
+		if(phoneUtil.isValidNumber(phoneNumber)) {
+			phoneNr = phoneUtil.format(phoneNumber, PhoneNumberFormat.E164);
+		}
+		return phoneNr;
+	}
+
 }

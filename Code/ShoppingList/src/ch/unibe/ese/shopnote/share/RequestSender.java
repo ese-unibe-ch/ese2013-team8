@@ -10,6 +10,7 @@ import java.net.SocketAddress;
 import java.net.UnknownHostException;
 
 import android.os.AsyncTask;
+import android.os.Build;
 import ch.unibe.ese.shopnote.share.requests.Request;
 
 /**
@@ -21,7 +22,7 @@ import ch.unibe.ese.shopnote.share.requests.Request;
 public class RequestSender extends AsyncTask<Request, Void, Boolean>{
 	
 	// Server data
-	private String host = "10.0.0.2";
+	private String host;
 	private int port = 1337;
 	
 	private Socket socket;
@@ -31,6 +32,11 @@ public class RequestSender extends AsyncTask<Request, Void, Boolean>{
 	private Request[] answers;
 	
 	public RequestSender(AnswerHandler handler) {
+		if ("sdk".equals( Build.PRODUCT )) {
+			this.host = "10.0.0.2";
+		} else {
+			this.host = "matter2.nine.ch";
+		}
 		this.handler = handler;
 	}
 	

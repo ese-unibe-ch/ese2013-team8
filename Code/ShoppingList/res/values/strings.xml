@@ -95,7 +95,7 @@
         by using the overflow menu in the shopping list.</string>
     
     <!-- VerifyNumberActivity -->
-    <string name="verify_number_info">In order to use the synchronisation you need to verify your phone number. 
+    <string name="verify_number_info">In order to use synchronisation you need to verify your phone number. 
         \nShopNote will send a one time SMS to your phone. 
         (Carrier SMS charges may apply)
         \n\nDepending on your provider this may take up to 20 seconds.</string>

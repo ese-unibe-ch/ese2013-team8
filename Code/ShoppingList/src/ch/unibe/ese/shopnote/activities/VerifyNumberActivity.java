@@ -3,6 +3,7 @@ package ch.unibe.ese.shopnote.activities;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
@@ -24,6 +25,7 @@ public class VerifyNumberActivity extends BaseActivity {
 	private static final String ACTION="android.provider.Telephony.SMS_RECEIVED";
 	private static boolean finished;
 	private SmsReceiver receiver;
+	private Button button;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,13 +46,14 @@ public class VerifyNumberActivity extends BaseActivity {
 	}
 
 	private void setButtonListener() {
-		final Button button = (Button) findViewById(R.id.verify_number_button);
+		this.button = (Button) findViewById(R.id.verify_number_button);
 		button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				if (getTextViewText(R.id.verify_number_text).length() > 0) {
 					VerifyNumberActivity.this.sendToken();
-					button.setEnabled(false);
+					VerifyNumberActivity.this.button.setEnabled(false);
+					VerifyNumberActivity.this.closeKeyboard();
 				} else {
 					showToast(getString(R.string.verify_number_empty));
 				}
@@ -67,14 +70,20 @@ public class VerifyNumberActivity extends BaseActivity {
 		try {
 			phoneNumber = phoneUtil.parse(phoneNumberString, "CH");
 		} catch (NumberParseException e) {
-			Toast.makeText(this, getString(R.string.verify_number_invalid), Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, getString(R.string.verify_number_invalid) + " (parseException)", Toast.LENGTH_SHORT).show();
+			this.button.setEnabled(true);
 		}
 		if(phoneUtil.isValidNumber(phoneNumber)) {
 			phoneNumberString = phoneUtil.format(phoneNumber, PhoneNumberFormat.E164);
 			savePhoneNumberInPreferences(phoneNumberString);
 			new SmsSender(phoneNumberString, this).execute();
+		// If the app is running on an emulator with no valid phonenumber
+		} else if ("sdk".equals( Build.PRODUCT )) {
+			savePhoneNumberInPreferences(phoneNumberString);
+			new SmsSender(phoneNumberString, this).execute();
 		} else {
 			Toast.makeText(this, getString(R.string.verify_number_invalid), Toast.LENGTH_SHORT).show();
+			this.button.setEnabled(true);
 		}
 	}
 
