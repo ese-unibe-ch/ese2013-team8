@@ -21,7 +21,7 @@ import ch.unibe.ese.shopnote.share.requests.Request;
 public class RequestSender extends AsyncTask<Request, Void, Boolean>{
 	
 	// Server data
-	private String host = "matter.nine.ch";
+	private String host = "matter2.nine.ch";
 	private int port = 1337;
 	
 	private Socket socket;
