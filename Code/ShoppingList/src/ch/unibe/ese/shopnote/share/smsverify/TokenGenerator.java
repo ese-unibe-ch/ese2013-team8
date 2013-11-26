@@ -22,20 +22,9 @@ public class TokenGenerator {
 	public String generateToken(String phoneNumber) {
 		TelephonyManager telephonyManager = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
 		String deviceIdText = telephonyManager.getDeviceId();
-		int token = 0;
-		int deviceId = 0;
-		int number = 0;
-		if(deviceIdText.length() > 0) {
-			try {
-				deviceId = Integer.parseInt(deviceIdText);
-				number = Integer.parseInt(phoneNumber);
-			}
-			catch (NumberFormatException e) {
-				e.printStackTrace();
-			}
-			
-			token = (deviceId%10000)+(number%10000);
-		}
+		
+		String token = ""+(deviceIdText+phoneNumber).hashCode();
+		
 		return ""+token;
 	}
 	
