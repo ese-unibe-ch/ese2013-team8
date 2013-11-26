@@ -76,22 +76,30 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 	 */
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-		if (key.equals("language")) {
+		if (key.equals("language")) 
 			updateLanguage(sharedPreferences);
+		else if(key.equals("color_setting"))
+			updateColor(sharedPreferences);
+		
             
             //refresh interface
             NavUtils.navigateUpFromSameTask(this);
             finish();
             startActivity(getIntent());
-        }
+        
+	}
+
+	private void updateColor(SharedPreferences sharedPreferences) {
+		String newLanguage = sharedPreferences.getString("color_setting", null);
+	
+		
 	}
 
 	private void updateLanguage(SharedPreferences sharedPreferences) {
 		String newLanguage = sharedPreferences.getString("language", null);
 		Configuration config = new Configuration();
 		
-		Locale locale = config.locale;
-		
+		Locale locale = config.locale;	
 		if(newLanguage.equals("english")) {
 			locale = Locale.ENGLISH; 
 		}
@@ -103,6 +111,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		config.locale = locale;
 		getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
 	}
+	
 }
 
 class SettingsFragment extends PreferenceFragment {

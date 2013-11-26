@@ -3,7 +3,7 @@
     
      <PreferenceCategory 
         android:title="@string/general_settings"
-        android:key="common_settings">
+        android:key="common_settings" >
         
 		<ListPreference
 	        android:key="language"
@@ -13,19 +13,22 @@
 	        android:entryValues="@array/choosable_languages_keys"
 	        android:defaultValue="@string/english" />
 
-		    <!-- Theme still not integrated
-		<ListPreference
-	        android:key="theme"
-	        android:title="@string/theme"
-	        android:dialogTitle="@string/theme_dialog"
-	        android:entries="@array/choosable_themes"
-	        android:entryValues="@array/choosable_themes"
-	        android:defaultValue="@string/standard" />
-	        
-	        -->
-	    
-	</PreferenceCategory>
-		
+		 <PreferenceScreen
+            android:key="button_theme_setting_key"
+            android:title="@string/theme_settings"
+            android:persistent="false">
+            
+		    <ListPreference
+	        android:key="color_setting"
+	        android:title="@string/color_setting"
+	        android:dialogTitle="@string/color_dialog"
+	        android:entries="@array/default_color_choice_values"
+	        android:entryValues="@array/default_color_choice_values"
+	        android:defaultValue="@color/white" />
     
-    
+
+		     
+        </PreferenceScreen>
+	
+	</PreferenceCategory> 
 </PreferenceScreen>

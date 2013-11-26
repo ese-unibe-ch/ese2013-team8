@@ -114,6 +114,7 @@
     <string name="german">German</string>
     <string name="language">Language</string>
     <string name="language_dialog">Change the language of the app</string>
+    
 
     <string-array name="choosable_languages">
         <item>English</item>
@@ -124,8 +125,9 @@
         <item>german</item>
     </string-array>
 
-    <string name="theme">Theme</string>
-    <string name="theme_dialog">Change the colors of the interface</string>
+    <string name="theme_settings">Theme</string>
+    <string name="color_setting">Color</string>
+    <string name="color_dialog">Change the colors of the interface</string>
     <string name="standard">standard</string>
 
     <string-array name="choosable_themes">

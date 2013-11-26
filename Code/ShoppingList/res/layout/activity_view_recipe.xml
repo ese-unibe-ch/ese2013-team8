@@ -12,7 +12,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".ViewRecipeActivity" >
+    tools:context=".ViewRecipeActivity" 
+    style="@style/BackGroundStandardStyle" >
 
 	<LinearLayout
         android:id="@+id/addItem"
@@ -80,8 +81,8 @@
         android:id="@+id/drawer_Linearlayout"
         android:layout_width="240dp"
         android:layout_height="fill_parent"
-        android:background="@color/lightgray"
-        android:layout_gravity="start">
+        android:layout_gravity="start"
+        style="@style/NavigationDrawerStandardStyle" >
 
 	<ListView
         android:id="@+id/left_drawer"

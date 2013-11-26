@@ -12,7 +12,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".ShareListActivity" >
+    tools:context=".ShareListActivity" 
+    style="BackGroundStandardStyle" >
 
     <LinearLayout
         android:id="@+id/addFriend"
@@ -58,10 +59,10 @@
         android:layout_below="@+id/addFriend"
         android:layout_marginBottom="0dp"
         android:layout_marginTop="15dp"
-        android:background="@android:color/white"
-        android:cacheColorHint="@android:color/white"
         android:divider="#CCCCCC"
-        android:dividerHeight="1dp" >
+        android:dividerHeight="1dp"
+        style="@style/TextViewStandardStyle"  >
+        
     </ListView>
 
 </RelativeLayout>
@@ -71,8 +72,8 @@
         android:id="@+id/drawer_Linearlayout"
         android:layout_width="240dp"
         android:layout_height="fill_parent"
-        android:background="@color/lightgray"
-        android:layout_gravity="start">
+        android:layout_gravity="start"
+        style="@style/NavigationDrawerStandardStyle" >
 
 	<ListView
         android:id="@+id/left_drawer"
