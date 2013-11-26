@@ -80,6 +80,7 @@
     <string name="verify_number_empty">Bitte Telefonnummer eingeben</string>
     <string name="verify_number_successful">Telefonnummer erfolgreich verifiziert!</string>
     <string name="verify_number_failed">Verifizierung fehlgeschlagen</string>
+    <string name="verify_number_invalid">Ungültige Nummer eingegeben</string>
     
     <!-- Buttons / Menu items -->
     <string name="button_back">Abbrechen</string>

@@ -82,6 +82,7 @@
     <string name="verify_number_empty">Please enter your phonenumber</string>
     <string name="verify_number_successful">Phone-number verified successfully</string>
     <string name="verify_number_failed">Verification failed</string>
+    <string name="verify_number_invalid">Invalid number entered</string>
     
     <!-- Buttons / Menu items -->
     <string name="button_back">Abort</string>

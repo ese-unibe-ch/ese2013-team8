@@ -1,5 +1,10 @@
 package ch.unibe.ese.shopnote.activities;
 
+import com.google.i18n.phonenumbers.NumberParseException;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.PhoneNumberUtil.PhoneNumberFormat;
+import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
+
 import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.share.smsverify.SmsReceiver;
@@ -12,6 +17,7 @@ import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 public class VerifyNumberActivity extends BaseActivity {
@@ -53,9 +59,22 @@ public class VerifyNumberActivity extends BaseActivity {
 	}
 	
 	protected void sendToken() {
-		String phoneNumber = getTextViewText(R.id.verify_number_text);
-		savePhoneNumberInPreferences(phoneNumber);
-		new SmsSender(phoneNumber, this).execute();
+		String phoneNumberString = getTextViewText(R.id.verify_number_text);
+		
+		PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
+		PhoneNumber phoneNumber = new PhoneNumber();
+		try {
+			phoneNumber = phoneUtil.parse(phoneNumberString, "CH");
+		} catch (NumberParseException e) {
+			Toast.makeText(this, getString(R.string.verify_number_invalid), Toast.LENGTH_SHORT).show();
+		}
+		if(phoneUtil.isValidNumber(phoneNumber)) {
+			phoneNumberString = phoneUtil.format(phoneNumber, PhoneNumberFormat.E164);
+			savePhoneNumberInPreferences(phoneNumberString);
+			new SmsSender(phoneNumberString, this).execute();
+		} else {
+			Toast.makeText(this, getString(R.string.verify_number_invalid), Toast.LENGTH_SHORT).show();
+		}
 	}
 
 	private void savePhoneNumberInPreferences(String phoneNumber) {
@@ -85,8 +104,8 @@ public class VerifyNumberActivity extends BaseActivity {
         		Toast.makeText(this, getString(R.string.verify_number_failed), Toast.LENGTH_SHORT).show();
         	}
         	finished = true;
+        	this.finish();
     	}
-    	this.finish();
     }
 
 }
