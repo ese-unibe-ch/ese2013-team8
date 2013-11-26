@@ -330,12 +330,12 @@ public class SQLitePersistenceManager implements PersistenceManager {
 					SQLiteHelper.COLUMN_RECIPE_ID + "=" + recipe.getId(), null);
 		}
 
-		ArrayList<Item> ingredients = recipe.getItemList();
+		List<Item> ingredients = recipe.getItemList();
 		if (ingredients != null && !ingredients.isEmpty())
 			saveIngredients(recipe, ingredients);
 	}
 
-	private void saveIngredients(Recipe recipe, ArrayList<Item> ingredients) {
+	private void saveIngredients(Recipe recipe, List<Item> ingredients) {
 		for (Item item : ingredients) {
 			ContentValues values = updateHelper.toValue(recipe, item);
 			if (!readHelper.isInList(item, recipe))
