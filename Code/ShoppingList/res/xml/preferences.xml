@@ -13,6 +13,8 @@
 	        android:entryValues="@array/choosable_languages_keys"
 	        android:defaultValue="@string/english" />
 
+		  <!-- colors not integrated yet
+		  
 		 <PreferenceScreen
             android:key="button_theme_setting_key"
             android:title="@string/theme_settings"
@@ -25,10 +27,15 @@
 	        android:entries="@array/default_color_choice_values"
 	        android:entryValues="@array/default_color_choice_values"
 	        android:defaultValue="@color/white" />
-    
-
 		     
         </PreferenceScreen>
+        
+        -->
 	
 	</PreferenceCategory> 
+	<CheckBoxPreference 
+	    android:title="phonenumberapproved" 
+	    android:defaultValue="false">
+	    
+	</CheckBoxPreference>
 </PreferenceScreen>

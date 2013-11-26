@@ -21,13 +21,13 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        
+<!--        
         <receiver android:name="ch.unibe.ese.shopnote.share.smsverify.SmsReceiver" >
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
-        
+ -->        
         <activity
             android:name="ch.unibe.ese.shopnote.activities.HomeActivity"
             android:label="@string/app_name" >
@@ -112,8 +112,12 @@
                 android:value="ch.unibe.ese.shopnote.activities.ManageRecipeActivity" />
         </activity>
         <activity
-            android:name="ch.unibe.ese.shopnote.VerifyNumerActivity"
-            android:label="@string/title_activity_verify_numer" >
+            android:name="ch.unibe.ese.shopnote.activities.VerifyNumberActivity"
+            android:label="@string/title_activity_verify_number" 
+            android:parentActivityName="ch.unibe.ese.shopnote.activities.HomeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ch.unibe.ese.activities.HomeActivity" />
         </activity>
     </application>
 

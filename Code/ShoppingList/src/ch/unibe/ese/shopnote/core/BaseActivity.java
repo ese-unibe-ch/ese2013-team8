@@ -4,10 +4,13 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.telephony.TelephonyManager;
@@ -16,6 +19,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 import ch.unibe.ese.shopnote.R;
+import ch.unibe.ese.shopnote.activities.CreateItemActivity;
+import ch.unibe.ese.shopnote.activities.VerifyNumberActivity;
 import ch.unibe.ese.shopnote.adapters.ShoppingListAdapter;
 import ch.unibe.ese.shopnote.core.sqlite.SQLitePersistenceManager;
 import ch.unibe.ese.shopnote.drawer.NavigationDrawer;
@@ -63,7 +68,7 @@ public class BaseActivity extends Activity {
 		FriendsManager manager = app.getFriendsManager();
 		if (manager == null) {
 			manager = new FriendsManager(new SQLitePersistenceManager(
-					getApplicationContext()));
+					getApplicationContext()), getSyncManager(), this);
 			app.setFriendsManager(manager);
 		}
 		return manager;
@@ -142,9 +147,15 @@ public class BaseActivity extends Activity {
 	 * @return Phonenumber as String (Or empty String, if it is not supported by your phone)
 	 */
 	public String getMyPhoneNumber() {
-		TelephonyManager tMgr =(TelephonyManager)this.getSystemService(Context.TELEPHONY_SERVICE);
-		String number = tMgr.getLine1Number();
-		return number;
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+		boolean phoneNumberApproved = settings.getBoolean("phonenumberapproved", false);
+		showToast(""+phoneNumberApproved);
+		if(!phoneNumberApproved) {
+			Intent intent = new Intent(this, VerifyNumberActivity.class);
+			startActivity(intent);
+		}
+		String phoneNumber = settings.getString("phonenumber", "-1");
+		return phoneNumber;
 	}
 	
 	/**

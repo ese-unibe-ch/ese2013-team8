@@ -33,10 +33,16 @@
    <style name="BackGroundSettingStandardStyle" parent="AppBaseTheme" >
   		<item name="android:windowBackground">@color/lightgray</item>   
   	</style>
+  	
+    <!-- TextBox theme. -->
+    <style name="TextBoxStandardStyle" parent="AppBaseTheme" >
+  		<item name="android:background">@color/white</item>   
+  	</style>
+   
    
     <!-- NavigationDrawer theme. -->
    <style name="NavigationDrawerStandardStyle" parent="AppBaseTheme" >
-       <item name="android:background">@color/white</item>
+       <item name="android:background">@color/lightgray</item>
    </style>
     
 
