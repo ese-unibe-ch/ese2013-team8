@@ -46,8 +46,19 @@ public class FriendsListAdapter extends ArrayAdapter<Friend> {
 		} else {
 			holder = (FriendHolder) convertView.getTag();
 		}
+		
+		// set name
 		holder.name.setText(friend.getName());
-		holder.phonenumber.setText(friend.getPhoneNr());
+		
+		// set phone number
+		String phoneNumber = friend.getPhoneNr();
+		if (phoneNumber.startsWith("41")) {
+			phoneNumber = phoneNumber.substring(2, phoneNumber.length());
+			phoneNumber = "0" + phoneNumber;
+		}
+		holder.phonenumber.setText(phoneNumber);
+		
+		// set app status
 		if(friend.hasTheApp()) {
 			holder.hasTheAppIcon.setImageResource(R.drawable.ic_action_ok);
 		} else {
