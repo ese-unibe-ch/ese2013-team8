@@ -131,7 +131,7 @@
     </string-array>
 
     <string name="theme_settings">Theme</string>
-    <string name="color_setting">Color</string>
+    <string name="color_setting">Background Color</string>
     <string name="color_dialog">Change the colors of the interface</string>
     <string name="standard">standard</string>
 
@@ -141,7 +141,6 @@
     </string-array>
 
     <string name="title_activity_verify_numer">VerifyNumerActivity</string>
-    <string name="hello_world">Hello world!</string>
     <string name="friend_has_not_app">Your friend does not have the app</string>
 
 </resources>

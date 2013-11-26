@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 
@@ -33,6 +34,11 @@ public class ArchiveActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_archive);
+      
+		//set chosen color theme
+		RelativeLayout lo = (RelativeLayout) findViewById(R.id.RelativeLayoutArchive);
+		updateTheme(lo);
+		
 		// Show the Up button in the action bar.
 		setupActionBar();
 		

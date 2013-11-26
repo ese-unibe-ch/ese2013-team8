@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import ch.unibe.ese.shopnote.adapters.ItemListAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Item;
@@ -29,6 +30,10 @@ public class ItemListActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_item_list);
+
+		//set chosen color theme
+		RelativeLayout lo = (RelativeLayout) findViewById(R.id.RelativeLayoutItemList);
+		updateTheme(lo);
 		
 		// Show the Up button in the action bar.
 		setupActionBar();

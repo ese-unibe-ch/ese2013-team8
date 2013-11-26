@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.adapters.FriendsListAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
@@ -35,6 +36,11 @@ public class ManageFriendsActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_manage_friends);
+        
+		//set chosen color theme
+		RelativeLayout lo = (RelativeLayout) findViewById(R.id.RelativeLayoutManageFriends);
+		updateTheme(lo);
+		
 		// Show the Up button in the action bar.
 		setupActionBar();
 

@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import ch.unibe.ese.shopnote.adapters.ShopAutocompleteAdapter;
@@ -40,6 +41,10 @@ public class CreateListActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_list);
+       
+		//set chosen color theme
+		RelativeLayout lo = (RelativeLayout) findViewById(R.id.relativeLayoutCreateList);
+		updateTheme(lo);
 
 		// hide the action bar on this activity
 		getActionBar().hide();

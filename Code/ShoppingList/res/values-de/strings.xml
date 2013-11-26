@@ -124,7 +124,7 @@
     </string-array>
 
     <string name="theme_settings">Design</string>
-    <string name="color_setting">Farbe</string>
+    <string name="color_setting">Hintergrund Farbe</string>
     <string name="color_dialog">Farben des Themes anpassen</string>
     <string name="standard">Standard</string>
 

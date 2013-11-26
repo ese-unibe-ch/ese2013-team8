@@ -13,7 +13,6 @@
 	        android:entryValues="@array/choosable_languages_keys"
 	        android:defaultValue="@string/english" />
 
-		  <!-- colors not integrated yet
 		  
 		 <PreferenceScreen
             android:key="button_theme_setting_key"
@@ -24,13 +23,12 @@
 	        android:key="color_setting"
 	        android:title="@string/color_setting"
 	        android:dialogTitle="@string/color_dialog"
-	        android:entries="@array/default_color_choice_values"
+	        android:entries="@array/default_color_choice_names"
 	        android:entryValues="@array/default_color_choice_values"
-	        android:defaultValue="@color/white" />
+	        android:defaultValue= "#FFFFFF" />
 		     
         </PreferenceScreen>
         
-        -->
 	
 	</PreferenceCategory> 
 </PreferenceScreen>

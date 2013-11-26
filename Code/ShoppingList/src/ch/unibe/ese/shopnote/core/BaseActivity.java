@@ -4,15 +4,20 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import ch.unibe.ese.shopnote.R;
@@ -252,4 +257,14 @@ public class BaseActivity extends Activity {
 		if (drawMenu != null)
 			drawMenu.closeDrawers();
 	}
+	
+	protected void updateTheme(RelativeLayout layout) {
+		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+		String colorString = sharedPref.getString("color_setting", "#FFFFFF");
+		Log.w("Color number" , colorString);
+		int color = Color.parseColor(colorString);
+		if(color != -1)
+			layout.setBackgroundColor(color);
+	}
+	
 }
