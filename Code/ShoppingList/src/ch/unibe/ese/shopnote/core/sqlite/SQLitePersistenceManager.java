@@ -108,7 +108,7 @@ public class SQLitePersistenceManager implements PersistenceManager {
 		return itemList;
 	}
 
-	public ArrayList<Item> getAllItems() {
+	public List<Item> getAllItems() {
 		ArrayList<Item> itemList = new ArrayList<Item>();
 		Cursor cursor = readHelper.getItemTableCursor();
 		while (!cursor.isAfterLast()) {

@@ -1,5 +1,6 @@
 package ch.unibe.ese.shopnote.core;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -73,6 +74,18 @@ public class SQLitePersistenceManagerTest extends
 		manager.save(item1, list1);
 		assertEquals(1, manager.getItems(list1).size());
 		assertEquals(item1, manager.getItems(list1).get(0));
+	}
+	
+	public void testAddItemWithPrice(){
+		Item item = new Item("item1");
+		item.setPrice(new BigDecimal("1.00"));
+		ShoppingList list = new ShoppingList("list");
+		manager.save(list);
+		manager.save(item, list);
+		
+		Item checkItem = manager.getItems(list).get(0);
+		assertEquals(item,checkItem);
+		assertEquals(new BigDecimal("1.00"), checkItem.getPrice());
 	}
 
 	public void testRemoveItemFromList() {

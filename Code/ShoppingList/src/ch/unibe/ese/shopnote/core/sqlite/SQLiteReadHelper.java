@@ -1,6 +1,7 @@
 package ch.unibe.ese.shopnote.core.sqlite;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 
 import android.database.Cursor;
@@ -185,8 +186,11 @@ public class SQLiteReadHelper {
 		item.setId(cursor.getInt(0));
 		item.setBought(cursor.getInt(2) == 1);
 		String price = cursor.getString(3);
-		if (price != null && !price.isEmpty())
-			item.setPrice(new BigDecimal(price));
+		if (price != null && !price.isEmpty()) {
+			BigDecimal p = new BigDecimal(price);
+			p = p.setScale(2, RoundingMode.HALF_UP);
+			item.setPrice(p);
+		}
 		item.setQuantity(cursor.getString(4));
 		return item;
 	}

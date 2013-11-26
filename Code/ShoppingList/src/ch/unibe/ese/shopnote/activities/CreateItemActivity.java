@@ -1,6 +1,7 @@
 package ch.unibe.ese.shopnote.activities;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -174,6 +175,7 @@ public class CreateItemActivity extends BaseActivity {
 			String priceString = getTextViewText(R.id.editTextPrice);
 			if (!priceString.isEmpty()) {
 				BigDecimal price = new BigDecimal(priceString);
+				price = price.setScale(2, RoundingMode.HALF_UP);
 				item.setPrice(price);
 			}
 			
