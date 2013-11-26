@@ -137,6 +137,8 @@ public class CreateFriendActivity extends BaseActivity {
 		friend = new Friend(nr, name);
 		long id = friendsManager.addFriend(friend);
 		
+		
+		
 		finishTheActivity(id);
 	}
 	
