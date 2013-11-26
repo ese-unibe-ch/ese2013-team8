@@ -95,7 +95,7 @@
     
     <!-- VerifyNumberActivity -->
     <string name="verify_number_info">Zum Benutzen der Synchronisation musst du deine Telefonnummer verifizieren. 
-        \nShopNote wird dazu ein einmaliges SMS an deine Nummer senden.
+        \nShopNote wird dazu einmalig ein SMS an deine Nummer senden.
         (Es können SMS Kosten deines Anbieters entstehen)
         \n\nAbhängig von deinem Anbieter kann dies bis zu 20 Sekunden dauern.</string>
     <string name="verify_number_hint">Deine Telefonnummer</string>

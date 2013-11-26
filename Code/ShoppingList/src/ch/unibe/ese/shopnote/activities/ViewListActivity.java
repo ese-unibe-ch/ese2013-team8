@@ -323,7 +323,6 @@ public class ViewListActivity extends BaseActivity {
         
 		if(list.isShared()) {
 			getSyncManager().synchronise(this);
-			return true;
 		} 
 
 		switch (item.getItemId()) {    
