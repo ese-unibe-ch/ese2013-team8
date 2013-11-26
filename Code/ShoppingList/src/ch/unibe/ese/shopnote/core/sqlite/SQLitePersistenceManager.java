@@ -169,15 +169,15 @@ public class SQLitePersistenceManager implements PersistenceManager {
 	/**
 	 * Returns item with the id
 	 * 
-	 * @param l
+	 * @param itemId
 	 * @return item with the itemId, if not found, null
 	 */
-	public Item getItem(long l) {
+	public Item getItem(long itemId) {
 		// TODO: rewrite code when problem is solved with shop and date in item
 		// db
 		List<Item> itemList = getAllItems();
 		for (Item item : itemList)
-			if (item.getId() == l)
+			if (item.getId() == itemId)
 				return item;
 		return null;
 	}
@@ -330,12 +330,12 @@ public class SQLitePersistenceManager implements PersistenceManager {
 					SQLiteHelper.COLUMN_RECIPE_ID + "=" + recipe.getId(), null);
 		}
 
-		ArrayList<Item> ingredients = recipe.getItemList();
+		List<Item> ingredients = recipe.getItemList();
 		if (ingredients != null && !ingredients.isEmpty())
 			saveIngredients(recipe, ingredients);
 	}
 
-	private void saveIngredients(Recipe recipe, ArrayList<Item> ingredients) {
+	private void saveIngredients(Recipe recipe, List<Item> ingredients) {
 		for (Item item : ingredients) {
 			ContentValues values = updateHelper.toValue(recipe, item);
 			if (!readHelper.isInList(item, recipe))

@@ -160,10 +160,10 @@ public class ListManager {
 	 * @param item
 	 */
 	public void remove(Item item) {
-		persistenceManager.remove(item);
-
 		for (ShoppingList list : shoppingLists)
 			removeItemFromList(item, list);
+		persistenceManager.remove(item);
+
 	}
 
 	/**
