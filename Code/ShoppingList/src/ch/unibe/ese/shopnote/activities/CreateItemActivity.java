@@ -36,9 +36,13 @@ public class CreateItemActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_item);
-        //set chosen color theme
+        
+		//set chosen color theme
 		RelativeLayout lo = (RelativeLayout) findViewById(R.id.relativeLayoutCreateItem);
 		updateTheme(lo);
+		View someView = findViewById(R.id.RelativeLayoutCreateItemComplete);
+		updateTheme(someView);
+
 		
 		// Show the Up button in the action bar.
 		getActionBar().hide();
