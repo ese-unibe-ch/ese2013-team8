@@ -34,11 +34,12 @@ public class CreateFriendActivity extends BaseActivity {
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
 			setContentView(R.layout.activity_create_friend);
-	       
+			
 			//set chosen color theme
 			RelativeLayout lo = (RelativeLayout) findViewById(R.id.relativeLayoutCreateFriend);
 			updateTheme(lo);
-//			this.getCurrentFocus().setBackgroundColor(getResources().getColor(R.color.yellow));
+			View someView = findViewById(R.id.RelativeLayoutCreateFriendTotal);
+			updateTheme(someView);
 			
 			getActionBar().hide();
 

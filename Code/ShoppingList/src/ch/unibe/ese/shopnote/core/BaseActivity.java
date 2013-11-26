@@ -16,7 +16,6 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import ch.unibe.ese.shopnote.R;
@@ -263,7 +262,7 @@ public class BaseActivity extends Activity {
 			drawMenu.closeDrawers();
 	}
 	
-	protected void updateTheme(RelativeLayout layout) {
+	protected void updateTheme(View layout) {
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 		String colorString = sharedPref.getString("color_setting", "#FFFFFF");
 		int color = Color.parseColor(colorString);
