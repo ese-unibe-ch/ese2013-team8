@@ -25,7 +25,22 @@
     <string name="title_activity_archive">Archiv</string>
     <string name="title_activity_view_recipe">Rezept</string>
     <string name="title_activity_settings">Einstellungen</string>
+    <string name="title_activity_verify_number">Einrichtung</string>
 
+    <!-- HomeActivity -->
+    <string name="home_welcome_title">Hallo!</string>
+    <string name="home_welcome_message">Tippe rechts oben auf das Plus-Symbol, um eine neue Einkaufsliste zu erstellen.</string>
+    
+    <!-- ItemListActivity -->
+    <string name="item_list_welcome_message"> 
+        Tippe rechts oben auf das Plus-Symbol, um ein neues Item zu erstellen. 
+        Danach siehst du hier eine Übersicht deiner Items. </string>
+        
+    <!-- ManageRecipeActivity -->
+    <string name="manage_recipe_welcome_message">
+        Mit Rezepten kannst du durch Eingeben von \n\"/Rezeptname\" mehrere Items zusammen zu einer Einkaufsliste hinzufügen.
+        \n\nTippe rechts oben auf das Plus-Symbol, um ein neues Rezept zu erstellen.</string>
+    
     <!-- CreateListActivity -->
     <string name="create_list_title">Neue Einkaufsliste erstellen</string>
     <string name="edit_list_title">Einkaufsliste bearbeiten</string>
@@ -67,14 +82,22 @@
     <string name="share_list_title">Teile</string>
     <string name="share_list_hint">Freund hinzufügen</string>
 
-    <!--  ManageFriendsActivity -->
-    <string name ="friend_has_the_app_icon">Appstatus</string>   
+    <!-- ManageFriendsActivity -->
+    <string name="friend_has_the_app_icon">Appstatus</string>   
+    <string name="manage_friends_welcome_message"> 
+        Tippe rechts oben auf das Plus-Symbol, um Freunde hinzuzufügen.
+        Danach kannst du mit diesen Einkaufslisten teilen.</string>
+        
+    <!-- ArchiveActivity -->
+    <string name="archive_welcome_message"> 
+        Im Archiv werden alle Einkaufslisten angezeigt, die du zuvor über
+        das Kontextmenü der entsprechenden Einkaufsliste archiviert hast.</string>
     
     <!-- VerifyNumberActivity -->
-    <string name="verify_number_info">Zum benutzen der Synchronisation musst du deine Telefonnummer verifizieren. 
-        \nShopNote wird ein einmaliges SMS an deine Nummer schicken.
-        \n(Es können einmalige SMS Kosten entstehen)
-        \n\nAbhängig von deinem Anbieter kann das bis zu 20 Sekunden dauern</string>
+    <string name="verify_number_info">Zum Benutzen der Synchronisation musst du deine Telefonnummer verifizieren. 
+        \nShopNote wird dazu ein einmaliges SMS an deine Nummer senden.
+        (Es können SMS Kosten deines Anbieters entstehen)
+        \n\nAbhängig von deinem Anbieter kann dies bis zu 20 Sekunden dauern.</string>
     <string name="verify_number_hint">Deine Telefonnummer</string>
     <string name="verify_number_send">Verifizieren</string>
     <string name="verify_number_empty">Bitte Telefonnummer eingeben</string>

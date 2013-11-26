@@ -25,6 +25,7 @@ import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.ShoppingList;
 import ch.unibe.ese.shopnote.share.SyncManager;
+import ch.unibe.ese.shopnote.share.requests.RegisterRequest;
 import ch.unibe.ese.shopnote.share.requests.ShareListRequest;
 
 /**
@@ -57,6 +58,9 @@ public class ShareListActivity extends BaseActivity {
 		friendsManager = getFriendsManager();
 
 		syncManager = getSyncManager();
+		
+		// verify phone number
+		syncManager.addRequest(new RegisterRequest(getMyPhoneNumber()));
 
 		// Create drawer menu
 		createDrawerMenu();

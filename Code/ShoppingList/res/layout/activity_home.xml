@@ -17,6 +17,34 @@
     tools:context=".HomeActivity" 
     style="@style/BackGroundStandardStyle" >
 
+    <RelativeLayout
+        android:id="@+id/home_welcome"
+        android:layout_width="match_parent"
+    	android:layout_height="match_parent" >
+    	
+        <TextView
+	        android:id="@+id/home_welcome_title"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentTop="true"
+	        android:paddingTop="10dp"
+	        android:textSize="24sp"
+	        android:textColor="@color/teal"
+        	android:text="@string/home_welcome_title" />
+        
+        <TextView
+	        android:id="@+id/home_welcome_message"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_below="@+id/home_welcome_title"
+	        android:paddingTop="5dp"
+	        android:textSize="16sp"
+        	android:text="@string/home_welcome_message" /> 
+        
+    </RelativeLayout>
+    
     <ListView
         android:id="@+id/ShoppingListView"
         android:layout_width="wrap_content"

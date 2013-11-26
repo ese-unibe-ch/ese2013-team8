@@ -16,6 +16,21 @@
     tools:context=".ItemListActivity" 
     style="@style/BackGroundStandardStyle" >
     
+    <RelativeLayout
+        android:id="@+id/item_list_welcome"
+        android:layout_width="match_parent"
+    	android:layout_height="match_parent" >
+        
+        <TextView
+	        android:id="@+id/item_list_welcome_message"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:textSize="16sp"
+        	android:text="@string/item_list_welcome_message" /> 
+        
+    </RelativeLayout>
+    
     <ListView
         android:id="@+id/ItemView"
         android:layout_width="wrap_content"

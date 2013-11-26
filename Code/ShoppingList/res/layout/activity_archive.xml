@@ -15,6 +15,21 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ArchiveActivity" 
     style="@style/BackGroundStandardStyle" >
+    
+        <RelativeLayout
+        android:id="@+id/archive_welcome"
+        android:layout_width="match_parent"
+    	android:layout_height="match_parent" >
+        
+        <TextView
+	        android:id="@+id/archive_welcome_message"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:textSize="16sp"
+        	android:text="@string/archive_welcome_message" /> 
+        
+    </RelativeLayout>
 
     <ListView
         android:id="@+id/ListView"

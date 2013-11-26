@@ -15,6 +15,21 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ManageFriendsActivity"  
     style="@style/BackGroundStandardStyle" >
+    
+    <RelativeLayout
+        android:id="@+id/manage_friends_welcome"
+        android:layout_width="match_parent"
+    	android:layout_height="match_parent" >
+        
+        <TextView
+	        android:id="@+id/manage_friends_welcome_message"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:textSize="16sp"
+        	android:text="@string/manage_friends_welcome_message" /> 
+        
+    </RelativeLayout>
 
     <ListView
         android:id="@+id/friends_list"

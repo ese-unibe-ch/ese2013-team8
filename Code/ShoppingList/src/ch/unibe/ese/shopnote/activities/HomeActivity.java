@@ -22,6 +22,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.adapters.ShoppingListAdapter;
@@ -93,6 +94,13 @@ public class HomeActivity extends BaseActivity {
 		listView.setAdapter(shoppingListAdapter);
 
 		addListener(listView);
+		
+		// hide welcome message
+		RelativeLayout welcome = (RelativeLayout) findViewById(R.id.home_welcome);
+		if (shoppingListAdapter.isEmpty())
+			welcome.setVisibility(View.VISIBLE);
+		else
+			welcome.setVisibility(View.GONE);
 	}
 
 	private void addListener(ListView listView) {

@@ -75,6 +75,13 @@ public class ArchiveActivity extends BaseActivity {
 		listView.setAdapter(listAdapter);
 		
 		addListener(listView);
+		
+		// hide welcome message
+		RelativeLayout welcome = (RelativeLayout) findViewById(R.id.archive_welcome);
+		if (listAdapter.isEmpty())
+			welcome.setVisibility(View.VISIBLE);
+		else
+			welcome.setVisibility(View.GONE);
 	}
 	
 	private void addListener(ListView listView) {

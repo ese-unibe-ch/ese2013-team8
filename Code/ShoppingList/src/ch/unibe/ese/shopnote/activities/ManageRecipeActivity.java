@@ -39,11 +39,7 @@ public class ManageRecipeActivity extends BaseActivity {
 		setupActionBar();
 		
 		manager = getListManager();
-		
-		//TODO
-		// Is here for testing purposes
-		getSyncManager().addRequest(new RegisterRequest(getMyPhoneNumber()));
-		
+
 		// Create drawer menu
 		createDrawerMenu();
 		createDrawerToggle();
@@ -54,7 +50,7 @@ public class ManageRecipeActivity extends BaseActivity {
 	}
 	
 	/**
-	 * Updates the Viewlist, which shows all friends and adds itemclicklistener
+	 * Updates the Viewlist, which shows all recipes and adds itemclicklistener
 	 */
 	public void updateRecipeList(){
 		recipes = manager.getRecipes();
@@ -62,6 +58,13 @@ public class ManageRecipeActivity extends BaseActivity {
 				R.layout.shopping_list_item, recipes);
 		ListView listView = (ListView) findViewById(R.id.recipe_list);
 		listView.setAdapter(recipeAdapter);
+		
+		// hide welcome message
+		RelativeLayout welcome = (RelativeLayout) findViewById(R.id.manage_recipe_welcome);
+		if (recipeAdapter.isEmpty())
+			welcome.setVisibility(View.VISIBLE);
+		else
+			welcome.setVisibility(View.GONE);
 		
 		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
 

@@ -40,6 +40,8 @@ public class VerifyNumberActivity extends BaseActivity {
         finished = false;
 		
 		setButtonListener();
+		
+		setTitle(this.getString(R.string.title_activity_verify_number));
 	}
 
 	private void setButtonListener() {

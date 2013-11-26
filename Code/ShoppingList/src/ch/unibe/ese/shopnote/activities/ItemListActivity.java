@@ -61,6 +61,13 @@ public class ItemListActivity extends BaseActivity {
 		listView.setAdapter(itemAdapter);
 		
 		setItemLongClick(listView);
+		
+		// hide welcome message
+		RelativeLayout welcome = (RelativeLayout) findViewById(R.id.item_list_welcome);
+		if (itemAdapter.isEmpty())
+			welcome.setVisibility(View.VISIBLE);
+		else
+			welcome.setVisibility(View.GONE);
 	}
 
 	private void setItemLongClick(ListView listView) {

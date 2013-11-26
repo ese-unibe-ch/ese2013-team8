@@ -16,6 +16,21 @@
     tools:context=".ManageRecipeActivity" 
     style="@style/BackGroundStandardStyle" >
     
+    <RelativeLayout
+        android:id="@+id/manage_recipe_welcome"
+        android:layout_width="match_parent"
+    	android:layout_height="match_parent" >
+        
+        <TextView
+	        android:id="@+id/manage_recipe_welcome_message"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:textSize="16sp"
+        	android:text="@string/manage_recipe_welcome_message" /> 
+        
+    </RelativeLayout>
+    
     <ListView
         android:id="@+id/recipe_list"
         android:layout_width="match_parent"

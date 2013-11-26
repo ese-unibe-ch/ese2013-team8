@@ -19,6 +19,7 @@ import ch.unibe.ese.shopnote.core.Friend;
 import ch.unibe.ese.shopnote.core.FriendsManager;
 import ch.unibe.ese.shopnote.share.SyncManager;
 import ch.unibe.ese.shopnote.share.requests.FriendRequest;
+import ch.unibe.ese.shopnote.share.requests.RegisterRequest;
 
 /**
  *	Creates a frame which enlists all friends and the possibility to manage them
@@ -47,6 +48,9 @@ public class ManageFriendsActivity extends BaseActivity {
 		friendsManager = getFriendsManager();
 		syncManager = getSyncManager();
 		
+		// verify phone number
+		getSyncManager().addRequest(new RegisterRequest(getMyPhoneNumber()));
+		
 		// Create drawer menu
 		createDrawerMenu();
 		createDrawerToggle();
@@ -73,6 +77,13 @@ public class ManageFriendsActivity extends BaseActivity {
 
 		ListView listView = (ListView) findViewById(R.id.friends_list);
 		listView.setAdapter(friendsAdapter);
+		
+		// hide welcome message
+		RelativeLayout welcome = (RelativeLayout) findViewById(R.id.manage_friends_welcome);
+		if (friendsAdapter.isEmpty())
+			welcome.setVisibility(View.VISIBLE);
+		else
+			welcome.setVisibility(View.GONE);
 		
 		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
 
