@@ -142,5 +142,6 @@
     </string-array>
     
     <string name="hello_world">Hello world!</string>
+    <string name="friend_has_not_app">Your friend does not have the app</string>
 
 </resources>

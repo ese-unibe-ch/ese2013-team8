@@ -3,6 +3,12 @@ package ch.unibe.ese.shopnote.core;
 import java.util.Collections;
 import java.util.List;
 
+import android.app.Dialog;
+import ch.unibe.ese.shopnote.R;
+import ch.unibe.ese.shopnote.share.SyncManager;
+import ch.unibe.ese.shopnote.share.requests.FriendRequest;
+
+
 /**
  * The FriendsManager provides all information about Friends locally stored on your phone<br>
  * He knows which friend is assigned to which shoppinglist.
@@ -11,10 +17,14 @@ import java.util.List;
 public class FriendsManager {
 	private List<Friend> friendsList;
 	private PersistenceManager persistenceManager;
+	private SyncManager syncManager;
+	private BaseActivity baseActivity;
 
-	public FriendsManager(PersistenceManager persistenceManager) {
+	public FriendsManager(PersistenceManager persistenceManager, SyncManager syncManager, BaseActivity baseActivity) {
 		this.persistenceManager = persistenceManager;
 		friendsList = persistenceManager.getFriends();
+		this.syncManager = syncManager;
+		this.baseActivity = baseActivity;
 	}
 
 	/**
@@ -28,6 +38,11 @@ public class FriendsManager {
 	public long addFriend(Friend friend) {
 		long id = checkIfDouble(friend);
 		if (id >= 0) return id;
+		
+		//check if friend on server
+		FriendRequest fr = new FriendRequest(friend);
+		syncManager.addRequest(fr);	
+		syncManager.synchronise(baseActivity);
 		
 		// Add the friend
 		friendsList.add(friend);

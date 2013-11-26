@@ -68,7 +68,7 @@ public class BaseActivity extends Activity {
 		FriendsManager manager = app.getFriendsManager();
 		if (manager == null) {
 			manager = new FriendsManager(new SQLitePersistenceManager(
-					getApplicationContext()));
+					getApplicationContext()), getSyncManager(), this);
 			app.setFriendsManager(manager);
 		}
 		return manager;
