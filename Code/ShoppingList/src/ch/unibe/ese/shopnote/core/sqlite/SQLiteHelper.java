@@ -20,6 +20,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public static final String COLUMN_LIST_ARCHIVED = "archived";
 	public static final String COLUMN_LIST_DUEDATE = "duedate";
 	public static final String COLUMN_LIST_SHARED = "shared";
+	public static final String COLUMN_LIST_CHANGESCOUNT = "changescount";
 	// Save all Items with an unique name and ID
 	public static final String TABLE_ITEMS = "items";
 	public static final String COLUMN_ITEM_ID = "itemid";
@@ -40,11 +41,12 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public static final String COLUMN_FRIEND_PHONENR = "friendphonenr";
 	// Save friends to synch lists
 	public static final String TABLE_FRIENDSTOLIST = "friendstolist";
-
 	// Save all recipes with an unique id and name
 	public static final String TABLE_RECIPES = "recipelist";
 	public static final String COLUMN_RECIPE_ID = "recipeid";
 	public static final String COLUMN_RECIPE_NAME = "recipename";
+	public static final String COLUMN_RECIPE_NOTES = "recipenotes";
+	public static final String COLUMN_RECIPE_SHOWNOTES = "recipeshownotes";
 	// Save all items to recipeid of a recipe
 	public static final String TABLE_ITEMTORECIPE = "itemtorecipe";
 
@@ -61,6 +63,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 			+ COLUMN_LIST_DUEDATE + " integer, " //
 			+ COLUMN_SHOP_ID + " integer, " //
 			+ COLUMN_LIST_SHARED + " integer NOT NULL, "
+			+ COLUMN_LIST_CHANGESCOUNT + " integer NOT NULL, "
 			+ "FOREIGN KEY ("+COLUMN_SHOP_ID + ") REFERENCES "
 			+ TABLE_SHOPS + "(" + COLUMN_SHOP_ID + ")"
 			+ ");";
@@ -111,7 +114,9 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	private static final String DATABASE_CREATE_TABLE_RECIPE =
 			"create table " + TABLE_RECIPES + "("
 			+ COLUMN_RECIPE_ID + " integer primary key autoincrement, "
-			+ COLUMN_RECIPE_NAME + " text NOT NULL "
+			+ COLUMN_RECIPE_NAME + " text NOT NULL, "
+			+ COLUMN_RECIPE_NOTES + " text, "
+			+ COLUMN_RECIPE_SHOWNOTES + " integer NOT NULL "
 			+ ");";
 	private static final String DATABASE_CREATE_TABLE_ITEMTORECIPE =
 			"create table " + TABLE_ITEMTORECIPE + "("
@@ -126,7 +131,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public static String[] LISTS_COLUMNS = { SQLiteHelper.COLUMN_LIST_ID,
 			SQLiteHelper.COLUMN_LIST_NAME, SQLiteHelper.COLUMN_LIST_ARCHIVED,
 			SQLiteHelper.COLUMN_LIST_DUEDATE, SQLiteHelper.COLUMN_SHOP_ID,
-			SQLiteHelper.COLUMN_LIST_SHARED};
+			SQLiteHelper.COLUMN_LIST_SHARED, SQLiteHelper.COLUMN_LIST_CHANGESCOUNT};
 	public static String[] SHOPS_COLUMNS = { SQLiteHelper.COLUMN_SHOP_ID,
 			SQLiteHelper.COLUMN_SHOP_NAME };
 	public static String[] ITEMS_COLUMNS = { SQLiteHelper.COLUMN_ITEM_ID,
@@ -139,7 +144,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public static String[] FRIENDSTOLIST_COLUMNS = {SQLiteHelper.COLUMN_LIST_ID,
 			SQLiteHelper.COLUMN_FRIEND_ID};
 	public static String[] RECIPE_COLUMNS = { SQLiteHelper.COLUMN_RECIPE_ID,
-			SQLiteHelper.COLUMN_RECIPE_NAME };
+			SQLiteHelper.COLUMN_RECIPE_NAME, SQLiteHelper.COLUMN_RECIPE_NOTES,
+			SQLiteHelper.COLUMN_RECIPE_SHOWNOTES};
 	public static String[] ITEMTORECIPE_COLUMNS = {
 			SQLiteHelper.COLUMN_RECIPE_ID, SQLiteHelper.COLUMN_ITEM_ID };
 

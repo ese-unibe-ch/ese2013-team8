@@ -34,6 +34,7 @@ public class SQLiteUpdateHelper {
 		values.put(SQLiteHelper.COLUMN_LIST_NAME, list.getName());
 		values.put(SQLiteHelper.COLUMN_LIST_ARCHIVED, list.isArchived() ? 1 : 0);
 		values.put(SQLiteHelper.COLUMN_LIST_SHARED, list.isShared() ? 1 : 0);
+		values.put(SQLiteHelper.COLUMN_LIST_CHANGESCOUNT, list.getChangesCount());
 		values.put(SQLiteHelper.COLUMN_LIST_DUEDATE,
 				list.getDueDate() != null ? list.getDueDate().getTime() : null);
 		this.addShopIfNotExistent(list.getShop());
@@ -107,6 +108,8 @@ public class SQLiteUpdateHelper {
 	public ContentValues toValue(Recipe recipe) {
 		ContentValues values = new ContentValues();
 		values.put(SQLiteHelper.COLUMN_RECIPE_NAME, recipe.getName());
+		values.put(SQLiteHelper.COLUMN_RECIPE_NOTES, recipe.getNotes());
+		values.put(SQLiteHelper.COLUMN_RECIPE_SHOWNOTES, recipe.isNotesVisible());
 		return values;
 	}
 	

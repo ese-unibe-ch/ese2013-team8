@@ -91,10 +91,11 @@ public class RecipeListActionMode implements Callback {
             	
             	if(recipeAdapter != null) {
 	            	manager.removeRecipe(selectedRecipe);
-	            	recipeAdapter.remove(selectedRecipe);
+	            	recipeAdapter.notifyDataSetChanged();
             	} else {
             		selectedRecipe.removeItem(selectedItem);
             		itemAdapter.remove(selectedItem);
+                	manager.saveRecipe(selectedRecipe);
             	}
 	            	
             	return true;

@@ -1,5 +1,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
+    <item android:id="@+id/action_notes"
+          android:icon="@drawable/ic_action_notes"
+          android:title="@string/action_notes"
+          android:showAsAction="ifRoom" />
+        
      <item android:id="@+id/action_edit_recipe"
 		  android:orderInCategory="1"
 		  android:showAsAction="never"

@@ -3,8 +3,6 @@ package ch.unibe.ese.shopnote.activities;
 import java.util.List;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,7 +14,6 @@ import android.widget.ListView;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.Recipe;
-import ch.unibe.ese.shopnote.drawer.NavigationDrawer;
 import ch.unibe.ese.shopnote.share.requests.RegisterRequest;
 import ch.unibe.ese.shopnote.R;
 
@@ -27,7 +24,6 @@ public class ManageRecipeActivity extends BaseActivity {
 	private ListManager manager; 
 	private ArrayAdapter<Recipe> recipeAdapter;
 	private List<Recipe> recipes;
-	private DrawerLayout drawMenu;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +39,12 @@ public class ManageRecipeActivity extends BaseActivity {
 		getSyncManager().addRequest(new RegisterRequest(getMyPhoneNumber()));
 		
 		// Create drawer menu
-		NavigationDrawer nDrawer = new NavigationDrawer();
-		drawMenu = nDrawer.constructNavigationDrawer(drawMenu, this);
+		createDrawerMenu();
+		createDrawerToggle();
 				
 		updateRecipeList();
+		
+		setTitle(this.getString(R.string.title_activity_manage_recipe));
 	}
 	
 	/**
@@ -110,19 +108,14 @@ public class ManageRecipeActivity extends BaseActivity {
 	}
 		
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(MenuItem item){
+	    // Pass the event to ActionBarDrawerToggle, if it returns
+	    // true, then it has handled the app icon touch event
+	    if (drawerToggle.onOptionsItemSelected(item))
+	    	return true;
+	
 		// Handle presses on the action bar items
 		switch (item.getItemId()) {
-			case android.R.id.home:
-				// This ID represents the Home or Up button. In the case of this
-				// activity, the Up button is shown. Use NavUtils to allow users
-				// to navigate up one level in the application structure. For
-				// more details, see the Navigation pattern on Android Design:
-				//
-				// http://developer.android.com/design/patterns/navigation.html#up-vs-back
-				//
-				NavUtils.navigateUpFromSameTask(this);
-				return true;
 			case R.id.action_new:
 				Intent createRecipeIntent = new Intent(this, CreateRecipeActivity.class);
 				this.startActivityForResult(createRecipeIntent, 1);
@@ -130,11 +123,5 @@ public class ManageRecipeActivity extends BaseActivity {
 			default:
 				return super.onOptionsItemSelected(item);
 		}
-	}
-	
-	@Override
-	protected void onPause() {
-		super.onPause();
-    	drawMenu.closeDrawers();
 	}
 }

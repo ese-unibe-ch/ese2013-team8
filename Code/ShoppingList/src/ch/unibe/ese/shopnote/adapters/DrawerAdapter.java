@@ -1,8 +1,15 @@
 package ch.unibe.ese.shopnote.adapters;
 
 import ch.unibe.ese.shopnote.R;
+import ch.unibe.ese.shopnote.activities.ArchiveActivity;
+import ch.unibe.ese.shopnote.activities.HomeActivity;
+import ch.unibe.ese.shopnote.activities.ItemListActivity;
+import ch.unibe.ese.shopnote.activities.ManageFriendsActivity;
+import ch.unibe.ese.shopnote.activities.ManageRecipeActivity;
+import ch.unibe.ese.shopnote.activities.SettingsActivity;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,29 +53,52 @@ public class DrawerAdapter extends ArrayAdapter<String> {
 		
 		switch(position+1){
 		case 1:
-			// set ItemList icon
-			holder.icon.setImageResource(R.drawable.ic_action_list);
+			// set Home icon
+			holder.icon.setImageResource(R.drawable.ic_action_home);
+			// set current activity name bold
+			if (context.getClass() == HomeActivity.class)
+				holder.menuItem.setTypeface(null, Typeface.BOLD);
 			break;
 		case 2:
-			// set Recipe icon
-			holder.icon.setImageResource(R.drawable.ic_action_favorite);
+			// set ItemList icon
+			holder.icon.setImageResource(R.drawable.ic_action_list);
+			// set current activity name bold
+			if (context.getClass() == ItemListActivity.class)
+				holder.menuItem.setTypeface(null, Typeface.BOLD);
 			break;
 		case 3:
+			// set Recipe icon
+			holder.icon.setImageResource(R.drawable.ic_action_favorite);
+			// set current activity name bold
+			if (context.getClass() == ManageRecipeActivity.class)
+				holder.menuItem.setTypeface(null, Typeface.BOLD);
+			break;
+		case 4:
 			// set Friends icon
 			holder.icon.setImageResource(R.drawable.ic_action_friends);
+			// set current activity name bold
+			if (context.getClass() == ManageFriendsActivity.class)
+				holder.menuItem.setTypeface(null, Typeface.BOLD);
 			break;
-		case 4: 
+		case 5: 
 			// set Archive icon
 			holder.icon.setImageResource(R.drawable.ic_action_archive);
+			// set current activity name bold
+			if (context.getClass() == ArchiveActivity.class)
+				holder.menuItem.setTypeface(null, Typeface.BOLD);
 			break;
-		case 5:
+		case 6:
 			// set Settings icon
 			holder.icon.setImageResource(R.drawable.ic_action_settings);
+			// set current activity name bold
+			if (context.getClass() == SettingsActivity.class)
+				holder.menuItem.setTypeface(null, Typeface.BOLD);
 			break;	
 		}
 	
 		// set name
 		holder.menuItem.setText(item);
+		
 		
 		return convertView;
 	}

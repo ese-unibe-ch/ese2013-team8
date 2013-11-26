@@ -1,11 +1,8 @@
 package ch.unibe.ese.shopnote.activities;
 
 import java.util.List;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,7 +14,6 @@ import ch.unibe.ese.shopnote.adapters.ItemListAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ListManager;
-import ch.unibe.ese.shopnote.drawer.NavigationDrawer;
 import ch.unibe.ese.shopnote.R;
 
 /**
@@ -25,11 +21,9 @@ import ch.unibe.ese.shopnote.R;
  */
 public class ItemListActivity extends BaseActivity {
 	
-	
 	private ListManager manager;
 	private List<Item> itemList;
 	private ArrayAdapter<Item> itemAdapter;
-	private DrawerLayout drawMenu;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +37,12 @@ public class ItemListActivity extends BaseActivity {
 		manager = getListManager();
 		
 		// Create drawer menu
-		NavigationDrawer nDrawer = new NavigationDrawer();
-		drawMenu = nDrawer.constructNavigationDrawer(drawMenu, this);
+		createDrawerMenu();
+		createDrawerToggle();
 	
 		updateAdapter();
 
+		setTitle(this.getString(R.string.title_activity_item_list));
 	}
 	
 	/**
@@ -94,24 +89,19 @@ public class ItemListActivity extends BaseActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case android.R.id.home:
-			// This ID represents the Home or Up button. In the case of this
-			// activity, the Up button is shown. Use NavUtils to allow users
-			// to navigate up one level in the application structure. For
-			// more details, see the Navigation pattern on Android Design:
-			//
-			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
-			//
-			NavUtils.navigateUpFromSameTask(this);
-			return true;
-			
-		case R.id.action_new:
-			Intent intent = new Intent(this, CreateItemActivity.class);
-			this.startActivityForResult(intent, 1);
-			return true;
+        // Pass the event to ActionBarDrawerToggle, if it returns
+        // true, then it has handled the app icon touch event
+        if (drawerToggle.onOptionsItemSelected(item))
+        	return true;
+        
+		switch (item.getItemId()) {		
+			case R.id.action_new:
+				Intent intent = new Intent(this, CreateItemActivity.class);
+				this.startActivityForResult(intent, 1);
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
 		}
-		return super.onOptionsItemSelected(item);
 	}
 	
 	/**
@@ -120,12 +110,6 @@ public class ItemListActivity extends BaseActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == 1 && resultCode == RESULT_OK) 
 				updateAdapter(); 
-	}
-	
-	@Override
-	protected void onPause() {
-		super.onPause();
-    	drawMenu.closeDrawers();
 	}
 	
 	public void onResume(){

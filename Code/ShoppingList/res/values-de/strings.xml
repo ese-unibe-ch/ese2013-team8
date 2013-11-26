@@ -6,10 +6,11 @@
     	<!-- this.getString(R.string.name) -->
 
     <!-- Miscellaneous -->
-    <string name="app_name">Shopnote</string>
+    <string name="app_name">ShopNote</string>
     <string name="action_settings">Einstellungen</string>
     <string name="btn_cancel">Abbrechen</string>
     <string name="btn_done">Ok</string>
+    <string name="create_optional_hint">optional</string>
 
     <!-- Default activity titles -->
     <string name="title_activity_create_list">Liste erstellen</string>
@@ -26,29 +27,29 @@
     <string name="title_activity_settings">Einstellungen</string>
 
     <!-- CreateListActivity -->
-    <string name="create_list_title">Neue Einkaufsliste erstellen:</string>
-    <string name="edit_list_title">Einkaufsliste bearbeiten:</string>
-    <string name="create_list_name">Name</string>
-    <string name="create_list_date">Datum (optional)</string>
-    <string name="create_list_shop">Laden (optional)</string>
+    <string name="create_list_title">Neue Einkaufsliste erstellen</string>
+    <string name="edit_list_title">Einkaufsliste bearbeiten</string>
+    <string name="create_list_name">Name:</string>
+    <string name="create_list_date">Datum:</string>
+    <string name="create_list_shop">Laden:</string>
 
     <!-- CreateItemActivity -->
-    <string name="create_item_title">Neues Item erstellen:</string>
-    <string name="edit_item_title">Item bearbeiten:</string>
-    <string name="create_item_name">Name</string>
-    <string name="create_item_shop">Laden (optional)</string>
-    <string name="create_item_price">Preis (optional)</string>
-    <string name="create_item_quantity">Menge (optional)</string>
+    <string name="create_item_title">Neues Item erstellen</string>
+    <string name="edit_item_title">Item bearbeiten</string>
+    <string name="create_item_name">Name:</string>
+    <string name="create_item_shop">Laden:</string>
+    <string name="create_item_price">Preis:</string>
+    <string name="create_item_quantity">Menge:</string>
     
     <!-- CreateRecipeActivity -->
-    <string name="create_recipe_title">Neues Rezept erstellen:</string>
-    <string name="edit_recipe_title">Rezept bearbeiten:</string>
-    <string name="create_recipe_name">Name</string>
+    <string name="create_recipe_title">Neues Rezept erstellen</string>
+    <string name="edit_recipe_title">Rezept bearbeiten</string>
+    <string name="create_recipe_name">Name:</string>
     
     <!-- CreateFriendActivity -->
-    <string name="add_friend">Freund hinzufügen:</string>
-    <string name="friend_name">Name</string>
-    <string name="friend_phone_number">Phone Nr</string>
+    <string name="add_friend">Freund hinzufügen</string>
+    <string name="friend_name">Name:</string>
+    <string name="friend_phone_number">Phone Nr:</string>
 
     <!-- ViewListActivity -->
     <string name="view_list_hint">Item hinzufügen</string>
@@ -59,6 +60,8 @@
     <!-- ViewRecipeActivity -->
     <string name="view_recipe_hint">Item hinzufügen</string>
     <string name="view_recipe_title">Rezept für</string>
+    <string name="view_recipe_items">Zutaten</string>
+    <string name="view_recipe_notes">Notizen</string>
 
     <!-- ShareListActivity -->
     <string name="share_list_title">Teile</string>
@@ -79,6 +82,7 @@
     <string name="action_edit_list">Liste bearbeiten</string>
     <string name="action_edit_recipe">Rezept bearbeiten</string>
     <string name="action_archive">Archivieren</string>
+    <string name="action_notes">Notizen</string>
 
     <!-- Error messages -->
     <string name="error_name">Bitte einen Namen eingeben</string>
@@ -92,6 +96,7 @@
 
     <!-- The navigation drawer -->
     <string-array name="navigation_items">
+        <item>Übersicht</item>
         <item>Item-Liste</item>
         <item>Rezepte</item>
         <item>Freunde</item>

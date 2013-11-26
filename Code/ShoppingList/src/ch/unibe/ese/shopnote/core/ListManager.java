@@ -182,8 +182,10 @@ public class ListManager {
 	 * @param recipe
 	 */
 	public void saveRecipe(Recipe recipe) {
+		if (!recipeList.contains(recipe)) {
+			recipeList.add(recipe);
+		}
 		persistenceManager.save(recipe);
-		recipeList = persistenceManager.readRecipes();
 	}
 
 	/**

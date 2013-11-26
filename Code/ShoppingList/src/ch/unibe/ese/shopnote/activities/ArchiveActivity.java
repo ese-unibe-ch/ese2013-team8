@@ -6,7 +6,6 @@ import ch.unibe.ese.shopnote.adapters.ShoppingListAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.ShoppingList;
-import ch.unibe.ese.shopnote.drawer.NavigationDrawer;
 import ch.unibe.ese.shopnote.R;
 import android.app.Activity;
 import android.content.Intent;
@@ -18,8 +17,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.support.v4.app.NavUtils;
-import android.support.v4.widget.DrawerLayout;
 
 /**
  *	Displays the archived shopping lists
@@ -31,7 +28,6 @@ public class ArchiveActivity extends BaseActivity {
 	private List<ShoppingList> shoppingLists;
 	private List<ShoppingList> shoppingListsArchived;
 	private Activity archiveActivity = this;
-	private DrawerLayout drawMenu;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +39,12 @@ public class ArchiveActivity extends BaseActivity {
 		manager = getListManager();
 		
 		// Create drawer menu
-		NavigationDrawer nDrawer = new NavigationDrawer();
-		drawMenu = nDrawer.constructNavigationDrawer(drawMenu, this);
+		createDrawerMenu();
+		createDrawerToggle();
 		
 		updateAdapter();
+		
+		setTitle(this.getString(R.string.title_activity_archive));
 	}
 	
 	/**
@@ -126,18 +124,11 @@ public class ArchiveActivity extends BaseActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case android.R.id.home:
-			// This ID represents the Home or Up button. In the case of this
-			// activity, the Up button is shown. Use NavUtils to allow users
-			// to navigate up one level in the application structure. For
-			// more details, see the Navigation pattern on Android Design:
-			//
-			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
-			//
-			NavUtils.navigateUpFromSameTask(this);
-			return true;
-		}
+	    // Pass the event to ActionBarDrawerToggle, if it returns
+	    // true, then it has handled the app icon touch event
+	    if (drawerToggle.onOptionsItemSelected(item))
+	    	return true;
+	    
 		return super.onOptionsItemSelected(item);
 	}
 

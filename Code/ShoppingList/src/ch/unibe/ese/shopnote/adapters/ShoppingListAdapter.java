@@ -33,6 +33,7 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingList> {
 		TextView name;
 		ImageView isShared;
 		TextView count;
+		TextView notification;
 	}
 	
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -46,6 +47,7 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingList> {
 			holder.name = (TextView) convertView.findViewById(R.id.shopping_list_name);
 			holder.isShared = (ImageView) convertView.findViewById(R.id.shopping_list_isShared);
 			holder.count = (TextView) convertView.findViewById(R.id.shopping_list_count);
+			holder.notification = (TextView) convertView.findViewById(R.id.shopping_list_notification);
 			convertView.setTag(holder);
 		} else {
 			holder = (ListHolder) convertView.getTag();
@@ -55,14 +57,30 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingList> {
 		holder.name.setText(list.toString());
 		
 		// set shared icon
-		if (list.isShared())
+		if (list.isShared()) {
+			holder.isShared.setVisibility(View.VISIBLE);
 			holder.isShared.setImageResource(R.drawable.ic_action_share);
+		}
+		else
+			holder.isShared.setVisibility(View.GONE);	
 
-		//set count
-		if (totalItemCount.get(position) != 0)
+		// set count
+		if (totalItemCount.get(position) != 0) {
+			holder.count.setVisibility(View.VISIBLE);
 			holder.count.setText(
 					boughtItemCount.get(position) + " / " + 
 					totalItemCount.get(position));
+		}
+		else
+			holder.count.setVisibility(View.GONE);
+		
+		// set notification count
+		if (list.getChangesCount() != 0) {
+			holder.notification.setText("" + list.getChangesCount());
+			holder.notification.setVisibility(View.VISIBLE);
+		}
+		else
+			holder.notification.setVisibility(View.GONE);
 		
 		return convertView;
 	}

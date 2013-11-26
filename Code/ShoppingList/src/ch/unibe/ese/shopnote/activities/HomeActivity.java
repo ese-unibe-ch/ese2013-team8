@@ -12,8 +12,6 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.widget.DrawerLayout;
 import android.view.ActionMode;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -29,7 +27,6 @@ import ch.unibe.ese.shopnote.adapters.ShoppingListAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.ShoppingList;
-import ch.unibe.ese.shopnote.drawer.NavigationDrawer;
 import ch.unibe.ese.shopnote.share.SyncManager;
 import ch.unibe.ese.shopnote.share.requests.RegisterRequest;
 
@@ -44,10 +41,8 @@ public class HomeActivity extends BaseActivity {
 	private List<ShoppingList> shoppingListsNotArchived;
 	private ShoppingListAdapter shoppingListAdapter;
 	private Activity homeActivity = this;
-	private DrawerLayout drawMenu;
-	private ActionBarDrawerToggle drawerToggle;
 
-	@SuppressLint("NewApi") // TODO: check "problem"
+	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -60,9 +55,9 @@ public class HomeActivity extends BaseActivity {
 		setContentView(R.layout.activity_home);	
 		
 		// Create drawer menu
-		NavigationDrawer nDrawer = new NavigationDrawer();
-		drawMenu = nDrawer.constructNavigationDrawer(drawMenu, this);
+		createDrawerMenu();
 		createDrawerToggle();
+		
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
 
@@ -74,45 +69,6 @@ public class HomeActivity extends BaseActivity {
 		updateAdapter();
 	}
 	
-	private void createDrawerToggle() {
-		drawerToggle = new ActionBarDrawerToggle(
-                this,                  	/* host Activity */
-                drawMenu,         		/* DrawerLayout object */
-                R.drawable.ic_drawer,  	/* nav drawer icon to replace 'Up' caret */
-                R.string.app_name,  	/* "open drawer" description */
-                R.string.app_name  	/* "close drawer" description */
-                ) {
-
-			// At the moment the following two methods are useless, but maybe 
-			// we will want to add stuff later
-            /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-                getActionBar().setTitle(R.string.app_name);
-            }
-
-            /** Called when a drawer has settled in a completely open state. */
-            public void onDrawerOpened(View drawerView) {
-                getActionBar().setTitle(R.string.app_name);
-            }
-        };
-        
-        // Set the drawer toggle as the DrawerListener
-        drawMenu.setDrawerListener(drawerToggle);
-	}
-	
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
-        drawerToggle.syncState();
-    }
-    
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        drawerToggle.onConfigurationChanged(newConfig);
-    }
-
 	private void updateAdapter() {
 		// Get List from manager
 		shoppingLists = listmanager.getShoppingLists();
@@ -182,7 +138,7 @@ public class HomeActivity extends BaseActivity {
         // Pass the event to ActionBarDrawerToggle, if it returns
         // true, then it has handled the app icon touch event
         if (drawerToggle.onOptionsItemSelected(item))
-        		return true;
+        	return true;
                 
 		// Handle presses on the action bar items
 		switch (item.getItemId()) {
@@ -202,12 +158,6 @@ public class HomeActivity extends BaseActivity {
 			default:
 				return super.onOptionsItemSelected(item);
 		}
-	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-    	drawMenu.closeDrawers();
 	}
 	
 	@Override

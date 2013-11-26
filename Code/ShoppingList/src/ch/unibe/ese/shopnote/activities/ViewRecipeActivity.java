@@ -1,13 +1,12 @@
 package ch.unibe.ese.shopnote.activities;
 
 import java.util.ArrayList;
-
 import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.Recipe;
-import ch.unibe.ese.shopnote.drawer.NavigationDrawer;
+import ch.unibe.ese.shopnote.core.Utility;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -26,7 +25,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.TextView.OnEditorActionListener;
 import android.support.v4.app.NavUtils;
-import android.support.v4.widget.DrawerLayout;
 
 /**
  *	Displays a single recipe including the items
@@ -37,7 +35,6 @@ public class ViewRecipeActivity extends BaseActivity {
 	private ArrayList<Item> itemsOfRecipe;
 	private ArrayAdapter<Item> itemAdapter;
 	ArrayAdapter<Item> autocompleteAdapter;
-	private DrawerLayout drawMenu;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +44,9 @@ public class ViewRecipeActivity extends BaseActivity {
 		setupActionBar();
 		
 		// Create drawer menu
-		NavigationDrawer nDrawer = new NavigationDrawer();
-		drawMenu = nDrawer.constructNavigationDrawer(drawMenu, this);
+		createDrawerMenu();
+		createDrawerToggle(); //to change the title
+		drawerToggle.setDrawerIndicatorEnabled(false);
 		
 		manager = getListManager();
 		
@@ -80,6 +78,9 @@ public class ViewRecipeActivity extends BaseActivity {
 		        return false;
 		    }
 		});
+		
+		// load notes
+		setTextViewText(R.id.editTextNotes, recipe.getNotes());
 	}
 
 	private void updateRecipeList() {
@@ -89,6 +90,7 @@ public class ViewRecipeActivity extends BaseActivity {
 		ListView listView = (ListView) findViewById(R.id.ItemView);
 		listView.setAdapter(itemAdapter);
 		manager.saveRecipe(recipe);
+		toggleDescription();
 		
 		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
 
@@ -102,6 +104,9 @@ public class ViewRecipeActivity extends BaseActivity {
 				return true;
 			}
 		});
+		
+		// Bugfix, allows to put a ListView in a ScrollView with other objects
+		Utility.setListViewHeightBasedOnChildren(listView);
 	}
 	
 	private AutoCompleteTextView createAutocomplete() {
@@ -194,6 +199,14 @@ public class ViewRecipeActivity extends BaseActivity {
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
 			
+		// Handle presses on the action bar items
+		case R.id.action_notes:
+			// toggle notes visibility state
+			recipe.setNotesVisible(!recipe.isNotesVisible());
+			manager.saveRecipe(recipe);
+			toggleDescription();
+			return true;
+			
 		// Handle presses on overflow menu items
 		case R.id.action_edit_recipe:
         	Intent intentEdit = new Intent(this, CreateRecipeActivity.class);
@@ -208,10 +221,43 @@ public class ViewRecipeActivity extends BaseActivity {
 		return super.onOptionsItemSelected(item);
 	}
 	
-	@Override
-	protected void onPause() {
-		super.onPause();
-    	drawMenu.closeDrawers();
+	/**
+	 *	Hide the description text if no notes/items
+	 */
+	private void toggleDescription() {
+		TextView textItems = (TextView) findViewById(R.id.textItems);
+		TextView textNotes = (TextView) findViewById(R.id.textNotes);
+		EditText editTextNotes = (EditText) findViewById(R.id.editTextNotes);
+		
+		// toggle ingredients description text
+		if (!itemAdapter.isEmpty())
+			textItems.setVisibility(View.VISIBLE);
+		else
+			textItems.setVisibility(View.GONE);
+		
+		// toggle notes description and field
+		if (recipe.isNotesVisible()) {
+			textNotes.setVisibility(View.VISIBLE);
+			editTextNotes.setVisibility(View.VISIBLE);
+		}
+		else {
+			textNotes.setVisibility(View.GONE);
+			editTextNotes.setVisibility(View.GONE);
+		}
 	}
-
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+		// save notes
+		recipe.setNotes(getTextViewText(R.id.editTextNotes));
+		manager.saveRecipe(recipe);
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		// load notes
+		setTextViewText(R.id.editTextNotes, recipe.getNotes());
+	}
 }

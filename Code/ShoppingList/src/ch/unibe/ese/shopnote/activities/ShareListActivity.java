@@ -5,7 +5,6 @@ import java.util.List;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,7 +23,6 @@ import ch.unibe.ese.shopnote.core.FriendsManager;
 import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.ShoppingList;
-import ch.unibe.ese.shopnote.drawer.NavigationDrawer;
 import ch.unibe.ese.shopnote.share.SyncManager;
 import ch.unibe.ese.shopnote.share.requests.ShareListRequest;
 
@@ -40,7 +38,6 @@ public class ShareListActivity extends BaseActivity {
 	private ArrayAdapter<Friend> autocompleteAdapter;
 	private FriendsListAdapter adapter;
 	private ShoppingList list;
-	private DrawerLayout drawMenu;
 	private ShareActionProvider mShareActionProvider;
 
 	@Override
@@ -56,8 +53,9 @@ public class ShareListActivity extends BaseActivity {
 		syncManager = getSyncManager();
 
 		// Create drawer menu
-		NavigationDrawer nDrawer = new NavigationDrawer();
-		drawMenu = nDrawer.constructNavigationDrawer(drawMenu, this);
+		createDrawerMenu();
+		createDrawerToggle(); //to change the title
+		drawerToggle.setDrawerIndicatorEnabled(false);
 
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
@@ -179,12 +177,6 @@ public class ShareListActivity extends BaseActivity {
 		});
 	}
 
-	@Override
-	protected void onPause() {
-		super.onPause();
-		drawMenu.closeDrawers();
-	}
-
 	private void setShareIntent(Intent shareIntent) {
 		if (mShareActionProvider != null) {
 			mShareActionProvider.setShareIntent(shareIntent);
@@ -240,5 +232,4 @@ public class ShareListActivity extends BaseActivity {
 		updateFriendsList();
 		createAutocomplete();
 	}
-
 }

@@ -167,11 +167,11 @@ public class SQLiteReadHelper {
 		ShoppingList list = new ShoppingList(cursor.getString(1));
 		list.setId(cursor.getLong(0));
 		list.setArchived(cursor.getInt(2) == 1);
-		list.setShared(cursor.getInt(5) == 1);
 		if (cursor.getLong(3) > 0)
-			list.setDueDate(new Date(cursor.getLong(3)));
-		
+			list.setDueDate(new Date(cursor.getLong(3)));	
 		list.setShop(getShopName(cursor.getInt(4)));
+		list.setShared(cursor.getInt(5) == 1);
+		list.setChangesCount(cursor.getInt(6));
 		return list;
 	}
 
@@ -221,6 +221,8 @@ public class SQLiteReadHelper {
 	public Recipe cursorToRecipe(Cursor cursor) {
 		Recipe recipe = new Recipe(cursor.getString(1));
 		recipe.setId(cursor.getLong(0));
+		recipe.setNotes(cursor.getString(2));
+		recipe.setNotesVisible(cursor.getInt(3) == 1);
 		return recipe;
 	}
 	
