@@ -3,6 +3,7 @@ package ch.unibe.ese.shopnote.share;
 import java.util.List;
 
 import android.content.Context;
+import ch.unibe.ese.shopnote.core.Friend;
 import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ShoppingList;
 import ch.unibe.ese.shopnote.core.BaseActivity;
@@ -93,6 +94,13 @@ public class AnswerHandler {
 			newList.setShared(true);
 			listManager.saveShoppingList(newList);
 			ShoppingList list3 = listManager.getShoppingLists().get(listManager.getShoppingLists().size()-1);
+			
+			for(String number : ((CreateSharedListRequest)request).getSharedFriendNumbers()) {
+				System.err.println("Friend Number: "+ number);
+				long friendId2 = friendsManager.addFriend(new Friend(number,"User"));
+				friendsManager.addFriendToList(list3, friendsManager.getFriend(friendId2));
+			}
+			
 			long id = list3.getId();
 			((CreateSharedListRequest)request).setLocalListId(id);
 			syncManager.addRequest(request);

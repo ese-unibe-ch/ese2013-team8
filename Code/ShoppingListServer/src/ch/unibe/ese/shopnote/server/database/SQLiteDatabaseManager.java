@@ -9,6 +9,7 @@ import ch.unibe.ese.shopnote.share.requests.CreateSharedListRequest;
 import ch.unibe.ese.shopnote.share.requests.Request;
 import ch.unibe.ese.shopnote.share.requests.ShareListRequest;
 import ch.unibe.ese.shopnote.share.requests.UnShareListRequest;
+import ch.unibe.ese.shopnote.share.requests.listchange.EmptyListChangeRequest;
 import ch.unibe.ese.shopnote.share.requests.listchange.ListChangeRequest;
 
 /**
@@ -147,6 +148,27 @@ public class SQLiteDatabaseManager {
 		}
 		return -1;
 	}
+	
+	/**
+	 * Returns the phoneNumber of a user
+	 * @param userId
+	 * @return
+	 */
+	public String getNumberOfUser(int userId) {
+		Statement stmt;
+		try {
+			stmt = this.c.createStatement();
+			String selectUserifExists = "select * from " + TABLE_USERS + " where " + COLUMN_USER_ID + "=\"" + userId + "\";";
+			ResultSet rs = stmt.executeQuery(selectUserifExists);
+			if(rs.next()) {
+				return rs.getString(COLUMN_USER_PHONENUMBER);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace(System.err);
+		}
+		return ""+-1;
+	}
+	
 
 	/**
 	 * Creates an entry in sharedlists
@@ -186,7 +208,17 @@ public class SQLiteDatabaseManager {
 				stmt.executeUpdate(insertSharedList);
 				System.out.println("\t:List " + serverListId + " is now shared with users " + friendId + " and " + userId);
 				
-				odbManager.storeRequest(new CreateSharedListRequest(request.getFriendNumber(), serverListId, listname));
+				// craft the CreateSharedListRequest for your friend with all shared users
+				CreateSharedListRequest cslRequest = new CreateSharedListRequest(request.getFriendNumber(), serverListId, listname);
+				
+				ArrayList<User> userList = getSharedUsers(new EmptyListChangeRequest(request.getPhoneNumber(),request.getListId()));
+				for(User u : userList) {
+					String friendNumber = getNumberOfUser(u.getUserId());
+					if(!friendNumber.equals(request.getFriendNumber())) {
+						cslRequest.addSharedFriendNumber(friendNumber);
+					}
+				}
+				odbManager.storeRequest(cslRequest);
 				
 				request.setSuccessful();
 			}

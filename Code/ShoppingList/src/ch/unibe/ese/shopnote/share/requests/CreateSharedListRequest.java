@@ -19,6 +19,7 @@ public class CreateSharedListRequest extends Request {
 		super(phoneNumber);
 		this.serverListId = serverListId;
 		this.listname = listname;
+		this.sharedFriendNumbers = new ArrayList<String>();
 		this.setSuccessful();
 	}
 
