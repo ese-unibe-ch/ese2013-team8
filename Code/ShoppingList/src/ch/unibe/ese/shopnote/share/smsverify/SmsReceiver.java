@@ -1,17 +1,19 @@
 package ch.unibe.ese.shopnote.share.smsverify;
 
+import ch.unibe.ese.shopnote.activities.VerifyNumberActivity;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
+import android.widget.Toast;
 
 public class SmsReceiver extends BroadcastReceiver{
 
-	private Context context;
+	private VerifyNumberActivity context;
 	
-	public SmsReceiver(Context context) {
+	public SmsReceiver(VerifyNumberActivity context) {
 		this.context = context;
 	}
 
@@ -28,7 +30,9 @@ public class SmsReceiver extends BroadcastReceiver{
 					for (int i = 0; i < msgs.length; i++) {
 						msgs[i] = SmsMessage.createFromPdu((byte[]) pdus[i]);
 						String msgBody = msgs[i].getMessageBody();
-						verifyToken(msgBody);
+						if(verifyToken(msgBody)) {
+							abortBroadcast();
+						}
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -38,9 +42,13 @@ public class SmsReceiver extends BroadcastReceiver{
 
 	}
 
-	private void verifyToken(String msgBody) {
+	private boolean verifyToken(String msgBody) {
 		TokenGenerator tokenGen = new TokenGenerator(context);
-		tokenGen.checkToken(msgBody);
-		((BaseActivity) context).finish();
+		boolean wasSuccessful = tokenGen.checkToken(msgBody);
+		if(wasSuccessful) {
+			context.setSuccessful(true);
+			context.finish();
+		}
+		return wasSuccessful;
 	}
 }

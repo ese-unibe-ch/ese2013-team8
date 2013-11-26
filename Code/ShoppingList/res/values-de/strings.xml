@@ -68,7 +68,18 @@
     <string name="share_list_hint">Freund hinzufügen</string>
 
     <!--  ManageFriendsActivity -->
-    <string name ="friend_has_the_app_icon">Appstatus</string>    
+    <string name ="friend_has_the_app_icon">Appstatus</string>   
+    
+    <!-- VerifyNumberActivity -->
+    <string name="verify_number_info">Zum benutzen der Synchronisation musst du deine Telefonnummer verifizieren. 
+        \nShopNote wird ein einmaliges SMS an deine Nummer schicken.
+        \n(Es können einmalige SMS Kosten entstehen)
+        \n\nAbhängig von deinem Anbieter kann das bis zu 20 Sekunden dauern</string>
+    <string name="verify_number_hint">Deine Telefonnummer</string>
+    <string name="verify_number_send">Verifizieren</string>
+    <string name="verify_number_empty">Bitte Telefonnummer eingeben</string>
+    <string name="verify_number_successful">Telefonnummer erfolgreich verifiziert!</string>
+    <string name="verify_number_failed">Verifizierung fehlgeschlagen</string>
     
     <!-- Buttons / Menu items -->
     <string name="button_back">Abbrechen</string>

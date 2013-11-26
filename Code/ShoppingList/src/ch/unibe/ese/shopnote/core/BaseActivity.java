@@ -13,13 +13,11 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
-import android.telephony.TelephonyManager;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 import ch.unibe.ese.shopnote.R;
-import ch.unibe.ese.shopnote.activities.CreateItemActivity;
 import ch.unibe.ese.shopnote.activities.VerifyNumberActivity;
 import ch.unibe.ese.shopnote.adapters.ShoppingListAdapter;
 import ch.unibe.ese.shopnote.core.sqlite.SQLitePersistenceManager;
@@ -149,7 +147,6 @@ public class BaseActivity extends Activity {
 	public String getMyPhoneNumber() {
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
 		boolean phoneNumberApproved = settings.getBoolean("phonenumberapproved", false);
-		showToast(""+phoneNumberApproved);
 		if(!phoneNumberApproved) {
 			Intent intent = new Intent(this, VerifyNumberActivity.class);
 			startActivity(intent);

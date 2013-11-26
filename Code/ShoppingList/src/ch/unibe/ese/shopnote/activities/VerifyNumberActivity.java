@@ -4,7 +4,6 @@ import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.share.smsverify.SmsReceiver;
 import ch.unibe.ese.shopnote.share.smsverify.SmsSender;
-import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -18,6 +17,7 @@ import android.widget.Toast;
 public class VerifyNumberActivity extends BaseActivity {
 
 	private static final String ACTION="android.provider.Telephony.SMS_RECEIVED";
+	private static boolean finished;
 	private SmsReceiver receiver;
 	
 	@Override
@@ -27,19 +27,26 @@ public class VerifyNumberActivity extends BaseActivity {
 		
         final IntentFilter filter = new IntentFilter();
         filter.addAction(ACTION);
+        filter.setPriority(10);
         this.receiver = new SmsReceiver(this);
         registerReceiver(this.receiver, filter);
 		
+        finished = false;
 		
 		setButtonListener();
 	}
 
 	private void setButtonListener() {
-		Button button = (Button) findViewById(R.id.verify_number_button);
+		final Button button = (Button) findViewById(R.id.verify_number_button);
 		button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				VerifyNumberActivity.this.sendToken();
+				if (getTextViewText(R.id.verify_number_text).length() > 0) {
+					VerifyNumberActivity.this.sendToken();
+					button.setEnabled(false);
+				} else {
+					showToast(getString(R.string.verify_number_empty));
+				}
 			}
 		});
 		
@@ -48,7 +55,7 @@ public class VerifyNumberActivity extends BaseActivity {
 	protected void sendToken() {
 		String phoneNumber = getTextViewText(R.id.verify_number_text);
 		savePhoneNumberInPreferences(phoneNumber);
-		new SmsSender(phoneNumber, this).sendToken();
+		new SmsSender(phoneNumber, this).execute();
 	}
 
 	private void savePhoneNumberInPreferences(String phoneNumber) {
@@ -57,7 +64,6 @@ public class VerifyNumberActivity extends BaseActivity {
 		edit.putString("phonenumber", phoneNumber);
 		edit.apply();
 	}
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -69,6 +75,18 @@ public class VerifyNumberActivity extends BaseActivity {
     public void onDestroy() {
         super.onDestroy();
         this.unregisterReceiver(this.receiver);
+    }
+    
+    public void setSuccessful(boolean wasSuccessful) {
+    	if(!finished) {
+        	if(wasSuccessful) {
+        		Toast.makeText(this, getString(R.string.verify_number_successful), Toast.LENGTH_SHORT).show();
+        	} else {
+        		Toast.makeText(this, getString(R.string.verify_number_failed), Toast.LENGTH_SHORT).show();
+        	}
+        	finished = true;
+    	}
+    	this.finish();
     }
 
 }

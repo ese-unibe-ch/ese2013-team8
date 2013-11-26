@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
-import android.widget.Toast;
 
 public class TokenGenerator {
 
@@ -34,15 +33,13 @@ public class TokenGenerator {
 		return phoneNumber;
 	}
 
-	public void checkToken(String msgBody) {
+	public boolean checkToken(String msgBody) {
 		String phoneNumber = getPhoneNumberFromPreferences();
 		String token = generateToken(phoneNumber);
 		if(msgBody.equals(token)) {
 			approvePhoneNumber();
-			Toast.makeText(context, "Phone-number verified successfully", Toast.LENGTH_SHORT).show();
-		} else {
-			Toast.makeText(context, "Phone-number verification failed", Toast.LENGTH_SHORT).show();
 		}
+		return msgBody.equals(token);
 	}
 	
 	private void approvePhoneNumber() {

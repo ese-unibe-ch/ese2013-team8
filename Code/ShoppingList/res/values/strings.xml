@@ -75,9 +75,13 @@
     <!-- VerifyNumberActivity -->
     <string name="verify_number_info">In order to use the synchronisation you need to verify your phonenumber. 
         \nShopNote will send a one time SMS to your phone.
-        \n(Carrier SMS charges may apply)</string>
-    <string name="verify_number_hint">your phonenumber</string>
-    <string name="verify_number_send">verify</string>
+        \n(Carrier SMS charges may apply)
+        \n\nDepending on your provider this may take up to 20 seconds</string>
+    <string name="verify_number_hint">Your phonenumber</string>
+    <string name="verify_number_send">Verify</string>
+    <string name="verify_number_empty">Please enter your phonenumber</string>
+    <string name="verify_number_successful">Phone-number verified successfully</string>
+    <string name="verify_number_failed">Verification failed</string>
     
     <!-- Buttons / Menu items -->
     <string name="button_back">Abort</string>
