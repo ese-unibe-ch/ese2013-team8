@@ -75,31 +75,7 @@ public class HomeActivity extends BaseActivity {
 		listmanager = getListManager();
 		syncmanager = getSyncManager();
 		getFriendsManager();
-		updateAdapter();
-		
-		
-		for( ShoppingList shoppingList: shoppingLists){
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(shoppingList.getDueDate());
-			// time of notification on dueDate
-			cal.set(Calendar.HOUR_OF_DAY, 9);
-			cal.set(Calendar.MINUTE, 0);
-			cal.set(Calendar.SECOND, 0);
-			cal.set(Calendar.AM_PM,Calendar.AM);
-			
-			calendars.add(cal);
-			
-			}
-		
-		   Intent myIntent = new Intent(HomeActivity.this, AlarmReceiver.class);
-		   pendingIntent = PendingIntent.getBroadcast(HomeActivity.this, 0, myIntent,0);
-		     
-		   AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
-		   for (Calendar calendar: calendars){
-				 
-				 alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
-		   }
-		
+		updateAdapter();	
 	}
 	
 	private void updateAdapter() {
@@ -122,6 +98,8 @@ public class HomeActivity extends BaseActivity {
 		listView.setAdapter(shoppingListAdapter);
 
 		addListener(listView);
+		
+		setDueDateNotifications();
 		
 		// hide welcome message
 		RelativeLayout welcome = (RelativeLayout) findViewById(R.id.home_welcome);
@@ -253,5 +231,29 @@ public class HomeActivity extends BaseActivity {
 		Locale.setDefault(locale);
 		config.locale = locale;
 		getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+	}
+	
+	private void setDueDateNotifications() {
+		
+		for( ShoppingList shoppingList: shoppingLists){
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(shoppingList.getDueDate());
+			// time of notification on dueDate
+			cal.set(Calendar.HOUR_OF_DAY, 9);
+			cal.set(Calendar.MINUTE, 0);
+			cal.set(Calendar.SECOND, 0);
+			cal.set(Calendar.AM_PM,Calendar.AM);
+			
+			calendars.add(cal);
+		}
+		
+	   Intent myIntent = new Intent(HomeActivity.this, AlarmReceiver.class);
+	   pendingIntent = PendingIntent.getBroadcast(HomeActivity.this, 0, myIntent,0);
+	     
+	   AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+	   for (Calendar calendar: calendars){
+			 
+			 alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+	   }
 	}
 }
