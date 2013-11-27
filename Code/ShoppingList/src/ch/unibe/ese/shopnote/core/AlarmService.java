@@ -1,11 +1,7 @@
-package ch.unibe.ese.shopnote.activities;
-
-
-
-
-
+package ch.unibe.ese.shopnote.core;
 
 import ch.unibe.ese.shopnote.R;
+import ch.unibe.ese.shopnote.activities.ViewListActivity;
 import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.app.PendingIntent;

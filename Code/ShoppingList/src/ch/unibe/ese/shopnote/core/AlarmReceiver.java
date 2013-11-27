@@ -1,4 +1,4 @@
-package ch.unibe.ese.shopnote.activities;
+package ch.unibe.ese.shopnote.core;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

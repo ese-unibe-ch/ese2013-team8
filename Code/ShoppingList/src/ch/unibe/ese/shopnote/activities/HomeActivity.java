@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -27,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.adapters.ShoppingListAdapter;
+import ch.unibe.ese.shopnote.core.AlarmReceiver;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.ShoppingList;
@@ -88,9 +89,16 @@ public class HomeActivity extends BaseActivity {
 			
 			calendars.add(cal);
 			
-			
-			
-		}
+			}
+		
+		   Intent myIntent = new Intent(HomeActivity.this, AlarmReceiver.class);
+		   pendingIntent = PendingIntent.getBroadcast(HomeActivity.this, 0, myIntent,0);
+		     
+		   AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+		   for (Calendar calendar: calendars){
+				 
+				 alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+		   }
 		
 	}
 	
