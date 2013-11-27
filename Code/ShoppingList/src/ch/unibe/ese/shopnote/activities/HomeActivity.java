@@ -1,11 +1,13 @@
 package ch.unibe.ese.shopnote.activities;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -42,6 +44,8 @@ public class HomeActivity extends BaseActivity {
 	private List<ShoppingList> shoppingListsNotArchived;
 	private ShoppingListAdapter shoppingListAdapter;
 	private Activity homeActivity = this;
+	private ArrayList<Calendar> calendars;
+	private PendingIntent pendingIntent;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -71,6 +75,23 @@ public class HomeActivity extends BaseActivity {
 		syncmanager = getSyncManager();
 		getFriendsManager();
 		updateAdapter();
+		
+		
+		for( ShoppingList shoppingList: shoppingLists){
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(shoppingList.getDueDate());
+			// time of notification on dueDate
+			cal.set(Calendar.HOUR_OF_DAY, 9);
+			cal.set(Calendar.MINUTE, 0);
+			cal.set(Calendar.SECOND, 0);
+			cal.set(Calendar.AM_PM,Calendar.AM);
+			
+			calendars.add(cal);
+			
+			
+			
+		}
+		
 	}
 	
 	private void updateAdapter() {
