@@ -39,9 +39,9 @@ public class CreateItemActivity extends BaseActivity {
         
 		//set chosen color theme
 		RelativeLayout lo = (RelativeLayout) findViewById(R.id.relativeLayoutCreateItem);
-		updateTheme(lo);
+		updateTheme(lo, getActionBar());
 		View someView = findViewById(R.id.RelativeLayoutCreateItemComplete);
-		updateTheme(someView);
+		updateTheme(someView, getActionBar());
 
 		
 		// Show the Up button in the action bar.

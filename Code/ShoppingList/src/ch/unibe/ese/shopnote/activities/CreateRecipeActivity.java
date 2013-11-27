@@ -28,9 +28,9 @@ public class CreateRecipeActivity extends BaseActivity {
         
 		//set chosen color theme
 		RelativeLayout lo = (RelativeLayout) findViewById(R.id.relativeLayoutRecipe);
-		updateTheme(lo);
+		updateTheme(lo, getActionBar());
 		View someView = findViewById(R.id.RelativeLayoutCreateRecipeComplete);
-		updateTheme(someView);
+		updateTheme(someView, getActionBar());
 		
 		getActionBar().hide();
 		

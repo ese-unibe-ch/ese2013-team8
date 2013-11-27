@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -49,7 +50,8 @@ public class ShareListActivity extends BaseActivity {
       
 		//set chosen color theme
 		RelativeLayout lo = (RelativeLayout) findViewById(R.id.RelativeLayoutShareList);
-		updateTheme(lo);
+		RelativeLayout rlDrawer = (RelativeLayout) findViewById(R.id.drawer_Linearlayout);
+		updateTheme(lo, getActionBar(), rlDrawer);
 		
 		// Show the Up button in the action bar.
 		getActionBar();

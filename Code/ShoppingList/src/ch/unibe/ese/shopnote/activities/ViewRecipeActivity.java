@@ -44,7 +44,8 @@ public class ViewRecipeActivity extends BaseActivity {
         
 		//set chosen color theme
 		RelativeLayout lo = (RelativeLayout) findViewById(R.id.RelativeLayoutViewRecipe);
-		updateTheme(lo);
+		RelativeLayout rlDrawer = (RelativeLayout) findViewById(R.id.drawer_Linearlayout);
+		updateTheme(lo, getActionBar(), rlDrawer);
 		
 		// Show the Up button in the action bar.
 		setupActionBar();

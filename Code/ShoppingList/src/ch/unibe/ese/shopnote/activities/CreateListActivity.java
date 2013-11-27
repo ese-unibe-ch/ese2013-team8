@@ -44,9 +44,9 @@ public class CreateListActivity extends BaseActivity {
        
 		//set chosen color theme
 		RelativeLayout lo = (RelativeLayout) findViewById(R.id.relativeLayoutCreateList);
-		updateTheme(lo);
+		updateTheme(lo, getActionBar());
 		View someView = findViewById(R.id.RelativeLayoutCreateListComplete);
-		updateTheme(someView);
+		updateTheme(someView, getActionBar());
 
 		// hide the action bar on this activity
 		getActionBar().hide();

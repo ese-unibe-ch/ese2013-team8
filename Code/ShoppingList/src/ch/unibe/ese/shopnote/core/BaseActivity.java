@@ -2,12 +2,14 @@ package ch.unibe.ese.shopnote.core;
 
 import java.util.List;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import ch.unibe.ese.shopnote.R;
@@ -42,6 +45,10 @@ public class BaseActivity extends Activity {
 	protected ActionBarDrawerToggle drawerToggle;
 	private boolean drawerToggleCreated;
 	private String title;
+	private int titleBarColor;
+	private int backgroundColor;
+	private int navigationDrawerColor;
+	private int textColor;
 	
 	/**
 	 * Returns the singleton ListManager which is responsible for all the shopping lists
@@ -262,12 +269,33 @@ public class BaseActivity extends Activity {
 			drawMenu.closeDrawers();
 	}
 	
-	protected void updateTheme(View layout) {
+	protected void updateTheme(View layout, ActionBar actionBar) {
+		getColorSettings();
+		actionBar.setBackgroundDrawable(new ColorDrawable(this.titleBarColor));
+		layout.setBackgroundColor(this.backgroundColor);
+	}
+	
+	protected void updateTheme(View layout, ActionBar actionBar, View layoutDrawer) {
+		updateTheme(layout, actionBar);
+		layoutDrawer.setBackgroundColor(this.navigationDrawerColor);		
+	}
+	
+	private void getColorSettings() {
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-		String colorString = sharedPref.getString("color_setting", "#FFFFFF");
-		int color = Color.parseColor(colorString);
-		if(color != -1)
-			layout.setBackgroundColor(color);
+		String colorString = sharedPref.getString("color_setting", "white");
+		String colorChoosable[] = getResources().getStringArray(R.array.default_color_choice_names);
+		String colors[] = getResources().getStringArray(R.array.default_color_choice_white);
+
+		if(colorString.equals(colorChoosable[1]))
+			colors = getResources().getStringArray(R.array.default_color_choice_dark);
+		else if(colorString.equals(colorChoosable[2]))
+			colors = getResources().getStringArray(R.array.default_color_choice_chocolate);
+		if(colors == null) throw new IllegalStateException();
+		
+		this.backgroundColor = Color.parseColor(colors[0]);
+		this.navigationDrawerColor = Color.parseColor(colors[1]);
+		this.titleBarColor = Color.parseColor(colors[2]);
+		this.textColor = Color.parseColor(colors[3]);
 	}
 	
 }

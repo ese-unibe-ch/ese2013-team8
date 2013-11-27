@@ -159,15 +159,15 @@
     </string-array>
 
     <string name="theme_settings">Design</string>
-    <string name="color_setting">Hintergrund Farbe</string>
+    <string name="color_setting">Theme</string>
     <string name="color_dialog">Farben des Themes anpassen</string>
     <string name="standard">Standard</string>
-
-    <string-array name="choosable_themes">
-        <item>Standard</item>
+    
+     <!-- color Menu -->
+    <string-array name="default_color_choice_names" >
+        <item>Weiss</item>
         <item>Dunkel</item>
+        <item>Schokolade</item>
     </string-array>
     
-
-
 </resources>

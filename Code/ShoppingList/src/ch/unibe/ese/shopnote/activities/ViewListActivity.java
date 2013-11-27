@@ -62,7 +62,8 @@ public class ViewListActivity extends BaseActivity {
        
 		//set chosen color theme
 		RelativeLayout lo = (RelativeLayout) findViewById(R.id.RelativeLayoutViewList);
-		updateTheme(lo);
+		RelativeLayout rlDrawer = (RelativeLayout) findViewById(R.id.drawer_Linearlayout);
+		updateTheme(lo, getActionBar(), rlDrawer);
 		
 		manager = getListManager();
 		syncmanager = getSyncManager();

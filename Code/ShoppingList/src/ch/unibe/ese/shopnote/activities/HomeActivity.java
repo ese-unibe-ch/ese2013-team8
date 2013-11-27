@@ -11,6 +11,7 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.ActionMode;
@@ -18,12 +19,12 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.adapters.ShoppingListAdapter;
@@ -60,9 +61,11 @@ public class HomeActivity extends BaseActivity {
         
         //set chosen color theme
 		setContentView(R.layout.activity_home);
-		RelativeLayout lo = (RelativeLayout) findViewById(R.id.RelativeLayoutHome);
-		updateTheme(lo);
-	
+		RelativeLayout rl = (RelativeLayout) findViewById(R.id.RelativeLayoutHome);
+		RelativeLayout rlDrawer = (RelativeLayout) findViewById(R.id.drawer_Linearlayout);
+//		ListView lv = (ListView) findViewById(R.id.left_drawer);
+		updateTheme(rl, getActionBar(), rlDrawer);
+
 		
 		// Create drawer menu
 		createDrawerMenu();

@@ -20,20 +20,27 @@
  <color name="navy">#000080</color>
  <color name="black">#000000</color>
  
- 
- <string-array name="default_color_choice_names" translatable="false">
-        <item>#white</item>
-        <item>#black</item>
-        <item>#red</item>
-        <item>#blue</item>
-        <item>green</item>
+    
+  <!-- ArrayFormat for theme-styles: first background, then navigationdrawer, titlebar, textColor -->
+  <string-array name="default_color_choice_white" translatable="false">
+        <item>#EEEEEE</item>
+        <item>#EEEEEE</item>
+        <item>#EEEEEE</item>
+        <item>#000000</item>
+    </string-array>
+        
+  <string-array name="default_color_choice_dark" translatable="false">
+        <item>#000000</item>
+        <item>#444444</item>
+        <item>#DDDDDD</item>
+        <item>#EEEEEE</item>
     </string-array>
     
-  <string-array name="default_color_choice_values" translatable="false">
-        <item>#FFFFFF</item>
+  <string-array name="default_color_choice_chocolate" translatable="false">
+        <item>#472004</item>
+        <item>#863500</item>
+        <item>#7A3D07</item>
         <item>#000000</item>
-        <item>#FF0000</item>
-        <item>#00FFFF</item>
-        <item>#008000</item>
     </string-array>
+  
 </resources>

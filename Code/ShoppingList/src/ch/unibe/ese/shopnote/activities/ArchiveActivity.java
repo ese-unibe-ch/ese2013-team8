@@ -37,7 +37,7 @@ public class ArchiveActivity extends BaseActivity {
       
 		//set chosen color theme
 		RelativeLayout lo = (RelativeLayout) findViewById(R.id.RelativeLayoutArchive);
-		updateTheme(lo);
+		updateTheme(lo, getActionBar());
 		
 		// Show the Up button in the action bar.
 		setupActionBar();
