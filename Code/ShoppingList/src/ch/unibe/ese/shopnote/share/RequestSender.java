@@ -108,7 +108,7 @@ public class RequestSender extends AsyncTask<Request, Void, Boolean>{
 				out.writeObject(request);
 				out.flush();
 			} catch (IOException e) {
-				// TODO
+				System.err.println("Couldn't write to socket in RequestSender");
 			}
 		}
 	}

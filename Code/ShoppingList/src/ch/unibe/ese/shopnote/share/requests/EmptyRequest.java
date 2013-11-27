@@ -17,6 +17,6 @@ public class EmptyRequest extends Request {
 
 	@Override
 	public int getType() {
-		return 0;
+		return Request.EMPTY_REQUEST;
 	}
 }
