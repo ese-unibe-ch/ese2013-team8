@@ -99,7 +99,7 @@ public class HomeActivity extends BaseActivity {
 
 		addListener(listView);
 		
-		setDueDateNotifications();
+		//setDueDateNotifications();
 		
 		// hide welcome message
 		RelativeLayout welcome = (RelativeLayout) findViewById(R.id.home_welcome);

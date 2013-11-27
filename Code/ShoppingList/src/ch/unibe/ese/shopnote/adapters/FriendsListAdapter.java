@@ -56,6 +56,10 @@ public class FriendsListAdapter extends ArrayAdapter<Friend> {
 			phoneNumber = phoneNumber.substring(2, phoneNumber.length());
 			phoneNumber = "0" + phoneNumber;
 		}
+		else if (phoneNumber.startsWith("+41")) {
+			phoneNumber = phoneNumber.substring(3, phoneNumber.length());
+			phoneNumber = "0" + phoneNumber;
+		}
 		holder.phonenumber.setText(phoneNumber);
 		
 		// set app status
