@@ -39,6 +39,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public static final String COLUMN_FRIEND_ID = "friendId";
 	public static final String COLUMN_FRIEND_NAME = "friendname";
 	public static final String COLUMN_FRIEND_PHONENR = "friendphonenr";
+	public static final String COLUMN_FRIEND_HASAPP = "friendhasapp";
 	// Save friends to synch lists
 	public static final String TABLE_FRIENDSTOLIST = "friendstolist";
 	// Save all recipes with an unique id and name
@@ -98,7 +99,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 			"create table " + TABLE_FRIENDS +"("
 			+ COLUMN_FRIEND_ID + " integer primary key autoincrement, "
 			+ COLUMN_FRIEND_PHONENR + " varchar(30) NOT NULL, "
-			+ COLUMN_FRIEND_NAME + " varchar(30) NOT NULL"
+			+ COLUMN_FRIEND_NAME + " varchar(30) NOT NULL, "
+			+ COLUMN_FRIEND_HASAPP + " integer "
 			+ ");";
 	
 	private static final String DATABASE_CREATE_TABLE_FRIENDSTOLIST =
@@ -141,7 +143,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 			SQLiteHelper.COLUMN_LIST_ID, SQLiteHelper.COLUMN_LISTPRICE,
 			SQLiteHelper.COLUMN_ITEMBOUGHT, SQLiteHelper.COLUMN_ITEM_QUANTITY };
 	public static String[] FRIENDS_COLUMNS = { SQLiteHelper.COLUMN_FRIEND_ID,
-			SQLiteHelper.COLUMN_FRIEND_PHONENR, SQLiteHelper.COLUMN_FRIEND_NAME };
+			SQLiteHelper.COLUMN_FRIEND_PHONENR, SQLiteHelper.COLUMN_FRIEND_NAME,
+			SQLiteHelper.COLUMN_FRIEND_HASAPP};
 	public static String[] FRIENDSTOLIST_COLUMNS = {SQLiteHelper.COLUMN_LIST_ID,
 			SQLiteHelper.COLUMN_FRIEND_ID};
 	public static String[] RECIPE_COLUMNS = { SQLiteHelper.COLUMN_RECIPE_ID,

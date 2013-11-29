@@ -224,6 +224,7 @@ public class SQLitePersistenceManager implements PersistenceManager {
 		} else if(friend.getId() == null) {
 			long id = readHelper.getFriendId(friend.getPhoneNr());
 			friend.setId(id);
+			save(friend);
 		} else { // Else if it is an old friend
 			database.update(
 					SQLiteHelper.TABLE_FRIENDS,

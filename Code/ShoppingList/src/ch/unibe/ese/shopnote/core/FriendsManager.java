@@ -1,5 +1,6 @@
 package ch.unibe.ese.shopnote.core;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -60,11 +61,24 @@ public class FriendsManager {
 	}
 
 	/**
+	 * Gets a list of all friends added (also friends who do not have the app)
 	 * @return List of all added friends, unmodifiable
 	 */
 	public List<Friend> getFriendsList() {
 		Collections.sort(friendsList, Comparators.FRIEND_COMPARATOR);
 		return Collections.unmodifiableList(friendsList);
+	}
+	
+	/**
+	 * Gets a list of all friends which have the app
+	 * @return List of all friends with the app, unmodifiable
+	 */
+	public List<Friend> getFriendsWithApp() {
+		List<Friend> list = new ArrayList<Friend>();
+		for(Friend friend: friendsList)
+			if(friend.hasTheApp())
+				list.add(friend);
+		return Collections.unmodifiableList(list);
 	}
 
 	/**
@@ -139,7 +153,9 @@ public class FriendsManager {
 	 * @param friendId
 	 */
 	public void setFriendHasApp(long friendId) {
-		getFriend(friendId).setHasApp();
+		Friend friend = getFriend(friendId);
+		friend.setHasApp();
+		persistenceManager.save(friend);
 	}
 	
 	public String toString() {

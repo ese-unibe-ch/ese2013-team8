@@ -84,6 +84,7 @@ public class SQLiteUpdateHelper {
 		ContentValues values = new ContentValues();
 		values.put(SQLiteHelper.COLUMN_FRIEND_NAME, friend.getName());
 		values.put(SQLiteHelper.COLUMN_FRIEND_PHONENR, friend.getPhoneNr());
+		values.put(SQLiteHelper.COLUMN_FRIEND_HASAPP, friend.hasTheApp()? 1 : 0);
 		return values;
 	}
 	

@@ -214,6 +214,10 @@ public class SQLiteReadHelper {
 	public Friend cursorToFriend(Cursor cursor) {
 		Friend friend = new Friend(cursor.getString(1), cursor.getString(2));
 		friend.setId(cursor.getLong(0));
+		if(cursor.getInt(3) == 1)
+			friend.setHasApp();
+		else
+			friend.setHasNotApp();
 		return friend;
 	}
 	
@@ -340,6 +344,11 @@ public class SQLiteReadHelper {
 			cursor.moveToFirst();
 			Friend friend = new Friend(cursor.getString(1), cursor.getString(2));
 			friend.setId(id);
+			if(cursor.getInt(3) == 1)
+				friend.setHasApp();
+			else
+				friend.setHasNotApp();
+
 			return friend;
 		} else {
 			return null;

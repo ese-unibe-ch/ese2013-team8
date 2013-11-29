@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.ShareActionProvider;
+import android.widget.Toast;
 import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.adapters.FriendsListAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
@@ -108,7 +109,7 @@ public class ShareListActivity extends BaseActivity {
 		AutoCompleteTextView textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
 		autocompleteAdapter = new ArrayAdapter<Friend>(this,
 				android.R.layout.simple_list_item_1,
-				friendsManager.getFriendsList());
+				friendsManager.getFriendsWithApp());
 		textName.setAdapter(autocompleteAdapter);
 		updateThemeTextBox(textName);
 
@@ -238,10 +239,13 @@ public class ShareListActivity extends BaseActivity {
 		
 		if (friendId != -1) {
 			Friend friend = friendsManager.getFriend(friendId);
-			friendsManager.addFriendToList(list, friend);
-			ShareListRequest slrequest = new ShareListRequest(getMyPhoneNumber(),
-					friend.getPhoneNr(), list.getId(), list.getName());
-			syncManager.addRequest(slrequest);
+			if(friend.hasTheApp()) {
+				friendsManager.addFriendToList(list, friend);
+				ShareListRequest slrequest = new ShareListRequest(getMyPhoneNumber(),
+						friend.getPhoneNr(), list.getId(), list.getName());
+				syncManager.addRequest(slrequest); 
+			} else
+				Toast.makeText(getApplicationContext(), "Friend does not have the app!", 2).show();
 		}
 		
 		// update lists
