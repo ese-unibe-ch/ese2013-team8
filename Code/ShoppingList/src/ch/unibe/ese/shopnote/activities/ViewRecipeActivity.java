@@ -60,11 +60,12 @@ public class ViewRecipeActivity extends BaseActivity {
 		drawerToggle.setDrawerIndicatorEnabled(false);
 		
 		manager = getListManager();
+		manager.updateRecipe();
 		
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
 			long recipeIndex = extras.getLong(EXTRAS_RECIPE_ID);
-			recipe = manager.getRecipe(recipeIndex);
+			recipe = manager.getRecipeAt(recipeIndex);
 			itemsOfRecipe = recipe.getItemList();
 			setTitle(this.getString(R.string.view_recipe_title) + " " + recipe.toString());
 		} 
@@ -96,6 +97,7 @@ public class ViewRecipeActivity extends BaseActivity {
 
 	private void updateRecipeList() {
 		// Get listOfRecipes and put it in the listview	
+		itemsOfRecipe = recipe.getItemList();
 		itemAdapter = new ArrayAdapter<Item>(this,
 				R.layout.shopping_list_item, itemsOfRecipe);
 		ListView listView = (ListView) findViewById(R.id.ItemView);
@@ -273,5 +275,13 @@ public class ViewRecipeActivity extends BaseActivity {
 		super.onResume();
 		// load notes
 		setTextViewText(R.id.editTextNotes, recipe.getNotes());
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		manager.updateRecipe();
+		this.recipe = manager.getRecipeAt(recipe.getId());
+		this.updateRecipeList();
 	}
 }

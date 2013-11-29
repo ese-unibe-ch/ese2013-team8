@@ -40,7 +40,7 @@ public class CreateRecipeActivity extends BaseActivity {
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
 			long recipeIndex = extras.getLong(EXTRAS_RECIPE_ID);
-			recipe = manager.getRecipe(recipeIndex);
+			recipe = manager.getRecipeAt(recipeIndex);
 			setText(recipe);
 		} 
 		
@@ -57,7 +57,7 @@ public class CreateRecipeActivity extends BaseActivity {
 		
 		// Input
 		EditText recipeName = (EditText) findViewById(R.id.editRecipeName);
-		recipeName.setText(recipe.getName());
+		recipeName.setText(recipe.toString());
 	}
 	
 	/** Called when the user touches the abort button */

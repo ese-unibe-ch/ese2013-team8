@@ -329,18 +329,20 @@ public class SQLitePersistenceManager implements PersistenceManager {
 		} else { // Else if it is an old recipe
 			database.update(SQLiteHelper.TABLE_RECIPES, values,
 					SQLiteHelper.COLUMN_RECIPE_ID + "=" + recipe.getId(), null);
+			database.delete(SQLiteHelper.TABLE_ITEMTORECIPE,
+					SQLiteHelper.COLUMN_RECIPE_ID + "=? ", new String[] { ""
+							+ recipe.getId() });
 		}
 
 		List<Item> ingredients = recipe.getItemList();
-		if (ingredients != null && !ingredients.isEmpty())
-			saveIngredients(recipe, ingredients);
+		if (ingredients == null) throw new IllegalStateException();
+		saveIngredients(recipe, ingredients);
 	}
 
 	private void saveIngredients(Recipe recipe, List<Item> ingredients) {
 		for (Item item : ingredients) {
 			ContentValues values = updateHelper.toValue(recipe, item);
-			if (!readHelper.isInList(item, recipe))
-				database.insert(SQLiteHelper.TABLE_ITEMTORECIPE, null, values);
+			database.insert(SQLiteHelper.TABLE_ITEMTORECIPE, null, values);
 		}
 	}
 

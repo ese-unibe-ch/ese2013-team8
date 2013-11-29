@@ -245,7 +245,7 @@ public class ShareListActivity extends BaseActivity {
 						friend.getPhoneNr(), list.getId(), list.getName());
 				syncManager.addRequest(slrequest); 
 			} else
-				Toast.makeText(getApplicationContext(), "Friend does not have the app!", 2).show();
+				Toast.makeText(getApplicationContext(), "Friend does not have the app!", Toast.LENGTH_SHORT ).show();
 		}
 		
 		// update lists

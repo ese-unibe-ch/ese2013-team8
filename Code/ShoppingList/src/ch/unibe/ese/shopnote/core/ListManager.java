@@ -214,11 +214,8 @@ public class ListManager {
 		return recipeList.get(position);
 	}
 	
-	public Recipe getRecipe(long id) {
-		for (Recipe recipe : recipeList) {
-			if (recipe.getId() == id)
-				return recipe;
-		}
-		return null;
+	public void updateRecipe() {
+		recipeList = persistenceManager.readRecipes();
 	}
+
 }

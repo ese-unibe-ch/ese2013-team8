@@ -81,7 +81,7 @@ public class CreateItemActivity extends BaseActivity {
 				list = manager.getShoppingList(listIndex);
 			long recipeIndex = extras.getLong(EXTRAS_RECIPE_ID);
 			if (recipeIndex != 0)
-				recipe = manager.getRecipe(recipeIndex);
+				recipe = manager.getRecipeAt(recipeIndex);
 
 			// prepare for edit item when necessary
 			if (extras.getBoolean(EXTRAS_ITEM_EDIT)) {
