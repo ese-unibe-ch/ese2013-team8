@@ -45,10 +45,16 @@ public class BaseActivity extends Activity {
 	protected ActionBarDrawerToggle drawerToggle;
 	private boolean drawerToggleCreated;
 	private String title;
+	
+	//color variables
 	private int titleBarColor;
 	private int backgroundColor;
 	private int navigationDrawerColor;
+	private int createTextBoxColor;
 	private int textColor;
+	private int listViewColor;
+	private int listViewDividerColor;
+	public boolean colorUpdated = false;
 	
 	/**
 	 * Returns the singleton ListManager which is responsible for all the shopping lists
@@ -269,15 +275,32 @@ public class BaseActivity extends Activity {
 			drawMenu.closeDrawers();
 	}
 	
-	protected void updateTheme(View layout, ActionBar actionBar) {
-		getColorSettings();
-		actionBar.setBackgroundDrawable(new ColorDrawable(this.titleBarColor));
-		layout.setBackgroundColor(this.backgroundColor);
+	//Color functions to paint the program
+	
+	protected void updateThemeListView(ListView lv) {
+		if(!colorUpdated)
+			getColorSettings();
+		lv.setBackgroundColor(listViewColor);
+		lv.setDivider(new ColorDrawable(listViewDividerColor));
+		lv.setDividerHeight(2);
+	}
+	
+	protected void updateThemeTextBox(View view) {
+		if(!colorUpdated)
+			getColorSettings();
+		view.setBackgroundColor(createTextBoxColor);
 	}
 	
 	protected void updateTheme(View layout, ActionBar actionBar, View layoutDrawer) {
 		updateTheme(layout, actionBar);
-		layoutDrawer.setBackgroundColor(this.navigationDrawerColor);		
+		layoutDrawer.setBackgroundColor(navigationDrawerColor);		
+	}
+	
+	protected void updateTheme(View layout, ActionBar actionBar) {
+		if(!colorUpdated)
+			getColorSettings();
+		actionBar.setBackgroundDrawable(new ColorDrawable(titleBarColor));
+		layout.setBackgroundColor(backgroundColor);
 	}
 	
 	private void getColorSettings() {
@@ -290,12 +313,18 @@ public class BaseActivity extends Activity {
 			colors = getResources().getStringArray(R.array.default_color_choice_dark);
 		else if(colorString.equals(colorChoosable[2]))
 			colors = getResources().getStringArray(R.array.default_color_choice_chocolate);
+		else if(colorString.equals(colorChoosable[3]))
+			colors = getResources().getStringArray(R.array.default_color_choice_barbie);
 		if(colors == null) throw new IllegalStateException();
 		
 		this.backgroundColor = Color.parseColor(colors[0]);
 		this.navigationDrawerColor = Color.parseColor(colors[1]);
 		this.titleBarColor = Color.parseColor(colors[2]);
 		this.textColor = Color.parseColor(colors[3]);
+		this.createTextBoxColor = Color.parseColor(colors[4]);
+		this.listViewColor = Color.parseColor(colors[5]);
+		this.listViewDividerColor = Color.parseColor(colors[6]);
+		this.colorUpdated = true;
 	}
 	
 }

@@ -78,6 +78,7 @@ public class ManageFriendsActivity extends BaseActivity {
 
 		ListView listView = (ListView) findViewById(R.id.friends_list);
 		listView.setAdapter(friendsAdapter);
+		updateThemeListView(listView);
 		
 		// hide welcome message
 		RelativeLayout welcome = (RelativeLayout) findViewById(R.id.manage_friends_welcome);

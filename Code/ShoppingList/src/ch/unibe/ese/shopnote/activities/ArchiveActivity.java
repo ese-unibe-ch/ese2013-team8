@@ -37,7 +37,8 @@ public class ArchiveActivity extends BaseActivity {
       
 		//set chosen color theme
 		RelativeLayout lo = (RelativeLayout) findViewById(R.id.RelativeLayoutArchive);
-		updateTheme(lo, getActionBar());
+		RelativeLayout rlDrawer = (RelativeLayout) findViewById(R.id.drawer_Linearlayout);
+		updateTheme(lo, getActionBar(), rlDrawer);
 		
 		// Show the Up button in the action bar.
 		setupActionBar();
@@ -73,7 +74,8 @@ public class ArchiveActivity extends BaseActivity {
 		
 		ListView listView = (ListView) findViewById(R.id.ListView);	
 		listView.setAdapter(listAdapter);
-		
+		updateThemeListView(listView);
+
 		addListener(listView);
 		
 		// hide welcome message

@@ -39,7 +39,7 @@ public class CreateItemActivity extends BaseActivity {
         
 		//set chosen color theme
 		RelativeLayout lo = (RelativeLayout) findViewById(R.id.relativeLayoutCreateItem);
-		updateTheme(lo, getActionBar());
+		updateThemeTextBox(lo);
 		View someView = findViewById(R.id.RelativeLayoutCreateItemComplete);
 		updateTheme(someView, getActionBar());
 

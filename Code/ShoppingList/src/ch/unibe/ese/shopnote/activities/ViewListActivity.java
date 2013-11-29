@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -64,6 +65,8 @@ public class ViewListActivity extends BaseActivity {
 		RelativeLayout lo = (RelativeLayout) findViewById(R.id.RelativeLayoutViewList);
 		RelativeLayout rlDrawer = (RelativeLayout) findViewById(R.id.drawer_Linearlayout);
 		updateTheme(lo, getActionBar(), rlDrawer);
+		LinearLayout lladdItem = (LinearLayout) findViewById(R.id.addItem);
+		updateThemeTextBox(lladdItem);
 		
 		manager = getListManager();
 		syncmanager = getSyncManager();
@@ -86,6 +89,7 @@ public class ViewListActivity extends BaseActivity {
 		AutoCompleteTextView itemName = (AutoCompleteTextView) findViewById(R.id.editTextName);
 		sqliteAdapter = new ItemAutocompleteAdapter(this, android.R.layout.simple_list_item_1, manager);
 		itemName.setAdapter(sqliteAdapter);
+		updateThemeTextBox(itemName);
 		
 		itemName.setOnItemClickListener(new OnItemClickListener() {
 
@@ -167,6 +171,7 @@ public class ViewListActivity extends BaseActivity {
 				itemsList);
 		ListView listView = (ListView) findViewById(R.id.ItemView);
 		listView.setAdapter(itemAdapter);
+		updateThemeListView(listView);
 		return listView;
 	}
 
@@ -175,6 +180,7 @@ public class ViewListActivity extends BaseActivity {
 		itemBoughtAdapter = new ItemListAdapter(viewListActivity,
 				R.layout.shopping_list_item, itemsBoughtList);
 		listViewBought.setAdapter(itemBoughtAdapter);
+		updateThemeListView(listViewBought);
 		return listViewBought;
 	}
 

@@ -1,6 +1,7 @@
 package ch.unibe.ese.shopnote.activities;
 
 import java.util.List;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,11 +13,10 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.Recipe;
-import ch.unibe.ese.shopnote.share.requests.RegisterRequest;
-import ch.unibe.ese.shopnote.R;
 
 /**
  *	Creates a frame which enlists all recipes and the possibility to manage them
@@ -59,6 +59,7 @@ public class ManageRecipeActivity extends BaseActivity {
 				R.layout.shopping_list_item, recipes);
 		ListView listView = (ListView) findViewById(R.id.recipe_list);
 		listView.setAdapter(recipeAdapter);
+		updateThemeListView(listView);
 		
 		// hide welcome message
 		RelativeLayout welcome = (RelativeLayout) findViewById(R.id.manage_recipe_welcome);

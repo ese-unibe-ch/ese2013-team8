@@ -1,31 +1,33 @@
 package ch.unibe.ese.shopnote.activities;
 
 import java.util.ArrayList;
-import ch.unibe.ese.shopnote.R;
-import ch.unibe.ese.shopnote.core.BaseActivity;
-import ch.unibe.ese.shopnote.core.Item;
-import ch.unibe.ese.shopnote.core.ListManager;
-import ch.unibe.ese.shopnote.core.Recipe;
-import ch.unibe.ese.shopnote.core.Utility;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.TextView.OnEditorActionListener;
-import android.support.v4.app.NavUtils;
+import android.widget.Toast;
+import ch.unibe.ese.shopnote.R;
+import ch.unibe.ese.shopnote.core.BaseActivity;
+import ch.unibe.ese.shopnote.core.Item;
+import ch.unibe.ese.shopnote.core.ListManager;
+import ch.unibe.ese.shopnote.core.Recipe;
+import ch.unibe.ese.shopnote.core.Utility;
 
 /**
  *	Displays a single recipe including the items
@@ -46,6 +48,8 @@ public class ViewRecipeActivity extends BaseActivity {
 		RelativeLayout lo = (RelativeLayout) findViewById(R.id.RelativeLayoutViewRecipe);
 		RelativeLayout rlDrawer = (RelativeLayout) findViewById(R.id.drawer_Linearlayout);
 		updateTheme(lo, getActionBar(), rlDrawer);
+		LinearLayout lladdItem = (LinearLayout) findViewById(R.id.addItem);
+		updateThemeTextBox(lladdItem);
 		
 		// Show the Up button in the action bar.
 		setupActionBar();
@@ -96,6 +100,8 @@ public class ViewRecipeActivity extends BaseActivity {
 				R.layout.shopping_list_item, itemsOfRecipe);
 		ListView listView = (ListView) findViewById(R.id.ItemView);
 		listView.setAdapter(itemAdapter);
+		updateThemeListView(listView);
+		
 		manager.saveRecipe(recipe);
 		toggleDescription();
 		
@@ -121,6 +127,7 @@ public class ViewRecipeActivity extends BaseActivity {
 		autocompleteAdapter = new ArrayAdapter<Item>(this,
 				android.R.layout.simple_list_item_1, manager.getAllItems());
 		addItems.setAdapter(autocompleteAdapter);
+		updateThemeTextBox(addItems);
 		
 		addItems.setOnItemClickListener(new OnItemClickListener() {
 

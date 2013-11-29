@@ -60,6 +60,7 @@ public class ItemListActivity extends BaseActivity {
 		itemAdapter = new ItemListAdapter(this, R.layout.shopping_list_item, itemList);
 		ListView listView = (ListView) findViewById(R.id.ItemView);
 		listView.setAdapter(itemAdapter);
+		updateThemeListView(listView);
 		
 		setItemLongClick(listView);
 		

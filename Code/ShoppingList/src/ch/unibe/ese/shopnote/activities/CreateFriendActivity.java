@@ -37,7 +37,7 @@ public class CreateFriendActivity extends BaseActivity {
 			
 			//set chosen color theme
 			RelativeLayout lo = (RelativeLayout) findViewById(R.id.relativeLayoutCreateFriend);
-			updateTheme(lo, getActionBar());
+			updateThemeTextBox(lo);
 			View someView = findViewById(R.id.RelativeLayoutCreateFriendTotal);
 			updateTheme(someView, getActionBar());
 			

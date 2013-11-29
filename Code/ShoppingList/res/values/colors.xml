@@ -21,26 +21,45 @@
  <color name="black">#000000</color>
  
     
-  <!-- ArrayFormat for theme-styles: first background, then navigationdrawer, titlebar, textColor -->
+  <!-- ArrayFormat for theme-styles: first background, then navigationdrawer, titlebar, textColor, textfield in creates -->
   <string-array name="default_color_choice_white" translatable="false">
-        <item>#EEEEEE</item>
-        <item>#EEEEEE</item>
-        <item>#EEEEEE</item>
-        <item>#000000</item>
+        <item>#EEEEEE</item> <!-- background -->
+        <item>#EEEEEE</item> <!-- navigationdrawer -->
+        <item>#EEEEEE</item> <!-- titlebar --> 
+        <item>#000000</item> <!-- textcolor -->
+        <item>#FFFFFF</item> <!-- textfield in create activities -->
+        <item>#FFFFFF</item> <!-- listviews -->
+        <item>#CCCCCC</item> <!-- listviews divider -->
     </string-array>
         
   <string-array name="default_color_choice_dark" translatable="false">
-        <item>#000000</item>
-        <item>#444444</item>
-        <item>#DDDDDD</item>
-        <item>#EEEEEE</item>
+        <item>#171A1B</item> <!-- background -->
+        <item>#787A83</item> <!-- navigationdrawer -->
+        <item>#3B4047</item> <!-- titlebar --> 
+        <item>#EEEEEE</item> <!-- textcolor -->
+        <item>#3B4047</item> <!-- textfield in create activities -->
+        <item>#3B4047</item> <!-- listviews -->
+        <item>#171A1B</item> <!-- listviews divider -->
     </string-array>
     
   <string-array name="default_color_choice_chocolate" translatable="false">
-        <item>#472004</item>
-        <item>#863500</item>
-        <item>#7A3D07</item>
-        <item>#000000</item>
+        <item>#472004</item> <!-- background -->
+        <item>#9E3914</item> <!-- navigationdrawer -->
+        <item>#7A3D07</item> <!-- titlebar --> 
+        <item>#000000</item> <!-- textcolor -->
+        <item>#883328</item> <!-- textfield in create activities -->
+        <item>#883328</item> <!-- listviews -->
+        <item>#2C1511</item> <!-- listviews divider -->
+    </string-array>
+    
+    <string-array name="default_color_choice_barbie" translatable="false">
+        <item>#FF0B63</item> <!-- background -->
+        <item>#C4427F</item> <!-- navigationdrawer -->
+        <item>#FF7A91</item> <!-- titlebar --> 
+        <item>#000000</item> <!-- textcolor -->
+        <item>#FF7A91</item> <!-- textfield in create activities -->
+        <item>#FF7A91</item> <!-- listviews -->
+        <item>#FF0B63</item> <!-- listviews divider -->
     </string-array>
   
 </resources>

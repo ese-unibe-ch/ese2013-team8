@@ -4,7 +4,6 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,6 +13,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.ShareActionProvider;
@@ -52,6 +52,8 @@ public class ShareListActivity extends BaseActivity {
 		RelativeLayout lo = (RelativeLayout) findViewById(R.id.RelativeLayoutShareList);
 		RelativeLayout rlDrawer = (RelativeLayout) findViewById(R.id.drawer_Linearlayout);
 		updateTheme(lo, getActionBar(), rlDrawer);
+		LinearLayout lladdItem = (LinearLayout) findViewById(R.id.addFriend);
+		updateThemeTextBox(lladdItem);
 		
 		// Show the Up button in the action bar.
 		getActionBar();
@@ -108,6 +110,7 @@ public class ShareListActivity extends BaseActivity {
 				android.R.layout.simple_list_item_1,
 				friendsManager.getFriendsList());
 		textName.setAdapter(autocompleteAdapter);
+		updateThemeTextBox(textName);
 
 		return textName;
 	}
@@ -172,6 +175,7 @@ public class ShareListActivity extends BaseActivity {
 				android.R.layout.simple_list_item_1,
 				friendsManager.getSharedFriends(list));
 		listView.setAdapter(adapter);
+		updateThemeListView(listView);
 		
 		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
 

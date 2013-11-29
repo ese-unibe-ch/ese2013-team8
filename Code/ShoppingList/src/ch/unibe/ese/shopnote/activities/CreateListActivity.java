@@ -44,7 +44,7 @@ public class CreateListActivity extends BaseActivity {
        
 		//set chosen color theme
 		RelativeLayout lo = (RelativeLayout) findViewById(R.id.relativeLayoutCreateList);
-		updateTheme(lo, getActionBar());
+		updateThemeTextBox(lo);
 		View someView = findViewById(R.id.RelativeLayoutCreateListComplete);
 		updateTheme(someView, getActionBar());
 
