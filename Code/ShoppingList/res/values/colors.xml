@@ -54,7 +54,7 @@
     
     <string-array name="default_color_choice_barbie" translatable="false">
         <item>#FF0B63</item> <!-- background -->
-        <item>#C4427F</item> <!-- navigationdrawer -->
+        <item>#FF7A91</item> <!-- navigationdrawer -->
         <item>#FF7A91</item> <!-- titlebar --> 
         <item>#000000</item> <!-- textcolor -->
         <item>#FF7A91</item> <!-- textfield in create activities -->

@@ -93,15 +93,16 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 
 	private void updateLanguage(SharedPreferences sharedPreferences) {
 		String newLanguage = sharedPreferences.getString("language", null);
+		String languages[] = getResources().getStringArray(R.array.choosable_languages_keys);
 		Configuration config = new Configuration();
 		
 		Locale locale = config.locale;	
-		if(newLanguage.equals("english")) {
+		if(newLanguage.equals(languages[0])) 
 			locale = Locale.ENGLISH; 
-		}
-		else if(newLanguage.equals("german")) {
+		else if(newLanguage.equals(languages[1])) 
 			locale = Locale.GERMANY;
-		}
+		else if(newLanguage.equals(languages[2])) 
+			locale = Locale.FRANCE;
 		
 		Locale.setDefault(locale);
 		config.locale = locale;
