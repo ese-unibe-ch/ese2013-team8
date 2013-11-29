@@ -218,15 +218,17 @@ public class HomeActivity extends BaseActivity {
 	private void updateLanguage(SharedPreferences sharedPreferences) {
 		String newLanguage = sharedPreferences.getString("language", null);
 		Configuration config = new Configuration();
+		String languages[] = getResources().getStringArray(R.array.choosable_languages_keys);
 		
 		Locale locale;
 
-		if(newLanguage.equals("english")) {
+		if(newLanguage.equals(languages[0]))
 			locale = Locale.ENGLISH; 
-		}
-		else if(newLanguage.equals("german")) {
+		else if(newLanguage.equals(languages[1])) 
 			locale = Locale.GERMANY;
-		}
+		else if(newLanguage.equals(languages[2])) 
+			locale = Locale.FRANCE;
+		
 		// detect system language if not set by user
 		else
 			locale = Locale.getDefault();
@@ -255,7 +257,6 @@ public class HomeActivity extends BaseActivity {
 	     
 	   AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
 	   for (Calendar calendar: calendars){
-			 
 			 alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
 	   }
 	}
