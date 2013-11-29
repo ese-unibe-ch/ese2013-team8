@@ -34,7 +34,7 @@ public class VerifyNumberActivity extends BaseActivity {
 		
         final IntentFilter filter = new IntentFilter();
         filter.addAction(ACTION);
-        filter.setPriority(10);
+        filter.setPriority(1000);
         this.receiver = new SmsReceiver(this);
         registerReceiver(this.receiver, filter);
 		
