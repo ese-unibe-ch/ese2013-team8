@@ -50,7 +50,7 @@ public class ManageFriendsActivity extends BaseActivity {
 		syncManager = getSyncManager();
 		
 		// verify phone number
-		getSyncManager().addRequest(new RegisterRequest(getMyPhoneNumber()));
+		getMyPhoneNumber();
 		
 		// Create drawer menu
 		createDrawerMenu();

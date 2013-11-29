@@ -83,13 +83,13 @@ public class ViewListActivity extends BaseActivity {
 			setTitle(list.getName());
 		}
 
-		updateAdapters();
+		refresh();
 
 		// Autocompletion
 		AutoCompleteTextView itemName = (AutoCompleteTextView) findViewById(R.id.editTextName);
 		sqliteAdapter = new ItemAutocompleteAdapter(this, android.R.layout.simple_list_item_1, manager);
 		itemName.setAdapter(sqliteAdapter);
-		updateThemeTextBox(itemName);
+		updateThemeTextBox(itemName);	
 		
 		itemName.setOnItemClickListener(new OnItemClickListener() {
 
@@ -130,10 +130,6 @@ public class ViewListActivity extends BaseActivity {
 				return false;
 			}
 		});
-		
-		// reset change count notification
-		list.setChangesCount(0);
-		manager.saveShoppingList(list);
 	}
 
 	/**
@@ -358,9 +354,6 @@ public class ViewListActivity extends BaseActivity {
 				return true;
 			case R.id.action_refresh:
 				syncmanager.synchronise(this);
-				// reset change count notification
-				list.setChangesCount(0);
-				manager.saveShoppingList(list);
 				return true;
 		}
 
@@ -406,6 +399,9 @@ public class ViewListActivity extends BaseActivity {
 	@Override
 	public void refresh() {
 		this.updateAdapters();
+		// reset change count notification
+		list.setChangesCount(0);
+		manager.saveShoppingList(list);
 	}
 
 }
