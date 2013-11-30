@@ -80,10 +80,12 @@ public class ListManagerTest extends AndroidTestCase {
 		assertTrue(manager.getItemsFor(list1).isEmpty());
 		final String name = "item1";
 		final BigDecimal price = new BigDecimal("100.00");
-		final String quantity = "500 g";
+		final BigDecimal quantity = new BigDecimal("500");
+		final ItemUnit unit = ItemUnit.GRAM;
 		Item item1 = new Item(name);
 		item1.setPrice(price);
 		item1.setQuantity(quantity);
+		item1.setUnit(unit);
 		manager.save(item1);
 		manager.addItemToList(item1, list1);
 
@@ -93,6 +95,7 @@ public class ListManagerTest extends AndroidTestCase {
 		assertEquals(name, testItem.getName());
 		assertEquals(price, testItem.getPrice());
 		assertEquals(quantity, testItem.getQuantity());
+		assertEquals(unit, testItem.getUnit());
 		assertNull(testItem.getShop());
 	}
 

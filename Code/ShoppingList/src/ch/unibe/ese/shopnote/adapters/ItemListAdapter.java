@@ -47,7 +47,7 @@ private Context context;
 		}
 		holder.name.setText(item.getName());
 		if (item.getQuantity() != null)
-			holder.quantity.setText(item.getQuantity());
+			holder.quantity.setText(item.getQuantity().toString());
 		else
 			holder.quantity.setText("");
 		if (item.getPrice() != null) {

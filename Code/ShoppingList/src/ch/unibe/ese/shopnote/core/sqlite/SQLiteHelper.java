@@ -34,6 +34,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public static final String COLUMN_LISTPRICE = "listprice";
 	public static final String COLUMN_ITEMBOUGHT = "itembought";
 	public static final String COLUMN_ITEM_QUANTITY = "quantity";
+	public static final String COLUMN_ITEM_UNIT = "unit";
 	// Save all friends with an unique phoneNr
 	public static final String TABLE_FRIENDS = "friendlist";
 	public static final String COLUMN_FRIEND_ID = "friendId";
@@ -81,7 +82,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 			+ COLUMN_LIST_ID + " integer NOT NULL, "
 			+ COLUMN_LISTPRICE + " NUMERIC, "
 			+ COLUMN_ITEMBOUGHT + " integer, "
-			+ COLUMN_ITEM_QUANTITY + " varchar(30), "
+			+ COLUMN_ITEM_QUANTITY + " NUMERIC, "
+			+ COLUMN_ITEM_UNIT + " VARCHAR, "
 			+ "PRIMARY KEY (" + COLUMN_ITEM_ID + ", " + COLUMN_LIST_ID + "), "
 			+ "FOREIGN KEY (" + COLUMN_ITEM_ID + ") REFERENCES "
 			+ TABLE_ITEMS + "("+COLUMN_ITEM_ID+"), "

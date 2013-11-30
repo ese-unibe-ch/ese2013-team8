@@ -16,8 +16,7 @@ public class SQLiteUpdateHelper {
 	private SQLiteDatabase database;
 	private SQLiteReadHelper readHelper;
 
-	public SQLiteUpdateHelper(SQLiteDatabase database,
-			SQLiteReadHelper readHelper) {
+	public SQLiteUpdateHelper(SQLiteDatabase database, SQLiteReadHelper readHelper) {
 		this.database = database;
 		this.readHelper = readHelper;
 	}
@@ -35,11 +34,9 @@ public class SQLiteUpdateHelper {
 		values.put(SQLiteHelper.COLUMN_LIST_ARCHIVED, list.isArchived() ? 1 : 0);
 		values.put(SQLiteHelper.COLUMN_LIST_SHARED, list.isShared() ? 1 : 0);
 		values.put(SQLiteHelper.COLUMN_LIST_CHANGESCOUNT, list.getChangesCount());
-		values.put(SQLiteHelper.COLUMN_LIST_DUEDATE,
-				list.getDueDate() != null ? list.getDueDate().getTime() : null);
+		values.put(SQLiteHelper.COLUMN_LIST_DUEDATE, list.getDueDate() != null ? list.getDueDate().getTime() : null);
 		this.addShopIfNotExistent(list.getShop());
-		values.put(SQLiteHelper.COLUMN_SHOP_ID,
-				readHelper.getShopId(list.getShop()));
+		values.put(SQLiteHelper.COLUMN_SHOP_ID, readHelper.getShopId(list.getShop()));
 		return values;
 	}
 
@@ -67,10 +64,9 @@ public class SQLiteUpdateHelper {
 		values.put(SQLiteHelper.COLUMN_ITEM_ID, item.getId());
 		values.put(SQLiteHelper.COLUMN_LIST_ID, list.getId());
 		values.put(SQLiteHelper.COLUMN_ITEMBOUGHT, item.isBought() ? 1 : 0);
-		String price = item.getPrice() != null ? item.getPrice().toString()
-				: null;
-		values.put(SQLiteHelper.COLUMN_LISTPRICE, price);
-		values.put(SQLiteHelper.COLUMN_ITEM_QUANTITY, item.getQuantity());
+		values.put(SQLiteHelper.COLUMN_LISTPRICE, toString(item.getPrice()));
+		values.put(SQLiteHelper.COLUMN_ITEM_QUANTITY, toString(item.getQuantity()));
+		values.put(SQLiteHelper.COLUMN_ITEM_UNIT, toString(item.getUnit()));
 		return values;
 	}
 
@@ -84,25 +80,28 @@ public class SQLiteUpdateHelper {
 		ContentValues values = new ContentValues();
 		values.put(SQLiteHelper.COLUMN_FRIEND_NAME, friend.getName());
 		values.put(SQLiteHelper.COLUMN_FRIEND_PHONENR, friend.getPhoneNr());
-		values.put(SQLiteHelper.COLUMN_FRIEND_HASAPP, friend.hasTheApp()? 1 : 0);
+		values.put(SQLiteHelper.COLUMN_FRIEND_HASAPP, friend.hasTheApp() ? 1 : 0);
 		return values;
 	}
-	
+
 	/**
-	 * Converts an list.id and a friend.id into a ContentValue (TABLE_FRIENDSTOLIST)
+	 * Converts an list.id and a friend.id into a ContentValue
+	 * (TABLE_FRIENDSTOLIST)
+	 * 
 	 * @param list
 	 * @param friend
 	 * @return ContentValues of the input
 	 */
 	public ContentValues toValue(ShoppingList list, Friend friend) {
-		ContentValues values = new ContentValues();		
+		ContentValues values = new ContentValues();
 		values.put(SQLiteHelper.COLUMN_LIST_ID, list.getId());
 		values.put(SQLiteHelper.COLUMN_FRIEND_ID, friend.getId());
 		return values;
 	}
-	
+
 	/**
 	 * Converts an recipe into a ContentValue (TABLE_RECIPE)
+	 * 
 	 * @param recipe
 	 * @return ContentValues of the input
 	 */
@@ -113,9 +112,11 @@ public class SQLiteUpdateHelper {
 		values.put(SQLiteHelper.COLUMN_RECIPE_SHOWNOTES, recipe.isNotesVisible());
 		return values;
 	}
-	
+
 	/**
-	 * Converts an item.id and an recipe.id into a ContentValue (TABLE_ITEMTORECIPE)
+	 * Converts an item.id and an recipe.id into a ContentValue
+	 * (TABLE_ITEMTORECIPE)
+	 * 
 	 * @param recipe
 	 * @param item
 	 * @return ContentValues of the input
@@ -153,5 +154,14 @@ public class SQLiteUpdateHelper {
 		}
 		if (item.getId() == null)
 			item.setId(id);
+	}
+
+	/**
+	 * @param obj
+	 * @return The String represantation of this object. Is null if number is
+	 *         null.
+	 */
+	private String toString(Object obj) {
+		return obj == null ? null : obj.toString();
 	}
 }

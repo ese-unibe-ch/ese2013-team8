@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import ch.unibe.ese.shopnote.core.Friend;
 import ch.unibe.ese.shopnote.core.Item;
+import ch.unibe.ese.shopnote.core.ItemUnit;
 import ch.unibe.ese.shopnote.core.Recipe;
 import ch.unibe.ese.shopnote.core.ShoppingList;
 
@@ -23,7 +24,8 @@ public class SQLiteReadHelper {
 			+ SQLiteHelper.TABLE_ITEMS + "." + SQLiteHelper.COLUMN_ITEM_NAME + ","
 			+ SQLiteHelper.TABLE_ITEMTOLIST + "." + SQLiteHelper.COLUMN_ITEMBOUGHT + ","
 			+ SQLiteHelper.TABLE_ITEMTOLIST + "." + SQLiteHelper.COLUMN_LISTPRICE + ","
-			+ SQLiteHelper.TABLE_ITEMTOLIST + "." + SQLiteHelper.COLUMN_ITEM_QUANTITY
+			+ SQLiteHelper.TABLE_ITEMTOLIST + "." + SQLiteHelper.COLUMN_ITEM_QUANTITY + ","
+			+ SQLiteHelper.TABLE_ITEMTOLIST + "." + SQLiteHelper.COLUMN_ITEM_UNIT
 			+ " FROM "
 			+ SQLiteHelper.TABLE_ITEMS + ","//
 			+ SQLiteHelper.TABLE_ITEMTOLIST
@@ -191,7 +193,12 @@ public class SQLiteReadHelper {
 			p = p.setScale(2, RoundingMode.HALF_UP);
 			item.setPrice(p);
 		}
-		item.setQuantity(cursor.getString(4));
+		String quantity = cursor.getString(4);
+		String unit = cursor.getString(5);
+		if (quantity != null && !quantity.isEmpty()){
+			item.setQuantity(new BigDecimal(quantity));
+			item.setUnit(ItemUnit.valueOf(unit));
+		}
 		return item;
 	}
 	

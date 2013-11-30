@@ -14,7 +14,8 @@ public class Item  extends Entity implements Serializable {
 	private String name;
 	private BigDecimal price;
 	private Shop shop;
-	private String quantity;
+	private BigDecimal quantity;
+	private ItemUnit unit;
 	private boolean bought;
 
 	public Item(String name) {
@@ -56,12 +57,20 @@ public class Item  extends Entity implements Serializable {
 		this.bought = bought;
 	}
 
-	public String getQuantity() {
+	public BigDecimal getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(String quantity) {
+	public void setQuantity(BigDecimal quantity) {
 		this.quantity = quantity;
+	}
+	
+	public ItemUnit getUnit() {
+		return unit;
+	}
+	
+	public void setUnit(ItemUnit unit) {
+		this.unit = unit;
 	}
 
 	private void invariant() {
@@ -79,7 +88,7 @@ public class Item  extends Entity implements Serializable {
 		copy.setPrice(this.price);
 		copy.setShop(this.shop);
 		copy.setQuantity(this.quantity);
+		copy.setUnit(this.unit);
 		return copy;
 	}
-	
 }

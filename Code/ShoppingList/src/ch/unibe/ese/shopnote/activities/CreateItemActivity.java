@@ -143,8 +143,9 @@ public class CreateItemActivity extends BaseActivity {
 		
 		if (item.getPrice() != null)
 			setTextViewText(R.id.editTextPrice, item.getPrice().toString());
-
-		setTextViewText(R.id.editTextQuantity, item.getQuantity());
+		
+		if(item.getQuantity()!= null)
+			setTextViewText(R.id.editTextQuantity, item.getQuantity().toString());
 	}
 
 	@Override
@@ -189,7 +190,8 @@ public class CreateItemActivity extends BaseActivity {
 			}
 			
 			String quantity = getTextViewText(R.id.editTextQuantity);
-			item.setQuantity(quantity);	
+			BigDecimal quant = quantity==null?null:new BigDecimal(quantity);
+			item.setQuantity(quant);	
 		}
 
 		// save the item
