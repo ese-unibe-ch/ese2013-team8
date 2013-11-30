@@ -18,6 +18,7 @@ import ch.unibe.ese.shopnote.adapters.ItemAutocompleteAdapter;
 import ch.unibe.ese.shopnote.adapters.ShopAutocompleteAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Item;
+import ch.unibe.ese.shopnote.core.ItemUnit;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.Recipe;
 import ch.unibe.ese.shopnote.core.Shop;
@@ -156,6 +157,11 @@ public class CreateItemActivity extends BaseActivity {
 		
 		if(item.getQuantity()!= null)
 			setTextViewText(R.id.editTextQuantity, item.getQuantity().toString());
+		
+		if(item.getUnit() != null) {
+			int position = item.getUnit().ordinal();
+			((Spinner) findViewById(R.id.editSpinnerUnits)).setSelection(position + 1);
+		}
 	}
 
 	@Override
@@ -179,6 +185,16 @@ public class CreateItemActivity extends BaseActivity {
 			return;
 		}
 
+		String quantity = getTextViewText(R.id.editTextQuantity);
+		int unitPosition = ((Spinner) findViewById(R.id.editSpinnerUnits)).getSelectedItemPosition();
+		if (quantity.isEmpty() && unitPosition > 0){
+			Toast.makeText(this, R.string.error_no_quantity_unit, Toast.LENGTH_SHORT).show();
+			return;
+		} else if (!quantity.isEmpty() && unitPosition <= 0) {
+			Toast.makeText(this, R.string.error_quantity_no_unit, Toast.LENGTH_SHORT).show();
+			return;
+		}
+
 		if (item == null)
 			item = new Item(name);
 		else
@@ -199,10 +215,9 @@ public class CreateItemActivity extends BaseActivity {
 				item.setPrice(price);
 			}
 			
-			String quantity = getTextViewText(R.id.editTextQuantity);
-			BigDecimal quant = quantity==null?null:new BigDecimal(quantity);
-			// TODO get the itemunit and set it.
-//			item.setQuantity(quant);	
+			BigDecimal quant = quantity.isEmpty() ? null : new BigDecimal(quantity);
+			ItemUnit unit = unitPosition <= 0 ? null : ItemUnit.values()[unitPosition - 1];
+			item.setQuantity(quant, unit);	
 		}
 
 		// save the item

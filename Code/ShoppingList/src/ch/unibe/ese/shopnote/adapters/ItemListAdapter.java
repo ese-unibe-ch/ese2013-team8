@@ -6,6 +6,7 @@ import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.R;
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,8 +47,15 @@ private Context context;
 			holder = (ItemHolder) convertView.getTag();
 		}
 		holder.name.setText(item.getName());
-		if (item.getQuantity() != null)
-			holder.quantity.setText(item.getQuantity().toString());
+		if (item.getQuantity() != null) {
+			String quantity = item.getQuantity().toString();
+			int ordinal = item.getUnit().ordinal();
+			Resources res = convertView.getResources();
+			String localizedUnit = res.getStringArray(R.array.item_units)[ordinal + 1];
+
+			StringBuilder sb = new StringBuilder(quantity).append(" ").append(localizedUnit);
+			holder.quantity.setText(sb.toString());
+		}
 		else
 			holder.quantity.setText("");
 		if (item.getPrice() != null) {

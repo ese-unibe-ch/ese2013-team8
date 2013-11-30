@@ -126,6 +126,8 @@
     <string name="error_friend">Fehler, Freund nicht gefunden</string>
     <string name="error_friend_already">Fehler, Freund existiert bereits</string>
     <string name="error_enter">Fehler, bitte korrekte Daten eingeben</string>
+    <string name="error_no_quantity_unit">Fehler, bitte eine Menge eingeben oder die Einheit löschen</string>
+    <string name="error_quantity_no_unit">Fehler, bitte eine Einheit auswählen oder die Menge löschen</string>
     
     <!--  Synchronisation and Connection -->
     <string name="no_connection">Keine Verbindung zum Internet</string>
@@ -168,5 +170,13 @@
         <item>Schokolade</item>
         <item>Barbie</item>
     </string-array>
-    
+        
+    <!-- do not change the order of these items, it must be the same as in ItemUnit -->
+    <string-array name="item_units">
+        <item></item>
+        <item>Gramm</item>
+        <item>Kilogramm</item>
+        <item>Liter</item>
+        <item>Stück</item>
+    </string-array>
 </resources>

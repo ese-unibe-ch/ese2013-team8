@@ -136,7 +136,7 @@ public class BaseActivity extends Activity {
 	 */
 	public String getTextViewText(int id) {
 		TextView textView = (TextView) findViewById(id);
-		return textView.getText().toString();
+		return textView.getText().toString().trim();
 	}
 	
 	/**
