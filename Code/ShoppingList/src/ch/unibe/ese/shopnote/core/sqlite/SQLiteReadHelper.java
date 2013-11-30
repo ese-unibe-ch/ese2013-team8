@@ -196,8 +196,7 @@ public class SQLiteReadHelper {
 		String quantity = cursor.getString(4);
 		String unit = cursor.getString(5);
 		if (quantity != null && !quantity.isEmpty()){
-			item.setQuantity(new BigDecimal(quantity));
-			item.setUnit(ItemUnit.valueOf(unit));
+			item.setQuantity(new BigDecimal(quantity), ItemUnit.valueOf(unit));
 		}
 		return item;
 	}

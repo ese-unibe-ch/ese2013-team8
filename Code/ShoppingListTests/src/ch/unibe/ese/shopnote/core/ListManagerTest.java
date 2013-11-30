@@ -84,8 +84,7 @@ public class ListManagerTest extends AndroidTestCase {
 		final ItemUnit unit = ItemUnit.GRAM;
 		Item item1 = new Item(name);
 		item1.setPrice(price);
-		item1.setQuantity(quantity);
-		item1.setUnit(unit);
+		item1.setQuantity(quantity, unit);
 		manager.save(item1);
 		manager.addItemToList(item1, list1);
 

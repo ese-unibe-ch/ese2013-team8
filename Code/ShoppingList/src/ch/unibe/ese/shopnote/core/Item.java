@@ -5,12 +5,12 @@ import java.math.BigDecimal;
 
 /**
  * Items can be stored in shopping lists
- *
+ * 
  */
-public class Item  extends Entity implements Serializable {
+public class Item extends Entity implements Serializable {
 
 	private static final long serialVersionUID = -6167160984174824511L;
-	
+
 	private String name;
 	private BigDecimal price;
 	private Shop shop;
@@ -61,21 +61,30 @@ public class Item  extends Entity implements Serializable {
 		return quantity;
 	}
 
-	public void setQuantity(BigDecimal quantity) {
+	/**
+	 * Sets the quantity with its unit.
+	 * <p>
+	 * Either both are null or both are not null.
+	 * 
+	 * @param quantity
+	 * @param unit
+	 */
+	public void setQuantity(BigDecimal quantity, ItemUnit unit) {
 		this.quantity = quantity;
+		this.unit = unit;
+		invariant();
 	}
-	
+
 	public ItemUnit getUnit() {
 		return unit;
-	}
-	
-	public void setUnit(ItemUnit unit) {
-		this.unit = unit;
 	}
 
 	private void invariant() {
 		if (this.name == null || this.name.trim().length() == 0)
 			throw new IllegalArgumentException("name musn't be empty!");
+		if (quantity == null ^ unit == null)
+			throw new IllegalArgumentException(String.format(
+					"It's not allowed to have either quantity or unit null: Quantity: %s. Unit: %s", quantity, unit));
 	}
 
 	public String toString() {
@@ -87,8 +96,7 @@ public class Item  extends Entity implements Serializable {
 		copy.setBought(this.isBought());
 		copy.setPrice(this.price);
 		copy.setShop(this.shop);
-		copy.setQuantity(this.quantity);
-		copy.setUnit(this.unit);
+		copy.setQuantity(this.quantity, this.unit);
 		return copy;
 	}
 }

@@ -191,7 +191,8 @@ public class CreateItemActivity extends BaseActivity {
 			
 			String quantity = getTextViewText(R.id.editTextQuantity);
 			BigDecimal quant = quantity==null?null:new BigDecimal(quantity);
-			item.setQuantity(quant);	
+			// TODO get the itemunit and set it.
+//			item.setQuantity(quant);	
 		}
 
 		// save the item
