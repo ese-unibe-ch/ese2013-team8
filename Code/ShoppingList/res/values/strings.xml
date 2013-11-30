@@ -56,6 +56,7 @@
     <string name="create_item_shop">Shop:</string>
     <string name="create_item_price">Price:</string>
     <string name="create_item_quantity">Quantity:</string>
+    <string name="create_item_unit">Unit:</string>
 
     <!-- CreateRecipeActivity -->
     <string name="create_recipe_title">Add new recipe</string>
@@ -174,5 +175,13 @@
         <item>chocolate</item>
         <item>barbie</item>
     </string-array>
-
+    
+    <!-- do not change the order of these items, it must be the same as in ItemUnit -->
+    <string-array name="item_units">
+        <item></item>
+        <item>gram</item>
+        <item>kilogram</item>
+        <item>liter</item>
+        <item>piece</item>
+    </string-array>
 </resources>

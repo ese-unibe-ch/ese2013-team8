@@ -8,8 +8,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.adapters.ItemAutocompleteAdapter;
@@ -62,6 +64,13 @@ public class CreateItemActivity extends BaseActivity {
 		ShopAutocompleteAdapter sqliteShopAdapter = new ShopAutocompleteAdapter(this,
 				android.R.layout.simple_list_item_1);
 		textShop.setAdapter(sqliteShopAdapter);
+		
+		// Set the adapter for the UnitSpinner
+		Spinner spinnerUnit = (Spinner) findViewById(R.id.editSpinnerUnits);
+		String[] labels = getResources().getStringArray(R.array.item_units);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, labels);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinnerUnit.setAdapter(adapter);
 		
 		Bundle extras = getIntent().getExtras();
 		String name = "";
@@ -128,6 +137,7 @@ public class CreateItemActivity extends BaseActivity {
 			setTextViewText(R.id.editTextPrice, "Not editable in this view");
 			findViewById(R.id.editTextQuantity).setEnabled(false);
 			setTextViewText(R.id.editTextQuantity, "Not editable in this view");
+			findViewById(R.id.editSpinnerUnits).setEnabled(false);
 		}
 	}
 
