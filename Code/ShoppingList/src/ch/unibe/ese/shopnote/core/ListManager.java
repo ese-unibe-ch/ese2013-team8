@@ -1,7 +1,6 @@
 package ch.unibe.ese.shopnote.core;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -85,28 +84,31 @@ public class ListManager {
 			items = new ArrayList<Item>();
 			listToItems.put(list, items);
 		}
-		for (Item item2 : items) {
-			if (!item2.isBought() && item2.getName().equals(item.getName())) {
-				if (item.getUnit() != null && item.getUnit() == item2.getUnit()) {
-					BigDecimal newQuantity = item.getQuantity().add(item2.getQuantity());
-					item2.setQuantity(newQuantity, item2.getUnit());
-					item = item2; // we want to save only one item.
-				} else if (ItemUnit.MASSES.contains(item.getUnit()) && ItemUnit.MASSES.contains(item2.getUnit())) {
-					// Both units are masses. Convert it first to grams and then add them.
-					BigDecimal mass1 = item.getUnit()==ItemUnit.GRAM ? item.getQuantity():item.getQuantity().multiply(THOUSAND);
-					BigDecimal mass2 = item2.getUnit()==ItemUnit.GRAM ? item2.getQuantity():item2.getQuantity().multiply(THOUSAND);
-					BigDecimal finalMass = mass1.add(mass2);
-					ItemUnit unit = ItemUnit.GRAM;
-					if (finalMass.compareTo(THOUSAND) > 0){
-						finalMass = finalMass.divide(THOUSAND);
-						unit = ItemUnit.KILO_GRAM;
+		if (item.getId() == null){
+			for (Item item2 : items) {
+				if (!item2.isBought() && item2.getName().equals(item.getName())) {
+					if (item.getUnit() != null && item.getUnit() == item2.getUnit()) {
+						BigDecimal newQuantity = item.getQuantity().add(item2.getQuantity());
+						item2.setQuantity(newQuantity, item2.getUnit());
+						item = item2; // we want to save only one item.
+					} else if (ItemUnit.MASSES.contains(item.getUnit()) && ItemUnit.MASSES.contains(item2.getUnit())) {
+						// Both units are masses. Convert it first to grams and then add them.
+						BigDecimal mass1 = item.getUnit()==ItemUnit.GRAM ? item.getQuantity():item.getQuantity().multiply(THOUSAND);
+						BigDecimal mass2 = item2.getUnit()==ItemUnit.GRAM ? item2.getQuantity():item2.getQuantity().multiply(THOUSAND);
+						BigDecimal finalMass = mass1.add(mass2);
+						ItemUnit unit = ItemUnit.GRAM;
+						if (finalMass.compareTo(THOUSAND) > 0){
+							finalMass = finalMass.divide(THOUSAND);
+							unit = ItemUnit.KILO_GRAM;
+						}
+						item2.setQuantity(finalMass, unit);
+						item = item2;
 					}
-					item2.setQuantity(finalMass, unit);
-					item = item2;
 				}
 			}
 		}
 		persistenceManager.save(item, list);
+		persistenceManager.save(item);
 		if (!items.contains(item))
 			return items.add(item);
 		return false;

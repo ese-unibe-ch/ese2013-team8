@@ -309,7 +309,7 @@ public class SQLiteReadHelper {
 				SQLiteHelper.ITEMS_COLUMNS, SQLiteHelper.COLUMN_ITEM_NAME
 						+ "=?", new String[] { itemName }, null, null, null,
 				null);
-		if (cursor.getCount() == 1) {
+		if (cursor.getCount() >= 1) {
 			cursor.moveToFirst();
 			return cursor.getLong(0);
 		} else {
