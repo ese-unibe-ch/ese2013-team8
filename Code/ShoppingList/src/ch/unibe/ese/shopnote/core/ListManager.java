@@ -1,11 +1,12 @@
 package ch.unibe.ese.shopnote.core;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 /**
  * The ListManager is responsible for access to all {@link ShoppingList
@@ -13,6 +14,7 @@ import java.util.Map;
  */
 public class ListManager {
 
+	private static final BigDecimal THOUSAND = new BigDecimal("1000");
 	private final List<ShoppingList> shoppingLists;
 	private final PersistenceManager persistenceManager;
 	private final Map<ShoppingList, List<Item>> listToItems;
@@ -35,6 +37,7 @@ public class ListManager {
 
 	/**
 	 * Get a specific shopping list with unique id
+	 * 
 	 * @param id
 	 * @return Shopping list with id
 	 */
@@ -71,7 +74,8 @@ public class ListManager {
 	 *            not null
 	 * @param list
 	 *            not null
-	 * @return true if the item was added (false if it only was updated or not changed at all)
+	 * @return true if the item was added (false if it only was updated or not
+	 *         changed at all)
 	 */
 	public boolean addItemToList(Item item, ShoppingList list) {
 		if (item == null || list == null)
@@ -80,6 +84,27 @@ public class ListManager {
 		if (items == null) {
 			items = new ArrayList<Item>();
 			listToItems.put(list, items);
+		}
+		for (Item item2 : items) {
+			if (!item2.isBought() && item2.getName().equals(item.getName())) {
+				if (item.getUnit() != null && item.getUnit() == item2.getUnit()) {
+					BigDecimal newQuantity = item.getQuantity().add(item2.getQuantity());
+					item2.setQuantity(newQuantity, item2.getUnit());
+					item = item2; // we want to save only one item.
+				} else if (ItemUnit.MASSES.contains(item.getUnit()) && ItemUnit.MASSES.contains(item2.getUnit())) {
+					// Both units are masses. Convert it first to grams and then add them.
+					BigDecimal mass1 = item.getUnit()==ItemUnit.GRAM ? item.getQuantity():item.getQuantity().multiply(THOUSAND);
+					BigDecimal mass2 = item2.getUnit()==ItemUnit.GRAM ? item2.getQuantity():item2.getQuantity().multiply(THOUSAND);
+					BigDecimal finalMass = mass1.add(mass2);
+					ItemUnit unit = ItemUnit.GRAM;
+					if (finalMass.compareTo(THOUSAND) > 0){
+						finalMass = finalMass.divide(THOUSAND);
+						unit = ItemUnit.KILO_GRAM;
+					}
+					item2.setQuantity(finalMass, unit);
+					item = item2;
+				}
+			}
 		}
 		persistenceManager.save(item, list);
 		if (!items.contains(item))
@@ -141,22 +166,25 @@ public class ListManager {
 	public void save(Item item) {
 		persistenceManager.save(item);
 	}
-	
+
 	/**
 	 * Get a specific item with unique id
+	 * 
 	 * @param id
 	 * @return item with id
 	 */
 	public Item getItem(Long id) {
 		List<Item> listOfItems = persistenceManager.getAllItems();
-		for(Item item: listOfItems) {
-			if(item.getId() == id) return item;
+		for (Item item : listOfItems) {
+			if (item.getId() == id)
+				return item;
 		}
 		return null;
 	}
 
 	/**
 	 * Removes an specific item from the db
+	 * 
 	 * @param item
 	 */
 	public void remove(Item item) {
@@ -205,15 +233,16 @@ public class ListManager {
 	 * @return recipe at position x
 	 */
 	public Recipe getRecipeAt(Long id) {
-		for(Recipe recipe: recipeList)
-			if(recipe.getId() == id) return recipe;
+		for (Recipe recipe : recipeList)
+			if (recipe.getId() == id)
+				return recipe;
 		return null;
 	}
 
 	public Recipe getRecipeAt(int position) {
 		return recipeList.get(position);
 	}
-	
+
 	public void updateRecipe() {
 		recipeList = persistenceManager.readRecipes();
 	}
