@@ -55,7 +55,6 @@
     <string name="create_item_shop">Laden:</string>
     <string name="create_item_price">Preis:</string>
     <string name="create_item_quantity">Menge:</string>
-    <string name="create_item_unit">Einheit:</string>
    
     <!-- CreateRecipeActivity -->
     <string name="create_recipe_title">Neues Rezept erstellen</string>

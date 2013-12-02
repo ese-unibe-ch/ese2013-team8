@@ -145,39 +145,36 @@
             android:text="@string/create_item_quantity"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <EditText
-            android:id="@+id/editTextQuantity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-			android:layout_alignParentRight="true"
-            android:layout_below="@+id/editTextPrice"
-            android:layout_marginLeft="75dp"
-            android:layout_marginTop="14dp"
-            android:ems="10"
-            android:hint="@string/create_optional_hint"
-            android:inputType="numberDecimal" />
+        <LinearLayout
+        	android:id="@+id/quantityUnit"
+        	android:layout_width="match_parent"
+        	android:layout_height="wrap_content" 
+        	android:layout_alignParentLeft="true" 
+        	android:layout_marginLeft="75dp" 
+        	android:layout_marginTop="14dp"
+        	android:layout_below="@+id/editTextPrice" >
+            
+	        <EditText
+	            android:id="@+id/editTextQuantity"
+	            android:layout_width="100dp"
+	            android:layout_height="wrap_content"
+	            android:ems="10"
+	            android:hint="@string/create_optional_hint"
+	            android:inputType="numberDecimal" 
+	            android:layout_weight="1" />
+	
+	        <!-- Unit -->
+	        <Spinner
+	            android:id="@+id/editSpinnerUnits"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:ems="10"
+	            android:layout_gravity="bottom"
+	            android:hint="@string/create_optional_hint" 
+	            android:layout_weight="1" />
+	        
+		</LinearLayout>
 
-        <!-- Unit -->
-        <TextView
-            android:id="@+id/textViewUnit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textViewQuantity"
-            android:layout_below="@+id/textViewQuantity"
-            android:layout_marginTop="26dp"
-            android:text="@string/create_item_unit"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <Spinner
-   			android:id="@+id/editSpinnerUnits"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-			android:layout_alignParentRight="true"
-            android:layout_below="@+id/editTextQuantity"
-            android:layout_marginLeft="75dp"
-            android:layout_marginTop="14dp"
-            android:ems="10"
-            android:hint="@string/create_optional_hint" />
 	</RelativeLayout>
 
 </RelativeLayout>
