@@ -218,10 +218,10 @@ public class SQLitePersistenceManager implements PersistenceManager {
 		// Convert the friend to a ContentValue
 		ContentValues values = updateHelper.toValue(friend);
 		// If this is a new friend
-		if (friend.getId() == null && !readHelper.isInList(friend)) {
+		if ((friend.getId() == null || friend.getId() < 0) && !readHelper.isInList(friend)) {
 			long id = database.insert(SQLiteHelper.TABLE_FRIENDS, null, values);
 			friend.setId(id);
-		} else if(friend.getId() == null) {
+		} else if(friend.getId() == null || friend.getId() < 0) {
 			long id = readHelper.getFriendId(friend.getPhoneNr());
 			friend.setId(id);
 			save(friend);

@@ -4,6 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import android.content.ContentResolver;
+import android.database.Cursor;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.provider.ContactsContract;
+import android.util.Log;
+import android.widget.Toast;
 import ch.unibe.ese.shopnote.share.SyncManager;
 import ch.unibe.ese.shopnote.share.requests.FriendRequest;
 
@@ -18,6 +26,9 @@ public class FriendsManager {
 	private PersistenceManager persistenceManager;
 	private SyncManager syncManager;
 	private BaseActivity baseActivity;
+	
+	private ArrayList<Friend> friendsInPhoneBook;
+	private boolean noFriendAdded;
 
 	public FriendsManager(PersistenceManager persistenceManager, SyncManager syncManager, BaseActivity baseActivity) {
 		this.persistenceManager = persistenceManager;
@@ -38,14 +49,16 @@ public class FriendsManager {
 		long id = checkIfDouble(friend);
 		if (id >= 0) return id;
 		
-		if(baseActivity != null)
-			checkIfFriendHasApp(friend);
-		
 		// Add the friend
 		friendsList.add(friend);
 
 		// Save friend to database
-		return persistenceManager.save(friend);
+		id = persistenceManager.save(friend);
+		
+		if(baseActivity != null && !friend.hasTheApp())
+			checkIfFriendHasApp(friend);
+		
+		return id;
 	}
 
 	private void checkIfFriendHasApp(Friend friend) {
@@ -100,7 +113,12 @@ public class FriendsManager {
 	 */
 	public boolean removeFriend(Friend friend) {
 		persistenceManager.removeFriend(friend);
-		return friendsList.remove(friend);
+		
+		long id = friend.getId();
+		for(Friend compare: friendsList)
+			if(compare.getId() == id)
+				return this.friendsList.remove(compare);
+		return false;
 	}
 
 	/**
@@ -153,9 +171,23 @@ public class FriendsManager {
 	 * @param friendId
 	 */
 	public void setFriendHasApp(long friendId) {
-		Friend friend = getFriend(friendId);
-		friend.setHasApp();
-		persistenceManager.save(friend);
+		if(friendId >= 0) {
+			Friend friend = getFriend(friendId);
+			friend.setHasApp();
+			persistenceManager.save(friend);
+		} else {
+			for(Friend friend: friendsInPhoneBook) {
+				if(friend.getId() == friendId) {
+					noFriendAdded = false;
+					addFriend(friend);
+					friend.setHasApp();
+					Looper.prepare();
+					Toast.makeText(baseActivity.getApplicationContext(), "Friend added: " + friend.getName(), Toast.LENGTH_SHORT).show();
+					Looper.loop();
+				}
+			}
+
+		}
 	}
 	
 	public String toString() {
@@ -163,5 +195,71 @@ public class FriendsManager {
 		for (Friend friend : friendsList)
 			result.append(friend).append("\n");
 		return result.toString();
+	}
+	
+	/**
+	 * Gets all Contacts from phone book and checks if someone has the app and adds him to the friendslibrary
+	 */
+	public void checkPhoneBookForFriends() {
+		new Thread(new Runnable() {
+			public void run() {
+				Looper.prepare();
+				new Handler() {
+		              public void handleMessage(Message msg) {
+		            	  super.handleMessage(msg);
+		              }
+				};
+				checkPhoneBookForFriendsHelper();
+				Looper.loop();
+			}
+
+			private void checkPhoneBookForFriendsHelper() {
+				friendsInPhoneBook = new ArrayList<Friend>();
+				getListWithFriendsFromPhoneBook(friendsInPhoneBook);
+				noFriendAdded = true;
+		        
+				for(Friend friend: friendsInPhoneBook) {
+					FriendRequest fr = new FriendRequest(friend);
+					syncManager.addRequest(fr);
+				}
+				syncManager.synchronise(baseActivity);
+				
+//				if(noFriendAdded)
+//					Toast.makeText(baseActivity.getApplicationContext(), "Sadly no one of your friends has the app", Toast.LENGTH_SHORT).show();
+				
+				Toast.makeText(baseActivity.getApplicationContext(), "Synchronization finished", Toast.LENGTH_SHORT).show();
+			}
+		}).start();
+	}
+
+	
+	private void getListWithFriendsFromPhoneBook(
+			ArrayList<Friend> friendsInPhoneBook) {
+		ContentResolver cr = baseActivity.getContentResolver();
+        Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,
+                null, null, null, null);
+        long idCounter = -1;
+        
+        if (cur.getCount() > 0) {
+            while (cur.moveToNext()) {
+                  String id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
+                  String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+                  if (Integer.parseInt(cur.getString(
+                        cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
+                     Cursor pCur = cr.query(
+                               ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                               null,
+                               ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = ?",
+                               new String[]{id}, null);
+                     while (pCur.moveToNext()) {
+                         String phoneNo = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                         Friend friend = new Friend(phoneNo, name);
+                         friend.setId(idCounter--);
+                         friendsInPhoneBook.add(friend);
+                     }
+                    pCur.close();
+                }
+            }
+        }
 	}
 }
