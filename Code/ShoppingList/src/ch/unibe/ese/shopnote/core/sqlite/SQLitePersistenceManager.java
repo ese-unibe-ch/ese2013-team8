@@ -63,7 +63,7 @@ public class SQLitePersistenceManager implements PersistenceManager {
 	}
 
 	@Override
-	public void save(ShoppingList list) {
+	public long save(ShoppingList list) {
 		// Convert the list to a ContentValue
 		// Automatically creates a new shop in the database if it doesn't exist
 		ContentValues values = updateHelper.toValue(list);
@@ -76,6 +76,7 @@ public class SQLitePersistenceManager implements PersistenceManager {
 					SQLiteHelper.COLUMN_LIST_ID + " = ?", new String[] { ""
 							+ list.getId() });
 		}
+		return list.getId();
 	}
 
 	@Override

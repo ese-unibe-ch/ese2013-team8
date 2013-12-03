@@ -29,7 +29,7 @@ public interface PersistenceManager {
 	 * @param list
 	 * @throws IOException
 	 */
-	void save(ShoppingList list);
+	long save(ShoppingList list);
 	
 	/**
 	 * Removes an already existing list

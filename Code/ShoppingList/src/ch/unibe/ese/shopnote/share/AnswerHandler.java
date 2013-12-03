@@ -92,16 +92,16 @@ public class AnswerHandler {
 			String listName = ((CreateSharedListRequest)request).getListName();
 			ShoppingList newList = new ShoppingList(listName);
 			newList.setShared(true);
+			// Sets the local List ID
 			listManager.saveShoppingList(newList);
-			ShoppingList list3 = listManager.getShoppingLists().get(listManager.getShoppingLists().size()-1);
 			
 			for(String number : ((CreateSharedListRequest)request).getSharedFriendNumbers()) {
 				System.err.println("Friend Number: "+ number);
 				long friendId2 = friendsManager.addFriend(new Friend(number,"User"));
-				friendsManager.addFriendToList(list3, friendsManager.getFriend(friendId2));
+				friendsManager.addFriendToList(newList, friendsManager.getFriend(friendId2));
 			}
 			
-			long id = list3.getId();
+			long id = newList.getId();
 			((CreateSharedListRequest)request).setLocalListId(id);
 			syncManager.addRequest(request);
 			syncManager.synchronise(context);

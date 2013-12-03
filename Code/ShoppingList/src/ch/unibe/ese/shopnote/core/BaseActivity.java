@@ -12,10 +12,12 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.telephony.TelephonyManager;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ListView;
@@ -162,7 +164,11 @@ public class BaseActivity extends Activity {
 	public String getMyPhoneNumber() {
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
 		boolean phoneNumberApproved = settings.getBoolean("phonenumberapproved", false);
-		if(!phoneNumberApproved) {
+		if ("sdk".equals( Build.PRODUCT )) {
+			TelephonyManager tMgr =(TelephonyManager)this.getSystemService(Context.TELEPHONY_SERVICE);
+			return tMgr.getLine1Number();
+		}
+		else if(!phoneNumberApproved) {
 			Intent intent = new Intent(this, VerifyNumberActivity.class);
 			startActivity(intent);
 		}
