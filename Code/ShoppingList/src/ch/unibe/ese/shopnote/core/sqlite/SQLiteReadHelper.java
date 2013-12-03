@@ -247,6 +247,7 @@ public class SQLiteReadHelper {
 		recipe.setId(cursor.getLong(0));
 		recipe.setNotes(cursor.getString(2));
 		recipe.setNotesVisible(cursor.getInt(3) == 1);
+		recipe.setShared(cursor.getInt(4) == 1);
 		return recipe;
 	}
 
