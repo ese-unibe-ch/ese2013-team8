@@ -96,12 +96,9 @@ public class ShareActivity extends BaseActivity {
 						+ recipe.toString());
 			}
 		}
-<<<<<<< HEAD:Code/ShoppingList/src/ch/unibe/ese/shopnote/activities/ShareActivity.java
-=======
 
 		// get Shared Friends
 		getSharedFriends();
->>>>>>> 60e223cbd7dd9b860e040261bbfd2f5c543ee2a1:Code/ShoppingList/src/ch/unibe/ese/shopnote/activities/ShareListActivity.java
 		
 		// create autocompletion
 		AutoCompleteTextView textName = createAutocomplete();
