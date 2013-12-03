@@ -2,6 +2,7 @@ package ch.unibe.ese.shopnote.activities;
 
 import java.util.Locale;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.res.Configuration;
@@ -57,13 +58,6 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			// This ID represents the Home or Up button. In the case of this
-			// activity, the Up button is shown. Use NavUtils to allow users
-			// to navigate up one level in the application structure. For
-			// more details, see the Navigation pattern on Android Design:
-			//
-			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
-			//
 			finish();
 			return true;
 		}
@@ -83,9 +77,11 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 			
 		}   
 		
-		//refresh interface
+		// refresh theme
+		Intent intent = new Intent(this, HomeActivity.class);
+		this.startActivity(intent);
         finish();
-        startActivity(getIntent());
+        //startActivity(getIntent());
 	}
 
 
