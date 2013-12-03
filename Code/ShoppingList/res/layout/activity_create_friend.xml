@@ -6,37 +6,89 @@
     android:layout_weight="1" 
     style="@style/BackGroundStandardStyle" >
 
+    <!-- Button Bar -->
     <LinearLayout style="?android:attr/buttonBarStyle"
         android:id="@+id/buttonBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" 
-        android:background="@drawable/ic_button_bar" >
+        android:background="@color/mediumgray" >
 
-        <Button style="?android:attr/buttonBarButtonStyle"
-            android:id="@+id/button1"
+        <!-- Back Button -->
+        <LinearLayout
+            android:id="@+id/buttonBack"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:orientation="horizontal" 
             android:layout_weight="1"
+            android:clickable="true"
             android:onClick="goBack"
-            android:drawableLeft="@drawable/ic_action_abort"
-            android:paddingLeft="50dp"
-            android:gravity="left|center"
-            android:text="@string/button_back" />
-
-        <Button style="?android:attr/buttonBarButtonStyle"
-            android:id="@+id/button2"
+            android:background="@drawable/selector"
+            android:gravity="center_horizontal">
+           	<ImageView
+				android:id="@+id/buttonBackImage"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:paddingTop="8dp"
+				android:paddingBottom="8dp"
+			    android:src="@drawable/ic_action_abort" />
+           	<TextView
+           	    android:id="@+id/buttonBackText"
+           	    android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:paddingTop="11dp"
+				android:paddingBottom="11dp"
+				android:textSize="18sp"
+				android:layout_toRightOf="@+id/buttonBackImage"
+           	    android:text="@string/button_back" />    
+        </LinearLayout>
+       
+        <!-- Save Button -->
+        <LinearLayout
+            android:id="@+id/buttonSave"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:layout_weight="1"
+            android:clickable="true"
             android:onClick="addEntryToList"
-            android:drawableLeft="@drawable/ic_action_ok"
-            android:paddingLeft="50dp"
-            android:gravity="left|center"
-            android:text="@string/button_save" />
-        
-   </LinearLayout>
+            android:background="@drawable/selector"
+            android:gravity="center_horizontal">
+           	<ImageView
+				android:id="@+id/buttonSaveImage"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:paddingTop="8dp"
+				android:paddingBottom="8dp"
+			    android:src="@drawable/ic_action_ok" />
+           	<TextView
+           	    android:id="@+id/buttonSaveText"
+           	    android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:paddingTop="11dp"
+				android:paddingBottom="11dp"
+				android:textSize="18sp"
+           	    android:text="@string/button_save" />    
+        </LinearLayout> 
+	</LinearLayout>
+	
+    <!-- Button Bar Shadow -->
+	<LinearLayout
+        android:id="@+id/buttonDivider"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@+id/buttonBar"
+        android:orientation="horizontal" 
+        android:background="@color/buttondivider" />
+	<LinearLayout
+        android:id="@+id/buttonShadow"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_below="@+id/buttonDivider"
+        android:orientation="horizontal" 
+        android:background="@drawable/shadow" />
 
+	<!-- Main Layout -->
     <RelativeLayout
         android:id="@+id/relativeLayoutCreateFriend"
         android:layout_width="wrap_content"
@@ -53,7 +105,6 @@
         android:paddingTop="@dimen/activity_vertical_margin" 
         style="@style/TextBoxStandardStyle" >
         
-
         <!-- Title -->
         <TextView
             android:id="@+id/textViewTitle"

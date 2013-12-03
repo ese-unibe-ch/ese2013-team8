@@ -12,6 +12,7 @@
     <string name="btn_cancel">Cancel</string>
     <string name="btn_done">Done</string>
     <string name="create_optional_hint">optional</string>
+    <string name="synchronizing">Synchronizing...</string>
 
     <!-- Default activity titles -->
     <string name="title_activity_create_list">Create List</string>
@@ -95,6 +96,8 @@
     <string name="noUpdates">None new friends added</string>
     <string name="friendHasNotApp">"Friend does not have the app!"</string>
     <string name="checkIfFriendHasApp">Checks if the friend has the app, one moment please</string>
+        <string name="send_invitation">Send Invitation</string>
+    <string name="send_invitation_text">Write a text for your friend to invite him personally</string>
     
     
         
@@ -173,6 +176,9 @@
 
     <string name="title_activity_verify_numer">VerifyNumerActivity</string>
     <string name="friend_has_not_app">Your friend does not have the app</string>
+    <string name="friend_is_no_shopnote_user">No ShopNote user</string>
+    <string name="friend_has_not_app_text">Your friend does not have the app, do you want to send an invitation to him?</string>
+    <string name="send">send</string>
     
      <!-- color Menu -->
     <string-array name="default_color_choice_names" >

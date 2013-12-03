@@ -21,8 +21,8 @@ public class SQLiteReadHelper {
 	private static final String SELECT_ALL_ITEM_DATA = "SELECT " //
 			+ SQLiteHelper.TABLE_ITEMS + "." + SQLiteHelper.COLUMN_ITEM_ID + ","
 			+ SQLiteHelper.TABLE_ITEMS + "." + SQLiteHelper.COLUMN_ITEM_NAME + ","
-			+ SQLiteHelper.TABLE_ITEMTOLIST + "." + SQLiteHelper.COLUMN_ITEMBOUGHT + ","
-			+ SQLiteHelper.TABLE_ITEMTOLIST + "." + SQLiteHelper.COLUMN_LISTPRICE + ","
+			+ SQLiteHelper.TABLE_ITEMTOLIST + "." + SQLiteHelper.COLUMN_ITEM_BOUGHT + ","
+			+ SQLiteHelper.TABLE_ITEMTOLIST + "." + SQLiteHelper.COLUMN_ITEM_PRICE + ","
 			+ SQLiteHelper.TABLE_ITEMTOLIST + "." + SQLiteHelper.COLUMN_ITEM_QUANTITY + ","
 			+ SQLiteHelper.TABLE_ITEMTOLIST + "." + SQLiteHelper.COLUMN_ITEM_UNIT
 			+ " FROM "
@@ -36,7 +36,21 @@ public class SQLiteReadHelper {
 			+ " AND "
 			+ SQLiteHelper.TABLE_ITEMTOLIST + "."
 			+ SQLiteHelper.COLUMN_LIST_ID
-			+ " = ?";;
+			+ " = ?";
+	
+	private static final String SELECT_RECIPE_ITEM_DATA = "SELECT " //
+			+ SQLiteHelper.TABLE_ITEMS + "." + SQLiteHelper.COLUMN_ITEM_ID + ","
+			+ SQLiteHelper.TABLE_ITEMS + "." + SQLiteHelper.COLUMN_ITEM_NAME + ", "
+			+ SQLiteHelper.TABLE_ITEMTORECIPE + "." + SQLiteHelper.COLUMN_RECIPE_ID + ","
+			+ SQLiteHelper.TABLE_ITEMTORECIPE + "." + SQLiteHelper.COLUMN_ITEM_PRICE + ","
+			+ SQLiteHelper.TABLE_ITEMTORECIPE + "." + SQLiteHelper.COLUMN_ITEM_QUANTITY + ","
+			+ SQLiteHelper.TABLE_ITEMTORECIPE + "." + SQLiteHelper.COLUMN_ITEM_UNIT
+			+ " FROM "
+			+ SQLiteHelper.TABLE_ITEMS + ","//
+			+ SQLiteHelper.TABLE_ITEMTORECIPE
+			+ " WHERE "
+			+ SQLiteHelper.TABLE_ITEMS + "." + SQLiteHelper.COLUMN_ITEM_ID
+			+ " = " + SQLiteHelper.TABLE_ITEMTORECIPE + "."+ SQLiteHelper.COLUMN_ITEM_ID;
 			
 	private static final String SELECT_RECIPE_DATA = "SELECT "
 			+ SQLiteHelper.TABLE_RECIPES + 		"." + SQLiteHelper.COLUMN_RECIPE_ID + ","
@@ -129,8 +143,7 @@ public class SQLiteReadHelper {
 	 * @return cursor on the first entry of itemToRecipe table
 	 */
 	public Cursor getItemToRecipeCursor() {
-		Cursor cursor = getQueryCursor(SQLiteHelper.TABLE_ITEMTORECIPE,
-				SQLiteHelper.ITEMTORECIPE_COLUMNS, null);
+		Cursor cursor = database.rawQuery(SELECT_RECIPE_ITEM_DATA, null);
 		cursor.moveToFirst();
 		return cursor;
 	}
@@ -193,16 +206,11 @@ public class SQLiteReadHelper {
 	 * @param cursor
 	 * @return item of the index (of the cursor)
 	 */
-	public Item cursorToItem(Cursor cursor) {
+	public Item cursorToShoppingListItem(Cursor cursor) {
 		Item item = new Item(cursor.getString(1));
 		item.setId(cursor.getInt(0));
 		item.setBought(cursor.getInt(2) == 1);
-		String price = cursor.getString(3);
-		if (price != null && !price.isEmpty()) {
-			BigDecimal p = new BigDecimal(price);
-			p = p.setScale(2, RoundingMode.HALF_UP);
-			item.setPrice(p);
-		}
+		item.setPrice(toPrice(cursor.getString(3)));
 		String quantity = cursor.getString(4);
 		String unit = cursor.getString(5);
 		if (quantity != null && !quantity.isEmpty()){
@@ -212,13 +220,36 @@ public class SQLiteReadHelper {
 	}
 	
 	/**
-	 *  Creates a item with the cursor input (just name and id of item, no shop or date)
+	 * item of the index (of the cursor)
+	 * @param cursor
+	 * @return item of the index (of the cursor)
+	 */
+	public Item cursorToRecipeItem(Cursor cursor) {
+		Item item = new Item(cursor.getString(1));
+		item.setId(cursor.getInt(0));
+		item.setPrice(toPrice(cursor.getString(3)));
+		String quantity = cursor.getString(4);
+		String unit = cursor.getString(5);
+		if (quantity != null && !quantity.isEmpty()){
+			item.setQuantity(new BigDecimal(quantity), ItemUnit.valueOf(unit));
+		}
+		return item;
+	}
+	
+	/**
+	 * Creates a item with the cursor input (just name, id, price, quantity and unit, no shop or date)
 	 * @param cursor
 	 * @return item of the index (of the cursor)
 	 */
 	public Item cursorToItemLite(Cursor cursor) {
 		Item item = new Item(cursor.getString(1));
 		item.setId(cursor.getInt(0));
+		item.setPrice(toPrice(cursor.getString(2)));
+		String quantity = cursor.getString(3);
+		String unit = cursor.getString(4);
+		if (quantity != null && !quantity.isEmpty()){
+			item.setQuantity(new BigDecimal(quantity), ItemUnit.valueOf(unit));
+		}
 		return item;
 	}
 
@@ -532,6 +563,17 @@ public class SQLiteReadHelper {
 		
 			return cursor.getCount() >= 1;
 	}
-
-
+	
+	/** Creates the price from a string.<p>
+	 * 
+	 * @param price
+	 * @return null if price is null or empty.
+	 */
+	private BigDecimal toPrice(String price){
+		if (price == null || price.isEmpty())
+			return null;
+		BigDecimal p = new BigDecimal(price);
+		p = p.setScale(2, RoundingMode.HALF_UP);
+		return p;
+	}
 }

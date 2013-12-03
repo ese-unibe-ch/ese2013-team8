@@ -32,7 +32,6 @@ import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.ShoppingList;
 import ch.unibe.ese.shopnote.share.SyncManager;
-import ch.unibe.ese.shopnote.share.requests.RegisterRequest;
 
 /**
  *	The main activity of the app, which displays an overview of the shopping lists
@@ -45,7 +44,6 @@ public class HomeActivity extends BaseActivity {
 	private List<ShoppingList> shoppingListsNotArchived;
 	private ShoppingListAdapter shoppingListAdapter;
 	private Activity homeActivity = this;
-	private ArrayList<Calendar> calendars;
 	private PendingIntent pendingIntent;
 
 	@SuppressLint("NewApi")
@@ -102,7 +100,7 @@ public class HomeActivity extends BaseActivity {
 		
 		addListener(listView);
 		
-		//setDueDateNotifications();
+		setDueDateNotifications();
 		
 		// hide welcome message
 		RelativeLayout welcome = (RelativeLayout) findViewById(R.id.home_welcome);
@@ -167,6 +165,8 @@ public class HomeActivity extends BaseActivity {
 			case R.id.action_refresh:
 				if(isOnline()) {
 					syncmanager.synchronise(this);
+					Toast.makeText(this, this.getString(R.string.synchronizing),
+							Toast.LENGTH_SHORT).show();
 				} else {
 					Toast.makeText(this, this.getString(R.string.no_connection),
 							Toast.LENGTH_SHORT).show();
@@ -239,6 +239,12 @@ public class HomeActivity extends BaseActivity {
 	
 	private void setDueDateNotifications() {
 		
+		shoppingLists = listmanager.getShoppingLists();
+		Intent myIntent = new Intent(HomeActivity.this, AlarmReceiver.class);
+		pendingIntent = PendingIntent.getBroadcast(HomeActivity.this, 0, myIntent,0);
+		AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+		
+		
 		for( ShoppingList shoppingList: shoppingLists){
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(shoppingList.getDueDate());
@@ -248,15 +254,11 @@ public class HomeActivity extends BaseActivity {
 			cal.set(Calendar.SECOND, 0);
 			cal.set(Calendar.AM_PM,Calendar.AM);
 			
-			calendars.add(cal);
+			alarmManager.set(AlarmManager.RTC, cal.getTimeInMillis(), pendingIntent);
 		}
 		
-	   Intent myIntent = new Intent(HomeActivity.this, AlarmReceiver.class);
-	   pendingIntent = PendingIntent.getBroadcast(HomeActivity.this, 0, myIntent,0);
-	     
-	   AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
-	   for (Calendar calendar: calendars){
-			 alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
-	   }
-	}
+	 
+	  
+	  }
+	
 }

@@ -20,9 +20,16 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.telephony.TelephonyManager;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import ch.unibe.ese.shopnote.R;
@@ -127,6 +134,7 @@ public class BaseActivity extends Activity {
 	public void setTextViewText(int id, String value) {
 		TextView textView = (TextView) findViewById(id);
 		textView.setText(value);
+		updateThemeTextBox(textView);
 	}
 
 	/**
@@ -284,8 +292,77 @@ public class BaseActivity extends Activity {
 			drawMenu.closeDrawers();
 	}
 	
-	//Color functions to paint the program
+	//Popup window for recruiting new friends
+	protected void FriendPopup(BaseActivity activity) {
+		final PopupWindow popUp = new PopupWindow(this);
+        RelativeLayout viewGroup = (RelativeLayout) findViewById(R.id.RelativeLayoutFriendInviteScreen);
+        LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View layout = layoutInflater.inflate(R.layout.friend_invite_screen, (ViewGroup) viewGroup);
+        
+		popUp.setContentView(layout);
+		popUp.setFocusable(true);
+		popUp.setWidth(550);
+		popUp.setHeight(300);
+		
+		popUp.showAtLocation(layout, Gravity.CENTER, 10, 10);
+		popUp.setBackgroundDrawable(new ColorDrawable(titleBarColor));
+		
+		Button close = (Button) layout.findViewById(R.id.close);
+		close.setOnClickListener(new OnClickListener() {
+			 @Override
+		     public void onClick(View v) {
+		       popUp.dismiss();
+		     }
+		});
+		
+		Button send = (Button) layout.findViewById(R.id.send);
+		final BaseActivity finalActivity = activity;
+		send.setOnClickListener(new OnClickListener() {
+			 @Override
+		     public void onClick(View v) {
+		       popUp.dismiss();
+		       InvitePopup(finalActivity);
+		     }
+		});
+		
+	}
 	
+	protected void InvitePopup(BaseActivity activity) {
+		final PopupWindow popUp = new PopupWindow(this);
+        RelativeLayout viewGroup = (RelativeLayout) findViewById(R.id.RelativeLayoutSendInvitationScreen);
+        LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View layout = layoutInflater.inflate(R.layout.send_invitation_screen, (ViewGroup) viewGroup);
+        
+		popUp.setContentView(layout);
+		popUp.setFocusable(true);
+		popUp.setWidth(550);
+		popUp.setHeight(300);
+		
+		popUp.showAtLocation(layout, Gravity.CENTER, 10, 10);
+		popUp.setBackgroundDrawable(new ColorDrawable(titleBarColor));
+		
+		Button close = (Button) layout.findViewById(R.id.close);
+		close.setOnClickListener(new OnClickListener() {
+			 @Override
+		     public void onClick(View v) {
+		       popUp.dismiss();
+		     }
+		});
+		
+		Button send = (Button) layout.findViewById(R.id.send);
+		send.setOnClickListener(new OnClickListener() {
+			 @Override
+		     public void onClick(View v) {
+		       popUp.dismiss();
+		       
+		     }
+		});
+	}
+		   
+	
+	
+	
+	//Color functions to paint the program
 	protected void updateThemeListView(ListView lv) {
 		if(!colorUpdated)
 			getColorSettings();
@@ -336,15 +413,28 @@ public class BaseActivity extends Activity {
 		this.colorUpdated = true;
 	}
 	
+	/**
+	 * Handler class to allow threads to update UI thread
+	 */
 	protected class SynchHandler extends Handler{
-		public SynchHandler() {
+		private BaseActivity activity;
+		
+		public SynchHandler(BaseActivity activity) {
 			super();
+			this.activity = activity;
 		}
 		
 		public void handleMessage(Message msg) {
       	  super.handleMessage(msg);  
-      	  refresh();
+      	  switch(msg.what) {
+      	  		case 0:
+      	  		 	refresh();
+      	  		 	break;
+      	  		case 1:
+      	  			FriendPopup(activity);
+      	  			break;
+      	  }
+      	 
 		}
 	}
-	
 }

@@ -2,14 +2,16 @@ package ch.unibe.ese.shopnote.activities;
 
 import java.util.Locale;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import ch.unibe.ese.shopnote.R;
@@ -33,9 +35,11 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
         getFragmentManager().beginTransaction()
                 .replace(android.R.id.content, new SettingsFragment())
                 .commit();
-        
+       
+        //Set color theme for settings
+        updateColorSettings();
+       
         setTitle(this.getString(R.string.title_activity_settings));
-        
     }
 	
 	/**
@@ -58,14 +62,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			// This ID represents the Home or Up button. In the case of this
-			// activity, the Up button is shown. Use NavUtils to allow users
-			// to navigate up one level in the application structure. For
-			// more details, see the Navigation pattern on Android Design:
-			//
-			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
-			//
-			NavUtils.navigateUpFromSameTask(this);
+			finish();
 			return true;
 		}
 		
@@ -84,10 +81,11 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 			
 		}   
 		
-		//refresh interface
-        NavUtils.navigateUpFromSameTask(this);
+		// refresh theme
+		Intent intent = new Intent(this, HomeActivity.class);
+		this.startActivity(intent);
         finish();
-        startActivity(getIntent());
+        //startActivity(getIntent());
 	}
 
 
@@ -107,6 +105,31 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		Locale.setDefault(locale);
 		config.locale = locale;
 		getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+	}
+	
+	private void updateColorSettings() {
+		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+		String colorString = sharedPref.getString("color_setting", "white");
+		String colorChoosable[] = getResources().getStringArray(R.array.default_color_choice_names);
+		String colors[] = getResources().getStringArray(R.array.default_color_choice_white);
+
+		if(colorString.equals(colorChoosable[1]))
+			colors = getResources().getStringArray(R.array.default_color_choice_dark);
+		else if(colorString.equals(colorChoosable[2]))
+			colors = getResources().getStringArray(R.array.default_color_choice_chocolate);
+		else if(colorString.equals(colorChoosable[3]))
+			colors = getResources().getStringArray(R.array.default_color_choice_barbie);
+		if(colors == null) throw new IllegalStateException();
+		
+		int backgroundColor = Color.parseColor(colors[0]);
+		int titleBarColor = Color.parseColor(colors[2]);
+		int textColor = Color.parseColor(colors[3]);
+		int listViewDividerColor = Color.parseColor(colors[6]);
+		
+		getListView().setBackgroundColor(backgroundColor);
+		getListView().setDivider(new ColorDrawable(listViewDividerColor));
+		
+		getActionBar().setBackgroundDrawable(new ColorDrawable(titleBarColor));
 	}
 	
 }

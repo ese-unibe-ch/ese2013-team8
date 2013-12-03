@@ -1,10 +1,10 @@
 package ch.unibe.ese.shopnote.activities;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 import ch.unibe.ese.shopnote.R;
+import ch.unibe.ese.shopnote.adapters.ItemListAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ListManager;
@@ -35,9 +36,10 @@ import ch.unibe.ese.shopnote.core.Utility;
 public class ViewRecipeActivity extends BaseActivity {
 	private ListManager manager;
 	private Recipe recipe;
-	private ArrayList<Item> itemsOfRecipe;
+	private List<Item> itemsOfRecipe;
 	private ArrayAdapter<Item> itemAdapter;
 	ArrayAdapter<Item> autocompleteAdapter;
+	private long recipeIndex;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +66,7 @@ public class ViewRecipeActivity extends BaseActivity {
 		
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
-			long recipeIndex = extras.getLong(EXTRAS_RECIPE_ID);
+			recipeIndex = extras.getLong(EXTRAS_RECIPE_ID);
 			recipe = manager.getRecipeAt(recipeIndex);
 			itemsOfRecipe = recipe.getItemList();
 			setTitle(this.getString(R.string.view_recipe_title) + " " + recipe.toString());
@@ -97,14 +99,14 @@ public class ViewRecipeActivity extends BaseActivity {
 
 	private void updateRecipeList() {
 		// Get listOfRecipes and put it in the listview	
+		recipe = manager.getRecipeAt(recipeIndex);
 		itemsOfRecipe = recipe.getItemList();
-		itemAdapter = new ArrayAdapter<Item>(this,
+		itemAdapter = new ItemListAdapter(this,
 				R.layout.shopping_list_item, itemsOfRecipe);
 		ListView listView = (ListView) findViewById(R.id.ItemView);
 		listView.setAdapter(itemAdapter);
 		updateThemeListView(listView);
 		
-		manager.saveRecipe(recipe);
 		toggleDescription();
 		
 		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
@@ -153,9 +155,7 @@ public class ViewRecipeActivity extends BaseActivity {
 	 * Set up the {@link android.app.ActionBar}.
 	 */
 	private void setupActionBar() {
-
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-
 	}
 	
 	/** Called when the user touches the add item button */
@@ -176,7 +176,7 @@ public class ViewRecipeActivity extends BaseActivity {
 	public void addItem(View view) {
 		EditText textName = (EditText) findViewById(R.id.editTextName);
 		String name = textName.getText().toString();
-		if (name.trim().length() == 0) {
+		if (name.trim().isEmpty()) {
 			Toast.makeText(this, this.getString(R.string.error_name), Toast.LENGTH_SHORT).show();
 			return;				
 		} 
@@ -212,7 +212,7 @@ public class ViewRecipeActivity extends BaseActivity {
 			//
 			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
 			//
-			NavUtils.navigateUpFromSameTask(this);
+			finish();
 			return true;
 			
 		// Handle presses on the action bar items
@@ -237,7 +237,7 @@ public class ViewRecipeActivity extends BaseActivity {
 			return true;
 		case R.id.action_delete:
 			manager.removeRecipe(recipe);
-			NavUtils.navigateUpFromSameTask(this);
+			finish();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
