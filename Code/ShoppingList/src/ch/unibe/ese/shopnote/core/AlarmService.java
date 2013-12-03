@@ -52,7 +52,7 @@ public class AlarmService extends Service
        mManager = (NotificationManager) this.getApplicationContext().getSystemService(this.getApplicationContext().NOTIFICATION_SERVICE);
        
        // ViewActivity geht nicht...
-	   Intent intent1 = new Intent(this.getApplicationContext(),ViewListActivity.class);
+	   Intent intent1 = new Intent(this.getApplicationContext(),HomeActivity.class);
 
 	
 	   Notification notification = new Notification(R.drawable.ic_launcher,"shopping time!", System.currentTimeMillis());
