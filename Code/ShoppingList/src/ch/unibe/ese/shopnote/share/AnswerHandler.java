@@ -107,7 +107,7 @@ public class AnswerHandler {
 			ShoppingList list3 = listManager.getShoppingList(((GetSharedFriendsRequest)request).getLocalListId());
 			// Drop all friends of a list and add them again if they are still in the list
 			for (Friend friend : friendsManager.getSharedFriends(list3)) {
-				friendsManager.removeFriendOfList(list3, friend);
+				friendsManager.removeFriendFromList(list3, friend);
 			}
 			for (String number : ((GetSharedFriendsRequest)request).getFriendNumbers()) {
 				friendsManager.addFriend(new Friend(number, "User"));
@@ -180,7 +180,7 @@ public class AnswerHandler {
 		case ListChangeRequest.SET_UNSHARED_REQUEST:
 			list.setShared(false);
 			for (Friend friend : friendsManager.getSharedFriends(list)) {
-				friendsManager.removeFriendOfList(list, friend);
+				friendsManager.removeFriendFromList(list, friend);
 			}
 		}
 	}
