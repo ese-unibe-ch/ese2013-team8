@@ -5,7 +5,9 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.adapters.FriendsListAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
@@ -130,12 +133,27 @@ public class ManageFriendsActivity extends BaseActivity {
 			this.startActivity(intent);
 			return true;
 		case R.id.searchContacts:
-			friendsManager.checkPhoneBookForFriends();
-			this.updateFriendsList();
+			searchContactsInPhoneBook();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+
+	/**
+	 * searches for contacts in the phonebook who do have the app
+	 */
+	public void searchContactsInPhoneBook() {
+		final SynchHandler handler = new SynchHandler();
+		Toast.makeText(getApplicationContext(), R.string.synchStarted , Toast.LENGTH_SHORT).show();
+		new Thread(new Runnable() {
+			public void run() {
+				Looper.prepare();
+				friendsManager.checkPhoneBookForFriends(ManageFriendsActivity.this, handler);
+				Toast.makeText(getApplicationContext(),R.string.synchFinished, Toast.LENGTH_SHORT).show();
+				Looper.loop();	
+			}
+		}).start();
 	}
 	
 	@Override
@@ -154,4 +172,12 @@ public class ManageFriendsActivity extends BaseActivity {
 	public void refresh() {
 		updateFriendsList();
 	}
+	
+	private class SynchHandler extends Handler{
+		public void handleMessage(Message msg) {
+      	  super.handleMessage(msg);  
+      	  updateFriendsList();
+		}
+	}
 }
+

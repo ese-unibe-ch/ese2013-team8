@@ -1,6 +1,5 @@
 package ch.unibe.ese.shopnote.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.view.ActionMode;
 import android.view.ActionMode.Callback;
@@ -22,10 +21,10 @@ public class FriendListActionMode implements Callback {
 	private FriendsManager friendsManager;
 	private Friend selectedFriend;
 	private ArrayAdapter<Friend> friendsAdapter;
-	private Activity activity;
+	private BaseActivity activity;
 	private ShoppingList list;
 	
-	public FriendListActionMode(FriendsManager manager, ArrayAdapter<Friend> friendsAdapter, Friend selectedFriend, Activity homeActivity) {
+	public FriendListActionMode(FriendsManager manager, ArrayAdapter<Friend> friendsAdapter, Friend selectedFriend, BaseActivity homeActivity) {
 		this.friendsManager = manager;
 		this.friendsAdapter = friendsAdapter;
 		this.selectedFriend = selectedFriend;
@@ -33,7 +32,7 @@ public class FriendListActionMode implements Callback {
 		this.list = null;
 	}
 	
-	public FriendListActionMode(FriendsManager manager, ShoppingList list, Friend selectedFriend, Activity homeActivity) {
+	public FriendListActionMode(FriendsManager manager, ShoppingList list, Friend selectedFriend, BaseActivity homeActivity) {
 		this.friendsManager = manager;
 		this.friendsAdapter = null;
 		this.selectedFriend = selectedFriend;
@@ -80,11 +79,11 @@ public class FriendListActionMode implements Callback {
 	            	friendsManager.removeFriend(selectedFriend);
 	            	friendsAdapter.remove(selectedFriend);
 	            	friendsAdapter.notifyDataSetChanged();
+	            	activity.refresh();
             	} else {
             		friendsManager.removeFriendOfList(list, selectedFriend);
             	}
-	            	mode.finish(); // Action picked, so close the CAB
-
+	            mode.finish(); // Action picked, so close the CAB
             	return true;
            
             default:

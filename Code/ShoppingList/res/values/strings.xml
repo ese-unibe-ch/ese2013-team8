@@ -89,6 +89,10 @@
         Tap on the plus-symbol in the top right corner to add friends.
         After that you can share shopping lists with them.</string>
     <string name="searchContacts">Check phone book for friends</string>
+    <string name="synchStarted">"Synchronization started, this may take a few seconds"</string>
+    <string name="synchFinished">Synchronization finished</string>
+    <string name="friendAdded">Friend added: </string>
+    <string name="noUpdates">None new friends added</string>
         
     <!-- ArchiveActivity -->
     <string name="archive_welcome_message"> 
