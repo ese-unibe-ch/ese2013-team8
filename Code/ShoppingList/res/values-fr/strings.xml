@@ -8,193 +8,193 @@
 
     <!-- Miscellaneous -->
     <string name="app_name">ShopNote</string>
-    <string name="action_settings">préferences</string>
-    <string name="btn_cancel">Cancel</string>
-    <string name="btn_done">Done</string>
-    <string name="create_optional_hint">optional</string>
-    <string name="synchronizing">Synchronizing...</string>
+    <string name="action_settings">Préférences</string>
+    <string name="btn_cancel">Annuler</string>
+    <string name="btn_done">Sauver</string>
+    <string name="create_optional_hint">facultatif</string>
+    <string name="synchronizing">Synchronisation...</string>
 
     <!-- Default activity titles -->
-    <string name="title_activity_create_list">Create List</string>
-    <string name="title_activity_create_item">Create Item</string>
-    <string name="title_activity_view_list">View List</string>
-    <string name="title_activity_share_list">Share List</string>
-    <string name="title_activity_manage_friends">Friends</string>
-    <string name="title_activity_create_friend">Add Friend</string>
-    <string name="title_activity_item_list">Item List</string>
-    <string name="title_activity_manage_recipe">Manage Recipes</string>
-    <string name="title_activity_create_recipe">Create Recipes</string>
-    <string name="title_activity_archive">Archive</string>
-    <string name="title_activity_view_recipe">View Recipe</string>
-    <string name="title_activity_settings">Settings</string>
-    <string name="title_activity_verify_number">Setup</string>
+    <string name="title_activity_create_list">Créer une liste</string>
+    <string name="title_activity_create_item">Créer un article</string>
+    <string name="title_activity_view_list">Vue Liste</string>
+    <string name="title_activity_share_list">Liste Partagée</string>
+    <string name="title_activity_manage_friends">Amis</string>
+    <string name="title_activity_create_friend">Ajouter un ami</string>
+    <string name="title_activity_item_list">Liste d\'Aricles</string>
+    <string name="title_activity_manage_recipe">Organiser Recettes</string>
+    <string name="title_activity_create_recipe">Créer Recettes</string>
+    <string name="title_activity_archive">Archives</string>
+    <string name="title_activity_view_recipe">Vue Recette</string>
+    <string name="title_activity_settings">Paramètres</string>
+    <string name="title_activity_verify_number">Installer</string>
     
     <!-- HomeActivity -->
-    <string name="home_welcome_title">Hello!</string>
-    <string name="home_welcome_message">Tap on the plus-symbol in the top right corner to add a new shopping list.</string>
+    <string name="home_welcome_title">Bonjour!</string>
+    <string name="home_welcome_message">Touchez le symbole-plus en haut à droite pour ajouter une nouvelle liste de courses.</string>
     
     <!-- ItemListActivity -->
     <string name="item_list_welcome_message"> 
-        Tap on the plus-symbol in the top right corner to add a new item.
-        After that you will see all your items here.</string>
+        Toucher le symbole-plus en haut à droite pour ajouter un nouvel article.
+        Après cela vous verrez tous vos articles ici.</string>
         
     <!-- ManageRecipeActivity -->
     <string name="manage_recipe_welcome_message">
-        Recipes allow you to add multiple items to a shopping list by typing \"/recipename\".
-        \n\nTap on the plus-symbol in the top right corner to create a new recipe.</string>
+        Recettes vous permet d\'ajouter plusieures articles a une liste de courses en tappant \"/nomdelarecette\" .
+        \n\nTouchez le symbole-plus en haut à droite pour créer une nouvelle recette.</string>
 
     <!-- CreateListActivity -->
-    <string name="create_list_title">Add new shopping list</string>
-    <string name="edit_list_title">Edit shopping list</string>
-    <string name="create_list_name">nom:</string>
-    <string name="create_list_date">date:</string>
-    <string name="create_list_shop">shop:</string>
+    <string name="create_list_title">Ajouter une nouvelle liste</string>
+    <string name="edit_list_title">Editer la liste</string>
+    <string name="create_list_name">Nom:</string>
+    <string name="create_list_date">Date:</string>
+    <string name="create_list_shop">Magasin:</string>
 
     <!-- CreateItemActivity -->
-    <string name="create_item_title">Add new item</string>
-    <string name="edit_item_title">Edit item</string>
-    <string name="create_item_name">Name:</string>
-    <string name="create_item_shop">Shop:</string>
-    <string name="create_item_price">Price:</string>
-    <string name="create_item_quantity">Quantity:</string>
+    <string name="create_item_title">Ajouter un article</string>
+    <string name="edit_item_title">Editer l\'article</string>
+    <string name="create_item_name">Nom:</string>
+    <string name="create_item_shop">Magasin:</string>
+    <string name="create_item_price">Prix:</string>
+    <string name="create_item_quantity">Quantité:</string>
 
     <!-- CreateRecipeActivity -->
-    <string name="create_recipe_title">Add new recipe</string>
-    <string name="edit_recipe_title">Edit recipe</string>
-    <string name="create_recipe_name">Name:</string>
+    <string name="create_recipe_title">Ajouter une recette</string>
+    <string name="edit_recipe_title">Editer la recette</string>
+    <string name="create_recipe_name">Nom:</string>
 
     <!-- CreateFriendActivity -->
-    <string name="add_friend">Add a friend</string>
-    <string name="friend_name">Name:</string>
-    <string name="friend_phone_number">Phone Nr:</string>
+    <string name="add_friend">Ajouter un ami</string>
+    <string name="friend_name">Nom:</string>
+    <string name="friend_phone_number">Téléphone:</string>
 
     <!-- ViewListActivity -->
-    <string name="view_list_hint">Add Item</string>
-    <string name="items_bought">Shopping Cart</string>
-    <string name="share">Share</string>
-    <string name="menu_item_share">Share</string>
+    <string name="view_list_hint">Ajouter un article</string>
+    <string name="items_bought">Caddie</string>
+    <string name="share">Partager</string>
+    <string name="menu_item_share">Partager</string>
 
     <!-- ViewRecipeActivity -->
-    <string name="view_recipe_hint">Add Item</string>
-    <string name="view_recipe_title">Recipe for</string>
+    <string name="view_recipe_hint">Ajouter un article</string>
+    <string name="view_recipe_title">Recette pour</string>
     <string name="view_recipe_items">Ingredients</string>
     <string name="view_recipe_notes">Notes</string>
 
     <!-- ShareListActivity -->
-    <string name="share_list_title">Share</string>
-    <string name="share_list_hint">Add Friend</string>
+    <string name="share_list_title">Partager</string>
+    <string name="share_list_hint">Ajouter un ami</string>
 
     <!-- ManageFriendsActivity -->
     <string name="friend_has_the_app_icon">Appstatus</string>
     <string name="manage_friends_welcome_message"> 
-        Tap on the plus-symbol in the top right corner to add friends.
-        After that you can share shopping lists with them.</string>
-    <string name="searchContacts">Check phone book for friends</string>
-    <string name="synchStarted">"Synchronization started, this may take a few seconds"</string>
-    <string name="synchFinished">Synchronization finished</string>
-    <string name="friendAdded">Friend added: </string>
-    <string name="noUpdates">None new friends added</string>
-    <string name="friendHasNotApp">"Friend does not have the app!"</string>
-    <string name="checkIfFriendHasApp">Checks if the friend has the app, one moment please</string>
-        <string name="send_invitation">Send Invitation</string>
-    <string name="send_invitation_text">Write a text for your friend to invite him personally</string>
+        Touche le symbole-plus en haut à droite pour ajouter des amis.
+        Après cela vous pourrez partager des listes de courses avec eux.</string>
+    <string name="searchContacts">Chercher un ami dans l\'annuaire</string>
+    <string name="synchStarted">"Demarrage de la synchronisation, cela peux prendre quelque secondes"</string>
+    <string name="synchFinished">Synchronisation terminée </string>
+    <string name="friendAdded">Ami ajouté: </string>
+    <string name="noUpdates">Pas de nouvel ami ajouté</string>
+    <string name="friendHasNotApp">Cet ami ne possède pas l\'application!</string>
+    <string name="checkIfFriendHasApp">Verifie si cet ami possède l\'application, un instant...</string>
+        <string name="send_invitation">Envoyer une invitation</string>
+    <string name="send_invitation_text">Ecrivez un texte à votre ami pour l\'inviter personnellement</string>
     
     
         
     <!-- ArchiveActivity -->
     <string name="archive_welcome_message"> 
-        The archive shows all shopping lists, which you archived before
-        by using the overflow menu in the shopping list.</string>
+        Les archives montrent toutes les listes que vous avez archivé
+        en utilisant le menu "overflow" dans la liste.</string>
     
     <!-- VerifyNumberActivity -->
-    <string name="verify_number_info">In order to use synchronisation you need to verify your phone number. 
-        \nShopNote will send a one time SMS to your phone. 
-        (Carrier SMS charges may apply)
-        \n\nDepending on your provider this may take up to 20 seconds.</string>
-    <string name="verify_number_hint">Your phone number</string>
-    <string name="verify_number_send">Verify</string>
-    <string name="verify_number_empty">Please enter your phonenumber</string>
-    <string name="verify_number_successful">Phone number verified successfully</string>
-    <string name="verify_number_failed">Verification failed</string>
-    <string name="verify_number_invalid">Invalid number entered</string>
+    <string name="verify_number_info">Pour pouvoir utiliser la synchronisation vous devez verifier votre numéro de téléphone. 
+        \nShopNote va vous envoyer (une seule fois) un sms. 
+        (Possible charges (prix du sms))
+        \n\nDépendement de votre opérateur cela peut prendre jusqu à 20 secondes.</string>
+    <string name="verify_number_hint">Votre numéro de téléphone</string>
+    <string name="verify_number_send">Vérification</string>
+    <string name="verify_number_empty">Entrez votre numéro de téléphone</string>
+    <string name="verify_number_successful">Vérification réussie</string>
+    <string name="verify_number_failed">La vérification a échoué</string>
+    <string name="verify_number_invalid">Numéro non valide</string>
     
     <!-- Buttons / Menu items -->
-    <string name="button_back">Abort</string>
-    <string name="button_save">Save</string>
-    <string name="action_new">New</string>
-    <string name="action_edit">Edit</string>
-    <string name="action_remove">Delete</string>
-    <string name="action_ok">add directly</string>
-    <string name="action_refresh">Refresh</string>
-    <string name="action_share">Share</string>
-    <string name="action_edit_list">Edit List</string>
-    <string name="action_edit_recipe">Edit Recipe</string>
-    <string name="action_archive">Archive</string>
+    <string name="button_back">Abandonner</string>
+    <string name="button_save">Sauver</string>
+    <string name="action_new">Nouveau</string>
+    <string name="action_edit">Editer</string>
+    <string name="action_remove">Effacer</string>
+    <string name="action_ok">Ajouter directement</string>
+    <string name="action_refresh">Actualiser</string>
+    <string name="action_share">Partager</string>
+    <string name="action_edit_list">Editer une Liste</string>
+    <string name="action_edit_recipe">Editer une Recette</string>
+    <string name="action_archive">Archives</string>
     <string name="action_notes">Notes</string>
 
     <!-- Error messages -->
-    <string name="error_name">Please enter a name</string>
-    <string name="error_missing">Not implemented yet</string>
-    <string name="error_friend">Error, friend not found</string>
-    <string name="error_friend_already">Error, friend already added</string>
-    <string name="error_enter">Error, please enter correct data</string>
-    <string name="error_no_quantity_unit">Error, please enter a quantity or deselect the unit</string>
-    <string name="error_quantity_no_unit">Error, please select a unit or delete the quantity</string>
+    <string name="error_name">Entrez un nom</string>
+    <string name="error_missing">Pas encore implémenté</string>
+    <string name="error_friend">Erreur, ami non touvé</string>
+    <string name="error_friend_already">Erreur, ami déjà ajouté</string>
+    <string name="error_enter">Erreur, données incorrectes</string>
+    <string name="error_no_quantity_unit">Erreur, entrez une quantité ou désélectionnez l\'unité</string>
+    <string name="error_quantity_no_unit">Erreur, selectionez une unité ou effacez la quantité</string>
 
     <!-- Synchronisation and Connection -->
-    <string name="no_connection">No internet connection available</string>
+    <string name="no_connection">Pas de connection internet</string>
 
     <!-- The navigation drawer -->
     <string-array name="navigation_items">
-        <item>Overview</item>
-        <item>Item List</item>
-        <item>Recipes</item>
-        <item>Friends</item>
-        <item>Archive</item>
-        <item>Settings</item>
+        <item>Vue d\'ensemble</item>
+        <item>Liste d\'articles</item>
+        <item>Recettes</item>
+        <item>Amis</item>
+        <item>Archives</item>
+        <item>Paramètres</item>
     </string-array>
 
     <!-- Options Menu -->
-    <string name="title_activity_options">Settings Menu</string>
-    <string name="general_settings">General Settings</string>
-    <string name="english">English</string>
-    <string name="german">German</string>
-    <string name="language">Language</string>
-    <string name="language_dialog">Change the language of the app</string>
+    <string name="title_activity_options">Menu paramètes</string>
+    <string name="general_settings">Menu général</string>
+    <string name="english">Anglais</string>
+    <string name="german">Allemand</string>
+    <string name="language">Langues</string>
+    <string name="language_dialog">Changer la langue de l\'applcation</string>
     
 
     <string-array name="choosable_languages">
-        <item>English</item>
-        <item>German</item>
-        <item>French</item>
+        <item>Anglais</item>
+        <item>Allemand</item>
+        <item>Français</item>
     </string-array>
 
 
-    <string name="color_setting">Theme</string>
-    <string name="color_dialog">Change the colors of the interface</string>
-    <string name="standard">standard</string>
+    <string name="color_setting">Thèmes</string>
+    <string name="color_dialog">Changer la couleur de l\'interface</string>
+    <string name="standard">Standard</string>
 
-    <string name="title_activity_verify_numer">VerifyNumerActivity</string>
-    <string name="friend_has_not_app">Your friend does not have the app</string>
-    <string name="friend_is_no_shopnote_user">No ShopNote user</string>
-    <string name="friend_has_not_app_text">Your friend does not have the app, do you want to send an invitation to him?</string>
-    <string name="send">send</string>
+    <string name="title_activity_verify_numer">VerifierNuméroDActivité</string>
+    <string name="friend_has_not_app">Votre ami ne possède pas l\'application</string>
+    <string name="friend_is_no_shopnote_user">N\'utilise pas ShopNote</string>
+    <string name="friend_has_not_app_text">Notre ami ne possède pas l\'application, voulez-vous l\'inviter?</string>
+    <string name="send">envoyer</string>
     
      <!-- color Menu -->
     <string-array name="default_color_choice_names" >
-        <item>white</item>
-        <item>dark</item>
-        <item>chocolate</item>
-        <item>barbie</item>
+        <item>Blanc</item>
+        <item>Sombre</item>
+        <item>Chocolat</item>
+        <item>Barbie</item>
     </string-array>
 
     <!-- do not change the order of these items, it must be the same as in ItemUnit -->
     <string-array name="item_units">
         <item></item>
-        <item>Gramm</item>
-        <item>Kilogramm</item>
-        <item>Liter</item>
-        <item>Stück</item>
+        <item>Grammes</item>
+        <item>Kilogrammes</item>
+        <item>Litres</item>
+        <item>Pièces</item>
     </string-array>
 </resources>
 

@@ -15,12 +15,12 @@
 
     <!-- Default activity titles -->
     <string name="title_activity_create_list">Liste erstellen</string>
-    <string name="title_activity_create_item">Item erstellen</string>
+    <string name="title_activity_create_item">Artikel erstellen</string>
     <string name="title_activity_view_list">Einkaufsliste</string>
     <string name="title_activity_share_list">Liste teilen</string>
     <string name="title_activity_manage_friends">Freunde</string>
     <string name="title_activity_create_friend">Freund hinzufügen</string>
-    <string name="title_activity_item_list">Item-Liste</string>
+    <string name="title_activity_item_list">Artikel-Liste</string>
     <string name="title_activity_manage_recipe">Rezepte verwalten</string>
     <string name="title_activity_create_recipe">Rezept erstellen</string>
     <string name="title_activity_archive">Archiv</string>
@@ -34,12 +34,12 @@
     
     <!-- ItemListActivity -->
     <string name="item_list_welcome_message"> 
-        Tippe rechts oben auf das Plus-Symbol, um ein neues Item zu erstellen. 
-        Danach siehst du hier eine Übersicht deiner Items. </string>
+        Tippe rechts oben auf das Plus-Symbol, um einen neuen Artikel zu erstellen. 
+        Danach siehst du hier eine Übersicht deiner Artikel. </string>
         
     <!-- ManageRecipeActivity -->
     <string name="manage_recipe_welcome_message">
-        Mit Rezepten kannst du durch Eingeben von \n\"/Rezeptname\" mehrere Items zusammen zu einer Einkaufsliste hinzufügen.
+        Mit Rezepten kannst du durch Eingeben von \n\"/Rezeptname\" mehrere Artikel zusammen zu einer Einkaufsliste hinzufügen.
         \n\nTippe rechts oben auf das Plus-Symbol, um ein neues Rezept zu erstellen.</string>
     
     <!-- CreateListActivity -->
@@ -50,8 +50,8 @@
     <string name="create_list_shop">Laden:</string>
 
     <!-- CreateItemActivity -->
-    <string name="create_item_title">Neues Item erstellen</string>
-    <string name="edit_item_title">Item bearbeiten</string>
+    <string name="create_item_title">Neuen Artikel erstellen</string>
+    <string name="edit_item_title">Artikel bearbeiten</string>
     <string name="create_item_name">Name:</string>
     <string name="create_item_shop">Laden:</string>
     <string name="create_item_price">Preis:</string>
@@ -68,13 +68,13 @@
     <string name="friend_phone_number">Phone Nr:</string>
 
     <!-- ViewListActivity -->
-    <string name="view_list_hint">Item hinzufügen</string>
+    <string name="view_list_hint">Artikel hinzufügen</string>
     <string name="items_bought">Einkaufswagen</string>
     <string name="share">Teilen</string>
     <string name="menu_item_share">Teilen</string>
     
     <!-- ViewRecipeActivity -->
-    <string name="view_recipe_hint">Item hinzufügen</string>
+    <string name="view_recipe_hint">Artikel hinzufügen</string>
     <string name="view_recipe_title">Rezept für</string>
     <string name="view_recipe_items">Zutaten</string>
     <string name="view_recipe_notes">Notizen</string>
@@ -145,7 +145,7 @@
     <!-- The navigation drawer -->
     <string-array name="navigation_items">
         <item>Übersicht</item>
-        <item>Item-Liste</item>
+        <item>Artikel-Liste</item>
         <item>Rezepte</item>
         <item>Freunde</item>
         <item>Archiv</item>
