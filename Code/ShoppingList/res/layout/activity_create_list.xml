@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" 
-        android:background="@drawable/ic_button_bar" >
+        android:background="@color/mediumgray" >
 
         <Button style="?android:attr/buttonBarButtonStyle"
             android:id="@+id/button1"

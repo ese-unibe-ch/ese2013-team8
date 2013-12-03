@@ -19,7 +19,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public static final String COLUMN_LIST_NAME = "listname";
 	public static final String COLUMN_LIST_ARCHIVED = "archived";
 	public static final String COLUMN_LIST_DUEDATE = "duedate";
-	public static final String COLUMN_LIST_SHARED = "shared";
+	public static final String COLUMN_LIST_SHARED = "itemshared";
 	public static final String COLUMN_LIST_CHANGESCOUNT = "changescount";
 	// Save all Items with an unique name and ID
 	public static final String TABLE_ITEMS = "items";
@@ -51,7 +51,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public static final String COLUMN_RECIPE_NAME = "recipename";
 	public static final String COLUMN_RECIPE_NOTES = "recipenotes";
 	public static final String COLUMN_RECIPE_SHOWNOTES = "recipeshownotes";
-	public static final String COLUMN_RECIPE_SHARED = "shared";
+	public static final String COLUMN_RECIPE_SHARED = "recipeshared";
 	// Save all items to recipeid of a recipe
 	public static final String TABLE_ITEMTORECIPE = "itemtorecipe";
 
@@ -131,13 +131,13 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 			+ TABLE_FRIENDS +"("+ COLUMN_FRIEND_ID + ") "
 			+ ");";
 
-	private static final String DATABASE_CREATE_TABLE_RECIPE =
+	private static final String DATABASE_CREATE_TABLE_RECIPES =
 			"create table " + TABLE_RECIPES + "("
 			+ COLUMN_RECIPE_ID + " integer primary key autoincrement, "
 			+ COLUMN_RECIPE_NAME + " text NOT NULL, "
 			+ COLUMN_RECIPE_NOTES + " text, "
-			+ COLUMN_RECIPE_SHOWNOTES + " integer NOT NULL "
-			+ COLUMN_RECIPE_SHARED + " integer NOT NULL, "
+			+ COLUMN_RECIPE_SHOWNOTES + " integer NOT NULL, "
+			+ COLUMN_RECIPE_SHARED + " integer NOT NULL "
 			+ ");";
 	
 	private static final String DATABASE_CREATE_TABLE_ITEMTORECIPE =
@@ -189,7 +189,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 		database.execSQL(DATABASE_CREATE_TABLE_FRIENDS);
 		database.execSQL(DATABASE_CREATE_TABLE_FRIENDSTOLIST);
 		database.execSQL(DATABASE_CREATE_TABLE_FRIENDSTORECIPE);
-		database.execSQL(DATABASE_CREATE_TABLE_RECIPE);
+		database.execSQL(DATABASE_CREATE_TABLE_RECIPES);
 		database.execSQL(DATABASE_CREATE_TABLE_ITEMTORECIPE);
 	}
 
