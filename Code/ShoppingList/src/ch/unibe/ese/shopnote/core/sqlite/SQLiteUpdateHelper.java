@@ -49,6 +49,9 @@ public class SQLiteUpdateHelper {
 	public ContentValues toValue(Item item) {
 		ContentValues values = new ContentValues();
 		values.put(SQLiteHelper.COLUMN_ITEM_NAME, item.getName());
+		values.put(SQLiteHelper.COLUMN_ITEM_PRICE, toString(item.getPrice()));
+		values.put(SQLiteHelper.COLUMN_ITEM_QUANTITY, toString(item.getQuantity()));
+		values.put(SQLiteHelper.COLUMN_ITEM_UNIT, toString(item.getUnit()));
 		return values;
 	}
 
@@ -63,8 +66,8 @@ public class SQLiteUpdateHelper {
 		ContentValues values = new ContentValues();
 		values.put(SQLiteHelper.COLUMN_ITEM_ID, item.getId());
 		values.put(SQLiteHelper.COLUMN_LIST_ID, list.getId());
-		values.put(SQLiteHelper.COLUMN_ITEMBOUGHT, item.isBought() ? 1 : 0);
-		values.put(SQLiteHelper.COLUMN_LISTPRICE, toString(item.getPrice()));
+		values.put(SQLiteHelper.COLUMN_ITEM_BOUGHT, item.isBought() ? 1 : 0);
+		values.put(SQLiteHelper.COLUMN_ITEM_PRICE, toString(item.getPrice()));
 		values.put(SQLiteHelper.COLUMN_ITEM_QUANTITY, toString(item.getQuantity()));
 		values.put(SQLiteHelper.COLUMN_ITEM_UNIT, toString(item.getUnit()));
 		return values;

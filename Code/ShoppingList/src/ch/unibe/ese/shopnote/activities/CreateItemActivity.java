@@ -52,7 +52,8 @@ public class CreateItemActivity extends BaseActivity {
 		manager = getListManager();
 
 		setTextViews();
-		setNotEditable();
+		// TODO delete this method
+		// setNotEditable();
 		openKeyboard();
 	}
 

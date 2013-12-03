@@ -25,16 +25,16 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public static final String TABLE_ITEMS = "items";
 	public static final String COLUMN_ITEM_ID = "itemid";
 	public static final String COLUMN_ITEM_NAME = "itemname";
+	public static final String COLUMN_ITEM_PRICE = "itemprice";
+	public static final String COLUMN_ITEM_QUANTITY = "quantity";
+	public static final String COLUMN_ITEM_UNIT = "unit";
 	// Save all shops with an unique name and ID
 	public static final String TABLE_SHOPS = "shops";
 	public static final String COLUMN_SHOP_ID = "shopid";
 	public static final String COLUMN_SHOP_NAME = "shopname";
 	// Link items to lists
 	public static final String TABLE_ITEMTOLIST = "itemtolist";
-	public static final String COLUMN_LISTPRICE = "listprice";
-	public static final String COLUMN_ITEMBOUGHT = "itembought";
-	public static final String COLUMN_ITEM_QUANTITY = "quantity";
-	public static final String COLUMN_ITEM_UNIT = "unit";
+	public static final String COLUMN_ITEM_BOUGHT = "itembought";
 	// Save all friends with an unique phoneNr
 	public static final String TABLE_FRIENDS = "friendlist";
 	public static final String COLUMN_FRIEND_ID = "friendId";
@@ -73,22 +73,25 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	private static final String DATABASE_CREATE_TABLE_ITEMS = 
 			"create table " + TABLE_ITEMS + "("
 			+ COLUMN_ITEM_ID + " integer primary key autoincrement, "
-			+ COLUMN_ITEM_NAME + " varchar(30) "
+			+ COLUMN_ITEM_NAME + " varchar(30) NOT NULL, "
+			+ COLUMN_ITEM_PRICE + " NUMERIC, "
+			+ COLUMN_ITEM_QUANTITY + " NUMERIC, "
+			+ COLUMN_ITEM_UNIT + " VARCHAR"
 			+ ");";
 	// link items to lists
 	private static final String DATABASE_CREATE_TABLE_ITEMTOLIST =
 			"create table " + TABLE_ITEMTOLIST + "("
 			+ COLUMN_ITEM_ID + " integer NOT NULL, "
 			+ COLUMN_LIST_ID + " integer NOT NULL, "
-			+ COLUMN_LISTPRICE + " NUMERIC, "
-			+ COLUMN_ITEMBOUGHT + " integer, "
+			+ COLUMN_ITEM_PRICE + " NUMERIC, "
+			+ COLUMN_ITEM_BOUGHT + " integer, "
 			+ COLUMN_ITEM_QUANTITY + " NUMERIC, "
 			+ COLUMN_ITEM_UNIT + " VARCHAR, "
 			+ "PRIMARY KEY (" + COLUMN_ITEM_ID + ", " + COLUMN_LIST_ID + "), "
 			+ "FOREIGN KEY (" + COLUMN_ITEM_ID + ") REFERENCES "
-			+ TABLE_ITEMS + "("+COLUMN_ITEM_ID+"), "
-			+ "FOREIGN KEY (" + COLUMN_LIST_ID+ ") REFERENCES "
-			+ TABLE_LISTS+ "("+COLUMN_LIST_ID+")"
+			+ TABLE_ITEMS + "(" + COLUMN_ITEM_ID + "), "
+			+ "FOREIGN KEY (" + COLUMN_LIST_ID + ") REFERENCES "
+			+ TABLE_LISTS + "(" + COLUMN_LIST_ID + ")"
 			+ ");";
 	// Create table for Shops
 	private static final String DATABASE_CREATE_TABLE_SHOPS =
@@ -133,27 +136,27 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 			+ TABLE_ITEMS +"("+ COLUMN_ITEM_ID + ") "
 			+ ");";
 
-	public static String[] LISTS_COLUMNS = { SQLiteHelper.COLUMN_LIST_ID,
-			SQLiteHelper.COLUMN_LIST_NAME, SQLiteHelper.COLUMN_LIST_ARCHIVED,
-			SQLiteHelper.COLUMN_LIST_DUEDATE, SQLiteHelper.COLUMN_SHOP_ID,
-			SQLiteHelper.COLUMN_LIST_SHARED, SQLiteHelper.COLUMN_LIST_CHANGESCOUNT};
-	public static String[] SHOPS_COLUMNS = { SQLiteHelper.COLUMN_SHOP_ID,
-			SQLiteHelper.COLUMN_SHOP_NAME };
-	public static String[] ITEMS_COLUMNS = { SQLiteHelper.COLUMN_ITEM_ID,
-			SQLiteHelper.COLUMN_ITEM_NAME };
-	public static String[] ITEMTOLIST_COLUMNS = { SQLiteHelper.COLUMN_ITEM_ID,
-			SQLiteHelper.COLUMN_LIST_ID, SQLiteHelper.COLUMN_LISTPRICE,
-			SQLiteHelper.COLUMN_ITEMBOUGHT, SQLiteHelper.COLUMN_ITEM_QUANTITY };
-	public static String[] FRIENDS_COLUMNS = { SQLiteHelper.COLUMN_FRIEND_ID,
-			SQLiteHelper.COLUMN_FRIEND_PHONENR, SQLiteHelper.COLUMN_FRIEND_NAME,
-			SQLiteHelper.COLUMN_FRIEND_HASAPP};
-	public static String[] FRIENDSTOLIST_COLUMNS = {SQLiteHelper.COLUMN_LIST_ID,
-			SQLiteHelper.COLUMN_FRIEND_ID};
-	public static String[] RECIPE_COLUMNS = { SQLiteHelper.COLUMN_RECIPE_ID,
-			SQLiteHelper.COLUMN_RECIPE_NAME, SQLiteHelper.COLUMN_RECIPE_NOTES,
-			SQLiteHelper.COLUMN_RECIPE_SHOWNOTES};
+	public static String[] LISTS_COLUMNS = { COLUMN_LIST_ID,
+			COLUMN_LIST_NAME, COLUMN_LIST_ARCHIVED,
+			COLUMN_LIST_DUEDATE, COLUMN_SHOP_ID,
+			COLUMN_LIST_SHARED, COLUMN_LIST_CHANGESCOUNT};
+	public static String[] SHOPS_COLUMNS = { COLUMN_SHOP_ID,
+			COLUMN_SHOP_NAME };
+	public static String[] ITEMS_COLUMNS = { COLUMN_ITEM_ID,
+			COLUMN_ITEM_NAME, COLUMN_ITEM_PRICE, COLUMN_ITEM_QUANTITY, COLUMN_ITEM_UNIT };
+	public static String[] ITEMTOLIST_COLUMNS = { COLUMN_ITEM_ID,
+			COLUMN_LIST_ID, COLUMN_ITEM_PRICE,
+			COLUMN_ITEM_BOUGHT, COLUMN_ITEM_QUANTITY };
+	public static String[] FRIENDS_COLUMNS = { COLUMN_FRIEND_ID,
+			COLUMN_FRIEND_PHONENR, COLUMN_FRIEND_NAME,
+			COLUMN_FRIEND_HASAPP};
+	public static String[] FRIENDSTOLIST_COLUMNS = {COLUMN_LIST_ID,
+			COLUMN_FRIEND_ID};
+	public static String[] RECIPE_COLUMNS = { COLUMN_RECIPE_ID,
+			COLUMN_RECIPE_NAME, COLUMN_RECIPE_NOTES,
+			COLUMN_RECIPE_SHOWNOTES};
 	public static String[] ITEMTORECIPE_COLUMNS = {
-			SQLiteHelper.COLUMN_RECIPE_ID, SQLiteHelper.COLUMN_ITEM_ID };
+			COLUMN_RECIPE_ID, COLUMN_ITEM_ID };
 
 	public SQLiteHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
