@@ -331,7 +331,7 @@ public class ViewListActivity extends BaseActivity {
 		switch (item.getItemId()) {    
 			// Handle presses on the action bar items
 			case R.id.action_share:
-				Intent intentShare = new Intent(this, ShareListActivity.class);
+				Intent intentShare = new Intent(this, ShareActivity.class);
 				intentShare.putExtra(EXTRAS_LIST_ID, listIndex);
 				this.startActivity(intentShare);
 				return true;

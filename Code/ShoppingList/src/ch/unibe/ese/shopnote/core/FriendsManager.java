@@ -14,7 +14,6 @@ import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.share.SyncManager;
 import ch.unibe.ese.shopnote.share.requests.FriendRequest;
 
-
 /**
  * The FriendsManager provides all information about Friends locally stored on your phone<br>
  * He knows which friend is assigned to which shoppinglist.
@@ -156,6 +155,15 @@ public class FriendsManager {
 	}
 	
 	/**
+	 * Get all friends which are assigned to this recipe
+	 * @param recipe
+	 * @return
+	 */
+	public List<Friend> getSharedFriends(Recipe recipe) {
+		return persistenceManager.getSharedFriends(recipe);
+	}
+	
+	/**
 	 * Adds a friend to a synchronized shopping list
 	 * @param friend
 	 * @param list
@@ -166,14 +174,35 @@ public class FriendsManager {
 	}
 	
 	/**
+	 * Adds a friend to a synchronized recipe
+	 * @param friend
+	 * @param recipe
+	 */
+	public void addFriendToRecipe(Recipe recipe, Friend friend) {
+		//TODO: send the information to the server and add the friend to the list on the server
+		persistenceManager.save(recipe, friend);
+	}
+	
+	/**
 	 * Deletes a friend from a synchronized shopping list
 	 * @param list
 	 * @param friend
 	 */
-	public void removeFriendOfList(ShoppingList list, Friend friend) {
+	public void removeFriendFromList(ShoppingList list, Friend friend) {
 		//TODO: send the information to the server and remove the friend on the server
 		//(just the entry of the shared Shoppinglist, not the friend as a onject of course^^)
 		persistenceManager.remove(list, friend);
+	}
+	
+	/**
+	 * Deletes a friend from a synchronized recipe
+	 * @param recipe
+	 * @param friend
+	 */
+	public void removeFriendFromRecipe(Recipe recipe, Friend friend) {
+		//TODO: send the information to the server and remove the friend on the server
+		//(just the entry of the shared recipe, not the friend as a onject of course^^)
+		persistenceManager.remove(recipe, friend);
 	}
 	
 	/**
