@@ -1,5 +1,6 @@
 package ch.unibe.ese.shopnote.share;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -81,6 +82,7 @@ public class AnswerHandler {
 			for (Item i : listManager.getItemsFor(list)) {
 				syncManager.addRequest(new ItemRequest(context.getMyPhoneNumber(), list.getId(), i));
 			}
+			syncManager.synchronise(context);
 			return;
 			
 		// UnshareListRequest => My friend has been successfully deleted from the sharing list on the server
@@ -96,11 +98,13 @@ public class AnswerHandler {
 		// The server asks me to create a new shared list (one that has been shared by another user)
 		case Request.CREATE_SHARED_LIST_REQUEST:
 			String listName = ((CreateSharedListRequest)request).getListName();
+			long serverListId = ((CreateSharedListRequest)request).getServerListid();
 			ShoppingList newList = new ShoppingList(listName);
 			newList.setShared(true);
+			// Sets the temporary server list Id (for incomming items)
+			newList.setServerListId(serverListId);	
 			// Sets the local List ID
 			listManager.saveShoppingList(newList);
-			
 			long id = newList.getId();
 			((CreateSharedListRequest)request).setLocalListId(id);
 			syncManager.addRequest(request);
@@ -136,7 +140,17 @@ public class AnswerHandler {
 	 * @param request
 	 */
 	private void processListChangeRequest(ListChangeRequest request) {
-		ShoppingList list = listManager.getShoppingList(request.getLocalListId());
+		ShoppingList list = new ShoppingList("Error");
+		if(request.islistIdPending()) {
+			List<ShoppingList> shoppingLists = listManager.getShoppingLists();
+			for (ShoppingList sl : shoppingLists) {
+				if(sl.getServerListId() == request.getLocalListId()) {
+					list = sl;
+				}
+			}
+		} else {
+			list = listManager.getShoppingList(request.getLocalListId());
+		}
 		if(list == null) {
 			// If the list doesn't exist here, just delete yourself from the server
 			System.err.println("List with id " + request.getLocalListId() + " doesn't exist!");

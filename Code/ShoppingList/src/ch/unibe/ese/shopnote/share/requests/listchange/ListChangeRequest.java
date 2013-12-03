@@ -15,10 +15,12 @@ public abstract class ListChangeRequest extends Request {
 	public static final int SET_UNSHARED_REQUEST = 120;
 	
 	private long localListId;
+	private boolean listIdPending;
 	
 	public ListChangeRequest(String phoneNumber, long localListId) {
 		super(phoneNumber);
 		this.localListId = localListId;
+		this.listIdPending = false;
 	}
 
 	@Override
@@ -32,6 +34,14 @@ public abstract class ListChangeRequest extends Request {
 	
 	public long getLocalListId() {
 		return this.localListId;
+	}
+	
+	public void setListIdPending(boolean b) {
+		this.listIdPending = b;
+	}
+	
+	public boolean islistIdPending() {
+		return this.listIdPending;
 	}
 
 	public abstract int getSubType();
