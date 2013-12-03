@@ -104,8 +104,9 @@ public class RequestHandler {
 			for(User u:sharedwith) {
 				// Cannot send requests to myself
 				if(u.getUserId() != senderId) {
-					((ListChangeRequest)request).setLocaListId(u.getLocalListid());
-					odbManager.storeRequest(request, u.getUserId());
+					ListChangeRequest copy = ((ListChangeRequest)request).getCopy();
+					copy.setLocaListId(u.getLocalListid());
+					odbManager.storeRequest(copy, u.getUserId());
 				}
 			}
 			return returnRequests(new EmptyRequest(request.getPhoneNumber()));

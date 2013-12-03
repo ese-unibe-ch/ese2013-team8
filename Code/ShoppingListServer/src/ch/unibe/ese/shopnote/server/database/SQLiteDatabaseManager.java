@@ -117,6 +117,7 @@ public class SQLiteDatabaseManager {
 				System.out.println("\t:User " + rs.getString(COLUMN_USER_PHONENUMBER) + " already existed");
 			}
 			request.setHandled();
+			
 		} catch (SQLException e) {
 			e.printStackTrace(System.err);
 		}
@@ -163,10 +164,12 @@ public class SQLiteDatabaseManager {
 			if(rs.next()) {
 				return rs.getString(COLUMN_USER_PHONENUMBER);
 			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace(System.err);
 		}
 		return ""+-1;
+		
 	}
 	
 
@@ -222,7 +225,7 @@ public class SQLiteDatabaseManager {
 				
 				request.setSuccessful();
 			}
-
+			
 		} catch (SQLException e) {
 			e.printStackTrace(System.err);
 		}
@@ -266,6 +269,7 @@ public class SQLiteDatabaseManager {
 				System.out.println("\t:List " + serverListId + " is not shared with user " + friendId);
 				request.setHandled();
 			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace(System.err);
 		}
@@ -293,6 +297,7 @@ public class SQLiteDatabaseManager {
 						+ COLUMN_SERVER_LIST_ID + ")+1 from "
 						+ TABLE_LOCALTOSERVER_LIST_ID + ")" + ");";
 				stmt.executeUpdate(createEntry);
+				
 			} catch (SQLException e) {
 				e.printStackTrace(System.err);
 			}
@@ -329,6 +334,7 @@ public class SQLiteDatabaseManager {
 					+ TABLE_LOCALTOSERVER_LIST_ID + " values (\"" + userId
 					+ "\",\"" + localListId + "\",\"" + serverListId + "\");";
 			stmt.executeUpdate(createEntry);
+			
 		} catch (SQLException e) {
 			e.printStackTrace(System.err);
 		}
@@ -401,6 +407,7 @@ public class SQLiteDatabaseManager {
 			while(rs.next()) {
 				User user = new User(rs.getInt(COLUMN_USER_ID));
 				user.setLocalListId(rs.getInt(COLUMN_LOCAL_LIST_ID));
+				System.out.println("U: " + user.getUserId() + " L: " + user.getLocalListid());
 				userList.add(user);
 			}
 		} catch (SQLException e) {

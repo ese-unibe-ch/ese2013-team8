@@ -14,6 +14,7 @@ import ch.unibe.ese.shopnote.share.requests.FriendRequest;
 import ch.unibe.ese.shopnote.share.requests.Request;
 import ch.unibe.ese.shopnote.share.requests.ShareListRequest;
 import ch.unibe.ese.shopnote.share.requests.UnShareListRequest;
+import ch.unibe.ese.shopnote.share.requests.listchange.AddSharedFriendRequest;
 import ch.unibe.ese.shopnote.share.requests.listchange.ItemRequest;
 import ch.unibe.ese.shopnote.share.requests.listchange.ListChangeRequest;
 import ch.unibe.ese.shopnote.share.requests.listchange.RenameListRequest;
@@ -96,7 +97,6 @@ public class AnswerHandler {
 			listManager.saveShoppingList(newList);
 			
 			for(String number : ((CreateSharedListRequest)request).getSharedFriendNumbers()) {
-				System.err.println("Friend Number: "+ number);
 				friendsManager.addFriend(new Friend(number,"User"));
 				friendsManager.addFriendToList(newList, friendsManager.getFriendWithPhoneNr(number));
 			}
@@ -121,6 +121,9 @@ public class AnswerHandler {
 	 */
 	private void processListChangeRequest(ListChangeRequest request) {
 		ShoppingList list = listManager.getShoppingList(request.getLocalListId());
+		if(list == null) {
+			throw new IllegalStateException("List with id " + request.getLocalListId() + " doesn't exist!");
+		}
 		switch (request.getSubType()) {
 		
 		// One of your sharing partners has changed the name of the list
@@ -156,6 +159,13 @@ public class AnswerHandler {
 			list.setChangesCount(changesCount);
 			listManager.saveShoppingList(list);
 
+			return;
+			
+		// One of your sharing partners has added a Friend to the list
+		case ListChangeRequest.ADD_SHARED_FRIEND_REQUEST:
+			String number = ((AddSharedFriendRequest)request).getFriendNumber();
+			friendsManager.addFriend(new Friend(number,"User"));
+			friendsManager.addFriendToList(list, friendsManager.getFriendWithPhoneNr(number));
 			return;
 		}
 	}

@@ -46,5 +46,13 @@ public class ItemRequest extends ListChangeRequest {
 	public int getSubType() {
 		return ListChangeRequest.ITEM_REQUEST;
 	}
+
+	@Override
+	public ListChangeRequest getCopy() {
+		ItemRequest copy = new ItemRequest(this.getPhoneNumber(), this.getLocalListId(), this.item);
+		copy.setBought(this.isBought);
+		copy.setDelete(this.isDeleted);
+		return copy;
+	}
 	
 }
