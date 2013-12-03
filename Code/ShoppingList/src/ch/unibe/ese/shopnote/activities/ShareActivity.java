@@ -30,7 +30,6 @@ import ch.unibe.ese.shopnote.core.Recipe;
 import ch.unibe.ese.shopnote.core.ShoppingList;
 import ch.unibe.ese.shopnote.share.SyncManager;
 import ch.unibe.ese.shopnote.share.requests.GetSharedFriendsRequest;
-import ch.unibe.ese.shopnote.share.requests.RegisterRequest;
 import ch.unibe.ese.shopnote.share.requests.ShareListRequest;
 
 /**
@@ -93,7 +92,7 @@ public class ShareActivity extends BaseActivity {
 				long recipeIndex = extras.getLong(EXTRAS_RECIPE_ID);
 				recipe = listManager.getRecipeAt(recipeIndex);
 				setTitle(this.getString(R.string.share_list_title) + " "
-						+ recipe.toString());
+						+ this.getString(R.string.view_recipe_title) + " " + recipe.toString());
 			}
 		}
 
