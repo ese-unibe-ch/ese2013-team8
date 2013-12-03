@@ -101,7 +101,7 @@ public class SQLitePersistenceManager implements PersistenceManager {
 		List<Item> itemList = new ArrayList<Item>();
 		Cursor cursor = readHelper.getItemCursor(list);
 		while (!cursor.isAfterLast()) {
-			Item item = readHelper.cursorToItem(cursor);
+			Item item = readHelper.cursorToShoppingListItem(cursor);
 			itemList.add(item);
 			cursor.moveToNext();
 		}
@@ -167,32 +167,15 @@ public class SQLitePersistenceManager implements PersistenceManager {
 		}
 	}
 
-	/**
-	 * Returns item with the id
-	 * 
-	 * @param itemId
-	 * @return item with the itemId, if not found, null
-	 */
-	public Item getItem(long itemId) {
-		// TODO: rewrite code when problem is solved with shop and date in item
-		// db
-		List<Item> itemList = getAllItems();
-		for (Item item : itemList)
-			if (item.getId() == itemId)
-				return item;
-		return null;
-	}
-
 	@Override
 	public void remove(Item item) {
 		if (readHelper.isInList(item)) {
+			String[] id = new String[] { "" + item.getId() };
+			
 			database.delete(SQLiteHelper.TABLE_ITEMTOLIST,
-					SQLiteHelper.COLUMN_ITEM_ID + "=? ", new String[] { ""
-							+ item.getId() });
-
+					SQLiteHelper.COLUMN_ITEM_ID + "=? ", id);
 			database.delete(SQLiteHelper.TABLE_ITEMS,
-					SQLiteHelper.COLUMN_ITEM_ID + "=? ", new String[] { ""
-							+ item.getId() });
+					SQLiteHelper.COLUMN_ITEM_ID + "=? ", id);
 		}
 	}
 
@@ -337,15 +320,12 @@ public class SQLitePersistenceManager implements PersistenceManager {
 
 	private void addItemsToRecipes(List<Recipe> listOfRecipes) {
 		Cursor cursor = readHelper.getItemToRecipeCursor();
-
-		// TODO: rewrite code, its just a fix. At the moment it would take a lot
-		// of resources for big lists
 		while (!cursor.isAfterLast()) {
-			Item item = getItem(cursor.getLong(1));
+			Item item = readHelper.cursorToRecipeItem(cursor);
 
 			if (item != null)
 				for (Recipe recipe : listOfRecipes) {
-					if (recipe.getId() == cursor.getLong(0))
+					if (recipe.getId() == cursor.getLong(2))
 						recipe.addItem(item);
 				}
 			cursor.moveToNext();
@@ -361,28 +341,24 @@ public class SQLitePersistenceManager implements PersistenceManager {
 			recipe.setId(id);
 		} else { // Else if it is an old recipe
 			database.update(SQLiteHelper.TABLE_RECIPES, values,
-					SQLiteHelper.COLUMN_RECIPE_ID + "=" + recipe.getId(), null);
+					SQLiteHelper.COLUMN_RECIPE_ID + "= ?", new String[] {"" + recipe.getId()});
 			database.delete(SQLiteHelper.TABLE_ITEMTORECIPE,
-					SQLiteHelper.COLUMN_RECIPE_ID + "=? ", new String[] { ""
+					SQLiteHelper.COLUMN_RECIPE_ID + "= ?", new String[] { ""
 							+ recipe.getId() });
 		}
 
-		List<Item> ingredients = recipe.getItemList();
-		if (ingredients == null) throw new IllegalStateException();
-		saveIngredients(recipe, ingredients);
-	}
-
-	private void saveIngredients(Recipe recipe, List<Item> ingredients) {
-		for (Item item : ingredients) {
-			ContentValues values = updateHelper.toValue(recipe, item);
+		for (Item item : recipe.getItemList()) {
+			// Add the item to the Items Table
+			updateHelper.addItemIfNotExistent(item);
+			values = updateHelper.toValue(recipe, item);
 			database.insert(SQLiteHelper.TABLE_ITEMTORECIPE, null, values);
 		}
 	}
 
 	@Override
 	public void remove(Recipe recipe) {
-		long recipeNr = readHelper.getRecipeId(recipe.getName());
-		if (recipeNr != -1) {
+		Long recipeNr = recipe.getId();
+		if (recipeNr != null && recipeNr != -1) {
 			database.delete(SQLiteHelper.TABLE_RECIPES,
 					SQLiteHelper.COLUMN_RECIPE_ID + "=?", new String[] { ""
 							+ recipeNr });
@@ -390,6 +366,5 @@ public class SQLitePersistenceManager implements PersistenceManager {
 					SQLiteHelper.COLUMN_RECIPE_ID + "=? ", new String[] { ""
 							+ recipeNr });
 		}
-
 	}
 }

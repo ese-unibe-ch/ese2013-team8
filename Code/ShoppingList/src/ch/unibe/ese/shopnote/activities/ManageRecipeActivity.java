@@ -73,7 +73,7 @@ public class ManageRecipeActivity extends BaseActivity {
 
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
-				Recipe selectedRecipe = manager.getRecipeAt(position);
+				Recipe selectedRecipe = manager.getRecipes().get(position);
 				ManageRecipeActivity.this.startActionMode(new RecipeListActionMode(
 						manager, selectedRecipe, recipeAdapter, ManageRecipeActivity.this));
 				return true;

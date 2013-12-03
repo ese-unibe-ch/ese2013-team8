@@ -305,7 +305,7 @@ public class ShareActivity extends BaseActivity {
 		
 		if (friendId != -1) {
 			final Friend friend = friendsManager.getFriend(friendId);
-			final SynchHandler handler = new SynchHandler();
+			final SynchHandler handler = new SynchHandler(this);
 			if(!friend.hasTheApp())
 				Toast.makeText(getApplicationContext(), R.string.checkIfFriendHasApp, Toast.LENGTH_SHORT ).show();
 				
@@ -322,9 +322,10 @@ public class ShareActivity extends BaseActivity {
 						syncManager.addRequest(slrequest);
 						handler.sendEmptyMessage(0);
 					} else {
-						Looper.prepare();
-						Toast.makeText(getApplicationContext(), R.string.friend_has_not_app, Toast.LENGTH_SHORT ).show();
-						Looper.loop();
+//						Looper.prepare();
+//						Toast.makeText(getApplicationContext(), R.string.friend_has_not_app, Toast.LENGTH_SHORT ).show();
+//						Looper.loop();
+						handler.sendEmptyMessage(1);
 					}
 				}
 

@@ -2,6 +2,7 @@ package ch.unibe.ese.shopnote.activities;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -52,7 +53,6 @@ public class CreateItemActivity extends BaseActivity {
 		manager = getListManager();
 
 		setTextViews();
-		setNotEditable();
 		openKeyboard();
 	}
 
@@ -97,8 +97,14 @@ public class CreateItemActivity extends BaseActivity {
 			if (extras.getBoolean(EXTRAS_ITEM_EDIT)) {
 				long itemId = extras.getLong(EXTRAS_ITEM_ID);
 				editItem = true;
-				for (Item it : (list == null ? manager.getAllItems() : manager
-						.getItemsFor(list))) {
+				List<Item> items;
+				if(list != null)
+					items = manager.getItemsFor(list);
+				else if (recipe != null)
+					items = recipe.getItemList();
+				else 
+					items = manager.getAllItems();
+				for (Item it :items) {
 					if (it.getId() == itemId) {
 						item = it;
 						break;
@@ -127,21 +133,6 @@ public class CreateItemActivity extends BaseActivity {
 		textShop.setAdapter(sqliteShopAdapter);
 	}
 	
-	/**
-	 * make last 3 input uneditable as a temporary fix if called from ItremList
-	 */
-	private void setNotEditable() {
-		if (list == null) {
-			findViewById(R.id.editTextShop).setEnabled(false);
-			setTextViewText(R.id.editTextShop, "Not editable in this view");
-			findViewById(R.id.editTextPrice).setEnabled(false);
-			setTextViewText(R.id.editTextPrice, "Not editable in this view");
-			findViewById(R.id.editTextQuantity).setEnabled(false);
-			setTextViewText(R.id.editTextQuantity, "Not editable in this view");
-			findViewById(R.id.editSpinnerUnits).setEnabled(false);
-		}
-	}
-
 	/**
 	 * enter item data in edittext fields if editing an item
 	 */
@@ -199,36 +190,33 @@ public class CreateItemActivity extends BaseActivity {
 			item = new Item(name);
 		else
 			item.setName(name);
-		if(list != null) {
-			// get shop and set it if necessary
-			String shopName = getTextViewText(R.id.editTextShop);
-			if (!shopName.isEmpty()) {
-				Shop shop = new Shop(shopName);
-				item.setShop(shop);
-			}
-	
-			// get price and set it if necessary
-			String priceString = getTextViewText(R.id.editTextPrice);
-			if (!priceString.isEmpty()) {
-				BigDecimal price = new BigDecimal(priceString);
-				price = price.setScale(2, RoundingMode.HALF_UP);
-				item.setPrice(price);
-			}
-			
-			BigDecimal quant = quantity.isEmpty() ? null : new BigDecimal(quantity);
-			ItemUnit unit = unitPosition <= 0 ? null : ItemUnit.values()[unitPosition - 1];
-			item.setQuantity(quant, unit);	
+		
+		// get shop and set it if necessary
+		String shopName = getTextViewText(R.id.editTextShop);
+		if (!shopName.isEmpty()) {
+			Shop shop = new Shop(shopName);
+			item.setShop(shop);
 		}
+
+		// get price and set it if necessary
+		String priceString = getTextViewText(R.id.editTextPrice);
+		if (!priceString.isEmpty()) {
+			BigDecimal price = new BigDecimal(priceString);
+			price = price.setScale(2, RoundingMode.HALF_UP);
+			item.setPrice(price);
+		}
+		
+		BigDecimal quant = quantity.isEmpty() ? null : new BigDecimal(quantity);
+		ItemUnit unit = unitPosition <= 0 ? null : ItemUnit.values()[unitPosition - 1];
+		item.setQuantity(quant, unit);	
 
 		// save the item
 		if (list != null) {
 			manager.addItemToList(item, list);
-		}
-		else if (recipe != null) {
+		} else if (recipe != null) {
 			recipe.addItem(item);
-			manager.save(item);
-		}
-		else {
+			manager.saveRecipe(recipe);
+		} else {
 			// save item if called in itemlist
 			manager.save(item);
 		}
