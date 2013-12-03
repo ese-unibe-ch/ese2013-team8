@@ -161,7 +161,6 @@ public class FriendsManager {
 	 * @param list
 	 */
 	public void addFriendToList(ShoppingList list, Friend friend) {
-		//TODO: send the information to the server and add the friend to the list on the server
 		persistenceManager.save(list, friend);
 	}
 	
@@ -171,8 +170,6 @@ public class FriendsManager {
 	 * @param friend
 	 */
 	public void removeFriendOfList(ShoppingList list, Friend friend) {
-		//TODO: send the information to the server and remove the friend on the server
-		//(just the entry of the shared Shoppinglist, not the friend as a onject of course^^)
 		persistenceManager.remove(list, friend);
 	}
 	

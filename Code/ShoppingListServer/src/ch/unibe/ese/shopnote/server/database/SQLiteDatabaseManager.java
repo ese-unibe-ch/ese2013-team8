@@ -11,6 +11,7 @@ import ch.unibe.ese.shopnote.share.requests.ShareListRequest;
 import ch.unibe.ese.shopnote.share.requests.UnShareListRequest;
 import ch.unibe.ese.shopnote.share.requests.listchange.EmptyListChangeRequest;
 import ch.unibe.ese.shopnote.share.requests.listchange.ListChangeRequest;
+import ch.unibe.ese.shopnote.share.requests.listchange.SetUnsharedRequest;
 
 /**
  * This Class organizes the database on the server.
@@ -261,6 +262,9 @@ public class SQLiteDatabaseManager {
 		Statement stmt;
 		try {
 			stmt = this.c.createStatement();
+			
+			// Check shared table
+			// remove the entry if it is in table
 			String selectEntryifExists = "select * from " + TABLE_SHAREDLISTS + " where " +
 					COLUMN_USER_ID + "=\"" + friendId + "\" and " + COLUMN_SERVER_LIST_ID + "=\"" + serverListId + "\";";
 			ResultSet rs = stmt.executeQuery(selectEntryifExists);
@@ -269,12 +273,26 @@ public class SQLiteDatabaseManager {
 						COLUMN_USER_ID + "=" + friendId + " and " +
 						COLUMN_SERVER_LIST_ID + "=" + serverListId + ";";
 				stmt.executeUpdate(deleteFriendfromList);
+			}
+			
+			// Check Local to server list id Table
+			// remove the entry if it is in table
+			String selectEntryifExists2 = "select * from " + TABLE_LOCALTOSERVER_LIST_ID + " where " +
+					COLUMN_USER_ID + "=\"" + friendId + "\" and " + COLUMN_SERVER_LIST_ID + "=\"" + serverListId + "\";";
+			ResultSet rs2 = stmt.executeQuery(selectEntryifExists2);
+			if(rs2.next()) {
+				long friendLocalListId = rs2.getLong(COLUMN_LOCAL_LIST_ID);
 				String deleteLocalToListId = "delete from " + TABLE_LOCALTOSERVER_LIST_ID + " where " +
 						COLUMN_USER_ID + "=" + friendId + " and " +
 						COLUMN_SERVER_LIST_ID + "=" + serverListId + ";";
 				stmt.executeUpdate(deleteLocalToListId);
 				System.out.println("\t:List " + serverListId + " is no longer shared with " + friendId);
+				
+				// Tell the friend that he has been removed
+				SetUnsharedRequest suRequest = new SetUnsharedRequest(request.getFriendNumber(), friendLocalListId);
+				odbManager.storeRequest(suRequest, friendId);
 				request.setSuccessful();
+				
 			} else {
 				System.out.println("\t:List " + serverListId + " is not shared with user " + friendId);
 				request.setHandled();

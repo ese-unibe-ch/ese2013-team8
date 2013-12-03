@@ -96,11 +96,6 @@ public class AnswerHandler {
 			// Sets the local List ID
 			listManager.saveShoppingList(newList);
 			
-//			for(String number : ((CreateSharedListRequest)request).getSharedFriendNumbers()) {
-//				friendsManager.addFriend(new Friend(number,"User"));
-//				friendsManager.addFriendToList(newList, friendsManager.getFriendWithPhoneNr(number));
-//			}
-			
 			long id = newList.getId();
 			((CreateSharedListRequest)request).setLocalListId(id);
 			syncManager.addRequest(request);
@@ -110,11 +105,16 @@ public class AnswerHandler {
 		// Get all Participants of a shared list
 		case Request.GET_SHARED_FRIENDS_REQUEST:
 			ShoppingList list3 = listManager.getShoppingList(((GetSharedFriendsRequest)request).getLocalListId());
-			System.err.println("I'm here");
+			// Drop all friends of a list and add them again if they are still in the list
+			for (Friend friend : friendsManager.getSharedFriends(list3)) {
+				friendsManager.removeFriendOfList(list3, friend);
+			}
 			for (String number : ((GetSharedFriendsRequest)request).getFriendNumbers()) {
-				System.err.println("FriendNumber: " + number + " ListId: " + list3.getId());
 				friendsManager.addFriend(new Friend(number, "User"));
 				friendsManager.addFriendToList(list3,friendsManager.getFriendWithPhoneNr(number));
+			}
+			if(friendsManager.getSharedFriends(list3).isEmpty()) {
+				list3.setShared(false);
 			}
 			return;
 
@@ -133,7 +133,10 @@ public class AnswerHandler {
 	private void processListChangeRequest(ListChangeRequest request) {
 		ShoppingList list = listManager.getShoppingList(request.getLocalListId());
 		if(list == null) {
-			throw new IllegalStateException("List with id " + request.getLocalListId() + " doesn't exist!");
+			// If the list doesn't exist here, just delete yourself from the server
+			System.err.println("List with id " + request.getLocalListId() + " doesn't exist!");
+			UnShareListRequest uslRequest = new UnShareListRequest(context.getMyPhoneNumber(), context.getMyPhoneNumber(), request.getLocalListId());
+			syncManager.addRequest(uslRequest);
 		}
 		switch (request.getSubType()) {
 		
@@ -171,6 +174,14 @@ public class AnswerHandler {
 			listManager.saveShoppingList(list);
 
 			return;
+			
+		// One of your sharing partners has removed you :(
+		// The server now asks you to set your list to unshared
+		case ListChangeRequest.SET_UNSHARED_REQUEST:
+			list.setShared(false);
+			for (Friend friend : friendsManager.getSharedFriends(list)) {
+				friendsManager.removeFriendOfList(list, friend);
+			}
 		}
 	}
 
