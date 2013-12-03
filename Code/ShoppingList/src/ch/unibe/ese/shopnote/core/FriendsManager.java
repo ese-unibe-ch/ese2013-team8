@@ -135,6 +135,18 @@ public class FriendsManager {
 	}
 	
 	/**
+	 * Gets the friend with the specific phoneNr
+	 * @param phoneNr - format matters!
+	 * @return friend if found, else null
+	 */
+	public Friend getFriendWithPhoneNr(String phoneNr) {
+		for(Friend friend: friendsList)
+			if(friend.getPhoneNr().equals(phoneNr))
+				return friend;
+		return null;
+	}
+	
+	/**
 	 * Get all friends which are assigned to this shoppinglist
 	 * @param list
 	 * @return

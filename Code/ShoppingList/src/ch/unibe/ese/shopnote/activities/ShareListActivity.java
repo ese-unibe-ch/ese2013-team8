@@ -5,6 +5,7 @@ import java.util.List;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -267,14 +268,39 @@ public class ShareListActivity extends BaseActivity {
 		}
 		
 		if (friendId != -1) {
-			Friend friend = friendsManager.getFriend(friendId);
-			if(friend.hasTheApp()) {
-				friendsManager.addFriendToList(list, friend);
-				ShareListRequest slrequest = new ShareListRequest(getMyPhoneNumber(),
-						friend.getPhoneNr(), list.getId(), list.getName());
-				syncManager.addRequest(slrequest); 
-			} else
-				Toast.makeText(getApplicationContext(), "Friend does not have the app!", Toast.LENGTH_SHORT ).show();
+			final Friend friend = friendsManager.getFriend(friendId);
+			final SynchHandler handler = new SynchHandler();
+			if(!friend.hasTheApp())
+				Toast.makeText(getApplicationContext(), R.string.checkIfFriendHasApp, Toast.LENGTH_SHORT ).show();
+				
+			new Thread(new Runnable() {
+				public void run() {	
+					for(int i=0; i<5; i++)
+						if(!friend.hasTheApp())
+							waitForMillisecs(1000);
+					if(friend.hasTheApp()) {
+						friendsManager.addFriendToList(list, friend);
+						ShareListRequest slrequest = new ShareListRequest(getMyPhoneNumber(),
+								friend.getPhoneNr(), list.getId(), list.getName());
+						syncManager.addRequest(slrequest);
+						handler.sendEmptyMessage(0);
+					} else {
+						Looper.prepare();
+						Toast.makeText(getApplicationContext(), R.string.friend_has_not_app, Toast.LENGTH_SHORT ).show();
+						Looper.loop();
+					}
+				}
+
+				private void waitForMillisecs(int number) {
+					try {
+						Thread.sleep(number);
+					} catch (InterruptedException e) {
+						System.err.println("Thread sleep interrupted");
+					}
+				}
+			}).start();
+			
+				
 		}
 		
 		// update lists

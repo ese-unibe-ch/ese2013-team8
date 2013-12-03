@@ -13,6 +13,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -326,6 +328,17 @@ public class BaseActivity extends Activity {
 		this.listViewColor = Color.parseColor(colors[5]);
 		this.listViewDividerColor = Color.parseColor(colors[6]);
 		this.colorUpdated = true;
+	}
+	
+	protected class SynchHandler extends Handler{
+		public SynchHandler() {
+			super();
+		}
+		
+		public void handleMessage(Message msg) {
+      	  super.handleMessage(msg);  
+      	  refresh();
+		}
 	}
 	
 }
