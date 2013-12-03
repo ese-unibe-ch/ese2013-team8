@@ -41,8 +41,10 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public static final String COLUMN_FRIEND_NAME = "friendname";
 	public static final String COLUMN_FRIEND_PHONENR = "friendphonenr";
 	public static final String COLUMN_FRIEND_HASAPP = "friendhasapp";
-	// Save friends to synch lists
+	// Save friends to synced lists
 	public static final String TABLE_FRIENDSTOLIST = "friendstolist";
+	// Save friends to synced recipes
+	public static final String TABLE_FRIENDSTORECIPE = "friendstorecipe";
 	// Save all recipes with an unique id and name
 	public static final String TABLE_RECIPES = "recipelist";
 	public static final String COLUMN_RECIPE_ID = "recipeid";
@@ -69,12 +71,14 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 			+ "FOREIGN KEY ("+COLUMN_SHOP_ID + ") REFERENCES "
 			+ TABLE_SHOPS + "(" + COLUMN_SHOP_ID + ")"
 			+ ");";
+	
 	// Create table for items
 	private static final String DATABASE_CREATE_TABLE_ITEMS = 
 			"create table " + TABLE_ITEMS + "("
 			+ COLUMN_ITEM_ID + " integer primary key autoincrement, "
 			+ COLUMN_ITEM_NAME + " varchar(30) "
 			+ ");";
+	
 	// link items to lists
 	private static final String DATABASE_CREATE_TABLE_ITEMTOLIST =
 			"create table " + TABLE_ITEMTOLIST + "("
@@ -90,6 +94,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 			+ "FOREIGN KEY (" + COLUMN_LIST_ID+ ") REFERENCES "
 			+ TABLE_LISTS+ "("+COLUMN_LIST_ID+")"
 			+ ");";
+	
 	// Create table for Shops
 	private static final String DATABASE_CREATE_TABLE_SHOPS =
 			"create table " + TABLE_SHOPS + "("
@@ -114,6 +119,16 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 			+ "FOREIGN KEY (" + COLUMN_FRIEND_ID + ") REFERENCES "
 			+ TABLE_FRIENDS +"("+ COLUMN_FRIEND_ID + ") "
 			+ ");";
+	
+	private static final String DATABASE_CREATE_TABLE_FRIENDSTORECIPE =
+			"create table " + TABLE_FRIENDSTORECIPE +"("
+			+ COLUMN_RECIPE_ID + " integer NOT NULL, "
+			+ COLUMN_FRIEND_ID + " integer NOT NULL, "
+			+ "FOREIGN KEY (" + COLUMN_RECIPE_ID + ") REFERENCES "
+			+ TABLE_RECIPES + "("+ COLUMN_RECIPE_ID + "), "
+			+ "FOREIGN KEY (" + COLUMN_FRIEND_ID + ") REFERENCES "
+			+ TABLE_FRIENDS +"("+ COLUMN_FRIEND_ID + ") "
+			+ ");";
 
 	private static final String DATABASE_CREATE_TABLE_RECIPE =
 			"create table " + TABLE_RECIPES + "("
@@ -122,6 +137,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 			+ COLUMN_RECIPE_NOTES + " text, "
 			+ COLUMN_RECIPE_SHOWNOTES + " integer NOT NULL "
 			+ ");";
+	
 	private static final String DATABASE_CREATE_TABLE_ITEMTORECIPE =
 			"create table " + TABLE_ITEMTORECIPE + "("
 			+ COLUMN_RECIPE_ID + " integer NOT NULL, "
@@ -149,6 +165,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 			SQLiteHelper.COLUMN_FRIEND_HASAPP};
 	public static String[] FRIENDSTOLIST_COLUMNS = {SQLiteHelper.COLUMN_LIST_ID,
 			SQLiteHelper.COLUMN_FRIEND_ID};
+	public static String[] FRIENDSTORECIPE_COLUMNS = {SQLiteHelper.COLUMN_RECIPE_ID,
+		SQLiteHelper.COLUMN_RECIPE_ID};
 	public static String[] RECIPE_COLUMNS = { SQLiteHelper.COLUMN_RECIPE_ID,
 			SQLiteHelper.COLUMN_RECIPE_NAME, SQLiteHelper.COLUMN_RECIPE_NOTES,
 			SQLiteHelper.COLUMN_RECIPE_SHOWNOTES};
@@ -168,6 +186,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 		database.execSQL(DATABASE_CREATE_TABLE_ITEMTOLIST);
 		database.execSQL(DATABASE_CREATE_TABLE_FRIENDS);
 		database.execSQL(DATABASE_CREATE_TABLE_FRIENDSTOLIST);
+		database.execSQL(DATABASE_CREATE_TABLE_FRIENDSTORECIPE);
 		database.execSQL(DATABASE_CREATE_TABLE_RECIPE);
 		database.execSQL(DATABASE_CREATE_TABLE_ITEMTORECIPE);
 	}
@@ -183,6 +202,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_ITEMTOLIST);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_FRIENDS);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_FRIENDSTOLIST);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_FRIENDSTORECIPE);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_RECIPES);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_ITEMTORECIPE);
 		onCreate(db);

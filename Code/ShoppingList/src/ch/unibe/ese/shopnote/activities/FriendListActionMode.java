@@ -81,7 +81,7 @@ public class FriendListActionMode implements Callback {
 	            	friendsAdapter.notifyDataSetChanged();
 	            	activity.refresh();
             	} else {
-            		friendsManager.removeFriendOfList(list, selectedFriend);
+            		friendsManager.removeFriendFromList(list, selectedFriend);
             	}
 	            mode.finish(); // Action picked, so close the CAB
             	return true;

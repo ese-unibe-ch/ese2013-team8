@@ -223,7 +223,7 @@ public class ViewRecipeActivity extends BaseActivity {
 			toggleDescription();
 			return true;
 		case R.id.action_share:
-			Intent intentShare = new Intent(this, ShareListActivity.class);
+			Intent intentShare = new Intent(this, ShareActivity.class);
 			intentShare.putExtra(EXTRAS_IS_RECIPE, true);
 			intentShare.putExtra(EXTRAS_RECIPE_ID, recipeIndex);
 			this.startActivity(intentShare);
