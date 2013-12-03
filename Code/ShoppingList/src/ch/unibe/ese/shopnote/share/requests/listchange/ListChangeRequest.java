@@ -12,7 +12,6 @@ public abstract class ListChangeRequest extends Request {
 
 	public static final int RENAME_LIST_REQUEST = 100;
 	public static final int ITEM_REQUEST = 110;
-	public static final int ADD_SHARED_FRIEND_REQUEST = 120;
 	
 	private long localListId;
 	

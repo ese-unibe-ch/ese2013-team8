@@ -35,7 +35,6 @@ public class SQLiteDatabaseManager {
 	// Links shared lists to users (unique server list id)
 	
 	public static final String TABLE_SHAREDLISTS = "sharedlists";
-	public static final String COLUMN_FRIEND_ID = "friendId";
 	public static final String COLUMN_LIST_NAME = "listname";
 	
 	// Create statements
@@ -51,10 +50,9 @@ public class SQLiteDatabaseManager {
 			");";
 	public static final String CREATE_TABLE_SHAREDLISTS = "create table if not exists " + TABLE_SHAREDLISTS + "(" +
 			COLUMN_USER_ID + " integer, " +
-			COLUMN_FRIEND_ID + " integer, " +
 			COLUMN_SERVER_LIST_ID + " integer, " +
 			COLUMN_LIST_NAME + " varchar(30), " +
-			"primary key(" + COLUMN_USER_ID + ", " + COLUMN_FRIEND_ID + ", " + COLUMN_SERVER_LIST_ID + ")" +
+			"primary key(" + COLUMN_USER_ID + ", " + COLUMN_SERVER_LIST_ID + ")" +
 			");";
 	// First dummy entry for localtoserver list id
 	public static final String INSERT_DUMMY = "insert or replace into " + TABLE_LOCALTOSERVER_LIST_ID + " values ( -1, -2, 0);";
@@ -195,32 +193,41 @@ public class SQLiteDatabaseManager {
 		Statement stmt;
 		try {
 			stmt = this.c.createStatement();
-			String selectEntryifExists = "select * from " + TABLE_SHAREDLISTS + " where " + COLUMN_USER_ID + "=\"" + userId + "\" and " + 
-					COLUMN_FRIEND_ID + "=\"" + friendId + "\" and " + COLUMN_SERVER_LIST_ID + "=\"" + serverListId + "\";";
+			String selectEntryifExists = "select * from " + TABLE_SHAREDLISTS + " where " + COLUMN_USER_ID + "=\"" + userId +
+					"\" and " + COLUMN_SERVER_LIST_ID + "=\"" + serverListId + "\";";
+			String selectEntryifExists2 = "select * from " + TABLE_SHAREDLISTS + " where " + COLUMN_USER_ID + "=\"" + friendId +
+					"\" and " + COLUMN_SERVER_LIST_ID + "=\"" + serverListId + "\";";
+			
+			// Check if author of request is in shared list
 			ResultSet rs = stmt.executeQuery(selectEntryifExists);
 			if(rs.next()) {
-				System.out.println("\t:List " + serverListId + " is already shared with user " + friendId);
-				request.setHandled();
+				System.out.println("\t:List " + serverListId + " is not a new shared list");
 			} else {
 				String insertSharedList = "insert into " + TABLE_SHAREDLISTS + " values (" +
 						"\"" + userId + "\", " +
+						"\"" + serverListId + "\"," +
+						"\"" + listname + "\"" +
+						");";	
+				stmt.executeUpdate(insertSharedList);
+				System.out.println("\t:List " + serverListId + " was created by " + userId);
+			}
+			
+			// Check if requested friend is in shared list
+			ResultSet rs2 = stmt.executeQuery(selectEntryifExists2);
+			if(rs2.next()) {
+				System.out.println("\t:List " + serverListId + " is already shared with " + friendId);
+				request.setHandled();
+			} else {
+				String insertSharedList = "insert into " + TABLE_SHAREDLISTS + " values (" +
 						"\"" + friendId + "\", " +
 						"\"" + serverListId + "\"," +
 						"\"" + listname + "\"" +
 						");";	
 				stmt.executeUpdate(insertSharedList);
-				System.out.println("\t:List " + serverListId + " is now shared with users " + friendId + " and " + userId);
 				
+				System.out.println("\t:List " + serverListId + " is now shared with users " + friendId);
 				// craft the CreateSharedListRequest for your friend with all shared users
 				CreateSharedListRequest cslRequest = new CreateSharedListRequest(request.getFriendNumber(), serverListId, listname);
-				
-				ArrayList<User> userList = getSharedUsers(new EmptyListChangeRequest(request.getPhoneNumber(),request.getListId()));
-				for(User u : userList) {
-					String friendNumber = getNumberOfUser(u.getUserId());
-					if(!friendNumber.equals(request.getFriendNumber())) {
-						cslRequest.addSharedFriendNumber(friendNumber);
-					}
-				}
 				odbManager.storeRequest(cslRequest);
 				
 				request.setSuccessful();
@@ -254,15 +261,18 @@ public class SQLiteDatabaseManager {
 		Statement stmt;
 		try {
 			stmt = this.c.createStatement();
-			String selectEntryifExists = "select * from " + TABLE_SHAREDLISTS + " where " + COLUMN_USER_ID + "=\"" + userId + "\" and " + 
-					COLUMN_FRIEND_ID + "=\"" + friendId + "\" and " + COLUMN_SERVER_LIST_ID + "=\"" + serverListId + "\";";
+			String selectEntryifExists = "select * from " + TABLE_SHAREDLISTS + " where " +
+					COLUMN_USER_ID + "=\"" + friendId + "\" and " + COLUMN_SERVER_LIST_ID + "=\"" + serverListId + "\";";
 			ResultSet rs = stmt.executeQuery(selectEntryifExists);
 			if(rs.next()) {
 				String deleteFriendfromList = "delete from " + TABLE_SHAREDLISTS + " where " +
-						COLUMN_USER_ID + "=" + userId + " and " +
-						COLUMN_FRIEND_ID + "=" + friendId + " and " +
+						COLUMN_USER_ID + "=" + friendId + " and " +
 						COLUMN_SERVER_LIST_ID + "=" + serverListId + ";";
 				stmt.executeUpdate(deleteFriendfromList);
+				String deleteLocalToListId = "delete from " + TABLE_LOCALTOSERVER_LIST_ID + " where " +
+						COLUMN_USER_ID + "=" + friendId + " and " +
+						COLUMN_SERVER_LIST_ID + "=" + serverListId + ";";
+				stmt.executeUpdate(deleteLocalToListId);
 				System.out.println("\t:List " + serverListId + " is no longer shared with " + friendId);
 				request.setSuccessful();
 			} else {

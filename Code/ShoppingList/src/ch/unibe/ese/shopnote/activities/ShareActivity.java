@@ -29,6 +29,7 @@ import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.Recipe;
 import ch.unibe.ese.shopnote.core.ShoppingList;
 import ch.unibe.ese.shopnote.share.SyncManager;
+import ch.unibe.ese.shopnote.share.requests.RegisterRequest;
 import ch.unibe.ese.shopnote.share.requests.ShareListRequest;
 
 /**
@@ -94,7 +95,7 @@ public class ShareActivity extends BaseActivity {
 						+ recipe.toString());
 			}
 		}
-
+		
 		// create autocompletion
 		AutoCompleteTextView textName = createAutocomplete();
 
@@ -148,7 +149,6 @@ public class ShareActivity extends BaseActivity {
 
 		setTextViewText(R.id.editTextName, "");
 	}
-	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
