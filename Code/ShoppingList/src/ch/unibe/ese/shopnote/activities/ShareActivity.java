@@ -132,7 +132,10 @@ public class ShareActivity extends BaseActivity {
 				else {
 					friendsManager.addFriendToRecipe(recipe, friend);
 					updateFriendsList();
-					// TODO: ShareRecipeRequest		
+					ShareListRequest slrequest = new ShareListRequest(getMyPhoneNumber(),
+							friend.getPhoneNr(), recipe.getId(), recipe.getName());
+					slrequest.isRecipe(true);
+					syncManager.addRequest(slrequest);	
 				}
 				setTextViewText(R.id.editTextName, "");
 			}
@@ -239,13 +242,15 @@ public class ShareActivity extends BaseActivity {
 	private void getSharedFriends() {
 		if(isRecipe) {
 			if(recipe.isShared()) {
-				// Get friends here
+				GetSharedFriendsRequest gsfRequest = new GetSharedFriendsRequest(getMyPhoneNumber(), recipe.getId());
+				gsfRequest.isRecipe(true);
+				syncManager.addRequest(gsfRequest);
 			}
 		} else if(list.isShared()) {
 				GetSharedFriendsRequest gsfRequest = new GetSharedFriendsRequest(getMyPhoneNumber(), list.getId());
 				syncManager.addRequest(gsfRequest);
-				syncManager.synchronise(this);
 		}
+		syncManager.synchronise(this);
 	}
 
 	private void setShareIntent(Intent shareIntent) {
@@ -325,7 +330,10 @@ public class ShareActivity extends BaseActivity {
 						}
 						else {
 							friendsManager.addFriendToRecipe(recipe, friend);
-							// TODO: ShareRecipeRequest
+							ShareListRequest slrequest = new ShareListRequest(getMyPhoneNumber(),
+									friend.getPhoneNr(), recipe.getId(), recipe.getName());
+							slrequest.isRecipe(true);
+							syncManager.addRequest(slrequest);
 						}
 						handler.sendEmptyMessage(0);
 					} else {

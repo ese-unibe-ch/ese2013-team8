@@ -16,6 +16,7 @@ public abstract class ListChangeRequest extends Request {
 	
 	private long localListId;
 	private boolean listIdPending;
+	private boolean isRecipe;
 	
 	public ListChangeRequest(String phoneNumber, long localListId) {
 		super(phoneNumber);
@@ -42,6 +43,14 @@ public abstract class ListChangeRequest extends Request {
 	
 	public boolean islistIdPending() {
 		return this.listIdPending;
+	}
+	
+	public void isRecipe(boolean b) {
+		this.isRecipe = b;
+	}
+	
+	public boolean isRecipe() {
+		return this.isRecipe;
 	}
 
 	public abstract int getSubType();

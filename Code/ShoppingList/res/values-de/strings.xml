@@ -87,15 +87,15 @@
     <string name="friend_has_the_app_icon">Appstatus</string>   
     <string name="manage_friends_welcome_message"> 
         Tippe rechts oben auf das Plus-Symbol, um Freunde hinzuzufügen.
-        Danach kannst du mit diesen Einkaufslisten teilen.</string>
+        Danach kannst du mit diesen Einkaufslisten oder Rezepte teilen.</string>
     <string name="searchContacts">Telefonbuch abfragen</string>
     <string name="synchStarted">"Ihre Kontakte werden durchsucht"</string>
     <string name="synchFinished">Synchronisation beendet</string>
     <string name="friendAdded">Freund hinzugefügt: </string>
     <string name="noUpdates">Keine neuen Freunde hinzugefügt</string>
-    <string name="checkIfFriendHasApp">Es wird geschaut ob Ihr freund die App hat, bitte ein Moment</string>
-        <string name="send_invitation">Einladung senden</string>
-    <string name="send_invitation_text">Schreib deinem freund persönlich und lade ihn ein</string>
+    <string name="checkIfFriendHasApp">Prüfe ob ihr Freund ShopNote hat</string>
+    <string name="send_invitation">Einladung senden</string>
+    <string name="send_invitation_text">Schreibe deinem Freund persönlich und lade ihn ein</string>
     
     
         

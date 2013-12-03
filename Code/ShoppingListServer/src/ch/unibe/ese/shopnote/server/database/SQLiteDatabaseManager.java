@@ -33,6 +33,7 @@ public class SQLiteDatabaseManager {
 	public static final String TABLE_LOCALTOSERVER_LIST_ID = "localtoserverlistid";
 	public static final String COLUMN_LOCAL_LIST_ID = "locallistid";
 	public static final String COLUMN_SERVER_LIST_ID = "serverlistId";
+	public static final String COLUMN_IS_RECIPE = "isrecipe";
 	// Links shared lists to users (unique server list id)
 	
 	public static final String TABLE_SHAREDLISTS = "sharedlists";
@@ -47,7 +48,8 @@ public class SQLiteDatabaseManager {
 			COLUMN_USER_ID + " integer, " +
 			COLUMN_LOCAL_LIST_ID + " integer, " +
 			COLUMN_SERVER_LIST_ID + " integer default 0, " +
-			"primary key(" + COLUMN_USER_ID + ", " + COLUMN_LOCAL_LIST_ID + ")" +
+			COLUMN_IS_RECIPE + " boolean default 0, " +
+			"primary key(" + COLUMN_USER_ID + ", " + COLUMN_LOCAL_LIST_ID + ", " + COLUMN_IS_RECIPE + ")" +
 			");";
 	public static final String CREATE_TABLE_SHAREDLISTS = "create table if not exists " + TABLE_SHAREDLISTS + "(" +
 			COLUMN_USER_ID + " integer, " +
@@ -56,7 +58,7 @@ public class SQLiteDatabaseManager {
 			"primary key(" + COLUMN_USER_ID + ", " + COLUMN_SERVER_LIST_ID + ")" +
 			");";
 	// First dummy entry for localtoserver list id
-	public static final String INSERT_DUMMY = "insert or replace into " + TABLE_LOCALTOSERVER_LIST_ID + " values ( -1, -2, 0);";
+	public static final String INSERT_DUMMY = "insert or replace into " + TABLE_LOCALTOSERVER_LIST_ID + " values ( -1, -2, 0, 0);";
 	
 	// instance variables
 	private Connection c;
@@ -186,7 +188,7 @@ public class SQLiteDatabaseManager {
 		// Cannot share a list with inexistent user
 		if(userId == -1 || friendId == -1)
 			return;
-		long serverListId = createServerListIdifNotExists(userId, request.getListId());
+		long serverListId = createServerListIdIfNotExists(userId, request.getListId(), request.isRecipe());
 		// Cannot share a list without global list ID
 		if(serverListId == -1)
 			System.err.println("Failed to find/create global list id");
@@ -226,11 +228,15 @@ public class SQLiteDatabaseManager {
 						");";	
 				stmt.executeUpdate(insertSharedList);
 				
-				System.out.println("\t:List " + serverListId + " is now shared with users " + friendId);
-				// craft the CreateSharedListRequest for your friend with all shared users
+				// craft the CreateSharedListRequest for your friend
 				CreateSharedListRequest cslRequest = new CreateSharedListRequest(request.getFriendNumber(), serverListId, listname);
+				if(request.isRecipe()) {
+					System.out.println("\t:Recipe " + serverListId + " is now shared with user " + friendId);
+					cslRequest.isRecipe(true);
+				} else {
+					System.out.println("\t:List " + serverListId + " is now shared with user " + friendId);
+				}
 				odbManager.storeRequest(cslRequest);
-				
 				request.setSuccessful();
 			}
 			
@@ -247,7 +253,7 @@ public class SQLiteDatabaseManager {
 	public void unShareList(UnShareListRequest request) {
 		int userId = findUser(request);
 		int friendId = findUser(new RegisterRequest(request.getFriendNumber()));
-		long serverListId = getServerListId(userId, request.getListId());
+		long serverListId = getServerListId(userId, request.getListId(), request.isRecipe());
 		// Cannot unshare a list which is shared between inexistent users
 		if(userId <= -1 || friendId <= -1) {
 			System.err.println("Cannot unshare List with non existent users");
@@ -286,10 +292,15 @@ public class SQLiteDatabaseManager {
 						COLUMN_USER_ID + "=" + friendId + " and " +
 						COLUMN_SERVER_LIST_ID + "=" + serverListId + ";";
 				stmt.executeUpdate(deleteLocalToListId);
-				System.out.println("\t:List " + serverListId + " is no longer shared with " + friendId);
 				
 				// Tell the friend that he has been removed
 				SetUnsharedRequest suRequest = new SetUnsharedRequest(request.getFriendNumber(), friendLocalListId);
+				if(request.isRecipe()) {
+					System.out.println("\t:Recipe " + serverListId + " is no longer shared with " + friendId);
+					suRequest.isRecipe(true);
+				} else {
+					System.out.println("\t:List " + serverListId + " is no longer shared with " + friendId);
+				}
 				odbManager.storeRequest(suRequest, friendId);
 				request.setSuccessful();
 				
@@ -310,10 +321,10 @@ public class SQLiteDatabaseManager {
 	 * @param listId
 	 * @return serverListId
 	 */
-	private long createServerListIdifNotExists(int userId, long listId) {
+	private long createServerListIdIfNotExists(int userId, long listId, boolean isRecipe) {
 		if(userId <= -1)
 			throw new IllegalStateException("userId <=-1 not allowed");
-		long serverListId = getServerListId(userId, listId);
+		long serverListId = getServerListId(userId, listId, isRecipe);
 		if (serverListId > -1) {
 			return serverListId;
 		} else {
@@ -323,18 +334,18 @@ public class SQLiteDatabaseManager {
 						+ TABLE_LOCALTOSERVER_LIST_ID + " values (\"" + userId
 						+ "\",\"" + listId + "\", (select max("
 						+ COLUMN_SERVER_LIST_ID + ")+1 from "
-						+ TABLE_LOCALTOSERVER_LIST_ID + ")" + ");";
+						+ TABLE_LOCALTOSERVER_LIST_ID + "), " + (isRecipe? 1:0) + ");";
 				stmt.executeUpdate(createEntry);
 				
 			} catch (SQLException e) {
 				e.printStackTrace(System.err);
 			}
 		}
-		serverListId = getServerListId(userId, listId);
+		serverListId = getServerListId(userId, listId, isRecipe);
 		if(serverListId <=-1) {
 			throw new IllegalStateException();
 		}
-		return getServerListId(userId, listId);
+		return getServerListId(userId, listId, isRecipe);
 	}
 	
 	/**
@@ -343,16 +354,16 @@ public class SQLiteDatabaseManager {
 	 */
 	public void assignLocalToServerListId(CreateSharedListRequest request) {
 		int userId = findUser(request);
-		assignLocalToServerListId(userId, request.getLocalListId(), request.getServerListid());
+		assignLocalToServerListId(userId, request.getLocalListId(), request.getServerListid(), request.isRecipe());
 	}
 	
 	/**
 	 * Assign a Local list Id to a global server list id (as a response to a CreateShareListRequest)
 	 * @param request
 	 */
-	public void assignLocalToServerListId(int userId, long localListId, long serverListId) {
+	public void assignLocalToServerListId(int userId, long localListId, long serverListId, boolean isRecipe) {
 		// Check if there's already an entry for this list (it shouldn't)
-		long maybeServerListId = getServerListId(userId, localListId);
+		long maybeServerListId = getServerListId(userId, localListId, isRecipe);
 		if(maybeServerListId >-1) {
 			return;
 		}
@@ -374,13 +385,13 @@ public class SQLiteDatabaseManager {
 	 * @param listId
 	 * @return serverListId
 	 */
-	private long getServerListId(int userId, long listId) {
+	private long getServerListId(int userId, long listId, boolean isRecipe) {
 		long serverId = -1;
 		Statement stmt;
 		try {
 			stmt = this.c.createStatement();
 			String selectEntryifExists = "select * from " + TABLE_LOCALTOSERVER_LIST_ID + " where " + COLUMN_USER_ID + "=\"" + userId + "\" and " +
-					COLUMN_LOCAL_LIST_ID + "=\"" + listId + "\";";
+					COLUMN_LOCAL_LIST_ID + "=\"" + listId + "\" and " + COLUMN_IS_RECIPE + "=\"" + (isRecipe?1:0) + "\";";
 			ResultSet rs = stmt.executeQuery(selectEntryifExists);
 			if(rs.next()) {
 				serverId = rs.getInt(COLUMN_SERVER_LIST_ID);
@@ -424,7 +435,7 @@ public class SQLiteDatabaseManager {
 	public ArrayList<User> getSharedUsers(ListChangeRequest request) {
 		int userId = findUser(request);
 		long localListId = request.getLocalListId();
-		long serverListId = getServerListId(userId, localListId);
+		long serverListId = getServerListId(userId, localListId, request.isRecipe());
 		Statement stmt;
 		ArrayList<User> userList = new ArrayList<User>();
 		try {

@@ -32,7 +32,8 @@ public class RequestSender extends AsyncTask<Request, Void, Boolean>{
 	private Request[] answers;
 	
 	public RequestSender(AnswerHandler handler) {
-		this.host = "matter2.nine.ch";
+//		this.host = "matter2.nine.ch";
+		this.host = "10.0.0.2";
 		this.handler = handler;
 	}
 	

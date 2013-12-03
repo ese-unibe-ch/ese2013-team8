@@ -11,12 +11,14 @@ public class ShareListRequest extends Request {
 	private String friendNumber;
 	private long listId;
 	private String listname;
+	private boolean isRecipe;
 
 	public ShareListRequest(String phoneNumber, String friendNumber, long listId, String listname) {
 		super(phoneNumber);
 		this.friendNumber = friendNumber;
 		this.listId = listId;
 		this.listname = listname;
+		this.isRecipe = false;
 	}
 
 	public String getFriendNumber() {
@@ -37,6 +39,14 @@ public class ShareListRequest extends Request {
 	
 	public void setFriend(String friendNumber) {
 		this.friendNumber = friendNumber;
+	}
+	
+	public void isRecipe(boolean b) {
+		this.isRecipe = b;
+	}
+	
+	public boolean isRecipe() {
+		return this.isRecipe;
 	}
 	
 	@Override
