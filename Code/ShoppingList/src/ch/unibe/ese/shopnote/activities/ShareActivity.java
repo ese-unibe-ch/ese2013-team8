@@ -322,9 +322,6 @@ public class ShareActivity extends BaseActivity {
 						syncManager.addRequest(slrequest);
 						handler.sendEmptyMessage(0);
 					} else {
-//						Looper.prepare();
-//						Toast.makeText(getApplicationContext(), R.string.friend_has_not_app, Toast.LENGTH_SHORT ).show();
-//						Looper.loop();
 						handler.sendEmptyMessage(1);
 					}
 				}

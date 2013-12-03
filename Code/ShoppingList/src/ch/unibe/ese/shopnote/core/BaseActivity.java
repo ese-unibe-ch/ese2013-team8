@@ -134,6 +134,7 @@ public class BaseActivity extends Activity {
 	public void setTextViewText(int id, String value) {
 		TextView textView = (TextView) findViewById(id);
 		textView.setText(value);
+		updateThemeTextBox(textView);
 	}
 
 	/**
