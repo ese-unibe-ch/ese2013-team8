@@ -52,8 +52,6 @@ public class CreateItemActivity extends BaseActivity {
 		manager = getListManager();
 
 		setTextViews();
-		// TODO delete this method
-		// setNotEditable();
 		openKeyboard();
 	}
 
@@ -128,21 +126,6 @@ public class CreateItemActivity extends BaseActivity {
 		textShop.setAdapter(sqliteShopAdapter);
 	}
 	
-	/**
-	 * make last 3 input uneditable as a temporary fix if called from ItremList
-	 */
-	private void setNotEditable() {
-		if (list == null) {
-			findViewById(R.id.editTextShop).setEnabled(false);
-			setTextViewText(R.id.editTextShop, "Not editable in this view");
-			findViewById(R.id.editTextPrice).setEnabled(false);
-			setTextViewText(R.id.editTextPrice, "Not editable in this view");
-			findViewById(R.id.editTextQuantity).setEnabled(false);
-			setTextViewText(R.id.editTextQuantity, "Not editable in this view");
-			findViewById(R.id.editSpinnerUnits).setEnabled(false);
-		}
-	}
-
 	/**
 	 * enter item data in edittext fields if editing an item
 	 */
@@ -226,9 +209,8 @@ public class CreateItemActivity extends BaseActivity {
 		}
 		else if (recipe != null) {
 			recipe.addItem(item);
-			manager.save(item);
-		}
-		else {
+			manager.saveRecipe(recipe);
+		} else {
 			// save item if called in itemlist
 			manager.save(item);
 		}

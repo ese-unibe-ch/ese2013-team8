@@ -108,7 +108,6 @@ public class ListManager {
 			}
 		}
 		persistenceManager.save(item, list);
-		persistenceManager.save(item);
 		if (!items.contains(item))
 			return items.add(item);
 		return false;
@@ -241,12 +240,7 @@ public class ListManager {
 		return null;
 	}
 
-	public Recipe getRecipeAt(int position) {
-		return recipeList.get(position);
-	}
-
 	public void updateRecipe() {
 		recipeList = persistenceManager.readRecipes();
 	}
-
 }

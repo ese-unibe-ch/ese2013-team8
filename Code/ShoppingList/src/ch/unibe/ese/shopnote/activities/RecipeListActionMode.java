@@ -80,6 +80,7 @@ public class RecipeListActionMode implements Callback {
 		            activity.startActivityForResult(editRecipeIntent, 1);
             	} else {
             		Intent editItemIntent = new Intent(activity, CreateItemActivity.class);
+            		editItemIntent.putExtra(BaseActivity.EXTRAS_RECIPE_ID, selectedRecipe.getId());
             		editItemIntent.putExtra(BaseActivity.EXTRAS_ITEM_ID, selectedItem.getId());
             		editItemIntent.putExtra(BaseActivity.EXTRAS_ITEM_EDIT, true);
 		            activity.startActivityForResult(editItemIntent, 1);	

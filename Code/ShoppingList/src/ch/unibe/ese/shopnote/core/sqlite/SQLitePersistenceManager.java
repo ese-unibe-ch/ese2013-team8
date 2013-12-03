@@ -328,28 +328,24 @@ public class SQLitePersistenceManager implements PersistenceManager {
 			recipe.setId(id);
 		} else { // Else if it is an old recipe
 			database.update(SQLiteHelper.TABLE_RECIPES, values,
-					SQLiteHelper.COLUMN_RECIPE_ID + "=" + recipe.getId(), null);
+					SQLiteHelper.COLUMN_RECIPE_ID + "= ?", new String[] {"" + recipe.getId()});
 			database.delete(SQLiteHelper.TABLE_ITEMTORECIPE,
-					SQLiteHelper.COLUMN_RECIPE_ID + "=? ", new String[] { ""
+					SQLiteHelper.COLUMN_RECIPE_ID + "= ?", new String[] { ""
 							+ recipe.getId() });
 		}
 
-		List<Item> ingredients = recipe.getItemList();
-		if (ingredients == null) throw new IllegalStateException();
-		saveIngredients(recipe, ingredients);
-	}
-
-	private void saveIngredients(Recipe recipe, List<Item> ingredients) {
-		for (Item item : ingredients) {
-			ContentValues values = updateHelper.toValue(recipe, item);
+		for (Item item : recipe.getItemList()) {
+			// Add the item to the Items Table
+			updateHelper.addItemIfNotExistent(item);
+			values = updateHelper.toValue(recipe, item);
 			database.insert(SQLiteHelper.TABLE_ITEMTORECIPE, null, values);
 		}
 	}
 
 	@Override
 	public void remove(Recipe recipe) {
-		long recipeNr = readHelper.getRecipeId(recipe.getName());
-		if (recipeNr != -1) {
+		Long recipeNr = recipe.getId();
+		if (recipeNr != null && recipeNr != -1) {
 			database.delete(SQLiteHelper.TABLE_RECIPES,
 					SQLiteHelper.COLUMN_RECIPE_ID + "=?", new String[] { ""
 							+ recipeNr });
@@ -357,6 +353,5 @@ public class SQLitePersistenceManager implements PersistenceManager {
 					SQLiteHelper.COLUMN_RECIPE_ID + "=? ", new String[] { ""
 							+ recipeNr });
 		}
-
 	}
 }

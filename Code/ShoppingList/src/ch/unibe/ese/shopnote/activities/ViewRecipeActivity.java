@@ -1,6 +1,7 @@
 package ch.unibe.ese.shopnote.activities;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,7 +36,7 @@ import ch.unibe.ese.shopnote.core.Utility;
 public class ViewRecipeActivity extends BaseActivity {
 	private ListManager manager;
 	private Recipe recipe;
-	private ArrayList<Item> itemsOfRecipe;
+	private List<Item> itemsOfRecipe;
 	private ArrayAdapter<Item> itemAdapter;
 	ArrayAdapter<Item> autocompleteAdapter;
 
@@ -104,7 +105,6 @@ public class ViewRecipeActivity extends BaseActivity {
 		listView.setAdapter(itemAdapter);
 		updateThemeListView(listView);
 		
-		manager.saveRecipe(recipe);
 		toggleDescription();
 		
 		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
@@ -176,7 +176,7 @@ public class ViewRecipeActivity extends BaseActivity {
 	public void addItem(View view) {
 		EditText textName = (EditText) findViewById(R.id.editTextName);
 		String name = textName.getText().toString();
-		if (name.trim().length() == 0) {
+		if (name.trim().isEmpty()) {
 			Toast.makeText(this, this.getString(R.string.error_name), Toast.LENGTH_SHORT).show();
 			return;				
 		} 
