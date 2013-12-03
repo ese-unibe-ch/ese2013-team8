@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import ch.unibe.ese.shopnote.R;
@@ -65,7 +64,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 			//
 			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
 			//
-			NavUtils.navigateUpFromSameTask(this);
+			finish();
 			return true;
 		}
 		
@@ -85,7 +84,6 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		}   
 		
 		//refresh interface
-        NavUtils.navigateUpFromSameTask(this);
         finish();
         startActivity(getIntent());
 	}

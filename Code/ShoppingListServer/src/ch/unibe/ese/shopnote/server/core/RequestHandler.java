@@ -124,6 +124,7 @@ public class RequestHandler {
 				if(u.getUserId() != senderId) {
 					ListChangeRequest copy = ((ListChangeRequest)request).getCopy();
 					copy.setLocaListId(u.getLocalListid());
+					copy.setListIdPending(u.isPending());
 					odbManager.storeRequest(copy, u.getUserId());
 				}
 			}

@@ -8,6 +8,7 @@ public class User {
 
 	private int userId;
 	private long localListId;
+	private boolean isPending;
 	
 	public User(int userId) {
 		this.userId = userId;
@@ -27,6 +28,14 @@ public class User {
 
 	public void setUserId(int userId) {
 		this.userId = userId;
+	}
+
+	public void setIsPending(boolean b) {
+		this.isPending = b;		
+	}
+	
+	public boolean isPending() {
+		return this.isPending;
 	}
 	
 }

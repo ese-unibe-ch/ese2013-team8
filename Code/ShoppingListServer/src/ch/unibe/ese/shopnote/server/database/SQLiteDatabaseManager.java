@@ -429,12 +429,21 @@ public class SQLiteDatabaseManager {
 		ArrayList<User> userList = new ArrayList<User>();
 		try {
 			stmt = this.c.createStatement();
-			String selectUsers = "select " + COLUMN_USER_ID + "," + COLUMN_LOCAL_LIST_ID + " from " + TABLE_LOCALTOSERVER_LIST_ID +
-					" where " + COLUMN_SERVER_LIST_ID + "=\"" + serverListId + "\";";
+//			String selectUsers = "select " + COLUMN_USER_ID + "," + COLUMN_LOCAL_LIST_ID + " from " + TABLE_LOCALTOSERVER_LIST_ID +
+//					" where " + COLUMN_SERVER_LIST_ID + "=\"" + serverListId + "\";";
+			String selectUsers = "select " + COLUMN_USER_ID + "," + COLUMN_SERVER_LIST_ID + " from " + TABLE_SHAREDLISTS + " where " +
+					COLUMN_SERVER_LIST_ID + "=\"" + serverListId + "\";";
 			ResultSet rs = stmt.executeQuery(selectUsers);
 			while(rs.next()) {
 				User user = new User(rs.getInt(COLUMN_USER_ID));
-				user.setLocalListId(rs.getInt(COLUMN_LOCAL_LIST_ID));
+				long newLocalListId = getLocalListId(user.getUserId(), serverListId);
+				if(newLocalListId <= -1) {
+					user.setLocalListId(serverListId);
+					user.setIsPending(true);
+				} else {
+					user.setLocalListId(newLocalListId);
+					user.setIsPending(false);
+				}
 				userList.add(user);
 			}
 		} catch (SQLException e) {

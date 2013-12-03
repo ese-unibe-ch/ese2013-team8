@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import ch.unibe.ese.shopnote.R;
+import ch.unibe.ese.shopnote.adapters.RecipeAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.Recipe;
@@ -55,7 +56,7 @@ public class ManageRecipeActivity extends BaseActivity {
 	 */
 	public void updateRecipeList(){
 		recipes = manager.getRecipes();
-		recipeAdapter = new ArrayAdapter<Recipe>(this,
+		recipeAdapter = new RecipeAdapter(this,
 				R.layout.shopping_list_item, recipes);
 		ListView listView = (ListView) findViewById(R.id.recipe_list);
 		listView.setAdapter(recipeAdapter);
@@ -72,7 +73,7 @@ public class ManageRecipeActivity extends BaseActivity {
 
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
-				Recipe selectedRecipe = manager.getRecipeAt(position);
+				Recipe selectedRecipe = manager.getRecipes().get(position);
 				ManageRecipeActivity.this.startActionMode(new RecipeListActionMode(
 						manager, selectedRecipe, recipeAdapter, ManageRecipeActivity.this));
 				return true;

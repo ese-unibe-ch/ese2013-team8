@@ -6,7 +6,6 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -342,14 +341,16 @@ public class ViewListActivity extends BaseActivity {
 				// toggle archive state
 				list.setArchived(!list.isArchived());
 				manager.saveShoppingList(list);
-				NavUtils.navigateUpFromSameTask(this);
+				finish();
 				return true;
 			case R.id.action_delete:
 				manager.removeShoppingList(list);
-				NavUtils.navigateUpFromSameTask(this);
+				finish();
 				return true;
 			case R.id.action_refresh:
 				syncmanager.synchronise(this);
+				Toast.makeText(this, this.getString(R.string.synchronizing),
+						Toast.LENGTH_SHORT).show();
 				return true;
 		}
 

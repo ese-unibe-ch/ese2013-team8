@@ -1,6 +1,7 @@
 package ch.unibe.ese.shopnote.core;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class which is used to combine different Items to a recipe
@@ -8,7 +9,7 @@ import java.util.ArrayList;
  */
 public class Recipe extends Entity {
 	private String name;
-	private ArrayList<Item> itemList;
+	private List<Item> itemList;
 	private String notes;
 	private boolean showNotes;
 	private boolean shared;
@@ -34,11 +35,11 @@ public class Recipe extends Entity {
 		invariant();
 	}
 
-	public ArrayList<Item> getItemList() {
+	public List<Item> getItemList() {
 		return itemList;
 	}
 
-	public void setItemList(ArrayList<Item> list) {
+	public void setItemList(List<Item> list) {
 		this.itemList = list;
 	}
 	

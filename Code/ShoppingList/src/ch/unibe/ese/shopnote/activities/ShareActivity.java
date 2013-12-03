@@ -136,9 +136,7 @@ public class ShareActivity extends BaseActivity {
 		AutoCompleteTextView textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
 		autocompleteAdapter = new ArrayAdapter<Friend>(this,
 				android.R.layout.simple_list_item_1,
-				friendsManager.getFriendsList());
-				//friendsManager.getFriendsWithApp());
-		// TODO: CHANGE BACK!
+				friendsManager.getFriendsWithApp());
 		textName.setAdapter(autocompleteAdapter);
 		updateThemeTextBox(textName);
 
@@ -176,21 +174,13 @@ public class ShareActivity extends BaseActivity {
 			
 			// Set the list on shared if there's an entry in the list
 			if (!isRecipe) {
-				if(adapter.isEmpty()) {
-					list.setShared(false);
-				} else {
-					list.setShared(true);
-				}
+				list.setShared(!adapter.isEmpty());
 				listManager.saveShoppingList(list);
 			}
 			
 			// Set the recipe on shared
 			else {
-				if(adapter.isEmpty()) {
-					recipe.setShared(false);
-				} else {
-					recipe.setShared(true);
-				}
+				recipe.setShared(!adapter.isEmpty());
 				listManager.saveRecipe(recipe);
 			}
 				
@@ -315,7 +305,7 @@ public class ShareActivity extends BaseActivity {
 		
 		if (friendId != -1) {
 			final Friend friend = friendsManager.getFriend(friendId);
-			final SynchHandler handler = new SynchHandler();
+			final SynchHandler handler = new SynchHandler(this);
 			if(!friend.hasTheApp())
 				Toast.makeText(getApplicationContext(), R.string.checkIfFriendHasApp, Toast.LENGTH_SHORT ).show();
 				
@@ -332,9 +322,10 @@ public class ShareActivity extends BaseActivity {
 						syncManager.addRequest(slrequest);
 						handler.sendEmptyMessage(0);
 					} else {
-						Looper.prepare();
-						Toast.makeText(getApplicationContext(), R.string.friend_has_not_app, Toast.LENGTH_SHORT ).show();
-						Looper.loop();
+//						Looper.prepare();
+//						Toast.makeText(getApplicationContext(), R.string.friend_has_not_app, Toast.LENGTH_SHORT ).show();
+//						Looper.loop();
+						handler.sendEmptyMessage(1);
 					}
 				}
 

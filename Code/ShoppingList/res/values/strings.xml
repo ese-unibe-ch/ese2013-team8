@@ -12,6 +12,7 @@
     <string name="btn_cancel">Cancel</string>
     <string name="btn_done">Done</string>
     <string name="create_optional_hint">optional</string>
+    <string name="synchronizing">Synchronizing...</string>
 
     <!-- Default activity titles -->
     <string name="title_activity_create_list">Create List</string>
@@ -27,19 +28,17 @@
     <string name="title_activity_view_recipe">View Recipe</string>
     <string name="title_activity_settings">Settings</string>
     <string name="title_activity_verify_number">Setup</string>
-    
+
     <!-- HomeActivity -->
     <string name="home_welcome_title">Hello!</string>
     <string name="home_welcome_message">Tap on the plus-symbol in the top right corner to add a new shopping list.</string>
-    
+
     <!-- ItemListActivity -->
-    <string name="item_list_welcome_message"> 
-        Tap on the plus-symbol in the top right corner to add a new item.
+    <string name="item_list_welcome_message">        Tap on the plus-symbol in the top right corner to add a new item.
         After that you will see all your items here.</string>
-        
+
     <!-- ManageRecipeActivity -->
-    <string name="manage_recipe_welcome_message">
-        Recipes allow you to add multiple items to a shopping list by typing \"/recipename\".
+    <string name="manage_recipe_welcome_message">        Recipes allow you to add multiple items to a shopping list by typing \"/recipename\".
         \n\nTap on the plus-symbol in the top right corner to create a new recipe.</string>
 
     <!-- CreateListActivity -->
@@ -85,8 +84,7 @@
 
     <!-- ManageFriendsActivity -->
     <string name="friend_has_the_app_icon">Appstatus</string>
-    <string name="manage_friends_welcome_message"> 
-        Tap on the plus-symbol in the top right corner to add friends.
+    <string name="manage_friends_welcome_message">        Tap on the plus-symbol in the top right corner to add friends.
         After that you can share shopping lists with them.</string>
     <string name="searchContacts">Check phone book for friends</string>
     <string name="synchStarted">"Synchronization started, this may take a few seconds"</string>
@@ -94,12 +92,13 @@
     <string name="friendAdded">Friend added: </string>
     <string name="noUpdates">None new friends added</string>
     <string name="checkIfFriendHasApp">Checks if the friend has the app, one moment please</string>
-        
+    <string name="send_invitation">Send Invitation</string>
+    <string name="send_invitation_text">Write a text for your friend to invite him personally</string>
+
     <!-- ArchiveActivity -->
-    <string name="archive_welcome_message"> 
-        The archive shows all shopping lists, which you archived before
+    <string name="archive_welcome_message">        The archive shows all shopping lists, which you archived before
         by using the overflow menu in the shopping list.</string>
-    
+
     <!-- VerifyNumberActivity -->
     <string name="verify_number_info">In order to use synchronisation you need to verify your phone number. 
         \nShopNote will send a one time SMS to your phone. 
@@ -111,7 +110,7 @@
     <string name="verify_number_successful">Phone number verified successfully</string>
     <string name="verify_number_failed">Verification failed</string>
     <string name="verify_number_invalid">Invalid number entered</string>
-    
+
     <!-- Buttons / Menu items -->
     <string name="button_back">Abort</string>
     <string name="button_save">Save</string>
@@ -155,7 +154,6 @@
     <string name="german">German</string>
     <string name="language">Language</string>
     <string name="language_dialog">Change the language of the app</string>
-    
 
     <string-array name="choosable_languages">
         <item>English</item>
@@ -171,18 +169,20 @@
     <string name="color_setting">Theme</string>
     <string name="color_dialog">Change the colors of the interface</string>
     <string name="standard">standard</string>
-
     <string name="title_activity_verify_numer">VerifyNumerActivity</string>
     <string name="friend_has_not_app">Your friend does not have the app</string>
-    
-     <!-- color Menu -->
-    <string-array name="default_color_choice_names" >
+    <string name="friend_is_no_shopnote_user">No ShopNote user</string>
+    <string name="friend_has_not_app_text">Your friend does not have the app, do you want to send an invitation to him?</string>
+    <string name="send">send</string>
+
+    <!-- color Menu -->
+    <string-array name="default_color_choice_names">
         <item>white</item>
         <item>dark</item>
         <item>chocolate</item>
         <item>barbie</item>
     </string-array>
-    
+
     <!-- do not change the order of these items, it must be the same as in ItemUnit -->
     <string-array name="item_units">
         <item></item>
@@ -191,4 +191,8 @@
         <item>liter</item>
         <item>piece</item>
     </string-array>
+
+    <string name="title_activity_invite_friend">Invite Friend</string>
+    <string name="hello_world">Hello world!</string>
+
 </resources>
