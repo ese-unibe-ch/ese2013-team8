@@ -97,8 +97,8 @@ public class AnswerHandler {
 			
 			for(String number : ((CreateSharedListRequest)request).getSharedFriendNumbers()) {
 				System.err.println("Friend Number: "+ number);
-				long friendId2 = friendsManager.addFriend(new Friend(number,"User"));
-				friendsManager.addFriendToList(newList, friendsManager.getFriend(friendId2));
+				friendsManager.addFriend(new Friend(number,"User"));
+				friendsManager.addFriendToList(newList, friendsManager.getFriendWithPhoneNr(number));
 			}
 			
 			long id = newList.getId();
