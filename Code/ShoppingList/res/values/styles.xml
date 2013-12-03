@@ -26,7 +26,7 @@
     
     <!-- Background theme. -->
    <style name="BackGroundStandardStyle" parent="AppBaseTheme" >
-        <item name="android:background">@color/lightgray</item>
+        <item name="android:background">@color/blue</item>
    </style>
    
     <!-- Background theme. -->
