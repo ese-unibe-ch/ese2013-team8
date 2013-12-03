@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
@@ -33,9 +35,11 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
         getFragmentManager().beginTransaction()
                 .replace(android.R.id.content, new SettingsFragment())
                 .commit();
-        
+       
+        //Set color theme for settings
+        updateColorSettings();
+       
         setTitle(this.getString(R.string.title_activity_settings));
-        
     }
 	
 	/**
@@ -101,6 +105,31 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		Locale.setDefault(locale);
 		config.locale = locale;
 		getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+	}
+	
+	private void updateColorSettings() {
+		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+		String colorString = sharedPref.getString("color_setting", "white");
+		String colorChoosable[] = getResources().getStringArray(R.array.default_color_choice_names);
+		String colors[] = getResources().getStringArray(R.array.default_color_choice_white);
+
+		if(colorString.equals(colorChoosable[1]))
+			colors = getResources().getStringArray(R.array.default_color_choice_dark);
+		else if(colorString.equals(colorChoosable[2]))
+			colors = getResources().getStringArray(R.array.default_color_choice_chocolate);
+		else if(colorString.equals(colorChoosable[3]))
+			colors = getResources().getStringArray(R.array.default_color_choice_barbie);
+		if(colors == null) throw new IllegalStateException();
+		
+		int backgroundColor = Color.parseColor(colors[0]);
+		int titleBarColor = Color.parseColor(colors[2]);
+		int textColor = Color.parseColor(colors[3]);
+		int listViewDividerColor = Color.parseColor(colors[6]);
+		
+		getListView().setBackgroundColor(backgroundColor);
+		getListView().setDivider(new ColorDrawable(listViewDividerColor));
+		
+		getActionBar().setBackgroundDrawable(new ColorDrawable(titleBarColor));
 	}
 	
 }
