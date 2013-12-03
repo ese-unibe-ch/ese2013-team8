@@ -87,8 +87,8 @@
     <string name="manage_friends_welcome_message"> 
         Tippe rechts oben auf das Plus-Symbol, um Freunde hinzuzufügen.
         Danach kannst du mit diesen Einkaufslisten teilen.</string>
-    <string name="searchContacts">Telefonbuch Synchronisation</string>
-    <string name="synchStarted">"Synchronisation begonnen, dies kann ein paar Sekunden dauern"</string>
+    <string name="searchContacts">Telefonbuch abfragen</string>
+    <string name="synchStarted">"Ihre Kontakte werden durchsucht"</string>
     <string name="synchFinished">Synchronisation beendet</string>
     <string name="friendAdded">Freund hinzugefügt: </string>
     <string name="noUpdates">Keine neuen Freunde hinzugefügt</string>

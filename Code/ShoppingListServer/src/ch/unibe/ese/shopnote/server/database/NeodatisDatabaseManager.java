@@ -71,7 +71,10 @@ public class NeodatisDatabaseManager {
 	 */
 	public ArrayList<Request> getRequestsForUser(int userId) {
 		RequestContainer container = getRequestContainer(userId);
-		ArrayList<Request> requests = container.popRequests();
+		ArrayList<Request> requests = new ArrayList<Request>();
+		if(container!= null) {
+			requests = container.popRequests();
+		}
 		database.store(container);
 		database.commit();
 		for(Request r: requests) {
@@ -89,7 +92,8 @@ public class NeodatisDatabaseManager {
 		IQuery query = new CriteriaQuery(RequestContainer.class, Where.equal("userId", userId));
 		Objects<RequestContainer> container = database.getObjects(query);
 		if(container.size() >= 2 || container.isEmpty()) {
-			throw new IllegalStateException("Not the right amount of Containers stored in the database");
+			System.err.println("\tNot the right amount of Containers stored in the database");
+			return null;
 		}
 		return container.getFirst();
 	}
