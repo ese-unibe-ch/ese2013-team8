@@ -435,7 +435,6 @@ public class SQLiteDatabaseManager {
 			while(rs.next()) {
 				User user = new User(rs.getInt(COLUMN_USER_ID));
 				user.setLocalListId(rs.getInt(COLUMN_LOCAL_LIST_ID));
-				System.out.println("U: " + user.getUserId() + " L: " + user.getLocalListid());
 				userList.add(user);
 			}
 		} catch (SQLException e) {

@@ -246,10 +246,14 @@ public class ShareActivity extends BaseActivity {
 	}
 
 	private void getSharedFriends() {
-		if(list.isShared()) {
-			GetSharedFriendsRequest gsfRequest = new GetSharedFriendsRequest(getMyPhoneNumber(), list.getId());
-			syncManager.addRequest(gsfRequest);
-			syncManager.synchronise(this);
+		if(isRecipe) {
+			if(recipe.isShared()) {
+				// Get friends here
+			}
+		} else if(list.isShared()) {
+				GetSharedFriendsRequest gsfRequest = new GetSharedFriendsRequest(getMyPhoneNumber(), list.getId());
+				syncManager.addRequest(gsfRequest);
+				syncManager.synchronise(this);
 		}
 	}
 

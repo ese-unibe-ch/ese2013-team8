@@ -78,13 +78,18 @@ public class AnswerHandler {
 		case Request.SHARELIST_REQUEST:
 			ShoppingList list = listManager.getShoppingList(((ShareListRequest)request).getListId());
 			list.setShared(true);
+			for (Item i : listManager.getItemsFor(list)) {
+				syncManager.addRequest(new ItemRequest(context.getMyPhoneNumber(), list.getId(), i));
+			}
 			return;
 			
 		// UnshareListRequest => My friend has been successfully deleted from the sharing list on the server
 		case Request.UNSHARELIST_REQUEST:
-			ShoppingList list2 = listManager.getShoppingList(((UnShareListRequest)request).getListId());
-			if(friendsManager.getSharedFriends(list2).isEmpty()) {
-				list2.setShared(false);
+			ShoppingList list2 = listManager.getShoppingList(((UnShareListRequest) request).getListId());
+			if (list2 != null) {
+				if (friendsManager.getSharedFriends(list2).isEmpty()) {
+					list2.setShared(false);
+				}
 			}
 			return;
 			
@@ -137,6 +142,7 @@ public class AnswerHandler {
 			System.err.println("List with id " + request.getLocalListId() + " doesn't exist!");
 			UnShareListRequest uslRequest = new UnShareListRequest(context.getMyPhoneNumber(), context.getMyPhoneNumber(), request.getLocalListId());
 			syncManager.addRequest(uslRequest);
+			return;
 		}
 		switch (request.getSubType()) {
 		
