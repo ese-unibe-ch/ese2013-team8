@@ -25,13 +25,14 @@ import ch.unibe.ese.shopnote.core.Friend;
 import ch.unibe.ese.shopnote.core.FriendsManager;
 import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ListManager;
+import ch.unibe.ese.shopnote.core.Recipe;
 import ch.unibe.ese.shopnote.core.ShoppingList;
 import ch.unibe.ese.shopnote.share.SyncManager;
 import ch.unibe.ese.shopnote.share.requests.RegisterRequest;
 import ch.unibe.ese.shopnote.share.requests.ShareListRequest;
 
 /**
- *	Allows to share/synchronize lists with friends or send them as text message
+ *	Allows to share/synchronize lists/recipes with friends or send them as text message
  */
 @SuppressLint("NewApi")
 public class ShareListActivity extends BaseActivity {
@@ -42,6 +43,8 @@ public class ShareListActivity extends BaseActivity {
 	private ArrayAdapter<Friend> autocompleteAdapter;
 	private FriendsListAdapter adapter;
 	private ShoppingList list;
+	private Recipe recipe;
+	private boolean isRecipe;
 	private ShareActionProvider mShareActionProvider;
 
 	@Override
@@ -65,7 +68,7 @@ public class ShareListActivity extends BaseActivity {
 		syncManager = getSyncManager();
 		
 		// verify phone number
-		syncManager.addRequest(new RegisterRequest(getMyPhoneNumber()));
+		getMyPhoneNumber();
 
 		// Create drawer menu
 		createDrawerMenu();
@@ -74,11 +77,21 @@ public class ShareListActivity extends BaseActivity {
 
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
+			isRecipe = extras.getBoolean(EXTRAS_IS_RECIPE);
 			// Get list
-			long listIndex = extras.getLong(EXTRAS_LIST_ID);
-			list = manager.getShoppingList(listIndex);
-			setTitle(this.getString(R.string.share_list_title) + " "
-					+ list.getName());
+			if (!isRecipe) {
+				long listIndex = extras.getLong(EXTRAS_LIST_ID);
+				list = manager.getShoppingList(listIndex);
+				setTitle(this.getString(R.string.share_list_title) + " "
+						+ list.getName());
+			}
+			// Get recipe
+			else {
+				long recipeIndex = extras.getLong(EXTRAS_RECIPE_ID);
+				recipe = manager.getRecipeAt(recipeIndex);
+				setTitle(this.getString(R.string.share_list_title) + " "
+						+ recipe.toString());
+			}
 		}
 
 		// create autocompletion
@@ -146,12 +159,14 @@ public class ShareListActivity extends BaseActivity {
 			// Try to sync with server
 			syncManager.synchronise(this);
 			// Set the list on shared if there's an entry in the list
-			if(adapter.isEmpty()) {
-				list.setShared(false);
-			} else {
-				list.setShared(true);
+			if (!isRecipe) {
+				if(adapter.isEmpty()) {
+					list.setShared(false);
+				} else {
+					list.setShared(true);
+				}
+				manager.saveShoppingList(list);
 			}
-			manager.saveShoppingList(list);
 			// Navigate back to the list
 			finish();
 			return true;
@@ -203,7 +218,10 @@ public class ShareListActivity extends BaseActivity {
 	private Intent createShareIntent() {
 		Intent shareIntent = new Intent(Intent.ACTION_SEND);
 		shareIntent.setType("text/plain");
-		shareIntent.putExtra(Intent.EXTRA_TEXT, listToString());
+		if (!isRecipe)
+			shareIntent.putExtra(Intent.EXTRA_TEXT, listToString());
+		else
+			shareIntent.putExtra(Intent.EXTRA_TEXT, recipeToString());
 		return shareIntent;
 
 	}
@@ -212,6 +230,17 @@ public class ShareListActivity extends BaseActivity {
 		List<Item> items = manager.getItemsFor(list);
 		StringBuilder sb = new StringBuilder();
 		sb.append(list).append("\n");
+		for (Item item : items) {
+			sb.append("- ").append(item).append("\n");
+		}
+
+		return sb.toString();
+	}
+	
+	private String recipeToString() {
+		List<Item> items = recipe.getItemList();
+		StringBuilder sb = new StringBuilder();
+		sb.append(this.getString(R.string.view_recipe_title) + " ").append(recipe).append(":").append("\n");
 		for (Item item : items) {
 			sb.append("- ").append(item).append("\n");
 		}

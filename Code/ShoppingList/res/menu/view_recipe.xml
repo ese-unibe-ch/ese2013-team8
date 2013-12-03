@@ -4,6 +4,11 @@
           android:icon="@drawable/ic_action_notes"
           android:title="@string/action_notes"
           android:showAsAction="ifRoom" />
+    
+    <item android:id="@+id/action_share"
+          android:icon="@drawable/ic_action_share"
+          android:title="@string/action_share"
+          android:showAsAction="ifRoom" />
         
      <item android:id="@+id/action_edit_recipe"
 		  android:orderInCategory="1"

@@ -38,6 +38,7 @@ public class BaseActivity extends Activity {
 	public static final String EXTRAS_ITEM_ID = "itemId";
 	public static final String EXTRAS_ITEM_NAME = "itemName";
 	public static final String EXTRAS_ITEM_EDIT= "itemEdit";
+	public static final String EXTRAS_IS_RECIPE = "isRecipe";
 	public static final String EXTRAS_RECIPE_ID = "recipeId";
 	public static final String EXTRAS_FRIEND_ID = "friendId";
 	public static final String EXTRAS_FRIEND_NAME= "friendName";

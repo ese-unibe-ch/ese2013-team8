@@ -222,6 +222,12 @@ public class ViewRecipeActivity extends BaseActivity {
 			manager.saveRecipe(recipe);
 			toggleDescription();
 			return true;
+		case R.id.action_share:
+			Intent intentShare = new Intent(this, ShareListActivity.class);
+			intentShare.putExtra(EXTRAS_IS_RECIPE, true);
+			intentShare.putExtra(EXTRAS_RECIPE_ID, recipeIndex);
+			this.startActivity(intentShare);
+			return true;
 			
 		// Handle presses on overflow menu items
 		case R.id.action_edit_recipe:
