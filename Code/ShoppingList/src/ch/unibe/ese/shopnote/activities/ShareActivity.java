@@ -29,6 +29,7 @@ import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.Recipe;
 import ch.unibe.ese.shopnote.core.ShoppingList;
 import ch.unibe.ese.shopnote.share.SyncManager;
+import ch.unibe.ese.shopnote.share.requests.GetSharedFriendsRequest;
 import ch.unibe.ese.shopnote.share.requests.RegisterRequest;
 import ch.unibe.ese.shopnote.share.requests.ShareListRequest;
 
@@ -95,6 +96,12 @@ public class ShareActivity extends BaseActivity {
 						+ recipe.toString());
 			}
 		}
+<<<<<<< HEAD:Code/ShoppingList/src/ch/unibe/ese/shopnote/activities/ShareActivity.java
+=======
+
+		// get Shared Friends
+		getSharedFriends();
+>>>>>>> 60e223cbd7dd9b860e040261bbfd2f5c543ee2a1:Code/ShoppingList/src/ch/unibe/ese/shopnote/activities/ShareListActivity.java
 		
 		// create autocompletion
 		AutoCompleteTextView textName = createAutocomplete();
@@ -239,6 +246,14 @@ public class ShareActivity extends BaseActivity {
 				return true;
 			}
 		});
+	}
+
+	private void getSharedFriends() {
+		if(list.isShared()) {
+			GetSharedFriendsRequest gsfRequest = new GetSharedFriendsRequest(getMyPhoneNumber(), list.getId());
+			syncManager.addRequest(gsfRequest);
+			syncManager.synchronise(this);
+		}
 	}
 
 	private void setShareIntent(Intent shareIntent) {
