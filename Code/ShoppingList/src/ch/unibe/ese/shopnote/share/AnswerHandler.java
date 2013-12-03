@@ -11,10 +11,10 @@ import ch.unibe.ese.shopnote.core.FriendsManager;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.share.requests.CreateSharedListRequest;
 import ch.unibe.ese.shopnote.share.requests.FriendRequest;
+import ch.unibe.ese.shopnote.share.requests.GetSharedFriendsRequest;
 import ch.unibe.ese.shopnote.share.requests.Request;
 import ch.unibe.ese.shopnote.share.requests.ShareListRequest;
 import ch.unibe.ese.shopnote.share.requests.UnShareListRequest;
-import ch.unibe.ese.shopnote.share.requests.listchange.AddSharedFriendRequest;
 import ch.unibe.ese.shopnote.share.requests.listchange.ItemRequest;
 import ch.unibe.ese.shopnote.share.requests.listchange.ListChangeRequest;
 import ch.unibe.ese.shopnote.share.requests.listchange.RenameListRequest;
@@ -96,10 +96,10 @@ public class AnswerHandler {
 			// Sets the local List ID
 			listManager.saveShoppingList(newList);
 			
-			for(String number : ((CreateSharedListRequest)request).getSharedFriendNumbers()) {
-				friendsManager.addFriend(new Friend(number,"User"));
-				friendsManager.addFriendToList(newList, friendsManager.getFriendWithPhoneNr(number));
-			}
+//			for(String number : ((CreateSharedListRequest)request).getSharedFriendNumbers()) {
+//				friendsManager.addFriend(new Friend(number,"User"));
+//				friendsManager.addFriendToList(newList, friendsManager.getFriendWithPhoneNr(number));
+//			}
 			
 			long id = newList.getId();
 			((CreateSharedListRequest)request).setLocalListId(id);
@@ -107,6 +107,17 @@ public class AnswerHandler {
 			syncManager.synchronise(context);
 			return;
 			
+		// Get all Participants of a shared list
+		case Request.GET_SHARED_FRIENDS_REQUEST:
+			ShoppingList list3 = listManager.getShoppingList(((GetSharedFriendsRequest)request).getLocalListId());
+			System.err.println("I'm here");
+			for (String number : ((GetSharedFriendsRequest)request).getFriendNumbers()) {
+				System.err.println("FriendNumber: " + number + " ListId: " + list3.getId());
+				friendsManager.addFriend(new Friend(number, "User"));
+				friendsManager.addFriendToList(list3,friendsManager.getFriendWithPhoneNr(number));
+			}
+			return;
+
 		// Those are the general requests concerning the content of a list (name, items, ...)
 		// See processListChangeRequest() for further details on how to handle them
 		case Request.LIST_CHANGE_REQUEST:
@@ -159,13 +170,6 @@ public class AnswerHandler {
 			list.setChangesCount(changesCount);
 			listManager.saveShoppingList(list);
 
-			return;
-			
-		// One of your sharing partners has added a Friend to the list
-		case ListChangeRequest.ADD_SHARED_FRIEND_REQUEST:
-			String number = ((AddSharedFriendRequest)request).getFriendNumber();
-			friendsManager.addFriend(new Friend(number,"User"));
-			friendsManager.addFriendToList(list, friendsManager.getFriendWithPhoneNr(number));
 			return;
 		}
 	}

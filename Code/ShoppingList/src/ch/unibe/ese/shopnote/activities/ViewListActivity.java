@@ -324,10 +324,6 @@ public class ViewListActivity extends BaseActivity {
         if (drawerToggle.onOptionsItemSelected(item))
         	return true;
         
-		if(list.isShared()) {
-			getSyncManager().synchronise(this);
-		} 
-
 		switch (item.getItemId()) {    
 			// Handle presses on the action bar items
 			case R.id.action_share:
