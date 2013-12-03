@@ -142,7 +142,7 @@ public class ManageFriendsActivity extends BaseActivity {
 	 * searches for contacts in the phonebook who do have the app
 	 */
 	public void searchContactsInPhoneBook() {
-		final SynchHandler handler = new SynchHandler();
+		final SynchHandler handler = new SynchHandler(this);
 		Toast.makeText(getApplicationContext(), R.string.synchStarted , Toast.LENGTH_SHORT).show();
 		new Thread(new Runnable() {
 			public void run() {
