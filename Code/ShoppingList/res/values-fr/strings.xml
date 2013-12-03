@@ -56,8 +56,6 @@
     <string name="create_item_shop">Shop:</string>
     <string name="create_item_price">Price:</string>
     <string name="create_item_quantity">Quantity:</string>
-    <string name="create_item_unit">Unit:</string>
-    
 
     <!-- CreateRecipeActivity -->
     <string name="create_recipe_title">Add new recipe</string>
@@ -90,6 +88,17 @@
     <string name="manage_friends_welcome_message"> 
         Tap on the plus-symbol in the top right corner to add friends.
         After that you can share shopping lists with them.</string>
+    <string name="searchContacts">Check phone book for friends</string>
+    <string name="synchStarted">"Synchronization started, this may take a few seconds"</string>
+    <string name="synchFinished">Synchronization finished</string>
+    <string name="friendAdded">Friend added: </string>
+    <string name="noUpdates">None new friends added</string>
+    <string name="friendHasNotApp">"Friend does not have the app!"</string>
+    <string name="checkIfFriendHasApp">Checks if the friend has the app, one moment please</string>
+        <string name="send_invitation">Send Invitation</string>
+    <string name="send_invitation_text">Write a text for your friend to invite him personally</string>
+    
+    
         
     <!-- ArchiveActivity -->
     <string name="archive_welcome_message"> 
@@ -166,6 +175,9 @@
 
     <string name="title_activity_verify_numer">VerifyNumerActivity</string>
     <string name="friend_has_not_app">Your friend does not have the app</string>
+    <string name="friend_is_no_shopnote_user">No ShopNote user</string>
+    <string name="friend_has_not_app_text">Your friend does not have the app, do you want to send an invitation to him?</string>
+    <string name="send">send</string>
     
      <!-- color Menu -->
     <string-array name="default_color_choice_names" >

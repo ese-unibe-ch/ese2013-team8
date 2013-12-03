@@ -16,7 +16,7 @@ public abstract class Entity {
 	 * @param id
 	 */
 	public void setId(long id) {
-		if (this.id != null)
+		if (this.id != null && this.id >= 0)
 			throw new IllegalArgumentException(
 					"it's not allowed to set the ID of an item twice");
 		this.id = id;

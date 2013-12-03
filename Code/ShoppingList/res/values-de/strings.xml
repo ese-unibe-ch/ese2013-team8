@@ -55,7 +55,6 @@
     <string name="create_item_shop">Laden:</string>
     <string name="create_item_price">Preis:</string>
     <string name="create_item_quantity">Menge:</string>
-    <string name="create_item_unit">Einheit:</string>
    
     <!-- CreateRecipeActivity -->
     <string name="create_recipe_title">Neues Rezept erstellen</string>
@@ -88,6 +87,16 @@
     <string name="manage_friends_welcome_message"> 
         Tippe rechts oben auf das Plus-Symbol, um Freunde hinzuzufügen.
         Danach kannst du mit diesen Einkaufslisten teilen.</string>
+    <string name="searchContacts">Telefonbuch Synchronisation</string>
+    <string name="synchStarted">"Synchronisation begonnen, dies kann ein paar Sekunden dauern"</string>
+    <string name="synchFinished">Synchronisation beendet</string>
+    <string name="friendAdded">Freund hinzugefügt: </string>
+    <string name="noUpdates">Keine neuen Freunde hinzugefügt</string>
+    <string name="checkIfFriendHasApp">Es wird geschaut ob Ihr freund die App hat, bitte ein Moment</string>
+        <string name="send_invitation">Einladung senden</string>
+    <string name="send_invitation_text">Schreib deinem freund persönlich und lade ihn ein</string>
+    
+    
         
     <!-- ArchiveActivity -->
     <string name="archive_welcome_message"> 
@@ -162,6 +171,13 @@
     <string name="color_setting">Theme</string>
     <string name="color_dialog">Farben des Themes anpassen</string>
     <string name="standard">Standard</string>
+    
+    <string name="title_activity_verify_numer">Nummer Verifizierung</string>
+    <string name="friend_has_not_app">Ihr Freund hat die App nicht</string>
+    <string name="friend_is_no_shopnote_user">Kein ShopNote Benutzer</string>
+    <string name="friend_has_not_app_text">Ihr Freund benutzt diese App im moment noch nicht, möchten Sie ihn dazu einladen?</string>
+    <string name="send">senden</string>
+    
     
      <!-- color Menu -->
     <string-array name="default_color_choice_names" >

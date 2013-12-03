@@ -12,6 +12,7 @@ public class Recipe extends Entity {
 	private List<Item> itemList;
 	private String notes;
 	private boolean showNotes;
+	private boolean shared;
 
 	public Recipe(String name) {
 		if(name.charAt(0) != '/')
@@ -56,6 +57,14 @@ public class Recipe extends Entity {
 
 	public void setNotesVisible(boolean showNotes) {
 		this.showNotes = showNotes;
+	}
+	
+	public boolean isShared() {
+		return shared;
+	}
+	
+	public void setShared(boolean shared) {
+		this.shared = shared;
 	}
 	
 	public void addItem(Item item) {

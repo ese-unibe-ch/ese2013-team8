@@ -2,8 +2,10 @@ package ch.unibe.ese.shopnote.activities;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.adapters.FriendsListAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
@@ -19,7 +22,6 @@ import ch.unibe.ese.shopnote.core.Friend;
 import ch.unibe.ese.shopnote.core.FriendsManager;
 import ch.unibe.ese.shopnote.share.SyncManager;
 import ch.unibe.ese.shopnote.share.requests.FriendRequest;
-import ch.unibe.ese.shopnote.share.requests.RegisterRequest;
 
 /**
  *	Creates a frame which enlists all friends and the possibility to manage them
@@ -128,9 +130,28 @@ public class ManageFriendsActivity extends BaseActivity {
 			Intent intent = new Intent(this, CreateFriendActivity.class);
 			this.startActivity(intent);
 			return true;
+		case R.id.searchContacts:
+			searchContactsInPhoneBook();
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+
+	/**
+	 * searches for contacts in the phonebook who do have the app
+	 */
+	public void searchContactsInPhoneBook() {
+		final SynchHandler handler = new SynchHandler(this);
+		Toast.makeText(getApplicationContext(), R.string.synchStarted , Toast.LENGTH_SHORT).show();
+		new Thread(new Runnable() {
+			public void run() {
+				Looper.prepare();
+				friendsManager.checkPhoneBookForFriends(ManageFriendsActivity.this, handler);
+				Toast.makeText(getApplicationContext(),R.string.synchFinished, Toast.LENGTH_SHORT).show();
+				Looper.loop();	
+			}
+		}).start();
 	}
 	
 	@Override
@@ -150,3 +171,4 @@ public class ManageFriendsActivity extends BaseActivity {
 		updateFriendsList();
 	}
 }
+

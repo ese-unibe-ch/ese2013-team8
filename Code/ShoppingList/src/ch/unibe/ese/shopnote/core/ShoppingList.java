@@ -15,6 +15,8 @@ public class ShoppingList extends Entity{
 	private boolean archived;
 	private boolean shared;
 	private int changesCount;
+	// Only temporary => doesn't need to be persisted
+	private long serverListId;
 
 	/**
 	 * @param name
@@ -76,6 +78,14 @@ public class ShoppingList extends Entity{
 	
 	public void setChangesCount(int changesCount) {
 		this.changesCount = changesCount;
+	}
+	
+	public long getServerListId() {
+		return serverListId;
+	}
+
+	public void setServerListId(long serverListId) {
+		this.serverListId = serverListId;
 	}
 
 	private void invariant() {

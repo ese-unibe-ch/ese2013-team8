@@ -20,12 +20,16 @@
  <color name="navy">#000080</color>
  <color name="black">#000000</color>
  
+ <color name="buttondivider">#AEAEAE</color>
+ <color name="shadowstart">#CECECE</color>
+ <color name="holobutton">#80CEEA</color>
+ 
     
   <!-- ArrayFormat for theme-styles: first background, then navigationdrawer, titlebar, textColor, textfield in creates -->
   <string-array name="default_color_choice_white" translatable="false">
         <item>#EEEEEE</item> <!-- background -->
         <item>#EEEEEE</item> <!-- navigationdrawer -->
-        <item>#EEEEEE</item> <!-- titlebar --> 
+        <item>#DDDDDD</item> <!-- titlebar --> 
         <item>#000000</item> <!-- textcolor -->
         <item>#FFFFFF</item> <!-- textfield in create activities -->
         <item>#FFFFFF</item> <!-- listviews -->

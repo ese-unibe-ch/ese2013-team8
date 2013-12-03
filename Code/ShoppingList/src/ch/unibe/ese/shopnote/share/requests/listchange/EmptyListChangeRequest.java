@@ -13,4 +13,9 @@ public class EmptyListChangeRequest extends ListChangeRequest {
 		return ListChangeRequest.EMPTY_REQUEST;
 	}
 
+	@Override
+	public ListChangeRequest getCopy() {
+		return new EmptyListChangeRequest(this.getPhoneNumber(), this.getLocalListId());
+	}
+
 }

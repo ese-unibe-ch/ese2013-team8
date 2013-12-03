@@ -67,8 +67,8 @@ public class ShareListActionMode implements Callback {
 		            activity.startActivityForResult(intent, 1);
                 return true;
             case R.id.action_remove:
-            		friendsManager.removeFriendOfList(list, selectedFriend);
-            		ShareListActivity shareActivity = (ShareListActivity) activity;
+            		friendsManager.removeFriendFromList(list, selectedFriend);
+            		ShareActivity shareActivity = (ShareActivity) activity;
                		UnShareListRequest uslrequest = new UnShareListRequest(shareActivity.getMyPhoneNumber(), 
             				selectedFriend.getPhoneNr(), list.getId());
             		shareActivity.getSyncManager().addRequest(uslrequest);

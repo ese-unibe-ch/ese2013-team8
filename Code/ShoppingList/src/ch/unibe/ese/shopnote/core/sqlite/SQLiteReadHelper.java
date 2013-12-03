@@ -13,8 +13,7 @@ import ch.unibe.ese.shopnote.core.Recipe;
 import ch.unibe.ese.shopnote.core.ShoppingList;
 
 /**
- * This Class provides usefull functions for reading the database
- * 
+ * This Class provides useful functions for reading the database
  */
 public class SQLiteReadHelper {
 
@@ -166,9 +165,20 @@ public class SQLiteReadHelper {
 	 * Creates a cursor on the TABLE_FRIENDSTOLIST
 	 * @return cursor on the first entry of friendsShared Table
 	 */
-	public Cursor getSharedFriendsCursor() {
+	public Cursor getSharedFriendsListCursor() {
 		Cursor cursor = getQueryCursor(SQLiteHelper.TABLE_FRIENDSTOLIST,
 				SQLiteHelper.FRIENDSTOLIST_COLUMNS, null);
+		cursor.moveToFirst();
+		return cursor;
+	}
+	
+	/**
+	 * Creates a cursor on the TABLE_FRIENDSTORECIPE
+	 * @return cursor on the first entry of friendsShared Table
+	 */
+	public Cursor getSharedFriendsRecipeCursor() {
+		Cursor cursor = getQueryCursor(SQLiteHelper.TABLE_FRIENDSTORECIPE,
+				SQLiteHelper.FRIENDSTORECIPE_COLUMNS, null);
 		cursor.moveToFirst();
 		return cursor;
 	}
@@ -268,10 +278,9 @@ public class SQLiteReadHelper {
 		recipe.setId(cursor.getLong(0));
 		recipe.setNotes(cursor.getString(2));
 		recipe.setNotesVisible(cursor.getInt(3) == 1);
+		recipe.setShared(cursor.getInt(4) == 1);
 		return recipe;
 	}
-	
-	
 
 	/**
 	 * Get Shop name with shop ID
@@ -523,10 +532,22 @@ public class SQLiteReadHelper {
 				+ "=? AND " + SQLiteHelper.COLUMN_LIST_ID + "=?",
 				new String[] { "" + friend.getId(), "" + list.getId() },null, null, null, null);
 		
-		if(cursor.getCount() == 1)
-			return true;
+		return (cursor.getCount() == 1);
+	}
+	
+	/**
+	 * Checks if the db contains the entry of a friend which is connected to a recipe
+	 * @param recipe
+	 * @param friend
+	 * @return true if entry exists, otherwise false
+	 */
+	public boolean isInRecipe(Recipe recipe, Friend friend) {
+		Cursor cursor = database.query(SQLiteHelper.TABLE_FRIENDSTORECIPE,
+				SQLiteHelper.FRIENDSTORECIPE_COLUMNS, SQLiteHelper.COLUMN_FRIEND_ID
+				+ "=? AND " + SQLiteHelper.COLUMN_RECIPE_ID + "=?",
+				new String[] { "" + friend.getId(), "" + recipe.getId() },null, null, null, null);
 		
-		return false;
+		return (cursor.getCount() == 1);
 	}
 
 	/**

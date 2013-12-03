@@ -4,9 +4,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import android.content.ContentResolver;
+import android.database.Cursor;
+import android.os.Handler;
+import android.os.Looper;
+import android.provider.ContactsContract;
+import android.widget.Toast;
+import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.share.SyncManager;
 import ch.unibe.ese.shopnote.share.requests.FriendRequest;
-
 
 /**
  * The FriendsManager provides all information about Friends locally stored on your phone<br>
@@ -18,6 +24,9 @@ public class FriendsManager {
 	private PersistenceManager persistenceManager;
 	private SyncManager syncManager;
 	private BaseActivity baseActivity;
+	
+	private ArrayList<Friend> friendsInPhoneBook;
+	private boolean noFriendAdded;
 
 	public FriendsManager(PersistenceManager persistenceManager, SyncManager syncManager, BaseActivity baseActivity) {
 		this.persistenceManager = persistenceManager;
@@ -36,16 +45,18 @@ public class FriendsManager {
 	 */
 	public long addFriend(Friend friend) {
 		long id = checkIfDouble(friend);
-		if (id >= 0) return id;
-		
-		if(baseActivity != null)
-			checkIfFriendHasApp(friend);
+		if (id >= 0) return -1;
 		
 		// Add the friend
 		friendsList.add(friend);
 
 		// Save friend to database
-		return persistenceManager.save(friend);
+		id = persistenceManager.save(friend);
+		
+		if(baseActivity != null && !friend.hasTheApp())
+			checkIfFriendHasApp(friend);
+		
+		return id;
 	}
 
 	private void checkIfFriendHasApp(Friend friend) {
@@ -99,8 +110,12 @@ public class FriendsManager {
 	 * @return if successful
 	 */
 	public boolean removeFriend(Friend friend) {
-		persistenceManager.removeFriend(friend);
-		return friendsList.remove(friend);
+		friend = getFriend(friend.getId());
+		if(friend != null) {
+			this.persistenceManager.removeFriend(friend);
+			return this.friendsList.remove(friend);
+		}
+		return false;
 	}
 
 	/**
@@ -119,6 +134,18 @@ public class FriendsManager {
 	}
 	
 	/**
+	 * Gets the friend with the specific phoneNr
+	 * @param phoneNr - format matters!
+	 * @return friend if found, else null
+	 */
+	public Friend getFriendWithPhoneNr(String phoneNr) {
+		for(Friend friend: friendsList)
+			if(friend.getPhoneNr().equals(phoneNr))
+				return friend;
+		return null;
+	}
+	
+	/**
 	 * Get all friends which are assigned to this shoppinglist
 	 * @param list
 	 * @return
@@ -128,13 +155,31 @@ public class FriendsManager {
 	}
 	
 	/**
+	 * Get all friends which are assigned to this recipe
+	 * @param recipe
+	 * @return
+	 */
+	public List<Friend> getSharedFriends(Recipe recipe) {
+		return persistenceManager.getSharedFriends(recipe);
+	}
+	
+	/**
 	 * Adds a friend to a synchronized shopping list
 	 * @param friend
 	 * @param list
 	 */
 	public void addFriendToList(ShoppingList list, Friend friend) {
-		//TODO: send the information to the server and add the friend to the list on the server
 		persistenceManager.save(list, friend);
+	}
+	
+	/**
+	 * Adds a friend to a synchronized recipe
+	 * @param friend
+	 * @param recipe
+	 */
+	public void addFriendToRecipe(Recipe recipe, Friend friend) {
+		//TODO: send the information to the server and add the friend to the list on the server
+		persistenceManager.save(recipe, friend);
 	}
 	
 	/**
@@ -142,20 +187,55 @@ public class FriendsManager {
 	 * @param list
 	 * @param friend
 	 */
-	public void removeFriendOfList(ShoppingList list, Friend friend) {
-		//TODO: send the information to the server and remove the friend on the server
-		//(just the entry of the shared Shoppinglist, not the friend as a onject of course^^)
+	public void removeFriendFromList(ShoppingList list, Friend friend) {
 		persistenceManager.remove(list, friend);
 	}
 	
 	/**
-	 * Mark a friend as app-owner (used by the Syncmanager)
+	 * Deletes a friend from a synchronized recipe
+	 * @param recipe
+	 * @param friend
+	 */
+	public void removeFriendFromRecipe(Recipe recipe, Friend friend) {
+		//TODO: send the information to the server and remove the friend on the server
+		//(just the entry of the shared recipe, not the friend as a onject of course^^)
+		persistenceManager.remove(recipe, friend);
+	}
+	
+	/**
+	 * Mark a friend as app-owner (used by the Syncmanager) or adds it to the libary if called from checkPhoneBookForFriends
 	 * @param friendId
 	 */
 	public void setFriendHasApp(long friendId) {
-		Friend friend = getFriend(friendId);
-		friend.setHasApp();
-		persistenceManager.save(friend);
+		if(friendId >= 0) {
+			Friend friend = getFriend(friendId);
+			if(friend != null) {
+				friend.setHasApp();
+				persistenceManager.save(friend);
+			}
+		} else {
+			//for search all the phonebook directly add friend if he has the app
+			for(Friend friend: friendsInPhoneBook) {
+				if(friend.getId() == friendId) {
+					noFriendAdded = false;
+					friend.setHasApp();
+					long id = addFriend(friend);
+					if(id != -1) {
+						Looper.prepare();
+						Toast.makeText(baseActivity.getApplicationContext(), R.string.friendAdded + friend.getName(), Toast.LENGTH_SHORT).show();
+						Looper.loop();
+					} else {
+						long idOfFriendInList = checkIfDouble(friend);
+						Friend friendInList = getFriend(idOfFriendInList);
+						if(!friendInList.hasTheApp()) {
+							friendInList.setHasApp();
+							persistenceManager.save(friendInList);
+						}
+					}
+				}
+			}
+
+		}
 	}
 	
 	public String toString() {
@@ -163,5 +243,53 @@ public class FriendsManager {
 		for (Friend friend : friendsList)
 			result.append(friend).append("\n");
 		return result.toString();
+	}
+	
+	/**
+	 * Gets all Contacts from phone book and checks if someone has the app and adds him to the friendslibrary
+	 */
+	public void checkPhoneBookForFriends(BaseActivity activity, Handler handler) {
+		friendsInPhoneBook = new ArrayList<Friend>();
+		getListWithFriendsFromPhoneBook(friendsInPhoneBook);
+		noFriendAdded = true;
+        
+		for(Friend friend: friendsInPhoneBook) {
+			FriendRequest fr = new FriendRequest(friend);
+			syncManager.addRequest(fr);
+		}
+		syncManager.synchroniseAndWaitForTaskToEnd(activity);
+		handler.sendEmptyMessage(0);
+		
+		if(noFriendAdded)
+			Toast.makeText(baseActivity.getApplicationContext(), R.string.noUpdates, Toast.LENGTH_SHORT).show();
+		
+	}
+
+
+	private void getListWithFriendsFromPhoneBook(ArrayList<Friend> friendsInPhoneBook) {
+		ContentResolver cr = baseActivity.getContentResolver();
+        Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
+        long idCounter = -1;
+        
+        if (cur.getCount() > 0) {
+            while (cur.moveToNext()) {
+                  String id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
+                  String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+                  
+                  if (Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
+	                     Cursor pCur = cr.query(
+	                               ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
+	                               ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = ?",
+	                               new String[]{id}, null);
+	                     while (pCur.moveToNext()) {
+	                         String phoneNo = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+	                         Friend friend = new Friend(phoneNo, name);
+	                         friend.setId(idCounter--);
+	                         friendsInPhoneBook.add(friend);
+	                     }
+	                     pCur.close();
+                  }
+            }			
+        }
 	}
 }
