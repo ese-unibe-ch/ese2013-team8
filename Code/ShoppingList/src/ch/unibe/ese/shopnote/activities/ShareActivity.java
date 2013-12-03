@@ -176,21 +176,13 @@ public class ShareActivity extends BaseActivity {
 			
 			// Set the list on shared if there's an entry in the list
 			if (!isRecipe) {
-				if(adapter.isEmpty()) {
-					list.setShared(false);
-				} else {
-					list.setShared(true);
-				}
+				list.setShared(!adapter.isEmpty());
 				listManager.saveShoppingList(list);
 			}
 			
 			// Set the recipe on shared
 			else {
-				if(adapter.isEmpty()) {
-					recipe.setShared(false);
-				} else {
-					recipe.setShared(true);
-				}
+				recipe.setShared(!adapter.isEmpty());
 				listManager.saveRecipe(recipe);
 			}
 				
