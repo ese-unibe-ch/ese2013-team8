@@ -1,8 +1,14 @@
 package ch.unibe.ese.shopnote.core;
 
+
+
+
+
 import ch.unibe.ese.shopnote.R;
+import ch.unibe.ese.shopnote.activities.HomeActivity;
 import ch.unibe.ese.shopnote.activities.ViewListActivity;
 import android.annotation.SuppressLint;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -18,6 +24,8 @@ import android.support.v4.app.NotificationCompat;
 @SuppressLint("NewApi")
 public class AlarmService extends Service
 {
+	
+	private NotificationManager mManager;
       
  
     @Override
@@ -35,53 +43,30 @@ public class AlarmService extends Service
     }
  
  
-   @Override
-   public int onStartCommand(Intent intent, int flags, int startId)
+   
+   @Override 
+   public void onStart(Intent intent, int startId)
    {
+	   super.onStart(intent, startId);
+	     
+       mManager = (NotificationManager) this.getApplicationContext().getSystemService(this.getApplicationContext().NOTIFICATION_SERVICE);
+       
+       // ViewActivity geht nicht...
+	   Intent intent1 = new Intent(this.getApplicationContext(),ViewListActivity.class);
+
+	
+	   Notification notification = new Notification(R.drawable.ic_launcher,"shopping time!", System.currentTimeMillis());
+	
+	   intent1.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP| Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+	   PendingIntent pendingNotificationIntent = PendingIntent.getActivity( this.getApplicationContext(),startId, intent1,PendingIntent.FLAG_UPDATE_CURRENT);
+       notification.flags |= Notification.FLAG_AUTO_CANCEL;
+       notification.setLatestEventInfo(this.getApplicationContext(), "Shopnote", "shopping time!", pendingNotificationIntent);
+
+       mManager.notify(startId, notification);
 	   
-	   handleStart(intent, startId);
-
-		return START_NOT_STICKY;
-		
-   }
-   
-   
-   private void handleStart(Intent intent, int startId) {
 	   
-
-	 		Intent resultIntent = new Intent(this, ViewListActivity.class);
-
-	 		
-	 		 NotificationCompat.Builder mBuilder =
-	 		        new NotificationCompat.Builder(this)
-	 		        .setSmallIcon(R.drawable.ic_notification)
-	 		        .setContentTitle("Shopnote")
-	 		        .setContentText("Shopping Time!")
-	 		        // funktioniert nicht, ich weiss nicht wieso..
-	 		        .setAutoCancel(true);
-
-	 		// The stack builder object will contain an artificial back stack for the
-	 		// started Activity.
-	 		// This ensures that navigating backward from the Activity leads out of
-	 		// your application to the Home screen.
-	 		 TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-	 		// Adds the back stack for the Intent (but not the Intent itself)
-	 		stackBuilder.addParentStack(ViewListActivity.class);
-	 		// Adds the Intent that starts the Activity to the top of the stack
-	 		stackBuilder.addNextIntent(resultIntent);
-	 		
-	 		PendingIntent resultPendingIntent =
-	 		        stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-	 		
-	 		mBuilder.setContentIntent(resultPendingIntent);
-	 		
-	 		
-	 		NotificationManager mNotificationManager =
-	 		    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-	 	
-	 		mNotificationManager.notify(0, mBuilder.build());
 	   
-	  
 		
    }
  

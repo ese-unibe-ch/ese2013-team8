@@ -119,10 +119,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ch.unibe.ese.activities.HomeActivity" />
         </activity>
-        <service android:name=".AlarmService"
+        <service android:name="ch.unibe.ese.shopnote.core.AlarmService"
             	 android:enabled="true" />
         
-        <receiver android:name=".AlarmReceiver"/>
+        <receiver android:name="ch.unibe.ese.shopnote.core.AlarmReceiver"/>
     </application>
 
 </manifest>
