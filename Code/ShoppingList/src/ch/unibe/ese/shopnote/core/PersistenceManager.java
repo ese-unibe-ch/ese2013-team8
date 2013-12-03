@@ -20,21 +20,18 @@ public interface PersistenceManager {
 	 * Reads ShoppingLists from their persistent state.
 	 * 
 	 * @return never <code>null</code>.
-	 * @throws IOException
 	 */
 	List<ShoppingList> getLists();
 	
 	/**
 	 * Saves a new created or editet list
 	 * @param list
-	 * @throws IOException
 	 */
 	long save(ShoppingList list);
 	
 	/**
 	 * Removes an already existing list
 	 * @param list
-	 * @throws IOException
 	 */
 	void remove(ShoppingList list);
 
@@ -49,7 +46,6 @@ public interface PersistenceManager {
 	 * Removes an already existing item from a list
 	 * @param item
 	 * @param list
-	 * @throws IOException
 	 */
 	void remove(Item item, ShoppingList list);
 
@@ -64,7 +60,6 @@ public interface PersistenceManager {
 	 * Reads friends from their persistent state.
 	 * 
 	 * @return never <code>null</code>.
-	 * @throws IOException
 	 */
 	List<Friend> getFriends();
 	
