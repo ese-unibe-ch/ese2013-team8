@@ -46,9 +46,9 @@
     <!-- CreateListActivity -->
     <string name="create_list_title">Ajouter une nouvelle liste</string>
     <string name="edit_list_title">Editer la liste</string>
-    <string name="create_list_name">nom:</string>
-    <string name="create_list_date">date:</string>
-    <string name="create_list_shop">magasin:</string>
+    <string name="create_list_name">Nom:</string>
+    <string name="create_list_date">Date:</string>
+    <string name="create_list_shop">Magasin:</string>
 
     <!-- CreateItemActivity -->
     <string name="create_item_title">Ajouter un article</string>
@@ -94,7 +94,7 @@
     <string name="synchFinished">Synchronisation terminée </string>
     <string name="friendAdded">Ami ajouté: </string>
     <string name="noUpdates">Pas de nouvel ami ajouté</string>
-    <string name="friendHasNotApp">"Cet ami ne possède pas l\'application!"</string>
+    <string name="friendHasNotApp">Cet ami ne possède pas l\'application!</string>
     <string name="checkIfFriendHasApp">Verifie si cet ami possède l\'application, un instant...</string>
         <string name="send_invitation">Envoyer une invitation</string>
     <string name="send_invitation_text">Ecrivez un texte à votre ami pour l\'inviter personnellement</string>
@@ -113,7 +113,7 @@
         \n\nDépendement de votre opérateur cela peut prendre jusqu à 20 secondes.</string>
     <string name="verify_number_hint">Votre numéro de téléphone</string>
     <string name="verify_number_send">Vérification</string>
-    <string name="verify_number_empty">entrez votre numéro de téléphone</string>
+    <string name="verify_number_empty">Entrez votre numéro de téléphone</string>
     <string name="verify_number_successful">Vérification réussie</string>
     <string name="verify_number_failed">La vérification a échoué</string>
     <string name="verify_number_invalid">Numéro non valide</string>
@@ -124,7 +124,7 @@
     <string name="action_new">Nouveau</string>
     <string name="action_edit">Editer</string>
     <string name="action_remove">Effacer</string>
-    <string name="action_ok">ajouter directement</string>
+    <string name="action_ok">Ajouter directement</string>
     <string name="action_refresh">Actualiser</string>
     <string name="action_share">Partager</string>
     <string name="action_edit_list">Editer une Liste</string>
@@ -172,20 +172,20 @@
 
     <string name="color_setting">Thèmes</string>
     <string name="color_dialog">Changer la couleur de l\'interface</string>
-    <string name="standard">standard</string>
+    <string name="standard">Standard</string>
 
     <string name="title_activity_verify_numer">VerifierNuméroDActivité</string>
     <string name="friend_has_not_app">Votre ami ne possède pas l\'application</string>
-    <string name="friend_is_no_shopnote_user">N utilise pas shopnote</string>
-    <string name="friend_has_not_app_text">votre ami ne possède pas l\'application, voulez-vous l\'inviter?</string>
+    <string name="friend_is_no_shopnote_user">N\'utilise pas ShopNote</string>
+    <string name="friend_has_not_app_text">Notre ami ne possède pas l\'application, voulez-vous l\'inviter?</string>
     <string name="send">envoyer</string>
     
      <!-- color Menu -->
     <string-array name="default_color_choice_names" >
-        <item>blanc</item>
-        <item>sombre</item>
-        <item>chocolat</item>
-        <item>barbie</item>
+        <item>Blanc</item>
+        <item>Sombre</item>
+        <item>Chocolat</item>
+        <item>Barbie</item>
     </string-array>
 
     <!-- do not change the order of these items, it must be the same as in ItemUnit -->
