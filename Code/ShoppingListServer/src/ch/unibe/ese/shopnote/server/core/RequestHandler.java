@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import ch.unibe.ese.shopnote.server.database.NeodatisDatabaseManager;
 import ch.unibe.ese.shopnote.server.database.SQLiteDatabaseManager;
 import ch.unibe.ese.shopnote.share.requests.EmptyRequest;
+import ch.unibe.ese.shopnote.share.requests.GetSharedFriendsRequest;
 import ch.unibe.ese.shopnote.share.requests.Request;
 import ch.unibe.ese.shopnote.share.requests.ShareListRequest;
 import ch.unibe.ese.shopnote.share.requests.UnShareListRequest;
 import ch.unibe.ese.shopnote.share.requests.CreateSharedListRequest;
+import ch.unibe.ese.shopnote.share.requests.listchange.EmptyListChangeRequest;
 import ch.unibe.ese.shopnote.share.requests.listchange.ListChangeRequest;
 
 /**
@@ -93,6 +95,22 @@ public class RequestHandler {
 			System.out.println("\tCreate Share List Request answer");
 			this.dbManager.assignLocalToServerListId((CreateSharedListRequest)request);
 			return returnRequests(new EmptyRequest(request.getPhoneNumber()));
+		
+		// A user asks you for all participants of a shared list
+		// You get them by asking the database for all shared users of his local List id
+		case Request.GET_SHARED_FRIENDS_REQUEST:
+			GetSharedFriendsRequest gsfRequest = (GetSharedFriendsRequest)request;
+			long listId = gsfRequest.getLocalListId();
+			System.out.println("\tGet Shared Friends for LocalListID " + listId);
+			ArrayList<User> sharedwith2 = dbManager.getSharedUsers(new EmptyListChangeRequest(request.getPhoneNumber(), listId));
+			int senderId2 = dbManager.findUser(request);
+			for(User u : sharedwith2) {
+				if(u.getUserId() != senderId2) {
+					gsfRequest.addFriendNumber(dbManager.getNumberOfUser(u.getUserId()));
+				}
+			}
+			gsfRequest.setSuccessful();
+			return returnRequests(gsfRequest);
 			
 		// This are general Requests that ask the user to rename his shopping list, add a new Item, ...
 		// They don't need to be processed by the server, but he needs to translate the localListId of 
@@ -104,8 +122,10 @@ public class RequestHandler {
 			for(User u:sharedwith) {
 				// Cannot send requests to myself
 				if(u.getUserId() != senderId) {
-					((ListChangeRequest)request).setLocaListId(u.getLocalListid());
-					odbManager.storeRequest(request, u.getUserId());
+					ListChangeRequest copy = ((ListChangeRequest)request).getCopy();
+					copy.setLocaListId(u.getLocalListid());
+					copy.setListIdPending(u.isPending());
+					odbManager.storeRequest(copy, u.getUserId());
 				}
 			}
 			return returnRequests(new EmptyRequest(request.getPhoneNumber()));

@@ -29,7 +29,7 @@ public interface PersistenceManager {
 	 * @param list
 	 * @throws IOException
 	 */
-	void save(ShoppingList list);
+	long save(ShoppingList list);
 	
 	/**
 	 * Removes an already existing list
@@ -122,13 +122,27 @@ public interface PersistenceManager {
 	 * @param list
 	 */
 	void save(ShoppingList list, Friend friend);
+	
+	/**
+	 * saves a friend to a synchronized recipe in the db
+	 * @param friend
+	 * @param list
+	 */
+	void save(Recipe recipe, Friend friend);
 
 	/**
-	 * removes a friend of a synchronized shopping list in the db
+	 * removes a friend from a synchronized shopping list in the db
 	 * @param list
 	 * @param friend
 	 */
 	void remove(ShoppingList list, Friend friend);
+	
+	/**
+	 * removes a friend from a synchronized recipe in the db
+	 * @param list
+	 * @param friend
+	 */
+	void remove(Recipe recipe, Friend friend);
 	
 	/**
 	 * Get all friends with which you shared a list
@@ -136,6 +150,11 @@ public interface PersistenceManager {
 	 * @return ArrayList of friends for a specific shared list
 	 */
 	List<Friend> getSharedFriends(ShoppingList list);
-
 	
+	/**
+	 * Get all friends with which you shared a recipe
+	 * @param list
+	 * @return ArrayList of friends for a specific recipe
+	 */
+	List<Friend> getSharedFriends(Recipe recipe);
 }

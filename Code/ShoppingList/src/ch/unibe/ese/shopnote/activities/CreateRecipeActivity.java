@@ -66,7 +66,7 @@ public class CreateRecipeActivity extends BaseActivity {
 	}
 
 	/** Called when the user touches the save button */
-	public void saveItem(View view) {
+	public void saveRecipe(View view) {
 		// get name and change it if necessary
 		EditText recipeName = (EditText) findViewById(R.id.editRecipeName);
 		String name = recipeName.getText().toString();
@@ -101,7 +101,6 @@ public class CreateRecipeActivity extends BaseActivity {
         super.finish();
     }
 	
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

@@ -164,7 +164,7 @@ public class ShoppingListActionMode implements Callback {
 		case R.id.action_share:
 			if (isList) {
 				Intent intentShare = new Intent(activity,
-						ShareListActivity.class);
+						ShareActivity.class);
 				intentShare.putExtra(BaseActivity.EXTRAS_LIST_ID, listIndex);
 				activity.startActivity(intentShare);
 				mode.finish(); // Action picked, so close the CAB

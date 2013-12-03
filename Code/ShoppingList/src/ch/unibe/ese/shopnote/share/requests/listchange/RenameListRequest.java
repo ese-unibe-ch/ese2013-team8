@@ -24,4 +24,9 @@ public class RenameListRequest extends ListChangeRequest {
 		return ListChangeRequest.RENAME_LIST_REQUEST;
 	}
 
+	@Override
+	public ListChangeRequest getCopy() {
+		return new RenameListRequest(this.getPhoneNumber(), this.getLocalListId(), this.newName);
+	}
+
 }

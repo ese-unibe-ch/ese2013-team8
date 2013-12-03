@@ -52,13 +52,14 @@ public class ListManager {
 	 * @param list
 	 *            not <code>null</code>
 	 */
-	public void saveShoppingList(ShoppingList list) {
+	public long saveShoppingList(ShoppingList list) {
 		if (list == null)
 			throw new IllegalArgumentException("null is not allowed");
 		if (!shoppingLists.contains(list)) {
 			shoppingLists.add(list);
 		}
-		persistenceManager.save(list);
+		long id = persistenceManager.save(list);
+		return id;
 	}
 
 	public void removeShoppingList(ShoppingList list) {

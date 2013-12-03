@@ -85,7 +85,7 @@ public class SQLiteUpdateHelper {
 	}
 
 	/**
-	 * Converts an list.id and a friend.id into a ContentValue
+	 * Converts a list.id and a friend.id into a ContentValue
 	 * (TABLE_FRIENDSTOLIST)
 	 * 
 	 * @param list
@@ -95,6 +95,21 @@ public class SQLiteUpdateHelper {
 	public ContentValues toValue(ShoppingList list, Friend friend) {
 		ContentValues values = new ContentValues();
 		values.put(SQLiteHelper.COLUMN_LIST_ID, list.getId());
+		values.put(SQLiteHelper.COLUMN_FRIEND_ID, friend.getId());
+		return values;
+	}
+	
+	/**
+	 * Converts a recipe.id and a friend.id into a ContentValue
+	 * (TABLE_FRIENDSTORECIPE)
+	 * 
+	 * @param recipe
+	 * @param friend
+	 * @return ContentValues of the input
+	 */
+	public ContentValues toValue(Recipe recipe, Friend friend) {
+		ContentValues values = new ContentValues();
+		values.put(SQLiteHelper.COLUMN_RECIPE_ID, recipe.getId());
 		values.put(SQLiteHelper.COLUMN_FRIEND_ID, friend.getId());
 		return values;
 	}
@@ -110,6 +125,7 @@ public class SQLiteUpdateHelper {
 		values.put(SQLiteHelper.COLUMN_RECIPE_NAME, recipe.getName());
 		values.put(SQLiteHelper.COLUMN_RECIPE_NOTES, recipe.getNotes());
 		values.put(SQLiteHelper.COLUMN_RECIPE_SHOWNOTES, recipe.isNotesVisible());
+		values.put(SQLiteHelper.COLUMN_RECIPE_SHARED, recipe.isShared() ? 1 : 0);
 		return values;
 	}
 

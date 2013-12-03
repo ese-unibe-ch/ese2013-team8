@@ -29,16 +29,16 @@ import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.Recipe;
 import ch.unibe.ese.shopnote.core.ShoppingList;
 import ch.unibe.ese.shopnote.share.SyncManager;
-import ch.unibe.ese.shopnote.share.requests.RegisterRequest;
+import ch.unibe.ese.shopnote.share.requests.GetSharedFriendsRequest;
 import ch.unibe.ese.shopnote.share.requests.ShareListRequest;
 
 /**
  *	Allows to share/synchronize lists/recipes with friends or send them as text message
  */
 @SuppressLint("NewApi")
-public class ShareListActivity extends BaseActivity {
+public class ShareActivity extends BaseActivity {
 
-	private ListManager manager;
+	private ListManager listManager;
 	private FriendsManager friendsManager;
 	private SyncManager syncManager;
 	private ArrayAdapter<Friend> autocompleteAdapter;
@@ -53,48 +53,52 @@ public class ShareListActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_share_list);
       
-		//set chosen color theme
+		// set chosen color theme
 		RelativeLayout lo = (RelativeLayout) findViewById(R.id.RelativeLayoutShareList);
 		RelativeLayout rlDrawer = (RelativeLayout) findViewById(R.id.drawer_Linearlayout);
 		updateTheme(lo, getActionBar(), rlDrawer);
 		LinearLayout lladdItem = (LinearLayout) findViewById(R.id.addFriend);
 		updateThemeTextBox(lladdItem);
 		
-		// Show the Up button in the action bar.
+		// show the up button in the action bar.
 		getActionBar();
 
-		manager = getListManager();
+		// get managers
+		listManager = getListManager();
 		friendsManager = getFriendsManager();
-
 		syncManager = getSyncManager();
 		
 		// verify phone number
 		getMyPhoneNumber();
 
-		// Create drawer menu
+		// create drawer menu
 		createDrawerMenu();
-		createDrawerToggle(); //to change the title
+		createDrawerToggle(); // to change the title
 		drawerToggle.setDrawerIndicatorEnabled(false);
 
+		// get extras
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
 			isRecipe = extras.getBoolean(EXTRAS_IS_RECIPE);
 			// Get list
 			if (!isRecipe) {
 				long listIndex = extras.getLong(EXTRAS_LIST_ID);
-				list = manager.getShoppingList(listIndex);
+				list = listManager.getShoppingList(listIndex);
 				setTitle(this.getString(R.string.share_list_title) + " "
 						+ list.getName());
 			}
 			// Get recipe
 			else {
 				long recipeIndex = extras.getLong(EXTRAS_RECIPE_ID);
-				recipe = manager.getRecipeAt(recipeIndex);
+				recipe = listManager.getRecipeAt(recipeIndex);
 				setTitle(this.getString(R.string.share_list_title) + " "
-						+ recipe.toString());
+						+ this.getString(R.string.view_recipe_title) + " " + recipe.toString());
 			}
 		}
 
+		// get Shared Friends
+		getSharedFriends();
+		
 		// create autocompletion
 		AutoCompleteTextView textName = createAutocomplete();
 
@@ -104,12 +108,21 @@ public class ShareListActivity extends BaseActivity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View arg1,
 					int position, long id) {
-				Friend friend = (Friend) autocompleteAdapter.getItem(position);				
-				friendsManager.addFriendToList(list, friend);
-				updateFriendsList();
-				ShareListRequest slrequest = new ShareListRequest(getMyPhoneNumber(),
-						friend.getPhoneNr(), list.getId(), list.getName());
-				syncManager.addRequest(slrequest);
+				Friend friend = (Friend) autocompleteAdapter.getItem(position);
+				// share list
+				if (!isRecipe) {
+					friendsManager.addFriendToList(list, friend);
+					updateFriendsList();
+					ShareListRequest slrequest = new ShareListRequest(getMyPhoneNumber(),
+							friend.getPhoneNr(), list.getId(), list.getName());
+					syncManager.addRequest(slrequest);			
+				}
+				// share recipe
+				else {
+					friendsManager.addFriendToRecipe(recipe, friend);
+					updateFriendsList();
+					// TODO: ShareRecipeRequest		
+				}
 				setTextViewText(R.id.editTextName, "");
 			}
 		});
@@ -123,7 +136,9 @@ public class ShareListActivity extends BaseActivity {
 		AutoCompleteTextView textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
 		autocompleteAdapter = new ArrayAdapter<Friend>(this,
 				android.R.layout.simple_list_item_1,
-				friendsManager.getFriendsWithApp());
+				friendsManager.getFriendsList());
+				//friendsManager.getFriendsWithApp());
+		// TODO: CHANGE BACK!
 		textName.setAdapter(autocompleteAdapter);
 		updateThemeTextBox(textName);
 
@@ -137,7 +152,6 @@ public class ShareListActivity extends BaseActivity {
 
 		setTextViewText(R.id.editTextName, "");
 	}
-	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -159,15 +173,19 @@ public class ShareListActivity extends BaseActivity {
 		case android.R.id.home:
 			// Try to sync with server
 			syncManager.synchronise(this);
+			
 			// Set the list on shared if there's an entry in the list
 			if (!isRecipe) {
-				if(adapter.isEmpty()) {
-					list.setShared(false);
-				} else {
-					list.setShared(true);
-				}
-				manager.saveShoppingList(list);
+				list.setShared(!adapter.isEmpty());
+				listManager.saveShoppingList(list);
 			}
+			
+			// Set the recipe on shared
+			else {
+				recipe.setShared(!adapter.isEmpty());
+				listManager.saveRecipe(recipe);
+			}
+				
 			// Navigate back to the list
 			finish();
 			return true;
@@ -188,26 +206,46 @@ public class ShareListActivity extends BaseActivity {
 	 */
 	public void updateFriendsList() {
 		ListView listView = (ListView) findViewById(R.id.FriendView);
-		adapter = new FriendsListAdapter(this,
-				android.R.layout.simple_list_item_1,
-				friendsManager.getSharedFriends(list));
+		if (!isRecipe) {
+			adapter = new FriendsListAdapter(this,
+					android.R.layout.simple_list_item_1,
+					friendsManager.getSharedFriends(list));
+		}
+		else {
+			adapter = new FriendsListAdapter(this,
+					android.R.layout.simple_list_item_1,
+					friendsManager.getSharedFriends(recipe));
+		}
 		listView.setAdapter(adapter);
 		updateThemeListView(listView);
 		
 		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
 
+			// TODO: change for recipe
 			@Override
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 					int position, long id) {
 				Friend friend = adapter.getItem(position);				
-				ShareListActivity.this.startActionMode(new ShareListActionMode(
-								ShareListActivity.this.friendsManager, friend,
-								list, ShareListActivity.this));
+				ShareActivity.this.startActionMode(new ShareListActionMode(
+								ShareActivity.this.friendsManager, friend,
+								list, ShareActivity.this));
 
 				setTextViewText(R.id.editTextName, "");
 				return true;
 			}
 		});
+	}
+
+	private void getSharedFriends() {
+		if(isRecipe) {
+			if(recipe.isShared()) {
+				// Get friends here
+			}
+		} else if(list.isShared()) {
+				GetSharedFriendsRequest gsfRequest = new GetSharedFriendsRequest(getMyPhoneNumber(), list.getId());
+				syncManager.addRequest(gsfRequest);
+				syncManager.synchronise(this);
+		}
 	}
 
 	private void setShareIntent(Intent shareIntent) {
@@ -228,7 +266,7 @@ public class ShareListActivity extends BaseActivity {
 	}
 
 	private String listToString() {
-		List<Item> items = manager.getItemsFor(list);
+		List<Item> items = listManager.getItemsFor(list);
 		StringBuilder sb = new StringBuilder();
 		sb.append(list).append("\n");
 		for (Item item : items) {
@@ -279,6 +317,7 @@ public class ShareListActivity extends BaseActivity {
 						if(!friend.hasTheApp())
 							waitForMillisecs(1000);
 					if(friend.hasTheApp()) {
+						// TODO: change for recipe
 						friendsManager.addFriendToList(list, friend);
 						ShareListRequest slrequest = new ShareListRequest(getMyPhoneNumber(),
 								friend.getPhoneNr(), list.getId(), list.getName());

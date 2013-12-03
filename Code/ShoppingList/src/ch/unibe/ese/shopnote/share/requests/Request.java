@@ -24,6 +24,7 @@ public abstract class Request implements Serializable {
 	public static final int CREATE_SHARED_LIST_REQUEST = 5;
 	// Client organisation requests
 	public static final int LIST_CHANGE_REQUEST = 6;
+	public static final int GET_SHARED_FRIENDS_REQUEST = 7;
 	
 	// Phone Number is always passed with the request
 	private String phoneNumber;

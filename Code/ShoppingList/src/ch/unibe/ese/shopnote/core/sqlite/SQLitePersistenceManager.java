@@ -63,7 +63,7 @@ public class SQLitePersistenceManager implements PersistenceManager {
 	}
 
 	@Override
-	public void save(ShoppingList list) {
+	public long save(ShoppingList list) {
 		// Convert the list to a ContentValue
 		// Automatically creates a new shop in the database if it doesn't exist
 		ContentValues values = updateHelper.toValue(list);
@@ -76,6 +76,7 @@ public class SQLitePersistenceManager implements PersistenceManager {
 					SQLiteHelper.COLUMN_LIST_ID + " = ?", new String[] { ""
 							+ list.getId() });
 		}
+		return list.getId();
 	}
 
 	@Override
@@ -195,10 +196,10 @@ public class SQLitePersistenceManager implements PersistenceManager {
 		}
 	}
 
+	
 	/**
 	 * Everything for friends
 	 */
-
 	@Override
 	public ArrayList<Friend> getFriends() {
 		ArrayList<Friend> list = new ArrayList<Friend>();
@@ -249,7 +250,7 @@ public class SQLitePersistenceManager implements PersistenceManager {
 	public List<Friend> getSharedFriends(ShoppingList list) {
 		ArrayList<Friend> sharedFriends = new ArrayList<Friend>();
 		
-		Cursor cursor = readHelper.getSharedFriendsCursor();
+		Cursor cursor = readHelper.getSharedFriendsListCursor();
 		while (!cursor.isAfterLast()) {
 			if(cursor.getLong(0) == list.getId()) {
 				long friendId = cursor.getLong(1);
@@ -261,7 +262,24 @@ public class SQLitePersistenceManager implements PersistenceManager {
 		}
 		cursor.close();
 		return sharedFriends;
+	}
+	
+	@Override
+	public List<Friend> getSharedFriends(Recipe recipe) {
+		ArrayList<Friend> sharedFriends = new ArrayList<Friend>();
 		
+		Cursor cursor = readHelper.getSharedFriendsRecipeCursor();
+		while (!cursor.isAfterLast()) {
+			if(cursor.getLong(0) == recipe.getId()) {
+				long friendId = cursor.getLong(1);
+				Friend friend = readHelper.getFriend(friendId);
+				if(friend != null)
+					sharedFriends.add(friend);
+			}	
+			cursor.moveToNext();
+		}
+		cursor.close();
+		return sharedFriends;
 	}
 
 	@Override
@@ -273,6 +291,14 @@ public class SQLitePersistenceManager implements PersistenceManager {
 	}
 	
 	@Override
+	public void save(Recipe recipe, Friend friend) {
+		ContentValues values = updateHelper.toValue(recipe, friend);
+		if (!readHelper.isInRecipe(recipe, friend)) {
+			database.insert(SQLiteHelper.TABLE_FRIENDSTORECIPE, null, values);
+		}
+	}
+	
+	@Override
 	public void remove(ShoppingList list, Friend friend) {
 		if (readHelper.isInList(list, friend))
 			database.delete(SQLiteHelper.TABLE_FRIENDSTOLIST, 
@@ -280,8 +306,15 @@ public class SQLitePersistenceManager implements PersistenceManager {
 				SQLiteHelper.COLUMN_FRIEND_ID + "=?", 
 				new String[] { "" + list.getId(), "" + friend.getId() });
 	}
-
-
+	
+	@Override
+	public void remove(Recipe recipe, Friend friend) {
+		if (readHelper.isInRecipe(recipe, friend))
+			database.delete(SQLiteHelper.TABLE_FRIENDSTORECIPE, 
+				SQLiteHelper.COLUMN_RECIPE_ID + "=? AND " + 
+				SQLiteHelper.COLUMN_FRIEND_ID + "=?", 
+				new String[] { "" + recipe.getId(), "" + friend.getId() });
+	}
 
 	/**
 	 * Everything for recipes

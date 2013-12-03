@@ -71,7 +71,7 @@
             android:parentActivityName="ch.unibe.ese.shopnote.activities.HomeActivity" >
         </activity>
         <activity
-            android:name="ch.unibe.ese.shopnote.activities.ShareListActivity"
+            android:name="ch.unibe.ese.shopnote.activities.ShareActivity"
             android:label="@string/title_activity_share_list"
             android:parentActivityName="ch.unibe.ese.shopnote.activities.ViewListActivity" >
             <meta-data
