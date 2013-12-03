@@ -100,7 +100,7 @@ public class SQLitePersistenceManager implements PersistenceManager {
 		List<Item> itemList = new ArrayList<Item>();
 		Cursor cursor = readHelper.getItemCursor(list);
 		while (!cursor.isAfterLast()) {
-			Item item = readHelper.cursorToItem(cursor);
+			Item item = readHelper.cursorToShoppingListItem(cursor);
 			itemList.add(item);
 			cursor.moveToNext();
 		}
@@ -166,32 +166,15 @@ public class SQLitePersistenceManager implements PersistenceManager {
 		}
 	}
 
-	/**
-	 * Returns item with the id
-	 * 
-	 * @param itemId
-	 * @return item with the itemId, if not found, null
-	 */
-	public Item getItem(long itemId) {
-		// TODO: rewrite code when problem is solved with shop and date in item
-		// db
-		List<Item> itemList = getAllItems();
-		for (Item item : itemList)
-			if (item.getId() == itemId)
-				return item;
-		return null;
-	}
-
 	@Override
 	public void remove(Item item) {
 		if (readHelper.isInList(item)) {
+			String[] id = new String[] { "" + item.getId() };
+			
 			database.delete(SQLiteHelper.TABLE_ITEMTOLIST,
-					SQLiteHelper.COLUMN_ITEM_ID + "=? ", new String[] { ""
-							+ item.getId() });
-
+					SQLiteHelper.COLUMN_ITEM_ID + "=? ", id);
 			database.delete(SQLiteHelper.TABLE_ITEMS,
-					SQLiteHelper.COLUMN_ITEM_ID + "=? ", new String[] { ""
-							+ item.getId() });
+					SQLiteHelper.COLUMN_ITEM_ID + "=? ", id);
 		}
 	}
 
@@ -304,15 +287,12 @@ public class SQLitePersistenceManager implements PersistenceManager {
 
 	private void addItemsToRecipes(List<Recipe> listOfRecipes) {
 		Cursor cursor = readHelper.getItemToRecipeCursor();
-
-		// TODO: rewrite code, its just a fix. At the moment it would take a lot
-		// of resources for big lists
 		while (!cursor.isAfterLast()) {
-			Item item = getItem(cursor.getLong(1));
+			Item item = readHelper.cursorToRecipeItem(cursor);
 
 			if (item != null)
 				for (Recipe recipe : listOfRecipes) {
-					if (recipe.getId() == cursor.getLong(0))
+					if (recipe.getId() == cursor.getLong(2))
 						recipe.addItem(item);
 				}
 			cursor.moveToNext();

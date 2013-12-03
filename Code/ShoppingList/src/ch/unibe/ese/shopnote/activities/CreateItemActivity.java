@@ -2,6 +2,7 @@ package ch.unibe.ese.shopnote.activities;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -96,8 +97,14 @@ public class CreateItemActivity extends BaseActivity {
 			if (extras.getBoolean(EXTRAS_ITEM_EDIT)) {
 				long itemId = extras.getLong(EXTRAS_ITEM_ID);
 				editItem = true;
-				for (Item it : (list == null ? manager.getAllItems() : manager
-						.getItemsFor(list))) {
+				List<Item> items;
+				if(list != null)
+					items = manager.getItemsFor(list);
+				else if (recipe != null)
+					items = recipe.getItemList();
+				else 
+					items = manager.getAllItems();
+				for (Item it :items) {
 					if (it.getId() == itemId) {
 						item = it;
 						break;
@@ -206,8 +213,7 @@ public class CreateItemActivity extends BaseActivity {
 		// save the item
 		if (list != null) {
 			manager.addItemToList(item, list);
-		}
-		else if (recipe != null) {
+		} else if (recipe != null) {
 			recipe.addItem(item);
 			manager.saveRecipe(recipe);
 		} else {

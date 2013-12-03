@@ -37,7 +37,21 @@ public class SQLiteReadHelper {
 			+ " AND "
 			+ SQLiteHelper.TABLE_ITEMTOLIST + "."
 			+ SQLiteHelper.COLUMN_LIST_ID
-			+ " = ?";;
+			+ " = ?";
+	
+	private static final String SELECT_RECIPE_ITEM_DATA = "SELECT " //
+			+ SQLiteHelper.TABLE_ITEMS + "." + SQLiteHelper.COLUMN_ITEM_ID + ","
+			+ SQLiteHelper.TABLE_ITEMS + "." + SQLiteHelper.COLUMN_ITEM_NAME + ", "
+			+ SQLiteHelper.TABLE_ITEMTORECIPE + "." + SQLiteHelper.COLUMN_RECIPE_ID + ","
+			+ SQLiteHelper.TABLE_ITEMTORECIPE + "." + SQLiteHelper.COLUMN_ITEM_PRICE + ","
+			+ SQLiteHelper.TABLE_ITEMTORECIPE + "." + SQLiteHelper.COLUMN_ITEM_QUANTITY + ","
+			+ SQLiteHelper.TABLE_ITEMTORECIPE + "." + SQLiteHelper.COLUMN_ITEM_UNIT
+			+ " FROM "
+			+ SQLiteHelper.TABLE_ITEMS + ","//
+			+ SQLiteHelper.TABLE_ITEMTORECIPE
+			+ " WHERE "
+			+ SQLiteHelper.TABLE_ITEMS + "." + SQLiteHelper.COLUMN_ITEM_ID
+			+ " = " + SQLiteHelper.TABLE_ITEMTORECIPE + "."+ SQLiteHelper.COLUMN_ITEM_ID;
 			
 	private static final String SELECT_RECIPE_DATA = "SELECT "
 			+ SQLiteHelper.TABLE_RECIPES + 		"." + SQLiteHelper.COLUMN_RECIPE_ID + ","
@@ -130,8 +144,7 @@ public class SQLiteReadHelper {
 	 * @return cursor on the first entry of itemToRecipe table
 	 */
 	public Cursor getItemToRecipeCursor() {
-		Cursor cursor = getQueryCursor(SQLiteHelper.TABLE_ITEMTORECIPE,
-				SQLiteHelper.ITEMTORECIPE_COLUMNS, null);
+		Cursor cursor = database.rawQuery(SELECT_RECIPE_ITEM_DATA, null);
 		cursor.moveToFirst();
 		return cursor;
 	}
@@ -183,10 +196,27 @@ public class SQLiteReadHelper {
 	 * @param cursor
 	 * @return item of the index (of the cursor)
 	 */
-	public Item cursorToItem(Cursor cursor) {
+	public Item cursorToShoppingListItem(Cursor cursor) {
 		Item item = new Item(cursor.getString(1));
 		item.setId(cursor.getInt(0));
 		item.setBought(cursor.getInt(2) == 1);
+		item.setPrice(toPrice(cursor.getString(3)));
+		String quantity = cursor.getString(4);
+		String unit = cursor.getString(5);
+		if (quantity != null && !quantity.isEmpty()){
+			item.setQuantity(new BigDecimal(quantity), ItemUnit.valueOf(unit));
+		}
+		return item;
+	}
+	
+	/**
+	 * item of the index (of the cursor)
+	 * @param cursor
+	 * @return item of the index (of the cursor)
+	 */
+	public Item cursorToRecipeItem(Cursor cursor) {
+		Item item = new Item(cursor.getString(1));
+		item.setId(cursor.getInt(0));
 		item.setPrice(toPrice(cursor.getString(3)));
 		String quantity = cursor.getString(4);
 		String unit = cursor.getString(5);

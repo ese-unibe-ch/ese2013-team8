@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 import ch.unibe.ese.shopnote.R;
+import ch.unibe.ese.shopnote.adapters.ItemListAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ListManager;
@@ -39,6 +40,7 @@ public class ViewRecipeActivity extends BaseActivity {
 	private List<Item> itemsOfRecipe;
 	private ArrayAdapter<Item> itemAdapter;
 	ArrayAdapter<Item> autocompleteAdapter;
+	private long recipeIndex;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +67,7 @@ public class ViewRecipeActivity extends BaseActivity {
 		
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
-			long recipeIndex = extras.getLong(EXTRAS_RECIPE_ID);
+			recipeIndex = extras.getLong(EXTRAS_RECIPE_ID);
 			recipe = manager.getRecipeAt(recipeIndex);
 			itemsOfRecipe = recipe.getItemList();
 			setTitle(this.getString(R.string.view_recipe_title) + " " + recipe.toString());
@@ -98,8 +100,9 @@ public class ViewRecipeActivity extends BaseActivity {
 
 	private void updateRecipeList() {
 		// Get listOfRecipes and put it in the listview	
+		recipe = manager.getRecipeAt(recipeIndex);
 		itemsOfRecipe = recipe.getItemList();
-		itemAdapter = new ArrayAdapter<Item>(this,
+		itemAdapter = new ItemListAdapter(this,
 				R.layout.shopping_list_item, itemsOfRecipe);
 		ListView listView = (ListView) findViewById(R.id.ItemView);
 		listView.setAdapter(itemAdapter);
@@ -153,9 +156,7 @@ public class ViewRecipeActivity extends BaseActivity {
 	 * Set up the {@link android.app.ActionBar}.
 	 */
 	private void setupActionBar() {
-
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-
 	}
 	
 	/** Called when the user touches the add item button */
