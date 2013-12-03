@@ -19,5 +19,11 @@
 		  android:orderInCategory="2"
 		  android:showAsAction="never"
 		  android:title="@string/action_remove"/>
+     
+         <item android:id="@+id/action_refresh"
+          android:orderInCategory="3"
+          android:icon="@drawable/ic_action_refresh"
+          android:title="@string/action_refresh"
+          android:showAsAction="never"  />
 
 </menu>

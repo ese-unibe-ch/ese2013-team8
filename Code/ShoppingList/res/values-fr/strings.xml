@@ -21,8 +21,8 @@
     <string name="title_activity_share_list">Liste Partagée</string>
     <string name="title_activity_manage_friends">Amis</string>
     <string name="title_activity_create_friend">Ajouter un ami</string>
-    <string name="title_activity_item_list">Liste d Aricles</string>
-    <string name="title_activity_manage_recipe">Oragniser Recettes</string>
+    <string name="title_activity_item_list">Liste d\'Aricles</string>
+    <string name="title_activity_manage_recipe">Organiser Recettes</string>
     <string name="title_activity_create_recipe">Créer Recettes</string>
     <string name="title_activity_archive">Archives</string>
     <string name="title_activity_view_recipe">Vue Recette</string>
@@ -40,7 +40,7 @@
         
     <!-- ManageRecipeActivity -->
     <string name="manage_recipe_welcome_message">
-        Recettes vous permet d ajouter plusieures articles a une liste de courses en tappant \"/nomdelarecette\" .
+        Recettes vous permet d\'ajouter plusieures articles a une liste de courses en tappant \"/nomdelarecette\" .
         \n\nTouchez le symbole-plus en haut à droite pour créer une nouvelle recette.</string>
 
     <!-- CreateListActivity -->
@@ -52,7 +52,7 @@
 
     <!-- CreateItemActivity -->
     <string name="create_item_title">Ajouter un article</string>
-    <string name="edit_item_title">Editer l article</string>
+    <string name="edit_item_title">Editer l\'article</string>
     <string name="create_item_name">Nom:</string>
     <string name="create_item_shop">Magasin:</string>
     <string name="create_item_price">Prix:</string>
@@ -89,15 +89,15 @@
     <string name="manage_friends_welcome_message"> 
         Touche le symbole-plus en haut à droite pour ajouter des amis.
         Après cela vous pourrez partager des listes de courses avec eux.</string>
-    <string name="searchContacts">Chercher un ami dans l annuaire</string>
+    <string name="searchContacts">Chercher un ami dans l\'annuaire</string>
     <string name="synchStarted">"Demarrage de la synchronisation, cela peux prendre quelque secondes"</string>
     <string name="synchFinished">Synchronisation terminée </string>
     <string name="friendAdded">Ami ajouté: </string>
     <string name="noUpdates">Pas de nouvel ami ajouté</string>
-    <string name="friendHasNotApp">"Cet ami ne possède pas l application!"</string>
-    <string name="checkIfFriendHasApp">Verifie si cet ami possède l application, un instant...</string>
+    <string name="friendHasNotApp">"Cet ami ne possède pas l\'application!"</string>
+    <string name="checkIfFriendHasApp">Verifie si cet ami possède l\'application, un instant...</string>
         <string name="send_invitation">Envoyer une invitation</string>
-    <string name="send_invitation_text">Ecrivez un texte à votre ami pour l inviter personnellement</string>
+    <string name="send_invitation_text">Ecrivez un texte à votre ami pour l\'inviter personnellement</string>
     
     
         
@@ -138,7 +138,7 @@
     <string name="error_friend">Erreur, ami non touvé</string>
     <string name="error_friend_already">Erreur, ami déjà ajouté</string>
     <string name="error_enter">Erreur, données incorrectes</string>
-    <string name="error_no_quantity_unit">Erreur, entrez une quantité ou désélectionnez l unité</string>
+    <string name="error_no_quantity_unit">Erreur, entrez une quantité ou désélectionnez l\'unité</string>
     <string name="error_quantity_no_unit">Erreur, selectionez une unité ou effacez la quantité</string>
 
     <!-- Synchronisation and Connection -->
@@ -146,8 +146,8 @@
 
     <!-- The navigation drawer -->
     <string-array name="navigation_items">
-        <item>Vue d ensemble</item>
-        <item>liste d articles</item>
+        <item>Vue d\'ensemble</item>
+        <item>Liste d\'articles</item>
         <item>Recettes</item>
         <item>Amis</item>
         <item>Archives</item>
@@ -160,7 +160,7 @@
     <string name="english">Anglais</string>
     <string name="german">Allemand</string>
     <string name="language">Langues</string>
-    <string name="language_dialog">Changer la langue de l applcation</string>
+    <string name="language_dialog">Changer la langue de l\'applcation</string>
     
 
     <string-array name="choosable_languages">
@@ -171,13 +171,13 @@
 
 
     <string name="color_setting">Thèmes</string>
-    <string name="color_dialog">Changer la couleur de l interface</string>
+    <string name="color_dialog">Changer la couleur de l\'interface</string>
     <string name="standard">standard</string>
 
     <string name="title_activity_verify_numer">VerifierNuméroDActivité</string>
-    <string name="friend_has_not_app">Votre ami ne possède pas l application</string>
+    <string name="friend_has_not_app">Votre ami ne possède pas l\'application</string>
     <string name="friend_is_no_shopnote_user">N utilise pas shopnote</string>
-    <string name="friend_has_not_app_text">votre ami ne possède pas l application, voulez-vous l inviter?</string>
+    <string name="friend_has_not_app_text">votre ami ne possède pas l\'application, voulez-vous l\'inviter?</string>
     <string name="send">envoyer</string>
     
      <!-- color Menu -->
