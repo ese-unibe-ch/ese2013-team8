@@ -11,6 +11,7 @@
     <string name="btn_cancel">Abbrechen</string>
     <string name="btn_done">Ok</string>
     <string name="create_optional_hint">optional</string>
+    <string name="synchronizing">Synchronisiere...</string>
 
     <!-- Default activity titles -->
     <string name="title_activity_create_list">Liste erstellen</string>

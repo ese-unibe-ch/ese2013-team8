@@ -136,9 +136,7 @@ public class ShareActivity extends BaseActivity {
 		AutoCompleteTextView textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
 		autocompleteAdapter = new ArrayAdapter<Friend>(this,
 				android.R.layout.simple_list_item_1,
-				friendsManager.getFriendsList());
-				//friendsManager.getFriendsWithApp());
-		// TODO: CHANGE BACK!
+				friendsManager.getFriendsWithApp());
 		textName.setAdapter(autocompleteAdapter);
 		updateThemeTextBox(textName);
 

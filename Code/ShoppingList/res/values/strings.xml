@@ -12,6 +12,7 @@
     <string name="btn_cancel">Cancel</string>
     <string name="btn_done">Done</string>
     <string name="create_optional_hint">optional</string>
+    <string name="synchronizing">Synchronizing...</string>
 
     <!-- Default activity titles -->
     <string name="title_activity_create_list">Create List</string>

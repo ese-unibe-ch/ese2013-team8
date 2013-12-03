@@ -32,7 +32,6 @@ import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.ShoppingList;
 import ch.unibe.ese.shopnote.share.SyncManager;
-import ch.unibe.ese.shopnote.share.requests.RegisterRequest;
 
 /**
  *	The main activity of the app, which displays an overview of the shopping lists
@@ -167,6 +166,8 @@ public class HomeActivity extends BaseActivity {
 			case R.id.action_refresh:
 				if(isOnline()) {
 					syncmanager.synchronise(this);
+					Toast.makeText(this, this.getString(R.string.synchronizing),
+							Toast.LENGTH_SHORT).show();
 				} else {
 					Toast.makeText(this, this.getString(R.string.no_connection),
 							Toast.LENGTH_SHORT).show();
