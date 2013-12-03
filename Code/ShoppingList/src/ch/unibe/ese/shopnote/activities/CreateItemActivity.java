@@ -200,26 +200,25 @@ public class CreateItemActivity extends BaseActivity {
 			item = new Item(name);
 		else
 			item.setName(name);
-		if(list != null) {
-			// get shop and set it if necessary
-			String shopName = getTextViewText(R.id.editTextShop);
-			if (!shopName.isEmpty()) {
-				Shop shop = new Shop(shopName);
-				item.setShop(shop);
-			}
-	
-			// get price and set it if necessary
-			String priceString = getTextViewText(R.id.editTextPrice);
-			if (!priceString.isEmpty()) {
-				BigDecimal price = new BigDecimal(priceString);
-				price = price.setScale(2, RoundingMode.HALF_UP);
-				item.setPrice(price);
-			}
-			
-			BigDecimal quant = quantity.isEmpty() ? null : new BigDecimal(quantity);
-			ItemUnit unit = unitPosition <= 0 ? null : ItemUnit.values()[unitPosition - 1];
-			item.setQuantity(quant, unit);	
+		
+		// get shop and set it if necessary
+		String shopName = getTextViewText(R.id.editTextShop);
+		if (!shopName.isEmpty()) {
+			Shop shop = new Shop(shopName);
+			item.setShop(shop);
 		}
+
+		// get price and set it if necessary
+		String priceString = getTextViewText(R.id.editTextPrice);
+		if (!priceString.isEmpty()) {
+			BigDecimal price = new BigDecimal(priceString);
+			price = price.setScale(2, RoundingMode.HALF_UP);
+			item.setPrice(price);
+		}
+		
+		BigDecimal quant = quantity.isEmpty() ? null : new BigDecimal(quantity);
+		ItemUnit unit = unitPosition <= 0 ? null : ItemUnit.values()[unitPosition - 1];
+		item.setQuantity(quant, unit);	
 
 		// save the item
 		if (list != null) {
