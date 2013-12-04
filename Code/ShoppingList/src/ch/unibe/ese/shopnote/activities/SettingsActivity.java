@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import ch.unibe.ese.shopnote.R;
@@ -82,10 +83,8 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		}   
 		
 		// refresh theme
-		Intent intent = new Intent(this, HomeActivity.class);
-		this.startActivity(intent);
         finish();
-        //startActivity(getIntent());
+        startActivity(getIntent());
 	}
 
 
@@ -130,6 +129,16 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		getListView().setDivider(new ColorDrawable(listViewDividerColor));
 		
 		getActionBar().setBackgroundDrawable(new ColorDrawable(titleBarColor));
+	}
+	
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	    if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+	        Intent intent = new Intent(this, HomeActivity.class);
+	        startActivity(intent);
+	    }
+	    return super.onKeyDown(keyCode, event);
 	}
 	
 }

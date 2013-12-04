@@ -58,10 +58,7 @@ public class HomeActivity extends BaseActivity {
         
         //set chosen color theme
 		setContentView(R.layout.activity_home);
-		RelativeLayout rl = (RelativeLayout) findViewById(R.id.RelativeLayoutHome);
-		RelativeLayout rlDrawer = (RelativeLayout) findViewById(R.id.drawer_Linearlayout);
-//		ListView lv = (ListView) findViewById(R.id.left_drawer);
-		updateTheme(rl, getActionBar(), rlDrawer);
+		updateColorTheme();
 
 		
 		// Create drawer menu
@@ -76,6 +73,12 @@ public class HomeActivity extends BaseActivity {
 		syncmanager = getSyncManager();
 		getFriendsManager();
 		updateAdapter();	
+	}
+
+	private void updateColorTheme() {
+		RelativeLayout rl = (RelativeLayout) findViewById(R.id.RelativeLayoutHome);
+		RelativeLayout rlDrawer = (RelativeLayout) findViewById(R.id.drawer_Linearlayout);
+		updateTheme(rl, getActionBar(), rlDrawer);
 	}
 	
 	private void updateAdapter() {
