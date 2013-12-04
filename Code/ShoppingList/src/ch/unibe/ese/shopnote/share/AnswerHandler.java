@@ -154,9 +154,9 @@ public class AnswerHandler {
 					friendsManager.addFriend(new Friend(number, "User"));
 					friendsManager.addFriendToRecipe(recipe, friendsManager.getFriendWithPhoneNr(number));
 				}
-				if(friendsManager.getSharedFriends(recipe).isEmpty()) {
-					recipe.setShared(false);
-				}
+//				if(friendsManager.getSharedFriends(recipe).isEmpty()) {
+//					recipe.setShared(false);
+//				}
 			} else {
 				ShoppingList list3 = listManager.getShoppingList(gsfRequest.getLocalListId());
 				// Drop all friends of a list and add them again if they are still in the list
@@ -167,9 +167,9 @@ public class AnswerHandler {
 					friendsManager.addFriend(new Friend(number, "User"));
 					friendsManager.addFriendToList(list3,friendsManager.getFriendWithPhoneNr(number));
 				}
-				if(friendsManager.getSharedFriends(list3).isEmpty()) {
-					list3.setShared(false);
-				}
+//				if(friendsManager.getSharedFriends(list3).isEmpty()) {
+//					list3.setShared(false);
+//				}
 			}
 			return;
 
@@ -267,7 +267,6 @@ public class AnswerHandler {
 				int changesCountList = list.getChangesCount();
 				if (((ItemRequest) request).isDeleted()) {
 					listManager.removeItemFromList(localItem, list);
-					
 				} else {
 					localItem.setBought(((ItemRequest) request).isBought());
 					listManager.addItemToList(localItem, list);
@@ -299,6 +298,7 @@ public class AnswerHandler {
 					friendsManager.removeFriendFromList(list, friend);
 				}
 			}
+			return;
 		}
 	}
 
