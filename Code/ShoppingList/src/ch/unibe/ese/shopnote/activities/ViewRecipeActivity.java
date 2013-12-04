@@ -132,7 +132,6 @@ public class ViewRecipeActivity extends BaseActivity {
 		
 		// Bugfix, allows to put a ListView in a ScrollView with other objects
 		Utility.setListViewHeightBasedOnChildren(listView);
-		Log.w("Log size", "" + listView.getCount());
 	}
 	
 	private AutoCompleteTextView createAutocomplete() {
@@ -250,9 +249,7 @@ public class ViewRecipeActivity extends BaseActivity {
 			finish();
 			return true;
 		case R.id.action_refresh:
-			syncManager.synchronise(this);
-			Toast.makeText(this, this.getString(R.string.synchronizing),
-					Toast.LENGTH_SHORT).show();
+			synchronize();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
