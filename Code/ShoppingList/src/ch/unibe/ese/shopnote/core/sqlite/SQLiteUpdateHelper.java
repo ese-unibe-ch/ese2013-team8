@@ -170,10 +170,13 @@ public class SQLiteUpdateHelper {
 	 * @param item
 	 */
 	public void addItemIfNotExistent(Item item) {
-		long id = readHelper.getItemId(item.getName());
-		if (id == -1) {
+		Item existing = readHelper.getItem(item.getName());
+		long id;
+		if (existing == null) {
 			ContentValues values = this.toValue(item);
 			id = database.insert(SQLiteHelper.TABLE_ITEMS, null, values);
+		} else {
+			id = existing.getId();
 		}
 		if (item.getId() == null)
 			item.setId(id);

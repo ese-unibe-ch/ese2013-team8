@@ -101,6 +101,7 @@ public class ViewRecipeActivity extends BaseActivity {
 		
 		// load notes
 		setTextViewText(R.id.editTextNotes, recipe.getNotes());
+		
 	}
 
 	private void updateRecipeList() {
@@ -262,6 +263,7 @@ public class ViewRecipeActivity extends BaseActivity {
 		TextView textItems = (TextView) findViewById(R.id.textItems);
 		TextView textNotes = (TextView) findViewById(R.id.textNotes);
 		EditText editTextNotes = (EditText) findViewById(R.id.editTextNotes);
+		updateThemeTextBox(editTextNotes);
 		
 		// toggle ingredients description text
 		if (!itemAdapter.isEmpty())

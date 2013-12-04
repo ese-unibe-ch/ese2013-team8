@@ -1,6 +1,5 @@
 package ch.unibe.ese.shopnote.core;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -16,25 +15,30 @@ import java.util.List;
  * </code>
  */
 public interface PersistenceManager {
+	
+	/**
+	 * Searches for the item with the given name.
+	 * @param itemName
+	 * @return null if the item does not exist.
+	 */
+	Item getItem(String itemName);
+
 	/**
 	 * Reads ShoppingLists from their persistent state.
 	 * 
 	 * @return never <code>null</code>.
-	 * @throws IOException
 	 */
 	List<ShoppingList> getLists();
 	
 	/**
 	 * Saves a new created or editet list
 	 * @param list
-	 * @throws IOException
 	 */
 	long save(ShoppingList list);
 	
 	/**
 	 * Removes an already existing list
 	 * @param list
-	 * @throws IOException
 	 */
 	void remove(ShoppingList list);
 
@@ -49,7 +53,6 @@ public interface PersistenceManager {
 	 * Removes an already existing item from a list
 	 * @param item
 	 * @param list
-	 * @throws IOException
 	 */
 	void remove(Item item, ShoppingList list);
 
@@ -64,7 +67,6 @@ public interface PersistenceManager {
 	 * Reads friends from their persistent state.
 	 * 
 	 * @return never <code>null</code>.
-	 * @throws IOException
 	 */
 	List<Friend> getFriends();
 	
