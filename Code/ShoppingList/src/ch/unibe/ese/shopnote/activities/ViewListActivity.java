@@ -97,7 +97,7 @@ public class ViewListActivity extends BaseActivity {
 	                long id) {
 	        	ItemRecipeAdapter entry = (ItemRecipeAdapter) sqliteAdapter.getItem(position);
 	
-	        	if(entry.isItem()) {
+	        	if (entry.isItem()) {
 	        		Item item = manager.getItem(entry.getId());
 	        		manager.addItemToList(item, list);
 	        		addItemRequestIfShared(item, false);
@@ -291,7 +291,9 @@ public class ViewListActivity extends BaseActivity {
 			}
 
 		} else {
-			Item item = new Item(name);
+			Item item = manager.getItem(name);
+			if (item == null)
+				item = new Item(name);
 			boolean added = manager.addItemToList(item, list);
 			addItemRequestIfShared(item, false);
 

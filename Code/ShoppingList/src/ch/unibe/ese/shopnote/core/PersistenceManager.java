@@ -1,6 +1,5 @@
 package ch.unibe.ese.shopnote.core;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -16,6 +15,14 @@ import java.util.List;
  * </code>
  */
 public interface PersistenceManager {
+	
+	/**
+	 * Searches for the item with the given name.
+	 * @param itemName
+	 * @return null if the item does not exist.
+	 */
+	Item getItem(String itemName);
+
 	/**
 	 * Reads ShoppingLists from their persistent state.
 	 * 

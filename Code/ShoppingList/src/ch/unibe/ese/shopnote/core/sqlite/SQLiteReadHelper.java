@@ -344,17 +344,15 @@ public class SQLiteReadHelper {
 	 * @param itemName
 	 * @return
 	 */
-	public long getItemId(String itemName) {
+	public Item getItem(String itemName) {
 		Cursor cursor = database.query(SQLiteHelper.TABLE_ITEMS,
 				SQLiteHelper.ITEMS_COLUMNS, SQLiteHelper.COLUMN_ITEM_NAME
 						+ "=?", new String[] { itemName }, null, null, null,
 				null);
-		if (cursor.getCount() >= 1) {
-			cursor.moveToFirst();
-			return cursor.getLong(0);
-		} else {
-			return -1;
-		}
+		if (cursor.getCount() == 0)
+			return null;
+		cursor.moveToFirst();
+		return cursorToItemLite(cursor);
 	}
 
 	/**

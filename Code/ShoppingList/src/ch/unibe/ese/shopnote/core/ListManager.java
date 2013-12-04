@@ -85,33 +85,45 @@ public class ListManager {
 			items = new ArrayList<Item>();
 			listToItems.put(list, items);
 		}
-		if (item.getId() == null){
-			for (Item item2 : items) {
-				if (!item2.isBought() && item2.getName().equals(item.getName())) {
-					if (item.getUnit() != null && item.getUnit() == item2.getUnit()) {
-						BigDecimal newQuantity = item.getQuantity().add(item2.getQuantity());
-						item2.setQuantity(newQuantity, item2.getUnit());
-						item = item2; // we want to save only one item.
-					} else if (ItemUnit.MASSES.contains(item.getUnit()) && ItemUnit.MASSES.contains(item2.getUnit())) {
-						// Both units are masses. Convert it first to grams and then add them.
-						BigDecimal mass1 = item.getUnit()==ItemUnit.GRAM ? item.getQuantity():item.getQuantity().multiply(THOUSAND);
-						BigDecimal mass2 = item2.getUnit()==ItemUnit.GRAM ? item2.getQuantity():item2.getQuantity().multiply(THOUSAND);
-						BigDecimal finalMass = mass1.add(mass2);
-						ItemUnit unit = ItemUnit.GRAM;
-						if (finalMass.compareTo(THOUSAND) > 0){
-							finalMass = finalMass.divide(THOUSAND);
-							unit = ItemUnit.KILO_GRAM;
-						}
-						item2.setQuantity(finalMass, unit);
-						item = item2;
-					}
-				}
-			}
-		}
+		if (item.getId() == null)
+			item = mergeItem(item, items);
+		
 		persistenceManager.save(item, list);
 		if (!items.contains(item))
 			return items.add(item);
 		return false;
+	}
+	
+	/**
+	 * Merges the newItem into the list of existing items.<p>
+	 * If the list contains an item with the same name and the same unit, it will merge this item with the newItem.
+	 * @param newItem
+	 * @param items
+	 * @return the item to persist.
+	 */
+	private Item mergeItem(Item newItem, List<Item> items){
+		for (Item item2 : items) {
+			if (!item2.isBought() && item2.getName().equals(newItem.getName())) {
+				if (newItem.getUnit() != null && newItem.getUnit() == item2.getUnit()) {
+					BigDecimal newQuantity = newItem.getQuantity().add(item2.getQuantity());
+					item2.setQuantity(newQuantity, item2.getUnit());
+					return item2; // we want to save only one item.
+				} else if (ItemUnit.MASSES.contains(newItem.getUnit()) && ItemUnit.MASSES.contains(item2.getUnit())) {
+					// Both units are masses. Convert it first to grams and then add them.
+					BigDecimal mass1 = newItem.getUnit()==ItemUnit.GRAM ? newItem.getQuantity():newItem.getQuantity().multiply(THOUSAND);
+					BigDecimal mass2 = item2.getUnit()==ItemUnit.GRAM ? item2.getQuantity():item2.getQuantity().multiply(THOUSAND);
+					BigDecimal finalMass = mass1.add(mass2);
+					ItemUnit unit = ItemUnit.GRAM;
+					if (finalMass.compareTo(THOUSAND) > 0){
+						finalMass = finalMass.divide(THOUSAND);
+						unit = ItemUnit.KILO_GRAM;
+					}
+					item2.setQuantity(finalMass, unit);
+					return item2;
+				}
+			}
+		}
+		return newItem;
 	}
 
 	/**
@@ -176,12 +188,22 @@ public class ListManager {
 	 * @return item with id
 	 */
 	public Item getItem(Long id) {
+		// TODO dont iterate over all items, just query for the right one.
 		List<Item> listOfItems = persistenceManager.getAllItems();
 		for (Item item : listOfItems) {
 			if (item.getId() == id)
 				return item;
 		}
 		return null;
+	}
+	
+	/**
+	 * Gets the item with the given name.
+	 * @param name
+	 * @return null if no item with the name exists.
+	 */
+	public Item getItem(String name) {
+		return persistenceManager.getItem(name);
 	}
 
 	/**
