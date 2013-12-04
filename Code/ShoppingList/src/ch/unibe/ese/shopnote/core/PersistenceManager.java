@@ -92,13 +92,13 @@ public interface PersistenceManager {
 	 * Saves item to the db where all items are saved.
 	 * @param item
 	 */
-	public void save(Item item);
+	void save(Item item);
 	
 	/**
 	 * Removes item from item db
 	 * @param item
 	 */
-	public void remove(Item item);
+	void remove(Item item);
 
 	/**
 	 * Reads all recipes on the db
@@ -110,7 +110,7 @@ public interface PersistenceManager {
 	 * Saves a recipe to the db
 	 * @param recipe
 	 */
-	public void save(Recipe recipe);
+	void save(Recipe recipe);
 
 	/**
 	 * removes a recipe from the db

@@ -42,7 +42,7 @@ public class ViewRecipeActivity extends BaseActivity {
 	private Recipe recipe;
 	private List<Item> itemsOfRecipe;
 	private ArrayAdapter<Item> itemAdapter;
-	ArrayAdapter<Item> autocompleteAdapter;
+	private ArrayAdapter<Item> autocompleteAdapter;
 	private long recipeIndex;
 
 	@Override
