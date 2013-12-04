@@ -13,11 +13,13 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.adapters.RecipeAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.Recipe;
+import ch.unibe.ese.shopnote.share.SyncManager;
 
 /**
  *	Creates a frame which enlists all recipes and the possibility to manage them
@@ -26,6 +28,7 @@ public class ManageRecipeActivity extends BaseActivity {
 	private ListManager manager; 
 	private ArrayAdapter<Recipe> recipeAdapter;
 	private List<Recipe> recipes;
+	private SyncManager syncManager;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +44,8 @@ public class ManageRecipeActivity extends BaseActivity {
 		setupActionBar();
 		
 		manager = getListManager();
-
+		syncManager = getSyncManager();
+		
 		// Create drawer menu
 		createDrawerMenu();
 		createDrawerToggle();
@@ -103,6 +107,12 @@ public class ManageRecipeActivity extends BaseActivity {
 				updateRecipeList();
 	}
 	
+	@Override
+	public void onResume() {
+		super.onResume();
+		updateRecipeList();
+	}
+	
 	/**
 	 * Set up the {@link android.app.ActionBar}.
 	 */
@@ -128,12 +138,28 @@ public class ManageRecipeActivity extends BaseActivity {
 	
 		// Handle presses on the action bar items
 		switch (item.getItemId()) {
-			case R.id.action_new:
-				Intent createRecipeIntent = new Intent(this, CreateRecipeActivity.class);
-				this.startActivityForResult(createRecipeIntent, 1);
-				return true;
-			default:
-				return super.onOptionsItemSelected(item);
+		case R.id.action_refresh:
+			if (isOnline()) {
+				syncManager.synchronise(this);
+				Toast.makeText(this, this.getString(R.string.synchronizing),
+						Toast.LENGTH_SHORT).show();
+			} else {
+				Toast.makeText(this, this.getString(R.string.no_connection),
+						Toast.LENGTH_SHORT).show();
+			}
+			return true;
+
+		case R.id.action_new:
+			Intent createRecipeIntent = new Intent(this,
+					CreateRecipeActivity.class);
+			this.startActivityForResult(createRecipeIntent, 1);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
 		}
+	}
+	
+	public void refresh() {
+		updateRecipeList();
 	}
 }

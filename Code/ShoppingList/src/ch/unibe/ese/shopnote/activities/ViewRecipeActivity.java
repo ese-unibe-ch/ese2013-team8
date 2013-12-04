@@ -29,12 +29,16 @@ import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.Recipe;
 import ch.unibe.ese.shopnote.core.Utility;
+import ch.unibe.ese.shopnote.share.SyncManager;
+import ch.unibe.ese.shopnote.share.requests.listchange.ItemRequest;
+import ch.unibe.ese.shopnote.share.requests.listchange.RecipeDescriptionRequest;
 
 /**
  *	Displays a single recipe including the items
  */
 public class ViewRecipeActivity extends BaseActivity {
-	private ListManager manager;
+	private ListManager listManager;
+	private SyncManager syncManager;
 	private Recipe recipe;
 	private List<Item> itemsOfRecipe;
 	private ArrayAdapter<Item> itemAdapter;
@@ -61,13 +65,15 @@ public class ViewRecipeActivity extends BaseActivity {
 		createDrawerToggle(); //to change the title
 		drawerToggle.setDrawerIndicatorEnabled(false);
 		
-		manager = getListManager();
-		manager.updateRecipe();
+		// get managers
+		syncManager = getSyncManager();
+		listManager = getListManager();
+		listManager.updateRecipe();
 		
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
 			recipeIndex = extras.getLong(EXTRAS_RECIPE_ID);
-			recipe = manager.getRecipeAt(recipeIndex);
+			recipe = listManager.getRecipeAt(recipeIndex);
 			itemsOfRecipe = recipe.getItemList();
 			setTitle(this.getString(R.string.view_recipe_title) + " " + recipe.toString());
 		} 
@@ -99,7 +105,7 @@ public class ViewRecipeActivity extends BaseActivity {
 
 	private void updateRecipeList() {
 		// Get listOfRecipes and put it in the listview	
-		recipe = manager.getRecipeAt(recipeIndex);
+		recipe = listManager.getRecipeAt(recipeIndex);
 		itemsOfRecipe = recipe.getItemList();
 		itemAdapter = new ItemListAdapter(this,
 				R.layout.shopping_list_item, itemsOfRecipe);
@@ -115,7 +121,7 @@ public class ViewRecipeActivity extends BaseActivity {
 					int position, long arg3) {
 				Item selectedItem = itemAdapter.getItem(position);
 				ViewRecipeActivity.this.startActionMode(new RecipeListActionMode(
-						ViewRecipeActivity.this.manager, recipe, selectedItem,
+						ViewRecipeActivity.this.listManager, recipe, selectedItem,
 						ViewRecipeActivity.this.itemAdapter,
 						ViewRecipeActivity.this));
 				return true;
@@ -129,7 +135,7 @@ public class ViewRecipeActivity extends BaseActivity {
 	private AutoCompleteTextView createAutocomplete() {
 		AutoCompleteTextView addItems = (AutoCompleteTextView) findViewById(R.id.editTextName);
 		autocompleteAdapter = new ArrayAdapter<Item>(this,
-				android.R.layout.simple_list_item_1, manager.getAllItems());
+				android.R.layout.simple_list_item_1, listManager.getAllItems());
 		addItems.setAdapter(autocompleteAdapter);
 		updateThemeTextBox(addItems);
 		
@@ -182,8 +188,9 @@ public class ViewRecipeActivity extends BaseActivity {
 		} 
 		else {
 			Item item = new Item(name);
-			manager.save(item);
+			listManager.save(item);
 			recipe.addItem(item);
+			addItemRequestIfShared(item);
 			updateRecipeList();
 		}
 
@@ -219,7 +226,7 @@ public class ViewRecipeActivity extends BaseActivity {
 		case R.id.action_notes:
 			// toggle notes visibility state
 			recipe.setNotesVisible(!recipe.isNotesVisible());
-			manager.saveRecipe(recipe);
+			listManager.saveRecipe(recipe);
 			toggleDescription();
 			return true;
 		case R.id.action_share:
@@ -236,8 +243,13 @@ public class ViewRecipeActivity extends BaseActivity {
             this.startActivity(intentEdit);
 			return true;
 		case R.id.action_delete:
-			manager.removeRecipe(recipe);
+			listManager.removeRecipe(recipe);
 			finish();
+			return true;
+		case R.id.action_refresh:
+			syncManager.synchronise(this);
+			Toast.makeText(this, this.getString(R.string.synchronizing),
+					Toast.LENGTH_SHORT).show();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -272,8 +284,13 @@ public class ViewRecipeActivity extends BaseActivity {
 	public void onPause() {
 		super.onPause();
 		// save notes
+		boolean hasChanged = !getTextViewText(R.id.editTextNotes).equals(recipe.getNotes());
 		recipe.setNotes(getTextViewText(R.id.editTextNotes));
-		manager.saveRecipe(recipe);
+		if(recipe.isShared() && hasChanged) {
+			syncManager.addRequest(new RecipeDescriptionRequest(getMyPhoneNumber(), recipe.getId(), recipe.getNotes()));
+			syncManager.synchronise(this);
+		}
+		listManager.saveRecipe(recipe);
 	}
 	
 	@Override
@@ -281,13 +298,28 @@ public class ViewRecipeActivity extends BaseActivity {
 		super.onResume();
 		// load notes
 		setTextViewText(R.id.editTextNotes, recipe.getNotes());
+		updateRecipeList();
 	}
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		manager.updateRecipe();
-		this.recipe = manager.getRecipeAt(recipe.getId());
+		listManager.updateRecipe();
+		this.recipe = listManager.getRecipeAt(recipe.getId());
 		this.updateRecipeList();
+	}
+	
+	private void addItemRequestIfShared(Item item) {
+		if (recipe.isShared()){
+			ItemRequest irequest = new ItemRequest(getMyPhoneNumber(), recipe.getId(), item.copy());
+			irequest.isRecipe(true);
+			syncManager.addRequest(irequest);
+			syncManager.synchronise(this);
+		}
+	}
+	
+	public void refresh() {
+		setTextViewText(R.id.editTextNotes, recipe.getNotes());
+		updateRecipeList();
 	}
 }

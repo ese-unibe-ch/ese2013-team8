@@ -13,6 +13,9 @@ public class Recipe extends Entity {
 	private String notes;
 	private boolean showNotes;
 	private boolean shared;
+	
+	// Temporary field, doesn't need to be persisted
+	private long serverId;
 
 	public Recipe(String name) {
 		if(name.charAt(0) != '/')
@@ -74,6 +77,14 @@ public class Recipe extends Entity {
 
 	public void removeItem(Item item) {
 		itemList.remove(item);
+	}
+	
+	public void setServerId(long id) {
+		this.serverId = id;
+	}
+	
+	public long getServerId() {
+		return this.serverId;
 	}
 
 	private void invariant() {

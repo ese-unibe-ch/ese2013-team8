@@ -22,7 +22,7 @@
     <string name="title_activity_manage_friends">Friends</string>
     <string name="title_activity_create_friend">Add Friend</string>
     <string name="title_activity_item_list">Item List</string>
-    <string name="title_activity_manage_recipe">Manage Recipes</string>
+    <string name="title_activity_manage_recipe">Recipes</string>
     <string name="title_activity_create_recipe">Create Recipes</string>
     <string name="title_activity_archive">Archive</string>
     <string name="title_activity_view_recipe">View Recipe</string>

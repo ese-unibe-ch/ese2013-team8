@@ -10,6 +10,7 @@ public class UnShareListRequest extends Request {
 	private static final long serialVersionUID = 3578967523359694420L;
 	private String friendNumber;
 	private long listId;
+	private boolean isRecipe;
 
 	public UnShareListRequest(String phoneNumber, String friendNumber, long listId) {
 		super(phoneNumber);
@@ -31,6 +32,14 @@ public class UnShareListRequest extends Request {
 	
 	public void setFriend(String friendNumber) {
 		this.friendNumber = friendNumber;
+	}
+	
+	public void isRecipe(boolean b) {
+		this.isRecipe = b;
+	}
+	
+	public boolean isRecipe() {
+		return this.isRecipe;
 	}
 	
 	@Override

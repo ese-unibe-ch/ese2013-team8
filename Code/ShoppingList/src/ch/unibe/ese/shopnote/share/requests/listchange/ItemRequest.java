@@ -52,6 +52,7 @@ public class ItemRequest extends ListChangeRequest {
 		ItemRequest copy = new ItemRequest(this.getPhoneNumber(), this.getLocalListId(), this.item);
 		copy.setBought(this.isBought);
 		copy.setDelete(this.isDeleted);
+		copy.isRecipe(isRecipe());
 		return copy;
 	}
 	

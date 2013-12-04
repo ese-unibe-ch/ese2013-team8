@@ -13,13 +13,12 @@ public class CreateSharedListRequest extends Request {
 	private long serverListId;
 	private long localListId;
 	private String listname;
-	private ArrayList<String> sharedFriendNumbers;
+	private boolean isRecipe;
 	
 	public CreateSharedListRequest(String phoneNumber, long serverListId, String listname) {
 		super(phoneNumber);
 		this.serverListId = serverListId;
 		this.listname = listname;
-		this.sharedFriendNumbers = new ArrayList<String>();
 		this.setSuccessful();
 	}
 
@@ -44,12 +43,12 @@ public class CreateSharedListRequest extends Request {
 		return this.localListId;
 	}
 	
-	public ArrayList<String> getSharedFriendNumbers() {
-		return this.sharedFriendNumbers;
+	public void isRecipe(boolean b) {
+		this.isRecipe = b;
 	}
 	
-	public void addSharedFriendNumber(String number) {
-		this.sharedFriendNumbers.add(number);
+	public boolean isRecipe() {
+		return this.isRecipe;
 	}
 	
 }

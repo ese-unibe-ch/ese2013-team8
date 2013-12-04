@@ -11,27 +11,36 @@ import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Friend;
 import ch.unibe.ese.shopnote.core.FriendsManager;
+import ch.unibe.ese.shopnote.core.Recipe;
 import ch.unibe.ese.shopnote.core.ShoppingList;
 import ch.unibe.ese.shopnote.share.requests.UnShareListRequest;
 
 /**
  *	Creates the action bar for shared lists to edit friends or remove them
  */
-public class ShareListActionMode implements Callback {
+public class ShareActionMode implements Callback {
 
 	private FriendsManager friendsManager;
 	private Friend selectedFriend;
 	private Activity activity;
 	private ShoppingList list;
-	
+	private Recipe recipe;
+	private boolean isRecipe;
 
-	public ShareListActionMode(FriendsManager manager, Friend friend, ShoppingList list, Activity homeActivity) {
+	public ShareActionMode(FriendsManager manager, Friend friend, ShoppingList list, Activity homeActivity) {
 		this.friendsManager = manager;
 		this.selectedFriend = friend;
 		this.activity = homeActivity;
 		this.list = list;
 	}
 	
+	public ShareActionMode(FriendsManager manager, Friend friend, Recipe recipe, Activity homeActivity) {
+		this.friendsManager = manager;
+		this.selectedFriend = friend;
+		this.activity = homeActivity;
+		this.recipe = recipe;
+		isRecipe = true;
+	}
 	
     /** 
      *	Called when the action mode is created; startActionMode() was called
@@ -67,13 +76,20 @@ public class ShareListActionMode implements Callback {
 		            activity.startActivityForResult(intent, 1);
                 return true;
             case R.id.action_remove:
+            	ShareActivity shareActivity = (ShareActivity) activity;
+            	if (!isRecipe) {
             		friendsManager.removeFriendFromList(list, selectedFriend);
-            		ShareActivity shareActivity = (ShareActivity) activity;
                		UnShareListRequest uslrequest = new UnShareListRequest(shareActivity.getMyPhoneNumber(), 
             				selectedFriend.getPhoneNr(), list.getId());
             		shareActivity.getSyncManager().addRequest(uslrequest);
-            		shareActivity.updateFriendsList();
-	            	mode.finish(); // Action picked, so close the CAB
+            	}
+            	else {
+            		friendsManager.removeFriendFromRecipe(recipe, selectedFriend);
+            		// TODO: Unshare request
+            	}
+            	
+        		shareActivity.updateFriendsList();
+            	mode.finish(); // Action picked, so close the CAB
             	return true;
            
             default:

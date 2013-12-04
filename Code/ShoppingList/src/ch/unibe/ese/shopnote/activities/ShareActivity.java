@@ -5,7 +5,6 @@ import java.util.List;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Looper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -100,7 +99,19 @@ public class ShareActivity extends BaseActivity {
 		getSharedFriends();
 		
 		// create autocompletion
-		AutoCompleteTextView textName = createAutocomplete();
+		createAutocomplete();
+	}
+
+	/**
+	 *	Creates or updates the autocreation textfield
+	 */
+	private void createAutocomplete() {
+		AutoCompleteTextView textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
+		autocompleteAdapter = new ArrayAdapter<Friend>(this,
+				android.R.layout.simple_list_item_1,
+				friendsManager.getFriendsWithApp());
+		textName.setAdapter(autocompleteAdapter);
+		updateThemeTextBox(textName);
 
 		// autocompletion click listener
 		textName.setOnItemClickListener(new OnItemClickListener() {
@@ -121,26 +132,14 @@ public class ShareActivity extends BaseActivity {
 				else {
 					friendsManager.addFriendToRecipe(recipe, friend);
 					updateFriendsList();
-					// TODO: ShareRecipeRequest		
+					ShareListRequest slrequest = new ShareListRequest(getMyPhoneNumber(),
+							friend.getPhoneNr(), recipe.getId(), recipe.getName());
+					slrequest.isRecipe(true);
+					syncManager.addRequest(slrequest);	
 				}
 				setTextViewText(R.id.editTextName, "");
 			}
 		});
-
-	}
-
-	/**
-	 *	Creates or updates the autocreation textfield
-	 */
-	private AutoCompleteTextView createAutocomplete() {
-		AutoCompleteTextView textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
-		autocompleteAdapter = new ArrayAdapter<Friend>(this,
-				android.R.layout.simple_list_item_1,
-				friendsManager.getFriendsWithApp());
-		textName.setAdapter(autocompleteAdapter);
-		updateThemeTextBox(textName);
-
-		return textName;
 	}
 
 	/** Called when the user touches the create button */
@@ -173,18 +172,18 @@ public class ShareActivity extends BaseActivity {
 			syncManager.synchronise(this);
 			
 			// Set the list on shared if there's an entry in the list
-			if (!isRecipe) {
-				list.setShared(!adapter.isEmpty());
-				listManager.saveShoppingList(list);
-			}
-			
-			// Set the recipe on shared
-			else {
-				recipe.setShared(!adapter.isEmpty());
-				listManager.saveRecipe(recipe);
-			}
+//			if (!isRecipe) {
+//				list.setShared(!adapter.isEmpty());
+//				listManager.saveShoppingList(list);
+//			}
+//			
+//			// Set the recipe on shared
+//			else {
+//				recipe.setShared(!adapter.isEmpty());
+//				listManager.saveRecipe(recipe);
+//			}
 				
-			// Navigate back to the list
+			// Navigate back to the list/recipe
 			finish();
 			return true;
 		case R.id.menu_item_share:
@@ -219,14 +218,20 @@ public class ShareActivity extends BaseActivity {
 		
 		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
 
-			// TODO: change for recipe
 			@Override
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 					int position, long id) {
-				Friend friend = adapter.getItem(position);				
-				ShareActivity.this.startActionMode(new ShareListActionMode(
-								ShareActivity.this.friendsManager, friend,
-								list, ShareActivity.this));
+				Friend friend = adapter.getItem(position);	
+				if (!isRecipe) {
+					ShareActivity.this.startActionMode(new ShareActionMode(
+									ShareActivity.this.friendsManager, friend,
+									list, ShareActivity.this));
+				}
+				else {
+					ShareActivity.this.startActionMode(new ShareActionMode(
+							ShareActivity.this.friendsManager, friend,
+							recipe, ShareActivity.this));
+				}
 
 				setTextViewText(R.id.editTextName, "");
 				return true;
@@ -237,13 +242,15 @@ public class ShareActivity extends BaseActivity {
 	private void getSharedFriends() {
 		if(isRecipe) {
 			if(recipe.isShared()) {
-				// Get friends here
+				GetSharedFriendsRequest gsfRequest = new GetSharedFriendsRequest(getMyPhoneNumber(), recipe.getId());
+				gsfRequest.isRecipe(true);
+				syncManager.addRequest(gsfRequest);
 			}
 		} else if(list.isShared()) {
 				GetSharedFriendsRequest gsfRequest = new GetSharedFriendsRequest(getMyPhoneNumber(), list.getId());
 				syncManager.addRequest(gsfRequest);
-				syncManager.synchronise(this);
 		}
+		syncManager.synchronise(this);
 	}
 
 	private void setShareIntent(Intent shareIntent) {
@@ -315,11 +322,19 @@ public class ShareActivity extends BaseActivity {
 						if(!friend.hasTheApp())
 							waitForMillisecs(1000);
 					if(friend.hasTheApp()) {
-						// TODO: change for recipe
-						friendsManager.addFriendToList(list, friend);
-						ShareListRequest slrequest = new ShareListRequest(getMyPhoneNumber(),
-								friend.getPhoneNr(), list.getId(), list.getName());
-						syncManager.addRequest(slrequest);
+						if (!isRecipe) {
+							friendsManager.addFriendToList(list, friend);
+							ShareListRequest slrequest = new ShareListRequest(getMyPhoneNumber(),
+									friend.getPhoneNr(), list.getId(), list.getName());
+							syncManager.addRequest(slrequest);
+						}
+						else {
+							friendsManager.addFriendToRecipe(recipe, friend);
+							ShareListRequest slrequest = new ShareListRequest(getMyPhoneNumber(),
+									friend.getPhoneNr(), recipe.getId(), recipe.getName());
+							slrequest.isRecipe(true);
+							syncManager.addRequest(slrequest);
+						}
 						handler.sendEmptyMessage(0);
 					} else {
 						handler.sendEmptyMessage(1);

@@ -13,9 +13,11 @@ public abstract class ListChangeRequest extends Request {
 	public static final int RENAME_LIST_REQUEST = 100;
 	public static final int ITEM_REQUEST = 110;
 	public static final int SET_UNSHARED_REQUEST = 120;
+	public static final int RECIPE_DESCRIPTION_REQUEST = 130;
 	
 	private long localListId;
 	private boolean listIdPending;
+	private boolean isRecipe;
 	
 	public ListChangeRequest(String phoneNumber, long localListId) {
 		super(phoneNumber);
@@ -42,6 +44,14 @@ public abstract class ListChangeRequest extends Request {
 	
 	public boolean islistIdPending() {
 		return this.listIdPending;
+	}
+	
+	public void isRecipe(boolean b) {
+		this.isRecipe = b;
+	}
+	
+	public boolean isRecipe() {
+		return this.isRecipe;
 	}
 
 	public abstract int getSubType();
