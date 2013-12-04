@@ -350,9 +350,7 @@ public class ViewListActivity extends BaseActivity {
 				finish();
 				return true;
 			case R.id.action_refresh:
-				syncmanager.synchronise(this);
-				Toast.makeText(this, this.getString(R.string.synchronizing),
-						Toast.LENGTH_SHORT).show();
+				synchronize();
 				return true;
 		}
 

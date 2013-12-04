@@ -59,7 +59,6 @@ public class HomeActivity extends BaseActivity {
         //set chosen color theme
 		setContentView(R.layout.activity_home);
 		updateColorTheme();
-
 		
 		// Create drawer menu
 		createDrawerMenu();
@@ -166,14 +165,7 @@ public class HomeActivity extends BaseActivity {
 		switch (item.getItemId()) {
 
 			case R.id.action_refresh:
-				if(isOnline()) {
-					syncmanager.synchronise(this);
-					Toast.makeText(this, this.getString(R.string.synchronizing),
-							Toast.LENGTH_SHORT).show();
-				} else {
-					Toast.makeText(this, this.getString(R.string.no_connection),
-							Toast.LENGTH_SHORT).show();
-				}
+				synchronize();
 				return true;
 			case R.id.action_new:
 				Intent intent = new Intent(this, CreateListActivity.class);
@@ -259,9 +251,5 @@ public class HomeActivity extends BaseActivity {
 			
 			alarmManager.set(AlarmManager.RTC, cal.getTimeInMillis(), pendingIntent);
 		}
-		
-	 
-	  
-	  }
-	
+	}
 }

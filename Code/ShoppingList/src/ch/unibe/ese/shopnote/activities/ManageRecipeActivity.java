@@ -139,14 +139,7 @@ public class ManageRecipeActivity extends BaseActivity {
 		// Handle presses on the action bar items
 		switch (item.getItemId()) {
 		case R.id.action_refresh:
-			if (isOnline()) {
-				syncManager.synchronise(this);
-				Toast.makeText(this, this.getString(R.string.synchronizing),
-						Toast.LENGTH_SHORT).show();
-			} else {
-				Toast.makeText(this, this.getString(R.string.no_connection),
-						Toast.LENGTH_SHORT).show();
-			}
+			synchronize();
 			return true;
 
 		case R.id.action_new:

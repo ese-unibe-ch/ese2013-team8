@@ -248,9 +248,7 @@ public class ViewRecipeActivity extends BaseActivity {
 			finish();
 			return true;
 		case R.id.action_refresh:
-			syncManager.synchronise(this);
-			Toast.makeText(this, this.getString(R.string.synchronizing),
-					Toast.LENGTH_SHORT).show();
+			synchronize();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
