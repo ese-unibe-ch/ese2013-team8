@@ -3,6 +3,7 @@ package ch.unibe.ese.shopnote.share;
 import java.util.List;
 
 import android.content.Context;
+import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.core.Friend;
 import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.Recipe;
@@ -18,6 +19,7 @@ import ch.unibe.ese.shopnote.share.requests.ShareListRequest;
 import ch.unibe.ese.shopnote.share.requests.UnShareListRequest;
 import ch.unibe.ese.shopnote.share.requests.listchange.ItemRequest;
 import ch.unibe.ese.shopnote.share.requests.listchange.ListChangeRequest;
+import ch.unibe.ese.shopnote.share.requests.listchange.RecipeDescriptionRequest;
 
 /**
  * Gets passed in a RequestSender to listen to its result
@@ -85,6 +87,7 @@ public class AnswerHandler {
 					iRequest.isRecipe(true);
 					syncManager.addRequest(iRequest);
 				}
+				syncManager.addRequest(new RecipeDescriptionRequest(context.getMyPhoneNumber(), recipe.getId(), recipe.getNotes()));
 			} else {
 				ShoppingList list = listManager.getShoppingList(slRequest.getListId());
 				list.setShared(true);
@@ -252,24 +255,29 @@ public class AnswerHandler {
 				if (((ItemRequest) request).isDeleted()) {
 					recipe.removeItem(localItem);
 				} else {
-					localItem.setBought(((ItemRequest) request).isBought());
 					recipe.addItem(localItem);
 				}
+				listManager.saveRecipe(recipe);
 			} else {
 				int changesCount = list.getChangesCount();
 				if (((ItemRequest) request).isDeleted()) {
 					listManager.removeItemFromList(localItem, list);
-					changesCount++;
+					
 				} else {
 					localItem.setBought(((ItemRequest) request).isBought());
 					listManager.addItemToList(localItem, list);
-					changesCount++;
 				}
+				changesCount++;
 				list.setChangesCount(changesCount);
 				listManager.saveShoppingList(list);
 			}
 
 
+			return;
+			
+		case ListChangeRequest.RECIPE_DESCRIPTION_REQUEST:
+			recipe.setNotes(((RecipeDescriptionRequest)request).getDescription());
+			listManager.saveRecipe(recipe);	
 			return;
 			
 		// One of your sharing partners has removed you :(

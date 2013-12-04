@@ -30,6 +30,8 @@ import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.Recipe;
 import ch.unibe.ese.shopnote.core.Utility;
 import ch.unibe.ese.shopnote.share.SyncManager;
+import ch.unibe.ese.shopnote.share.requests.listchange.ItemRequest;
+import ch.unibe.ese.shopnote.share.requests.listchange.RecipeDescriptionRequest;
 
 /**
  *	Displays a single recipe including the items
@@ -188,6 +190,7 @@ public class ViewRecipeActivity extends BaseActivity {
 			Item item = new Item(name);
 			listManager.save(item);
 			recipe.addItem(item);
+			addItemRequestIfShared(item);
 			updateRecipeList();
 		}
 
@@ -281,7 +284,12 @@ public class ViewRecipeActivity extends BaseActivity {
 	public void onPause() {
 		super.onPause();
 		// save notes
+		boolean hasChanged = !getTextViewText(R.id.editTextNotes).equals(recipe.getNotes());
 		recipe.setNotes(getTextViewText(R.id.editTextNotes));
+		if(recipe.isShared() && hasChanged) {
+			syncManager.addRequest(new RecipeDescriptionRequest(getMyPhoneNumber(), recipe.getId(), recipe.getNotes()));
+			syncManager.synchronise(this);
+		}
 		listManager.saveRecipe(recipe);
 	}
 	
@@ -290,6 +298,7 @@ public class ViewRecipeActivity extends BaseActivity {
 		super.onResume();
 		// load notes
 		setTextViewText(R.id.editTextNotes, recipe.getNotes());
+		updateRecipeList();
 	}
 	
 	@Override
@@ -298,5 +307,19 @@ public class ViewRecipeActivity extends BaseActivity {
 		listManager.updateRecipe();
 		this.recipe = listManager.getRecipeAt(recipe.getId());
 		this.updateRecipeList();
+	}
+	
+	private void addItemRequestIfShared(Item item) {
+		if (recipe.isShared()){
+			ItemRequest irequest = new ItemRequest(getMyPhoneNumber(), recipe.getId(), item.copy());
+			irequest.isRecipe(true);
+			syncManager.addRequest(irequest);
+			syncManager.synchronise(this);
+		}
+	}
+	
+	public void refresh() {
+		setTextViewText(R.id.editTextNotes, recipe.getNotes());
+		updateRecipeList();
 	}
 }

@@ -21,7 +21,9 @@ public class SetUnsharedRequest extends ListChangeRequest {
 
 	@Override
 	public ListChangeRequest getCopy() {
-		return new SetUnsharedRequest(this.getPhoneNumber(), this.getLocalListId());
+		SetUnsharedRequest suRequest = new SetUnsharedRequest(this.getPhoneNumber(), this.getLocalListId());
+		suRequest.isRecipe(isRecipe());
+		return suRequest;
 	}
 
 }

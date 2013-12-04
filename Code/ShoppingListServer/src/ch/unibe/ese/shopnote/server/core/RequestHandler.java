@@ -102,7 +102,9 @@ public class RequestHandler {
 			GetSharedFriendsRequest gsfRequest = (GetSharedFriendsRequest)request;
 			long listId = gsfRequest.getLocalListId();
 			System.out.println("\tGet Shared Friends for LocalListID " + listId);
-			ArrayList<User> sharedwith2 = dbManager.getSharedUsers(new EmptyListChangeRequest(request.getPhoneNumber(), listId));
+			EmptyListChangeRequest elcRequest = new EmptyListChangeRequest(request.getPhoneNumber(), listId);
+			elcRequest.isRecipe(gsfRequest.isRecipe());
+			ArrayList<User> sharedwith2 = dbManager.getSharedUsers(elcRequest);
 			int senderId2 = dbManager.findUser(request);
 			for(User u : sharedwith2) {
 				if(u.getUserId() != senderId2) {

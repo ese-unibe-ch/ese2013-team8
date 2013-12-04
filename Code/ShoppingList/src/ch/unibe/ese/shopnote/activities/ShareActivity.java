@@ -172,16 +172,16 @@ public class ShareActivity extends BaseActivity {
 			syncManager.synchronise(this);
 			
 			// Set the list on shared if there's an entry in the list
-			if (!isRecipe) {
-				list.setShared(!adapter.isEmpty());
-				listManager.saveShoppingList(list);
-			}
-			
-			// Set the recipe on shared
-			else {
-				recipe.setShared(!adapter.isEmpty());
-				listManager.saveRecipe(recipe);
-			}
+//			if (!isRecipe) {
+//				list.setShared(!adapter.isEmpty());
+//				listManager.saveShoppingList(list);
+//			}
+//			
+//			// Set the recipe on shared
+//			else {
+//				recipe.setShared(!adapter.isEmpty());
+//				listManager.saveRecipe(recipe);
+//			}
 				
 			// Navigate back to the list/recipe
 			finish();

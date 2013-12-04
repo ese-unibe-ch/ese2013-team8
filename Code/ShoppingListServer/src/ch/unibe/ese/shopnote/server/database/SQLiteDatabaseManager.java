@@ -371,7 +371,7 @@ public class SQLiteDatabaseManager {
 			Statement stmt = this.c.createStatement();
 			String createEntry = "insert into "
 					+ TABLE_LOCALTOSERVER_LIST_ID + " values (\"" + userId
-					+ "\",\"" + localListId + "\",\"" + serverListId + "\");";
+					+ "\",\"" + localListId + "\",\"" + serverListId + "\",\"" + (isRecipe?1:0) + "\");";
 			stmt.executeUpdate(createEntry);
 			
 		} catch (SQLException e) {

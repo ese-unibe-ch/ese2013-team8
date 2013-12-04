@@ -21,7 +21,7 @@
     <string name="title_activity_manage_friends">Freunde</string>
     <string name="title_activity_create_friend">Freund hinzufügen</string>
     <string name="title_activity_item_list">Artikel-Liste</string>
-    <string name="title_activity_manage_recipe">Rezepte verwalten</string>
+    <string name="title_activity_manage_recipe">Rezepte</string>
     <string name="title_activity_create_recipe">Rezept erstellen</string>
     <string name="title_activity_archive">Archiv</string>
     <string name="title_activity_view_recipe">Rezept</string>

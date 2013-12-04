@@ -22,7 +22,7 @@
     <string name="title_activity_manage_friends">Amis</string>
     <string name="title_activity_create_friend">Ajouter un ami</string>
     <string name="title_activity_item_list">Liste d\'Aricles</string>
-    <string name="title_activity_manage_recipe">Organiser Recettes</string>
+    <string name="title_activity_manage_recipe">Recettes</string>
     <string name="title_activity_create_recipe">Créer Recettes</string>
     <string name="title_activity_archive">Archives</string>
     <string name="title_activity_view_recipe">Vue Recette</string>
