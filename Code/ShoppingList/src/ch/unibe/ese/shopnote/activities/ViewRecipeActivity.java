@@ -132,7 +132,6 @@ public class ViewRecipeActivity extends BaseActivity {
 		
 		// Bugfix, allows to put a ListView in a ScrollView with other objects
 		Utility.setListViewHeightBasedOnChildren(listView);
-		Log.w("Log size", "" + listView.getCount());
 	}
 	
 	private AutoCompleteTextView createAutocomplete() {
