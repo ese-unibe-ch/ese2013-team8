@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -131,6 +132,7 @@ public class ViewRecipeActivity extends BaseActivity {
 		
 		// Bugfix, allows to put a ListView in a ScrollView with other objects
 		Utility.setListViewHeightBasedOnChildren(listView);
+		Log.w("Log size", "" + listView.getCount());
 	}
 	
 	private AutoCompleteTextView createAutocomplete() {

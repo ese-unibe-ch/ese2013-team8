@@ -20,14 +20,14 @@ import ch.unibe.ese.shopnote.R;
 public class RecipeListActionMode implements Callback {
 
 	private ListManager manager;
-	private Activity activity;
+	private BaseActivity activity;
 	private Recipe selectedRecipe;
 	private ArrayAdapter<Recipe> recipeAdapter;
 	private ArrayAdapter<Item> itemAdapter;
 	private Item selectedItem;
 
 	
-	public RecipeListActionMode(ListManager manager, Recipe selectedRecipe, ArrayAdapter<Recipe> recipeAdapter, Activity homeActivity) {
+	public RecipeListActionMode(ListManager manager, Recipe selectedRecipe, ArrayAdapter<Recipe> recipeAdapter, BaseActivity homeActivity) {
 		this.manager = manager;
 		this.selectedRecipe = selectedRecipe;
 		this.activity = homeActivity;
@@ -36,7 +36,7 @@ public class RecipeListActionMode implements Callback {
 		this.selectedItem = null;
 	}
 	
-	public RecipeListActionMode(ListManager manager, Recipe selectedRecipe, Item selectedItem, ArrayAdapter<Item> itemAdapter, Activity homeActivity) {
+	public RecipeListActionMode(ListManager manager, Recipe selectedRecipe, Item selectedItem, ArrayAdapter<Item> itemAdapter, BaseActivity homeActivity) {
 		this.manager = manager;
 		this.selectedRecipe = selectedRecipe;
 		this.activity = homeActivity;
@@ -97,6 +97,7 @@ public class RecipeListActionMode implements Callback {
             		selectedRecipe.removeItem(selectedItem);
             		itemAdapter.remove(selectedItem);
                 	manager.saveRecipe(selectedRecipe);
+                	activity.refresh();
             	}
 	            	
             	return true;
