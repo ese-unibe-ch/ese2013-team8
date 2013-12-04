@@ -63,7 +63,8 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			finish();
+			Intent intent = new Intent(this, HomeActivity.class);
+	        startActivity(intent);
 			return true;
 		}
 		
