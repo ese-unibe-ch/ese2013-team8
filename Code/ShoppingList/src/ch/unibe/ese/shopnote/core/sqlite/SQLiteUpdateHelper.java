@@ -170,7 +170,7 @@ public class SQLiteUpdateHelper {
 	 * @param item
 	 */
 	public void addItemIfNotExistent(Item item) {
-		Item existing = readHelper.getItem(item.getName());
+		Item existing = readHelper.getItem(SQLiteHelper.COLUMN_ITEM_NAME, item.getName());
 		long id;
 		if (existing == null) {
 			ContentValues values = this.toValue(item);
