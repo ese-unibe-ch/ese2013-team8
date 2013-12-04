@@ -52,6 +52,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public static final String COLUMN_RECIPE_NOTES = "recipenotes";
 	public static final String COLUMN_RECIPE_SHOWNOTES = "recipeshownotes";
 	public static final String COLUMN_RECIPE_SHARED = "recipeshared";
+	public static final String COLUMN_RECIPE_CHANGESCOUNT = "changescount";
 	// Save all items to recipeid of a recipe
 	public static final String TABLE_ITEMTORECIPE = "itemtorecipe";
 
@@ -140,7 +141,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 			+ COLUMN_RECIPE_NAME + " text NOT NULL, "
 			+ COLUMN_RECIPE_NOTES + " text, "
 			+ COLUMN_RECIPE_SHOWNOTES + " integer NOT NULL, "
-			+ COLUMN_RECIPE_SHARED + " integer NOT NULL "
+			+ COLUMN_RECIPE_SHARED + " integer NOT NULL, "
+			+ COLUMN_RECIPE_CHANGESCOUNT + " integer NOT NULL "
 			+ ");";
 	
 	private static final String DATABASE_CREATE_TABLE_ITEMTORECIPE =
@@ -177,7 +179,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 		COLUMN_FRIEND_ID};
 	public static String[] RECIPE_COLUMNS = { COLUMN_RECIPE_ID,
 			COLUMN_RECIPE_NAME, COLUMN_RECIPE_NOTES,
-			COLUMN_RECIPE_SHOWNOTES, COLUMN_RECIPE_SHARED};
+			COLUMN_RECIPE_SHOWNOTES, COLUMN_RECIPE_SHARED, COLUMN_RECIPE_CHANGESCOUNT};
 	public static String[] ITEMTORECIPE_COLUMNS = {
 			COLUMN_RECIPE_ID, COLUMN_ITEM_ID, COLUMN_ITEM_PRICE,
 			COLUMN_ITEM_QUANTITY, COLUMN_ITEM_UNIT  };

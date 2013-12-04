@@ -254,14 +254,17 @@ public class AnswerHandler {
 			}
 			// set change notification count
 			if(request.isRecipe()) {
+				int changesCountRecipe = recipe.getChangesCount();
 				if (((ItemRequest) request).isDeleted()) {
 					recipe.removeItem(localItem);
 				} else {
 					recipe.addItem(localItem);
 				}
+				changesCountRecipe++;
+				recipe.setChangesCount(changesCountRecipe);
 				listManager.saveRecipe(recipe);
 			} else {
-				int changesCount = list.getChangesCount();
+				int changesCountList = list.getChangesCount();
 				if (((ItemRequest) request).isDeleted()) {
 					listManager.removeItemFromList(localItem, list);
 					
@@ -269,8 +272,8 @@ public class AnswerHandler {
 					localItem.setBought(((ItemRequest) request).isBought());
 					listManager.addItemToList(localItem, list);
 				}
-				changesCount++;
-				list.setChangesCount(changesCount);
+				changesCountList++;
+				list.setChangesCount(changesCountList);
 				listManager.saveShoppingList(list);
 			}
 

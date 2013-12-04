@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -81,7 +82,7 @@ public class ViewRecipeActivity extends BaseActivity {
 			itemsOfRecipe = new ArrayList<Item>();
 		
 		//create or update recipe list
-		updateRecipeList();
+		refresh();
 		
 		//add autocomplete items
 		createAutocomplete();
@@ -131,6 +132,7 @@ public class ViewRecipeActivity extends BaseActivity {
 		
 		// Bugfix, allows to put a ListView in a ScrollView with other objects
 		Utility.setListViewHeightBasedOnChildren(listView);
+		Log.w("Log size", "" + listView.getCount());
 	}
 	
 	private AutoCompleteTextView createAutocomplete() {
@@ -298,6 +300,7 @@ public class ViewRecipeActivity extends BaseActivity {
 	@Override
 	public void onResume() {
 		super.onResume();
+		refresh();
 		// load notes
 		setTextViewText(R.id.editTextNotes, recipe.getNotes());
 		updateRecipeList();
@@ -323,5 +326,8 @@ public class ViewRecipeActivity extends BaseActivity {
 	public void refresh() {
 		setTextViewText(R.id.editTextNotes, recipe.getNotes());
 		updateRecipeList();
+		// reset change count notification
+		recipe.setChangesCount(0);
+		listManager.saveRecipe(recipe);
 	}
 }
