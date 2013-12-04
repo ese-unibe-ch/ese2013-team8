@@ -129,6 +129,7 @@ public class SQLiteUpdateHelper {
 		values.put(SQLiteHelper.COLUMN_RECIPE_NOTES, recipe.getNotes());
 		values.put(SQLiteHelper.COLUMN_RECIPE_SHOWNOTES, recipe.isNotesVisible());
 		values.put(SQLiteHelper.COLUMN_RECIPE_SHARED, recipe.isShared() ? 1 : 0);
+		values.put(SQLiteHelper.COLUMN_RECIPE_CHANGESCOUNT, recipe.getChangesCount());
 		return values;
 	}
 

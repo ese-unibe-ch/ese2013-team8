@@ -13,6 +13,7 @@ public class Recipe extends Entity {
 	private String notes;
 	private boolean showNotes;
 	private boolean shared;
+	private int changesCount;
 	
 	// Temporary field, doesn't need to be persisted
 	private long serverId;
@@ -68,6 +69,14 @@ public class Recipe extends Entity {
 	
 	public void setShared(boolean shared) {
 		this.shared = shared;
+	}
+	
+	public int getChangesCount() {
+		return changesCount;
+	}
+	
+	public void setChangesCount(int changesCount) {
+		this.changesCount = changesCount;
 	}
 	
 	public void addItem(Item item) {

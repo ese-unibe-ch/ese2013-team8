@@ -81,7 +81,7 @@ public class ViewRecipeActivity extends BaseActivity {
 			itemsOfRecipe = new ArrayList<Item>();
 		
 		//create or update recipe list
-		updateRecipeList();
+		refresh();
 		
 		//add autocomplete items
 		createAutocomplete();
@@ -296,6 +296,7 @@ public class ViewRecipeActivity extends BaseActivity {
 	@Override
 	public void onResume() {
 		super.onResume();
+		refresh();
 		// load notes
 		setTextViewText(R.id.editTextNotes, recipe.getNotes());
 		updateRecipeList();
@@ -321,5 +322,8 @@ public class ViewRecipeActivity extends BaseActivity {
 	public void refresh() {
 		setTextViewText(R.id.editTextNotes, recipe.getNotes());
 		updateRecipeList();
+		// reset change count notification
+		recipe.setChangesCount(0);
+		listManager.saveRecipe(recipe);
 	}
 }

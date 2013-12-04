@@ -1,6 +1,5 @@
 package ch.unibe.ese.shopnote.adapters;
 
-import java.util.ArrayList;
 import java.util.List;
 import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.core.Recipe;
@@ -60,15 +59,13 @@ public class RecipeAdapter extends ArrayAdapter<Recipe> {
 		else
 			holder.isShared.setVisibility(View.GONE);	
 		
-		// set notification count
-		// TODO: Add recipe changes count
-		
-		/*if (recipe.getChangesCount() != 0) {
+		// set notification count		
+		if (recipe.getChangesCount() != 0) {
 			holder.notification.setText("" + recipe.getChangesCount());
 			holder.notification.setVisibility(View.VISIBLE);
 		}
 		else
-			holder.notification.setVisibility(View.GONE);*/
+			holder.notification.setVisibility(View.GONE);
 		
 		return convertView;
 	}
