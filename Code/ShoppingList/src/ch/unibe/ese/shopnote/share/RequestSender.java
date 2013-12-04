@@ -82,6 +82,7 @@ public class RequestSender extends AsyncTask<Request, Void, Boolean>{
 		try {
 			SocketAddress sockaddr = new InetSocketAddress(host, port);
 			socket = new Socket();
+			socket.setSoTimeout(5000);
 			socket.connect(sockaddr, 5000);
 			return true;
 		} catch (UnknownHostException e) {
