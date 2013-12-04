@@ -48,7 +48,12 @@ public class SQLitePersistenceManager implements PersistenceManager {
 	public Item getItem(String itemName) {
 		if (itemName == null || itemName.isEmpty())
 			return null;
-		return readHelper.getItem(itemName);
+		return readHelper.getItem(SQLiteHelper.COLUMN_ITEM_NAME + " = ?", itemName);
+	}
+	
+	@Override
+	public Item getItem(long itemId) {
+		return readHelper.getItem(SQLiteHelper.COLUMN_ITEM_ID  + " = ?", "" + itemId);
 	}
 	
 	/**

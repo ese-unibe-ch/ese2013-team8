@@ -24,6 +24,13 @@ public interface PersistenceManager {
 	Item getItem(String itemName);
 
 	/**
+	 * Searches for the item with the given id.
+	 * @param itemId
+	 * @return null if the item does not exist.
+	 */
+	Item getItem(long itemId);
+
+	/**
 	 * Reads ShoppingLists from their persistent state.
 	 * 
 	 * @return never <code>null</code>.

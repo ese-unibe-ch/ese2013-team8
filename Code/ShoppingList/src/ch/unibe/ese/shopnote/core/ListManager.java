@@ -188,13 +188,9 @@ public class ListManager {
 	 * @return item with id
 	 */
 	public Item getItem(Long id) {
-		// TODO dont iterate over all items, just query for the right one.
-		List<Item> listOfItems = persistenceManager.getAllItems();
-		for (Item item : listOfItems) {
-			if (item.getId() == id)
-				return item;
-		}
-		return null;
+		if (id == null)
+			return null;
+		return persistenceManager.getItem(id);
 	}
 	
 	/**

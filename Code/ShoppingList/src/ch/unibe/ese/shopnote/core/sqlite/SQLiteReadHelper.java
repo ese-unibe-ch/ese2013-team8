@@ -340,15 +340,17 @@ public class SQLiteReadHelper {
 	}
 
 	/**
-	 * Get Item Id with Item Name
-	 * 
-	 * @param itemName
-	 * @return
+	 * Queries the DB for an item.
+	 * @param whereClause not null.
+	 * @param param the parameter to fill in the whereClaus, not null.
+	 * @return the item that fits the param. Can be null.
 	 */
-	public Item getItem(String itemName) {
+	public Item getItem(String whereClause, String param){
+		if (whereClause == null || param == null)
+			throw new IllegalArgumentException(String.format(
+					"null is not allowed. whereClause: %s; param: %s", whereClause));
 		Cursor cursor = database.query(SQLiteHelper.TABLE_ITEMS,
-				SQLiteHelper.ITEMS_COLUMNS, SQLiteHelper.COLUMN_ITEM_NAME
-						+ "=?", new String[] { itemName }, null, null, null,
+				SQLiteHelper.ITEMS_COLUMNS, whereClause,new String[]{param}, null, null, null,
 				null);
 		if (cursor.getCount() == 0)
 			return null;
