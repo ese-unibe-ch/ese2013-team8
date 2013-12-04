@@ -92,7 +92,9 @@ public class AnswerHandler {
 				ShoppingList list = listManager.getShoppingList(slRequest.getListId());
 				list.setShared(true);
 				for (Item i : listManager.getItemsFor(list)) {
-					syncManager.addRequest(new ItemRequest(context.getMyPhoneNumber(), list.getId(), i));
+					ItemRequest iRequest = new ItemRequest(context.getMyPhoneNumber(), list.getId(), i);
+					iRequest.setBought(i.isBought());
+					syncManager.addRequest(iRequest);
 				}
 			}
 			syncManager.synchronise(context);
