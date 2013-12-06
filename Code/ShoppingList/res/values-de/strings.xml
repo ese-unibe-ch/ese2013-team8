@@ -82,6 +82,8 @@
     <!-- ShareListActivity -->
     <string name="share_list_title">Teile</string>
     <string name="share_list_hint">Freund hinzufügen</string>
+    <string name="unshare">teilen beenden</string>
+    
 
     <!-- ManageFriendsActivity -->
     <string name="friend_has_the_app_icon">Appstatus</string>   

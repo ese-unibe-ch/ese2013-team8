@@ -30,6 +30,7 @@ import ch.unibe.ese.shopnote.core.ShoppingList;
 import ch.unibe.ese.shopnote.share.SyncManager;
 import ch.unibe.ese.shopnote.share.requests.GetSharedFriendsRequest;
 import ch.unibe.ese.shopnote.share.requests.ShareListRequest;
+import ch.unibe.ese.shopnote.share.requests.UnShareListRequest;
 
 /**
  *	Allows to share/synchronize lists/recipes with friends or send them as text message
@@ -188,6 +189,15 @@ public class ShareActivity extends BaseActivity {
 			return true;
 		case R.id.menu_item_share:
 			createShareIntent();
+			return true;
+		case R.id.action_unshare:
+			for(Friend friend: friendsManager.getSharedFriends(list)) {
+				friendsManager.removeFriendFromList(list, friend);
+				UnShareListRequest uslrequest = new UnShareListRequest(this.getMyPhoneNumber(), 
+						friend.getPhoneNr(), list.getId());
+				this.getSyncManager().addRequest(uslrequest);
+			}
+    		this.updateFriendsList();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
