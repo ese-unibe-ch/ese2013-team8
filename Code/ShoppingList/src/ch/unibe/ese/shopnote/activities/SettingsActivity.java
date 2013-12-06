@@ -141,6 +141,11 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 	    }
 	    return super.onKeyDown(keyCode, event);
 	}
+
+	
+	public void onResume() {
+		super.onResume();
+	}
 	
 }
 

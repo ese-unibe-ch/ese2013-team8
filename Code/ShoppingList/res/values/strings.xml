@@ -157,9 +157,10 @@
 
     <string-array name="choosable_languages">
         <item>English</item>
-        <item>German</item>
-        <item>French</item>
+        <item>Deutsch</item>
+        <item>Français</item>
     </string-array>
+    
     <string-array name="choosable_languages_keys">
         <item>english</item>
         <item>german</item>

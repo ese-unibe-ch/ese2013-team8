@@ -160,13 +160,6 @@
     <string name="language">Sprache</string>
     <string name="language_dialog">Sprache der App ändern</string>
     
-
-    <string-array name="choosable_languages">
-        <item>Englisch</item>
-        <item>Deutsch</item>
-        <item>Französisch</item>
-    </string-array>
-    
     
     <string name="theme_settings">Design</string>
     <string name="color_setting">Theme</string>

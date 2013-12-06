@@ -161,13 +161,6 @@
     <string name="german">Allemand</string>
     <string name="language">Langues</string>
     <string name="language_dialog">Changer la langue de l\'applcation</string>
-    
-
-    <string-array name="choosable_languages">
-        <item>Anglais</item>
-        <item>Allemand</item>
-        <item>Français</item>
-    </string-array>
 
 
     <string name="color_setting">Thèmes</string>
