@@ -146,7 +146,7 @@
 
     <!-- The navigation drawer -->
     <string-array name="navigation_items">
-        <item>Vue d\'ensemble</item>
+        <item>Liste de courses</item>
         <item>Liste d\'articles</item>
         <item>Recettes</item>
         <item>Amis</item>

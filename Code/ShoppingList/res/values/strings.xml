@@ -139,7 +139,7 @@
 
     <!-- The navigation drawer -->
     <string-array name="navigation_items">
-        <item>Overview</item>
+        <item>Shopping Lists</item>
         <item>Item List</item>
         <item>Recipes</item>
         <item>Friends</item>
