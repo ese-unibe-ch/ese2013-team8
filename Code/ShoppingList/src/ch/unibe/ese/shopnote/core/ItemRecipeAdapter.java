@@ -15,7 +15,7 @@ public class ItemRecipeAdapter {
 			}
 			
 			public ItemRecipeAdapter(Recipe recipe) {
-				name = recipe.getName();
+				name = recipe.getName() + " - Recipe";
 				id = recipe.getId();
 				entryTyp = Type.RECIPE;		
 			}

@@ -60,7 +60,7 @@ public class SyncManager {
 	
 	private void waitForTask(RequestSender sender) {
 		try {
-			sender.get(3000, TimeUnit.MILLISECONDS);
+			sender.get(5000, TimeUnit.MILLISECONDS);
 		} catch (InterruptedException e) {
 			System.err.println("Connection was interrupted");
 		} catch (ExecutionException e) {
