@@ -136,20 +136,12 @@ public class CreateFriendActivity extends BaseActivity {
 				  String cName = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
 				  // Remove all unneccessary characters
 				  cNumber = cNumber.replaceAll("[^0-9]", "");
-				  addNewFriend(cName, cNumber);
+				  finishTheActivity(cName, cNumber);
 			  }	else {
 					Toast.makeText(this, this.getString(R.string.error_enter), Toast.LENGTH_SHORT).show();
-					finishTheActivity();
+					finish();
 			  }
 	     }
-	}
-	
-	private void addNewFriend(String name, String nr) {
-		friend = new Friend(nr, name);
-		long id = friendsManager.addFriend(friend);
-		if(id == -1) 
-			friend = friendsManager.getFriendWithPhoneNr(friend.getPhoneNr());	
-		finishTheActivity();
 	}
 	
 
@@ -157,10 +149,11 @@ public class CreateFriendActivity extends BaseActivity {
 	 * finishes the program with no result when called from ManageFriendsActivity
 	 * or with result when called by ShareListActivity
 	 */
-	private void finishTheActivity() {
-		if (friend != null) {
+	private void finishTheActivity(String cName, String cNumber) {
+		if (cName != null && cNumber != null) {
 			Intent intent = new Intent();
-			intent.putExtra(EXTRAS_FRIEND_ID, friend.getId());
+			intent.putExtra(EXTRAS_FRIEND_NAME, cName);
+			intent.putExtra(EXTRAS_FRIEND_PHONENR, cNumber);
 			setResult(RESULT_OK, intent);
 		}
 		finish();

@@ -146,7 +146,7 @@ public class ShareActivity extends BaseActivity {
 	/** Called when the user touches the create button */
 	public void addFriend(View view) {
 		Intent intent = new Intent(this, CreateFriendActivity.class);
-		startActivityForResult(intent, 1);
+		startActivityForResult(intent, INTENT_FRIEND_REQUEST);
 
 		setTextViewText(R.id.editTextName, "");
 	}
@@ -304,7 +304,8 @@ public class ShareActivity extends BaseActivity {
 	
 	@Override
 	public void refresh() {
-		this.updateFriendsList();
+		updateFriendsList();
+		createAutocomplete();
 	}
 	
 	/**
@@ -313,25 +314,17 @@ public class ShareActivity extends BaseActivity {
 	 */
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		long friendId = -1;
-	
-		if (resultCode == RESULT_OK) {
-			Bundle korb = data.getExtras();
-			friendId = korb.getLong(EXTRAS_FRIEND_ID);
-		}
+		if(resultCode == RESULT_OK && requestCode == INTENT_FRIEND_REQUEST) {
 		
-		if (friendId != -1) {
-			final Friend friend = friendsManager.getFriend(friendId);
+			final String name = data.getExtras().getString(EXTRAS_FRIEND_NAME);
+			final String number = data.getExtras().getString(EXTRAS_FRIEND_PHONENR);
+			Toast.makeText(this, R.string.checkIfFriendHasApp, Toast.LENGTH_SHORT).show();
 			final SynchHandler handler = new SynchHandler(this);
-			if(!friend.hasTheApp())
-				Toast.makeText(getApplicationContext(), R.string.checkIfFriendHasApp, Toast.LENGTH_SHORT ).show();
-				
+		
 			new Thread(new Runnable() {
 				public void run() {	
-					for(int i=0; i<5; i++)
-						if(!friend.hasTheApp())
-							waitForMillisecs(1000);
-					if(friend.hasTheApp()) {
+					Friend friend = friendsManager.addFriend(new Friend(number, name));
+					if(friend != null && friend.hasTheApp()) {
 						if (!isRecipe) {
 							friendsManager.addFriendToList(list, friend);
 							ShareListRequest slrequest = new ShareListRequest(getMyPhoneNumber(),
@@ -350,21 +343,12 @@ public class ShareActivity extends BaseActivity {
 						handler.sendEmptyMessage(1);
 					}
 				}
-
-				private void waitForMillisecs(int number) {
-					try {
-						Thread.sleep(number);
-					} catch (InterruptedException e) {
-						System.err.println("Thread sleep interrupted");
-					}
-				}
 			}).start();
-			
-				
-		}
 		
-		// update lists
-		updateFriendsList();
-		createAutocomplete();
+		} else {
+			// update lists
+			updateFriendsList();
+			createAutocomplete();
+		}
 	}
 }

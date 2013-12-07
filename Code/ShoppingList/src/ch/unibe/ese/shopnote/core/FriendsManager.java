@@ -41,34 +41,38 @@ public class FriendsManager {
 	 * 
 	 * @param phoneNr
 	 * @param name
-	 * @return id of friend in long, -1 when failure 
+	 * @return friend which is now in the db, if friend has not the app, null
 	 */
-	public long addFriend(Friend friend) {
-		long id = checkIfDouble(friend);
-		if (id >= 0) return -1;
+	public Friend addFriend(Friend friend) {
+		Friend compare = checkIfDouble(friend);
+		if (compare != null) return compare;
 		
 		// Add the friend
 		friendsList.add(friend);
-
 		// Save friend to database
-		id = persistenceManager.save(friend);
+		persistenceManager.save(friend);
 		
 		if(baseActivity != null && !friend.hasTheApp())
 			checkIfFriendHasApp(friend);
 		
-		return id;
+		if(friend.hasTheApp())
+			return friend;
+		
+		friendsList.remove(friend);
+		persistenceManager.removeFriend(friend);
+		return null;
 	}
 
 	private void checkIfFriendHasApp(Friend friend) {
 		FriendRequest fr = new FriendRequest(friend);
 		syncManager.addRequest(fr);	
-		syncManager.synchronise(baseActivity);
+		syncManager.synchroniseAndWaitForTaskToEnd(baseActivity);
 	}
 
-	private long checkIfDouble(Friend friend) {
+	private Friend checkIfDouble(Friend friend) {
 		for(Friend compare: friendsList) 
-			if(compare.getPhoneNr().equals(friend.getPhoneNr())) return compare.getId();
-		return -1l;
+			if(compare.getPhoneNr().equals(friend.getPhoneNr())) return compare;
+		return null;
 	}
 
 	/**
@@ -219,18 +223,11 @@ public class FriendsManager {
 				if(friend.getId() == friendId) {
 					noFriendAdded = false;
 					friend.setHasApp();
-					long id = addFriend(friend);
-					if(id != -1) {
+					friend = addFriend(friend);
+					if(friend != null) {
 						Looper.prepare();
 						Toast.makeText(baseActivity.getApplicationContext(), R.string.friendAdded + friend.getName(), Toast.LENGTH_SHORT).show();
 						Looper.loop();
-					} else {
-						long idOfFriendInList = checkIfDouble(friend);
-						Friend friendInList = getFriend(idOfFriendInList);
-						if(!friendInList.hasTheApp()) {
-							friendInList.setHasApp();
-							persistenceManager.save(friendInList);
-						}
 					}
 				}
 			}

@@ -53,6 +53,8 @@ public class BaseActivity extends Activity {
 	public static final String EXTRAS_RECIPE_ID = "recipeId";
 	public static final String EXTRAS_FRIEND_ID = "friendId";
 	public static final String EXTRAS_FRIEND_NAME= "friendName";
+	public static final String EXTRAS_FRIEND_PHONENR= "friendNr";
+	public static final int INTENT_FRIEND_REQUEST= 011;
 	protected DrawerLayout drawMenu;
 	protected ActionBarDrawerToggle drawerToggle;
 	private boolean drawerToggleCreated;

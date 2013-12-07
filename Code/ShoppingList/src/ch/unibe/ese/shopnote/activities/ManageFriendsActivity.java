@@ -54,6 +54,9 @@ public class ManageFriendsActivity extends BaseActivity {
 		// verify phone number
 		getMyPhoneNumber();
 		
+		//Update all friends
+		searchContactsInPhoneBook();
+		
 		// Create drawer menu
 		createDrawerMenu();
 		createDrawerToggle();
@@ -128,7 +131,7 @@ public class ManageFriendsActivity extends BaseActivity {
 		switch (item.getItemId()) {
 		case R.id.action_new:
 			Intent intent = new Intent(this, CreateFriendActivity.class);
-			this.startActivity(intent);
+			this.startActivityForResult(intent, INTENT_FRIEND_REQUEST);
 			return true;
 		case R.id.searchContacts:
 			searchContactsInPhoneBook();
@@ -163,6 +166,25 @@ public class ManageFriendsActivity extends BaseActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
+		if(resultCode == RESULT_OK && requestCode == INTENT_FRIEND_REQUEST){
+			
+			final String name = data.getExtras().getString(EXTRAS_FRIEND_NAME);
+			final String number = data.getExtras().getString(EXTRAS_FRIEND_PHONENR);
+			Toast.makeText(this, R.string.checkIfFriendHasApp, Toast.LENGTH_SHORT).show();
+			final SynchHandler handler = new SynchHandler(this);
+			
+			new Thread(new Runnable() {
+				public void run() {	
+					Friend friend = friendsManager.addFriend(new Friend(number, name));
+					if(friend != null && friend.hasTheApp()) {
+						handler.sendEmptyMessage(0);
+					} else {
+						handler.sendEmptyMessage(1);
+						handler.sendEmptyMessage(0);
+					}
+				}
+			}).start();
+		}	
 		updateFriendsList();
 	}
 

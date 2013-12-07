@@ -279,9 +279,11 @@ public class SQLitePersistenceManager implements PersistenceManager {
 
 	@Override
 	public void save(ShoppingList list, Friend friend) {
-		ContentValues values = updateHelper.toValue(list, friend);
-		if (!readHelper.isInList(list, friend)) {
-			database.insert(SQLiteHelper.TABLE_FRIENDSTOLIST, null, values);
+		if(friend != null && list != null) {
+			ContentValues values = updateHelper.toValue(list, friend);
+			if (!readHelper.isInList(list, friend)) {
+				database.insert(SQLiteHelper.TABLE_FRIENDSTOLIST, null, values);
+			}
 		}
 	}
 	
