@@ -1,6 +1,7 @@
 package ch.unibe.ese.shopnote.core;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -40,13 +41,10 @@ public class Recipe extends Entity {
 	}
 
 	public List<Item> getItemList() {
-		return itemList;
+		Collections.sort(itemList, Comparators.ITEM_COMPARATOR);
+		return Collections.unmodifiableList(itemList);
 	}
 
-	public void setItemList(List<Item> list) {
-		this.itemList = list;
-	}
-	
 	public String getNotes() {
 		return notes;
 	}
