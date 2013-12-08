@@ -138,6 +138,7 @@
     <string name="error_friend">Fehler, Freund nicht gefunden</string>
     <string name="error_friend_already">Fehler, Freund existiert bereits</string>
     <string name="error_enter">Fehler, bitte korrekte Daten eingeben</string>
+    <string name="error_duplicate_item">Artikel kann nicht hinzugefügt werden. Die Liste enthält bereits den selben Artikel mit einer anderen Masseinheit</string>
     
     <!--  Synchronisation and Connection -->
     <string name="no_connection">Keine Verbindung zum Internet</string>

@@ -3,9 +3,9 @@ package ch.unibe.ese.shopnote.share;
 import java.util.List;
 
 import android.content.Context;
-import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.core.Friend;
 import ch.unibe.ese.shopnote.core.Item;
+import ch.unibe.ese.shopnote.core.ItemException;
 import ch.unibe.ese.shopnote.core.Recipe;
 import ch.unibe.ese.shopnote.core.ShoppingList;
 import ch.unibe.ese.shopnote.core.BaseActivity;
@@ -253,7 +253,7 @@ public class AnswerHandler {
 				}
 			}
 			// set change notification count
-			if(request.isRecipe()) {
+			if (request.isRecipe()) {
 				int changesCountRecipe = recipe.getChangesCount();
 				if (((ItemRequest) request).isDeleted()) {
 					recipe.removeItem(localItem);
@@ -269,7 +269,15 @@ public class AnswerHandler {
 					listManager.removeItemFromList(localItem, list);
 				} else {
 					localItem.setBought(((ItemRequest) request).isBought());
-					listManager.addItemToList(localItem, list);
+					if (itemlist.contains(localItem)) {
+						listManager.updateItemInList(localItem, list);
+					} else {
+						try {
+							listManager.addItemToList(localItem, list);
+						} catch (ItemException e) {
+							// There is already an item with the same name but different unit in the list. so we do nothing here.
+						}
+					}
 				}
 				changesCountList++;
 				list.setChangesCount(changesCountList);

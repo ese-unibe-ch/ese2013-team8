@@ -140,6 +140,8 @@
     <string name="error_friend">Erreur, ami non touvé</string>
     <string name="error_friend_already">Erreur, ami déjà ajouté</string>
     <string name="error_enter">Erreur, données incorrectes</string>
+	<!-- TODO translate -->
+    <string name="error_duplicate_item">Can\'t add item because list already contains the same item with another unit</string>
 
     <!-- Synchronisation and Connection -->
     <string name="no_connection">Pas de connection internet</string>

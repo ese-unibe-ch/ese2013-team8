@@ -7,7 +7,6 @@ import java.util.Date;
  * It knows nothing about the item it contains. This knowledge is stored in the Listmanager.
  *
  */
-
 public class ShoppingList extends Entity{
 	private String name;
 	private Date dueDate;

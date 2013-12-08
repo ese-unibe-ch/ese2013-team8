@@ -76,8 +76,9 @@ public class ListManager {
 	 *            not null
 	 * @return true if the item was added (false if it only was updated or not
 	 *         changed at all)
+	 * @throws ItemException thrown if another item with the same name, but different unit is in the list.
 	 */
-	public boolean addItemToList(Item item, ShoppingList list) {
+	public boolean addItemToList(Item item, ShoppingList list) throws ItemException {
 		if (item == null || list == null)
 			throw new IllegalArgumentException("null is not allowed");
 		List<Item> items = listToItems.get(list);
@@ -85,8 +86,8 @@ public class ListManager {
 			items = new ArrayList<Item>();
 			listToItems.put(list, items);
 		}
-		if (item.getId() == null)
-			item = mergeItem(item, items);
+		
+		item = mergeItem(item, items);
 		
 		persistenceManager.save(item, list);
 		if (!items.contains(item))
@@ -95,16 +96,49 @@ public class ListManager {
 	}
 	
 	/**
+	 * Updates the item in the shopping list.<p>
+	 * If the item is not yet in the list, nothing is done.
+	 * 
+	 * @param item not null
+	 * @param list not null
+	 */
+	public void updateItemInList(Item item, ShoppingList list) {
+		if (item == null || item.getId() == null || list == null)
+			throw new IllegalArgumentException("null is not allowed");
+		List<Item> items = listToItems.get(list);
+		if (items == null) {
+			items = new ArrayList<Item>();
+			listToItems.put(list, items);
+		}
+		if (!items.contains(items))
+			return;
+		
+		persistenceManager.save(item, list);
+		items.remove(item);
+		items.add(item);
+	}
+	
+	/**
 	 * Merges the newItem into the list of existing items.<p>
 	 * If the list contains an item with the same name and the same unit, it will merge this item with the newItem.
 	 * @param newItem
 	 * @param items
 	 * @return the item to persist.
+	 * @throws ItemException thrown if another item with the same name, but different unit is in the list.
 	 */
-	private Item mergeItem(Item newItem, List<Item> items){
+	private Item mergeItem(Item newItem, List<Item> items) throws ItemException{
 		for (Item item2 : items) {
 			if (!item2.isBought() && item2.getName().equals(newItem.getName())) {
-				if (newItem.getUnit() != null && newItem.getUnit() == item2.getUnit()) {
+				if (newItem.getUnit() == null && item2.getUnit() == null) {
+					// Both have no unit --> item has now 2 pieces.
+					item2.setQuantity(BigDecimal.valueOf(2), ItemUnit.PIECE);
+					return item2;
+				} else if (newItem.getUnit() == null && item2.getUnit() == ItemUnit.PIECE) {
+					// new Item has no unit, existing item has PIECE as unit. add one piece to the existing item.
+					item2.setQuantity(item2.getQuantity().add(BigDecimal.ONE), ItemUnit.PIECE);
+					return item2;
+				} else if (newItem.getUnit() != null && newItem.getUnit() == item2.getUnit()) {
+					// Both have same unit --> add them together
 					BigDecimal newQuantity = newItem.getQuantity().add(item2.getQuantity());
 					item2.setQuantity(newQuantity, item2.getUnit());
 					return item2; // we want to save only one item.
@@ -120,6 +154,8 @@ public class ListManager {
 					}
 					item2.setQuantity(finalMass, unit);
 					return item2;
+				} else {
+					throw new ItemException();
 				}
 			}
 		}

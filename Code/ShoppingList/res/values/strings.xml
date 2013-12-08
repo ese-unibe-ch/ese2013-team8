@@ -132,6 +132,7 @@
     <string name="error_friend">Error, friend not found</string>
     <string name="error_friend_already">Error, friend already added</string>
     <string name="error_enter">Error, please enter correct data</string>
+    <string name="error_duplicate_item">Can\'t add item because list already contains the same item with another unit</string>
 
     <!-- Synchronisation and Connection -->
     <string name="no_connection">No internet connection available</string>

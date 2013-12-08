@@ -19,6 +19,7 @@ import ch.unibe.ese.shopnote.adapters.ItemAutocompleteAdapter;
 import ch.unibe.ese.shopnote.adapters.ShopAutocompleteAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Item;
+import ch.unibe.ese.shopnote.core.ItemException;
 import ch.unibe.ese.shopnote.core.ItemUnit;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.Recipe;
@@ -203,19 +204,23 @@ public class CreateItemActivity extends BaseActivity {
 		item.setPrice(price);
 		item.setQuantity(quant, unit);	
 
-		// save the item
-		if (list != null) {
-			manager.addItemToList(item, list);
-		} else if (recipe != null) {
-			recipe.addItem(item);
-			manager.saveRecipe(recipe);
-		} else {
-			// save item if called in itemlist
-			manager.save(item);
+		try {
+			// save the item
+			if (list != null) {
+				manager.addItemToList(item, list);
+			} else if (recipe != null) {
+				recipe.addItem(item);
+				manager.saveRecipe(recipe);
+			} else {
+				// save item if called in itemlist
+				manager.save(item);
+			}
+	
+			// go back to the list
+			finish();
+		} catch (ItemException e){
+			showToast(getString(R.string.error_duplicate_item));
 		}
-
-		// go back to the list
-		finish();
 	}
 
 	public void finish() {
