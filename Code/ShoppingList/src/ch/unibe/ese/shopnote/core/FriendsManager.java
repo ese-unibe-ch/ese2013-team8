@@ -220,13 +220,13 @@ public class FriendsManager {
 		} else {
 			//for search all the phonebook directly add friend if he has the app
 			for(Friend friend: friendsInPhoneBook) {
-				if(friend.getId() == friendId) {
-					noFriendAdded = false;
+				if(friend.getId() == friendId && checkIfDouble(friend) == null) {
 					friend.setHasApp();
 					friend = addFriend(friend);
 					if(friend != null) {
+						noFriendAdded = false;
 						Looper.prepare();
-						Toast.makeText(baseActivity.getApplicationContext(), R.string.friendAdded + friend.getName(), Toast.LENGTH_SHORT).show();
+						baseActivity.showToast(baseActivity.getString(R.string.friendAdded) + " " +  friend.getName());
 						Looper.loop();
 					}
 				}

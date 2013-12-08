@@ -329,35 +329,11 @@ public class BaseActivity extends Activity {
 	}
 	
 	protected void InvitePopup(BaseActivity activity) {
-		final PopupWindow popUp = new PopupWindow(this);
-        RelativeLayout viewGroup = (RelativeLayout) findViewById(R.id.RelativeLayoutSendInvitationScreen);
-        LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View layout = layoutInflater.inflate(R.layout.send_invitation_screen, (ViewGroup) viewGroup);
-        
-		popUp.setContentView(layout);
-		popUp.setFocusable(true);
-		popUp.setWidth(550);
-		popUp.setHeight(300);
-		
-		popUp.showAtLocation(layout, Gravity.CENTER, 10, 10);
-		popUp.setBackgroundDrawable(new ColorDrawable(titleBarColor));
-		
-		Button close = (Button) layout.findViewById(R.id.close);
-		close.setOnClickListener(new OnClickListener() {
-			 @Override
-		     public void onClick(View v) {
-		       popUp.dismiss();
-		     }
-		});
-		
-		Button send = (Button) layout.findViewById(R.id.send);
-		send.setOnClickListener(new OnClickListener() {
-			 @Override
-		     public void onClick(View v) {
-		       popUp.dismiss();
-		       
-		     }
-		});
+		Intent sendIntent = new Intent();
+		sendIntent.setAction(Intent.ACTION_SEND);
+		sendIntent.putExtra(Intent.EXTRA_TEXT, R.string.inviteFriendMessage);
+		sendIntent.setType("text/plain");
+		startActivity(sendIntent);
 	}
 		   
 	

@@ -98,8 +98,7 @@
     <string name="noUpdates">Pas de nouvel ami ajouté</string>
     <string name="friendHasNotApp">Cet ami ne possède pas l\'application!</string>
     <string name="checkIfFriendHasApp">Verifie si cet ami possède l\'application, un instant...</string>
-        <string name="send_invitation">Envoyer une invitation</string>
-    <string name="send_invitation_text">Ecrivez un texte à votre ami pour l\'inviter personnellement</string>
+	<string name="inviteFriendMessage">Bonjour, je te recommande le ShopNote application pour Android. </string>
     
     
         
