@@ -294,7 +294,7 @@ public class BaseActivity extends Activity {
 	}
 	
 	//Popup window for recruiting new friends
-	protected void FriendPopup(BaseActivity activity) {
+	protected void friendPopup(BaseActivity activity) {
 		final PopupWindow popUp = new PopupWindow(this);
         RelativeLayout viewGroup = (RelativeLayout) findViewById(R.id.RelativeLayoutFriendInviteScreen);
         LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -322,13 +322,13 @@ public class BaseActivity extends Activity {
 			 @Override
 		     public void onClick(View v) {
 		       popUp.dismiss();
-		       InvitePopup(finalActivity);
+		       invitePopup(finalActivity);
 		     }
 		});
 		
 	}
 	
-	protected void InvitePopup(BaseActivity activity) {
+	protected void invitePopup(BaseActivity activity) {
 		final PopupWindow popUp = new PopupWindow(this);
         RelativeLayout viewGroup = (RelativeLayout) findViewById(R.id.RelativeLayoutSendInvitationScreen);
         LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -417,7 +417,7 @@ public class BaseActivity extends Activity {
 	/**
 	 * Handler class to allow threads to update UI thread
 	 */
-	protected class SynchHandler extends Handler{
+	protected class SynchHandler extends Handler {
 		private BaseActivity activity;
 		
 		public SynchHandler(BaseActivity activity) {
@@ -432,7 +432,7 @@ public class BaseActivity extends Activity {
       	  		 	refresh();
       	  		 	break;
       	  		case 1:
-      	  			FriendPopup(activity);
+      	  			friendPopup(activity);
       	  			break;
       	  }
       	 
