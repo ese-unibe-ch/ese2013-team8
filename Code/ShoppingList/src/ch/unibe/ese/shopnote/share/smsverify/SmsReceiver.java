@@ -1,13 +1,11 @@
 package ch.unibe.ese.shopnote.share.smsverify;
 
-import ch.unibe.ese.shopnote.activities.VerifyNumberActivity;
-import ch.unibe.ese.shopnote.core.BaseActivity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
-import android.widget.Toast;
+import ch.unibe.ese.shopnote.activities.VerifyNumberActivity;
 
 public class SmsReceiver extends BroadcastReceiver{
 

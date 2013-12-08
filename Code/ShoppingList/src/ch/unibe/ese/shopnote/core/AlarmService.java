@@ -4,19 +4,15 @@ package ch.unibe.ese.shopnote.core;
 
 
 
-import ch.unibe.ese.shopnote.R;
-import ch.unibe.ese.shopnote.activities.HomeActivity;
-import ch.unibe.ese.shopnote.activities.ViewListActivity;
 import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.app.TaskStackBuilder;
-import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
-import android.support.v4.app.NotificationCompat;
+import ch.unibe.ese.shopnote.R;
+import ch.unibe.ese.shopnote.activities.HomeActivity;
 
 
                             

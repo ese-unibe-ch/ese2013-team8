@@ -5,7 +5,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import ch.unibe.ese.shopnote.core.BaseActivity;
-import ch.unibe.ese.shopnote.share.requests.EmptyRequest;
 import ch.unibe.ese.shopnote.share.requests.RegisterRequest;
 import ch.unibe.ese.shopnote.share.requests.Request;
 

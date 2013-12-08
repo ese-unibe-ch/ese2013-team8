@@ -3,14 +3,14 @@ package ch.unibe.ese.shopnote.share;
 import java.util.List;
 
 import android.content.Context;
+import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Friend;
+import ch.unibe.ese.shopnote.core.FriendsManager;
 import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ItemException;
+import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.Recipe;
 import ch.unibe.ese.shopnote.core.ShoppingList;
-import ch.unibe.ese.shopnote.core.BaseActivity;
-import ch.unibe.ese.shopnote.core.FriendsManager;
-import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.share.requests.CreateSharedListRequest;
 import ch.unibe.ese.shopnote.share.requests.FriendRequest;
 import ch.unibe.ese.shopnote.share.requests.GetSharedFriendsRequest;

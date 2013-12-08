@@ -1,10 +1,10 @@
 package ch.unibe.ese.shopnote.adapters;
 
-import ch.unibe.ese.shopnote.core.sqlite.SQLiteHelper;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.widget.ArrayAdapter;
+import ch.unibe.ese.shopnote.core.sqlite.SQLiteHelper;
 
 /**
  * AutocompleteAdapter for shops

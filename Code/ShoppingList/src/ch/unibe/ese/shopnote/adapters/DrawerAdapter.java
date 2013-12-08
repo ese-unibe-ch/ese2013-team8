@@ -1,12 +1,5 @@
 package ch.unibe.ese.shopnote.adapters;
 
-import ch.unibe.ese.shopnote.R;
-import ch.unibe.ese.shopnote.activities.ArchiveActivity;
-import ch.unibe.ese.shopnote.activities.HomeActivity;
-import ch.unibe.ese.shopnote.activities.ItemListActivity;
-import ch.unibe.ese.shopnote.activities.ManageFriendsActivity;
-import ch.unibe.ese.shopnote.activities.ManageRecipeActivity;
-import ch.unibe.ese.shopnote.activities.SettingsActivity;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
@@ -16,6 +9,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import ch.unibe.ese.shopnote.R;
+import ch.unibe.ese.shopnote.activities.ArchiveActivity;
+import ch.unibe.ese.shopnote.activities.HomeActivity;
+import ch.unibe.ese.shopnote.activities.ItemListActivity;
+import ch.unibe.ese.shopnote.activities.ManageFriendsActivity;
+import ch.unibe.ese.shopnote.activities.ManageRecipeActivity;
+import ch.unibe.ese.shopnote.activities.SettingsActivity;
 
 /**
  *	Modified ArrayAdapter to display the drawer menu items including their icons

@@ -1,11 +1,11 @@
 package ch.unibe.ese.shopnote.core.sqlite;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import ch.unibe.ese.shopnote.core.Friend;
 import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.Recipe;
 import ch.unibe.ese.shopnote.core.ShoppingList;
-import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
 
 /**
  * This class provides useful functions for updating the database

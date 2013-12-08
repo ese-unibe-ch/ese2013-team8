@@ -2,8 +2,6 @@ package ch.unibe.ese.shopnote.adapters;
 
 import java.util.List;
 
-import ch.unibe.ese.shopnote.core.Item;
-import ch.unibe.ese.shopnote.R;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
@@ -12,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import ch.unibe.ese.shopnote.R;
+import ch.unibe.ese.shopnote.core.Item;
 
 /**
  *	Modified ArrayAdapter to display the items including the name, quantity and price (if defined)

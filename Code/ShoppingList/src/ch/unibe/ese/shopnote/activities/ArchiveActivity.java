@@ -2,11 +2,7 @@ package ch.unibe.ese.shopnote.activities;
 
 import java.util.ArrayList;
 import java.util.List;
-import ch.unibe.ese.shopnote.adapters.ShoppingListAdapter;
-import ch.unibe.ese.shopnote.core.BaseActivity;
-import ch.unibe.ese.shopnote.core.ListManager;
-import ch.unibe.ese.shopnote.core.ShoppingList;
-import ch.unibe.ese.shopnote.R;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,10 +10,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+import ch.unibe.ese.shopnote.R;
+import ch.unibe.ese.shopnote.adapters.ShoppingListAdapter;
+import ch.unibe.ese.shopnote.core.BaseActivity;
+import ch.unibe.ese.shopnote.core.ListManager;
+import ch.unibe.ese.shopnote.core.ShoppingList;
 
 /**
  *	Displays the archived shopping lists

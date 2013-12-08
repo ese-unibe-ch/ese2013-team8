@@ -1,6 +1,7 @@
 package ch.unibe.ese.shopnote.activities;
 
 import java.util.List;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,11 +12,11 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.adapters.ItemListAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ListManager;
-import ch.unibe.ese.shopnote.R;
 
 /**
  * 	Displays all Items in the database

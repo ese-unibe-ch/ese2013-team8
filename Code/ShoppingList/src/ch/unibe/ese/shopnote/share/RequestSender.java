@@ -10,7 +10,6 @@ import java.net.SocketAddress;
 import java.net.UnknownHostException;
 
 import android.os.AsyncTask;
-import android.os.Build;
 import ch.unibe.ese.shopnote.share.requests.Request;
 
 /**

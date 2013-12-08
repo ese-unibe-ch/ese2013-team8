@@ -4,7 +4,9 @@ import java.util.List;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -20,16 +22,9 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.telephony.TelephonyManager;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import ch.unibe.ese.shopnote.R;
@@ -294,37 +289,29 @@ public class BaseActivity extends Activity {
 	}
 	
 	//Popup window for recruiting new friends
-	protected void friendPopup(BaseActivity activity) {
-		final PopupWindow popUp = new PopupWindow(this);
-        RelativeLayout viewGroup = (RelativeLayout) findViewById(R.id.RelativeLayoutFriendInviteScreen);
-        LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View layout = layoutInflater.inflate(R.layout.friend_invite_screen, (ViewGroup) viewGroup);
-        
-		popUp.setContentView(layout);
-		popUp.setFocusable(true);
-		popUp.setWidth(550);
-		popUp.setHeight(300);
+	protected void friendPopup(final BaseActivity activity) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 		
-		popUp.showAtLocation(layout, Gravity.CENTER, 10, 10);
-		popUp.setBackgroundDrawable(new ColorDrawable(titleBarColor));
+		//add texts
+		builder.setMessage(R.string.friend_has_not_app_text)
+	       .setTitle(R.string.friend_has_not_app);
 		
-		Button close = (Button) layout.findViewById(R.id.close);
-		close.setOnClickListener(new OnClickListener() {
-			 @Override
-		     public void onClick(View v) {
-		       popUp.dismiss();
-		     }
-		});
-		
-		Button send = (Button) layout.findViewById(R.id.send);
-		final BaseActivity finalActivity = activity;
-		send.setOnClickListener(new OnClickListener() {
-			 @Override
-		     public void onClick(View v) {
-		       popUp.dismiss();
-		       invitePopup(finalActivity);
-		     }
-		});
+		// Add the buttons
+		builder.setPositiveButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {
+	           public void onClick(DialogInterface dialog, int id) {
+	        	   //close window
+	           }
+	       });
+		builder.setNegativeButton(R.string.send, new DialogInterface.OnClickListener() {
+	           public void onClick(DialogInterface dialog, int id) {
+	        	   invitePopup(activity);
+	           }
+	       });
+
+
+		// Create the AlertDialog
+		AlertDialog dialog = builder.create();
+		dialog.show();
 		
 	}
 	

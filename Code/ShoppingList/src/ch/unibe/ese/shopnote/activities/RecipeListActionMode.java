@@ -1,6 +1,5 @@
 package ch.unibe.ese.shopnote.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.view.ActionMode;
 import android.view.ActionMode.Callback;
@@ -8,11 +7,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.Recipe;
-import ch.unibe.ese.shopnote.R;
 
 /**
  * 	Creates the Action Bar for Recipes to edit or remove them

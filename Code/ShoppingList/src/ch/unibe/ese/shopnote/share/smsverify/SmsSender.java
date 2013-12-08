@@ -1,9 +1,9 @@
 package ch.unibe.ese.shopnote.share.smsverify;
 
-import ch.unibe.ese.shopnote.activities.VerifyNumberActivity;
 import android.os.AsyncTask;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.SmsManager;
+import ch.unibe.ese.shopnote.activities.VerifyNumberActivity;
 
 public class SmsSender extends AsyncTask<Void, Void, Void> {
 

@@ -2,8 +2,7 @@ package ch.unibe.ese.shopnote.adapters;
 
 import java.util.ArrayList;
 import java.util.List;
-import ch.unibe.ese.shopnote.R;
-import ch.unibe.ese.shopnote.core.ShoppingList;
+
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import ch.unibe.ese.shopnote.R;
+import ch.unibe.ese.shopnote.core.ShoppingList;
 
 /**
  *	Modified ArrayAdapter to display the shopping lists including the (bought) item count
