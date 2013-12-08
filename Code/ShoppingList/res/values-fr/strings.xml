@@ -140,8 +140,6 @@
     <string name="error_friend">Erreur, ami non touvé</string>
     <string name="error_friend_already">Erreur, ami déjà ajouté</string>
     <string name="error_enter">Erreur, données incorrectes</string>
-    <string name="error_no_quantity_unit">Erreur, entrez une quantité ou désélectionnez l\'unité</string>
-    <string name="error_quantity_no_unit">Erreur, selectionez une unité ou effacez la quantité</string>
 
     <!-- Synchronisation and Connection -->
     <string name="no_connection">Pas de connection internet</string>
@@ -185,11 +183,10 @@
 
     <!-- do not change the order of these items, it must be the same as in ItemUnit -->
     <string-array name="item_units">
-        <item></item>
+        <item>Pièces</item>
         <item>Grammes</item>
         <item>Kilogrammes</item>
         <item>Litres</item>
-        <item>Pièces</item>
     </string-array>
 </resources>
 

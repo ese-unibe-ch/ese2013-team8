@@ -8,7 +8,7 @@ import java.util.List;
  */
 public enum ItemUnit {
 	// Do not change the order of these. it must be the same as in strings.xml->item_units for the correct lookup.
-	GRAM, KILO_GRAM, LITER, PIECE;
+	PIECE, GRAM, KILO_GRAM, LITER;
 	
 	/**
 	 * List that contains all masses.

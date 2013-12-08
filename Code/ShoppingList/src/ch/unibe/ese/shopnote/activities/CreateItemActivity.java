@@ -149,9 +149,9 @@ public class CreateItemActivity extends BaseActivity {
 		if(item.getQuantity()!= null)
 			setTextViewText(R.id.editTextQuantity, item.getQuantity().toString());
 		
-		if(item.getUnit() != null) {
+		if (item.getUnit() != null) {
 			int position = item.getUnit().ordinal();
-			((Spinner) findViewById(R.id.editSpinnerUnits)).setSelection(position + 1);
+			((Spinner) findViewById(R.id.editSpinnerUnits)).setSelection(position);
 		}
 	}
 
@@ -176,15 +176,18 @@ public class CreateItemActivity extends BaseActivity {
 			return;
 		}
 
+		// get price and set it if necessary
+		String priceString = getTextViewText(R.id.editTextPrice);
+		BigDecimal price = null;
+		if (!priceString.isEmpty() && !priceString.equals(".")) {
+			price = new BigDecimal(priceString);
+			price = price.setScale(2, RoundingMode.HALF_UP);
+		}
+		// get quantity and item
 		String quantity = getTextViewText(R.id.editTextQuantity);
 		int unitPosition = ((Spinner) findViewById(R.id.editSpinnerUnits)).getSelectedItemPosition();
-		if (quantity.isEmpty() && unitPosition > 0){
-			Toast.makeText(this, R.string.error_no_quantity_unit, Toast.LENGTH_SHORT).show();
-			return;
-		} else if (!quantity.isEmpty() && unitPosition <= 0) {
-			Toast.makeText(this, R.string.error_quantity_no_unit, Toast.LENGTH_SHORT).show();
-			return;
-		}
+		BigDecimal quant = (quantity.isEmpty() || quantity.equals(".")) ? null : new BigDecimal(quantity);
+		ItemUnit unit = (unitPosition < 0 || quant == null) ? null : ItemUnit.values()[unitPosition];
 
 		if (item == null)
 			item = new Item(name);
@@ -197,18 +200,7 @@ public class CreateItemActivity extends BaseActivity {
 			Shop shop = new Shop(shopName);
 			item.setShop(shop);
 		}
-
-		// get price and set it if necessary
-		String priceString = getTextViewText(R.id.editTextPrice);
-		BigDecimal price = null;
-		if (!priceString.isEmpty() && !priceString.equals(".")) {
-			price = new BigDecimal(priceString);
-			price = price.setScale(2, RoundingMode.HALF_UP);
-		}
 		item.setPrice(price);
-		
-		BigDecimal quant = (quantity.isEmpty() || quantity.equals(".")) ? null : new BigDecimal(quantity);
-		ItemUnit unit = unitPosition <= 0 ? null : ItemUnit.values()[unitPosition - 1];
 		item.setQuantity(quant, unit);	
 
 		// save the item
