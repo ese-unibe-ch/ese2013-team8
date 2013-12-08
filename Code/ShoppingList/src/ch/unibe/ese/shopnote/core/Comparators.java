@@ -6,6 +6,11 @@ import java.util.Comparator;
  * Bietet {@link Comparator} an.
  */
 public class Comparators {
+	
+	private Comparators(){
+		// private constructor for util class.
+	}
+
 	/**
 	 * Comparator für {@link ShoppingList}.
 	 * <p>

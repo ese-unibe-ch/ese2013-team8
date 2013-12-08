@@ -189,8 +189,11 @@ public class ViewRecipeActivity extends BaseActivity {
 			return;				
 		} 
 		else {
-			Item item = new Item(name);
-			listManager.save(item);
+			Item item = listManager.getItem(name);
+			if (item == null) {
+				item = new Item(name);
+				listManager.save(item);
+			}
 			recipe.addItem(item);
 			addItemRequestIfShared(item);
 			updateRecipeList();

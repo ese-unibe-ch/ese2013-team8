@@ -131,8 +131,7 @@
     <string name="error_friend">Error, friend not found</string>
     <string name="error_friend_already">Error, friend already added</string>
     <string name="error_enter">Error, please enter correct data</string>
-    <string name="error_no_quantity_unit">Error, please enter a quantity or deselect the unit</string>
-    <string name="error_quantity_no_unit">Error, please select a unit or delete the quantity</string>
+    <string name="error_duplicate_item">Can\'t add item because list already contains the same item with another unit</string>
 
     <!-- Synchronisation and Connection -->
     <string name="no_connection">No internet connection available</string>
@@ -186,11 +185,10 @@
 
     <!-- do not change the order of these items, it must be the same as in ItemUnit -->
     <string-array name="item_units">
-        <item></item>
+        <item>piece</item>
         <item>gram</item>
         <item>kilogram</item>
         <item>liter</item>
-        <item>piece</item>
     </string-array>
 
     <string name="title_activity_invite_friend">Invite Friend</string>

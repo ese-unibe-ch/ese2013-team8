@@ -51,7 +51,7 @@ private Context context;
 			String quantity = item.getQuantity().toString();
 			int ordinal = item.getUnit().ordinal();
 			Resources res = convertView.getResources();
-			String localizedUnit = res.getStringArray(R.array.item_units)[ordinal + 1];
+			String localizedUnit = res.getStringArray(R.array.item_units)[ordinal];
 
 			StringBuilder sb = new StringBuilder(quantity).append(" ").append(localizedUnit);
 			holder.quantity.setText(sb.toString());

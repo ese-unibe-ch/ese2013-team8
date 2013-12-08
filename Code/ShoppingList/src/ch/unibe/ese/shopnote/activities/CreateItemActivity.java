@@ -19,6 +19,7 @@ import ch.unibe.ese.shopnote.adapters.ItemAutocompleteAdapter;
 import ch.unibe.ese.shopnote.adapters.ShopAutocompleteAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Item;
+import ch.unibe.ese.shopnote.core.ItemException;
 import ch.unibe.ese.shopnote.core.ItemUnit;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.Recipe;
@@ -149,9 +150,9 @@ public class CreateItemActivity extends BaseActivity {
 		if(item.getQuantity()!= null)
 			setTextViewText(R.id.editTextQuantity, item.getQuantity().toString());
 		
-		if(item.getUnit() != null) {
+		if (item.getUnit() != null) {
 			int position = item.getUnit().ordinal();
-			((Spinner) findViewById(R.id.editSpinnerUnits)).setSelection(position + 1);
+			((Spinner) findViewById(R.id.editSpinnerUnits)).setSelection(position);
 		}
 	}
 
@@ -176,15 +177,18 @@ public class CreateItemActivity extends BaseActivity {
 			return;
 		}
 
+		// get price and set it if necessary
+		String priceString = getTextViewText(R.id.editTextPrice);
+		BigDecimal price = null;
+		if (!priceString.isEmpty() && !priceString.equals(".")) {
+			price = new BigDecimal(priceString);
+			price = price.setScale(2, RoundingMode.HALF_UP);
+		}
+		// get quantity and item
 		String quantity = getTextViewText(R.id.editTextQuantity);
 		int unitPosition = ((Spinner) findViewById(R.id.editSpinnerUnits)).getSelectedItemPosition();
-		if (quantity.isEmpty() && unitPosition > 0){
-			Toast.makeText(this, R.string.error_no_quantity_unit, Toast.LENGTH_SHORT).show();
-			return;
-		} else if (!quantity.isEmpty() && unitPosition <= 0) {
-			Toast.makeText(this, R.string.error_quantity_no_unit, Toast.LENGTH_SHORT).show();
-			return;
-		}
+		BigDecimal quant = (quantity.isEmpty() || quantity.equals(".")) ? null : new BigDecimal(quantity);
+		ItemUnit unit = (unitPosition < 0 || quant == null) ? null : ItemUnit.values()[unitPosition];
 
 		if (item == null)
 			item = new Item(name);
@@ -197,32 +201,26 @@ public class CreateItemActivity extends BaseActivity {
 			Shop shop = new Shop(shopName);
 			item.setShop(shop);
 		}
-
-		// get price and set it if necessary
-		String priceString = getTextViewText(R.id.editTextPrice);
-		if (!priceString.isEmpty()) {
-			BigDecimal price = new BigDecimal(priceString);
-			price = price.setScale(2, RoundingMode.HALF_UP);
-			item.setPrice(price);
-		}
-		
-		BigDecimal quant = quantity.isEmpty() ? null : new BigDecimal(quantity);
-		ItemUnit unit = unitPosition <= 0 ? null : ItemUnit.values()[unitPosition - 1];
+		item.setPrice(price);
 		item.setQuantity(quant, unit);	
 
-		// save the item
-		if (list != null) {
-			manager.addItemToList(item, list);
-		} else if (recipe != null) {
-			recipe.addItem(item);
-			manager.saveRecipe(recipe);
-		} else {
-			// save item if called in itemlist
-			manager.save(item);
+		try {
+			// save the item
+			if (list != null) {
+				manager.addItemToList(item, list);
+			} else if (recipe != null) {
+				recipe.addItem(item);
+				manager.saveRecipe(recipe);
+			} else {
+				// save item if called in itemlist
+				manager.save(item);
+			}
+	
+			// go back to the list
+			finish();
+		} catch (ItemException e){
+			showToast(getString(R.string.error_duplicate_item));
 		}
-
-		// go back to the list
-		finish();
 	}
 
 	public void finish() {

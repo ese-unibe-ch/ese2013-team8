@@ -72,7 +72,7 @@ public class ListManagerTest extends AndroidTestCase {
 		assertEquals(rename, lists.get(0).getName());
 	}
 
-	public void testAddItemToList() {
+	public void testAddItemToList() throws Exception {
 		ShoppingList list1 = new ShoppingList("list1");
 		manager.saveShoppingList(list1);
 		assertEquals(list1, manager.getShoppingLists().get(0));
@@ -98,7 +98,7 @@ public class ListManagerTest extends AndroidTestCase {
 		assertNull(testItem.getShop());
 	}
 
-	public void testAddItemsToList() {
+	public void testAddItemsToList() throws Exception {
 		ShoppingList list1 = new ShoppingList("list1");
 		manager.saveShoppingList(list1);
 		assertEquals(list1, manager.getShoppingLists().get(0));
@@ -114,7 +114,7 @@ public class ListManagerTest extends AndroidTestCase {
 		assertEquals(item2, manager.getItemsFor(list1).get(1));
 	}
 
-	public void testAddItemTwice() {
+	public void testAddItemTwice() throws Exception {
 		ShoppingList list1 = new ShoppingList("list1");
 		manager.saveShoppingList(list1);
 		assertEquals(list1, manager.getShoppingLists().get(0));
@@ -128,7 +128,7 @@ public class ListManagerTest extends AndroidTestCase {
 		assertEquals(item1, manager.getItemsFor(list1).get(0));
 	}
 
-	public void testAddItemsWithSameUnit() {
+	public void testAddItemsWithSameUnit() throws Exception {
 		ShoppingList list = new ShoppingList("list1");
 		manager.saveShoppingList(list);
 		assertEquals(list, manager.getShoppingLists().get(0));
@@ -152,7 +152,7 @@ public class ListManagerTest extends AndroidTestCase {
 		assertEquals(unit, testItem.getUnit());
 	}
 
-	public void testAddItemsWithGrams() {
+	public void testAddItemsWithGrams() throws Exception {
 		ShoppingList list = new ShoppingList("list1");
 		manager.saveShoppingList(list);
 		assertEquals(list, manager.getShoppingLists().get(0));
@@ -177,39 +177,7 @@ public class ListManagerTest extends AndroidTestCase {
 		assertEquals(unit1, testItem.getUnit());
 	}
 
-	// TODO currently, an item with the same name is only added once to a list.
-	// this should be changed so if an item exists in a list and an item with
-	// the same name but different unit is added, it should be added again, so
-	// the list has 2 items.
-	// public void testAddItemsWithDifferrentUnits(){
-	// ShoppingList list = new ShoppingList("list1");
-	// manager.saveShoppingList(list);
-	// assertEquals(list, manager.getShoppingLists().get(0));
-	//
-	// assertTrue(manager.getItemsFor(list).isEmpty());
-	// Item item1 = new Item("item");
-	// final BigDecimal quantity1 = new BigDecimal("1.23");
-	// final BigDecimal quantity2 = new BigDecimal("321");
-	// final ItemUnit unit1 = ItemUnit.KILO_GRAM;
-	// final ItemUnit unit2 = ItemUnit.PIECE;
-	// item1.setQuantity(quantity1, unit1);
-	// assertTrue(manager.addItemToList(item1, list));
-	//
-	// Item item2 = new Item("item");
-	// item2.setQuantity(quantity2, unit2);
-	// manager.addItemToList(item2, list);
-	//
-	// List<Item> items = manager.getItemsFor(list);
-	// assertEquals(2, items.size());
-	// Item testItem1 = items.get(0);
-	// Item testItem2 = items.get(0);
-	// assertEquals(quantity1, testItem1.getQuantity());
-	// assertEquals(unit1, testItem1.getUnit());
-	// assertEquals(quantity2, testItem2.getQuantity());
-	// assertEquals(unit2, testItem2.getUnit());
-	// }
-
-	public void testRemoveItemFromList() {
+	public void testRemoveItemFromList() throws Exception {
 		ShoppingList list1 = new ShoppingList("list1");
 		manager.saveShoppingList(list1);
 		assertEquals(list1, manager.getShoppingLists().get(0));

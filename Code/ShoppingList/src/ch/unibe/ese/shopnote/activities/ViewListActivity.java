@@ -30,6 +30,7 @@ import ch.unibe.ese.shopnote.adapters.ItemListAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Comparators;
 import ch.unibe.ese.shopnote.core.Item;
+import ch.unibe.ese.shopnote.core.ItemException;
 import ch.unibe.ese.shopnote.core.ItemRecipeAdapter;
 import ch.unibe.ese.shopnote.core.ListManager;
 import ch.unibe.ese.shopnote.core.Recipe;
@@ -95,24 +96,27 @@ public class ViewListActivity extends BaseActivity {
 	        @Override
 	        public void onItemClick(AdapterView<?> parent, View arg1, int position,
 	                long id) {
-	        	ItemRecipeAdapter entry = (ItemRecipeAdapter) sqliteAdapter.getItem(position);
-	
-	        	if (entry.isItem()) {
-	        		Item item = manager.getItem(entry.getId());
-	        		manager.addItemToList(item, list);
-	        		addItemRequestIfShared(item, false);
-	        	} else {
-	        		Recipe recipe = manager.getRecipeAt(entry.getId());
-	        		for (Item item : recipe.getItemList()) {
-						manager.addItemToList(item, list);
-						addItemRequestIfShared(item, false);
-						itemAdapter.add(item);
-					}
+	        	try {
+		        	ItemRecipeAdapter entry = (ItemRecipeAdapter) sqliteAdapter.getItem(position);
+		        	if (entry.isItem()) {
+		        		Item item = manager.getItem(entry.getId());
+		        		manager.addItemToList(item, list);
+		        		addItemRequestIfShared(item, false);
+		        	} else {
+		        		Recipe recipe = manager.getRecipeAt(entry.getId());
+		        		for (Item item : recipe.getItemList()) {
+							manager.addItemToList(item, list);
+							addItemRequestIfShared(item, false);
+							itemAdapter.add(item);
+						}
+		        	}
+		        	updateAdapters();
+		        	
+		        	EditText addItem = (EditText) findViewById(R.id.editTextName);
+		        	addItem.setText("");
+	        	} catch (ItemException e){
+	        		showToast(getString(R.string.error_duplicate_item));
 	        	}
-	        	updateAdapters();
-	        	
-	        	EditText addItem = (EditText) findViewById(R.id.editTextName);
-	        	addItem.setText("");
 	        }
 	    });
 
@@ -207,7 +211,7 @@ public class ViewListActivity extends BaseActivity {
 				// bought items
 				Item item = itemAdapter.getItem(position);
 				item.setBought(true);
-				manager.addItemToList(item, list);
+				manager.updateItemInList(item, list);
 				addItemRequestIfShared(item, true);
 
 				itemAdapter.remove(item);
@@ -244,7 +248,7 @@ public class ViewListActivity extends BaseActivity {
 				// bought items
 				Item item = itemBoughtAdapter.getItem(position);
 				item.setBought(false);
-				manager.addItemToList(item, list);
+				manager.updateItemInList(item, list);
 				addItemRequestIfShared(item, false);
 				itemBoughtAdapter.remove(item);
 				itemAdapter.add(item);
@@ -275,38 +279,43 @@ public class ViewListActivity extends BaseActivity {
 			Toast.makeText(this, this.getString(R.string.error_name),
 					Toast.LENGTH_SHORT).show();
 			return;
-		} else if (name.charAt(0) == '/') {
-			List<Recipe> recipeList = manager.getRecipes();
-			String recipeName = name.toLowerCase();
-
-			for (Recipe recipe : recipeList) {
-				if (recipe.getName().toLowerCase().equals(recipeName)) {
-					for (Item item : recipe.getItemList()) {
-						item.setBought(false);
-						manager.addItemToList(item, list);
-						addItemRequestIfShared(item, false);
-						itemAdapter.add(item);
+		}
+		try {
+			if (name.charAt(0) == '/') {
+				List<Recipe> recipeList = manager.getRecipes();
+				String recipeName = name.toLowerCase();
+	
+				for (Recipe recipe : recipeList) {
+					if (recipe.getName().toLowerCase().equals(recipeName)) {
+						for (Item item : recipe.getItemList()) {
+							item.setBought(false);
+							manager.addItemToList(item, list);
+							addItemRequestIfShared(item, false);
+							itemAdapter.add(item);
+						}
 					}
 				}
+	
+			} else {
+				Item item = manager.getItem(name);
+				if (item == null)
+					item = new Item(name);
+				boolean added = manager.addItemToList(item, list);
+				addItemRequestIfShared(item, false);
+	
+				if (added) {	// refresh view
+					itemAdapter.add(item);
+					itemAdapter.sort(Comparators.ITEM_COMPARATOR);
+				}
 			}
-
-		} else {
-			Item item = manager.getItem(name);
-			if (item == null)
-				item = new Item(name);
-			boolean added = manager.addItemToList(item, list);
-			addItemRequestIfShared(item, false);
-
-			if (added) {	// refresh view
-				itemAdapter.add(item);
-				itemAdapter.sort(Comparators.ITEM_COMPARATOR);
-			}
+	
+			// remove text from field
+			textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
+			textName.setText("");
+			updateAdapters();
+		} catch (ItemException e){
+			showToast(getString(R.string.error_duplicate_item));
 		}
-
-		// remove text from field
-		textName = (AutoCompleteTextView) findViewById(R.id.editTextName);
-		textName.setText("");
-		updateAdapters();
 	}
 
 	@Override
