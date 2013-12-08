@@ -200,11 +200,12 @@ public class CreateItemActivity extends BaseActivity {
 
 		// get price and set it if necessary
 		String priceString = getTextViewText(R.id.editTextPrice);
+		BigDecimal price = null;
 		if (!priceString.isEmpty()) {
-			BigDecimal price = new BigDecimal(priceString);
+			price = new BigDecimal(priceString);
 			price = price.setScale(2, RoundingMode.HALF_UP);
-			item.setPrice(price);
 		}
+		item.setPrice(price);
 		
 		BigDecimal quant = quantity.isEmpty() ? null : new BigDecimal(quantity);
 		ItemUnit unit = unitPosition <= 0 ? null : ItemUnit.values()[unitPosition - 1];
