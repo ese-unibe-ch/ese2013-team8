@@ -12,6 +12,10 @@ import android.widget.ListView;
 
 public class Utility {
 	
+	private Utility() {
+		// private constructor for util class.
+	}
+	
 	/**
 	 * Bugfix, allows to put a ListView in a ScrollView with other objects
 	 * 
