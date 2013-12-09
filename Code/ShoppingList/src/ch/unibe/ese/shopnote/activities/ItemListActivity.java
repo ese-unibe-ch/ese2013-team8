@@ -13,7 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import ch.unibe.ese.shopnote.R;
-import ch.unibe.ese.shopnote.adapters.ItemListAdapter;
+import ch.unibe.ese.shopnote.adapters.ItemAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ListManager;
@@ -58,7 +58,7 @@ public class ItemListActivity extends BaseActivity {
 	public void updateAdapter() {
 		// display items
 		itemList = manager.getAllItems();
-		itemAdapter = new ItemListAdapter(this, R.layout.shopping_list_item, itemList);
+		itemAdapter = new ItemAdapter(this, R.layout.shopping_list_item, itemList);
 		ListView listView = (ListView) findViewById(R.id.ItemView);
 		listView.setAdapter(itemAdapter);
 		updateThemeListView(listView);

@@ -9,23 +9,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import ch.unibe.ese.shopnote.R;
+import ch.unibe.ese.shopnote.activities.ItemListActivity;
+import ch.unibe.ese.shopnote.activities.ViewRecipeActivity;
 import ch.unibe.ese.shopnote.core.Item;
 
 /**
  *	Modified ArrayAdapter to display the items including the name, quantity and price (if defined)
  */
-public class ItemListAdapter extends ArrayAdapter<Item> {
+public class ItemAdapter extends ArrayAdapter<Item> {
 
 private Context context;
 	
-	public ItemListAdapter(Context context, int resource, List<Item> itemList) {
+	public ItemAdapter(Context context, int resource, List<Item> itemList) {
 		super(context, resource, itemList);
 		this.context = context;
 	}
 
 	private class ItemHolder {
+		CheckBox checkBox;
 		TextView name;
 		TextView quantity;
 		TextView price;
@@ -39,6 +43,7 @@ private Context context;
 		if(convertView == null) {
 			convertView = mInflater.inflate(R.layout.shopping_list_item_view, null);
 			holder = new ItemHolder();
+			holder.checkBox = (CheckBox) convertView.findViewById(R.id.item_checkBox);
 			holder.name = (TextView) convertView.findViewById(R.id.item_name);
 			holder.quantity = (TextView) convertView.findViewById(R.id.item_quantity);
 			holder.price = (TextView) convertView.findViewById(R.id.item_price);
@@ -46,7 +51,19 @@ private Context context;
 		} else {
 			holder = (ItemHolder) convertView.getTag();
 		}
+		
+		// tick checkbox
+		if ((context.getClass() == ItemListActivity.class) || (context.getClass() == ViewRecipeActivity.class))
+			holder.checkBox.setVisibility(View.GONE);
+		else {
+			holder.checkBox.setChecked(item.isBought());
+			holder.checkBox.setEnabled(false);
+		}
+		
+		// set name
 		holder.name.setText(item.getName());
+		
+		// set quantity
 		if (item.getQuantity() != null) {
 			String quantity = item.getQuantity().toString();
 			int ordinal = item.getUnit().ordinal();
@@ -58,6 +75,8 @@ private Context context;
 		}
 		else
 			holder.quantity.setText("");
+		
+		// set price
 		if (item.getPrice() != null) {
 			// TODO: get user currency
 			String price = item.getPrice().toString();

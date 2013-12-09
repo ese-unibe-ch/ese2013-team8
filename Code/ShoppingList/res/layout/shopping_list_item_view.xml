@@ -4,12 +4,22 @@
     android:layout_height="fill_parent"
     android:gravity="center_vertical"
     android:orientation="horizontal" >
+    
+    <CheckBox
+	    android:id="@+id/item_checkBox"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content" 
+	    android:layout_centerVertical="true"
+	    android:layout_marginRight="-15dp"
+	    android:focusable="false" >
+	</CheckBox>
 
 	<TextView
 	    android:id="@+id/item_name"
 	    android:layout_width="wrap_content"
     	android:layout_height="wrap_content"
 	    android:onClick="onClick"
+	    android:layout_toRightOf="@+id/item_checkBox"
 	    android:padding="10dp"
 	    android:textSize="16sp" >
 	</TextView>
