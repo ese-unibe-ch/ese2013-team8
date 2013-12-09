@@ -9,6 +9,8 @@ import android.os.Looper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
@@ -133,6 +135,12 @@ public class ManageFriendsActivity extends BaseActivity {
 			Intent intent = new Intent(this, CreateFriendActivity.class);
 			this.startActivityForResult(intent, INTENT_FRIEND_REQUEST);
 			return true;
+		case R.id.action_refresh:
+		     Animation rotation = AnimationUtils.loadAnimation(this, R.layout.sync_animation);
+		     rotation.setRepeatCount(Animation.INFINITE);
+		     findViewById(R.id.action_refresh).startAnimation(rotation);
+			 searchContactsInPhoneBook();
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -188,6 +196,7 @@ public class ManageFriendsActivity extends BaseActivity {
 	@Override
 	public void refresh() {
 		updateFriendsList();
+		findViewById(R.id.action_refresh).clearAnimation();
 	}
 }
 
