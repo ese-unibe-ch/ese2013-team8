@@ -19,18 +19,9 @@
 		android:layout_height="fill_parent"
 		android:textColor="@color/gray"
 		android:paddingTop="10dp"
-		android:paddingRight="65dp"
+		android:paddingRight="10dp"
 		android:textSize="16sp"
 		android:gravity="right" >
 	</TextView>
-
-	<ImageView
-		android:id="@+id/friend_list_item_hasTheAppIcon"
-		android:layout_width="32dp"
-		android:layout_height="32dp"
-		android:paddingTop="10dp"
-		android:paddingRight="10dp"
-		android:layout_alignParentRight="true" >
-	</ImageView>
 
 </RelativeLayout>

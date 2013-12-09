@@ -28,7 +28,6 @@ public class FriendsListAdapter extends ArrayAdapter<Friend> {
 	private class FriendHolder {
 		TextView name;
 		TextView phonenumber;
-		ImageView hasTheAppIcon;
 	}
 	
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -41,7 +40,6 @@ public class FriendsListAdapter extends ArrayAdapter<Friend> {
 			holder = new FriendHolder();
 			holder.name = (TextView) convertView.findViewById(R.id.friend_list_item_name);
 			holder.phonenumber = (TextView) convertView.findViewById(R.id.friend_list_phonenumber);
-			holder.hasTheAppIcon = (ImageView) convertView.findViewById(R.id.friend_list_item_hasTheAppIcon);
 			convertView.setTag(holder);
 		} else {
 			holder = (FriendHolder) convertView.getTag();
@@ -62,12 +60,6 @@ public class FriendsListAdapter extends ArrayAdapter<Friend> {
 		}
 		holder.phonenumber.setText(phoneNumber);
 		
-		// set app status
-		if(friend.hasTheApp()) {
-			holder.hasTheAppIcon.setImageResource(R.drawable.ic_action_ok);
-		} else {
-			holder.hasTheAppIcon.setImageResource(R.drawable.ic_action_abort);
-		}
 		return convertView;
 	}
 	
