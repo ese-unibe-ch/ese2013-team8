@@ -55,6 +55,7 @@ public class BaseActivity extends Activity {
 	protected ActionBarDrawerToggle drawerToggle;
 	private boolean drawerToggleCreated;
 	private String title;
+	private static boolean isSyncing = false;
 	
 	//color variables
 	private int titleBarColor;
@@ -65,6 +66,7 @@ public class BaseActivity extends Activity {
 	private int listViewColor;
 	private int listViewDividerColor;
 	public boolean colorUpdated = false;
+
 	
 	/**
 	 * Returns the singleton ListManager which is responsible for all the shopping lists
@@ -447,5 +449,13 @@ public class BaseActivity extends Activity {
 			Toast.makeText(this, this.getString(R.string.no_connection),
 					Toast.LENGTH_SHORT).show();
 		}
+	}
+	
+	public void isSyncing(boolean b) {
+		isSyncing = b;
+	}
+	
+	public boolean isSyncing() {
+		return isSyncing;
 	}
 }

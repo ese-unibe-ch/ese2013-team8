@@ -33,6 +33,8 @@ public class ManageFriendsActivity extends BaseActivity {
 	private FriendsManager friendsManager;
 	private SyncManager syncManager;
 	private ArrayAdapter<Friend> friendsAdapter;
+	
+	private static boolean isFriendsSyncing = false;
 
 	@Override
 	/**
@@ -56,12 +58,14 @@ public class ManageFriendsActivity extends BaseActivity {
 		// verify phone number
 		getMyPhoneNumber();
 		
-		//Update all friends
-		searchContactsInPhoneBook();
-		
 		// Create drawer menu
 		createDrawerMenu();
 		createDrawerToggle();
+		
+		//Update all friends
+		if (!isFriendsSyncing) {
+			searchContactsInPhoneBook();
+		}
 		
 		updateFriendsList();
 		
@@ -136,11 +140,14 @@ public class ManageFriendsActivity extends BaseActivity {
 			this.startActivityForResult(intent, INTENT_FRIEND_REQUEST);
 			return true;
 		case R.id.action_refresh:
-		     Animation rotation = AnimationUtils.loadAnimation(this, R.layout.sync_animation);
-		     rotation.setRepeatCount(Animation.INFINITE);
-		     findViewById(R.id.action_refresh).startAnimation(rotation);
-			 searchContactsInPhoneBook();
-			return true;
+			Animation rotation = AnimationUtils.loadAnimation(this,
+					R.layout.sync_animation);
+			rotation.setRepeatCount(Animation.INFINITE);
+			findViewById(R.id.action_refresh).startAnimation(rotation);
+			if (!isFriendsSyncing) {
+				searchContactsInPhoneBook();
+				return true;
+			}
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -150,6 +157,7 @@ public class ManageFriendsActivity extends BaseActivity {
 	 * searches for contacts in the phonebook who do have the app
 	 */
 	public void searchContactsInPhoneBook() {
+		isFriendsSyncing = true;
 		final SynchHandler handler = new SynchHandler(this);
 		Toast.makeText(getApplicationContext(), R.string.synchStarted , Toast.LENGTH_SHORT).show();
 		new Thread(new Runnable() {
@@ -195,6 +203,7 @@ public class ManageFriendsActivity extends BaseActivity {
 
 	@Override
 	public void refresh() {
+		isFriendsSyncing = false;
 		updateFriendsList();
 		findViewById(R.id.action_refresh).clearAnimation();
 	}

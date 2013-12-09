@@ -317,6 +317,7 @@ public class AnswerHandler {
 		if(!successful) {
 			context.showToast(context.getString(R.string.error_connection));
 		}
+		context.isSyncing(false);
 		context.refresh();
 	}
 }

@@ -18,8 +18,6 @@ public class SyncManager {
 
 	private static SyncManager instance;
 	private RequestQueue rQueue;
-	
-	private boolean isSyncing = false;
 	private boolean waitForTask;
 	
 	
@@ -45,15 +43,18 @@ public class SyncManager {
 	}
 
 	public synchronized void synchronise(BaseActivity context) {
-		// To be sure, that the client is registered on the server
-		rQueue.addFirst(new RegisterRequest(context.getMyPhoneNumber()));
+		if (!context.isSyncing()) {
+			context.isSyncing(true);
+			// To be sure, that the client is registered on the server
+			rQueue.addFirst(new RegisterRequest(context.getMyPhoneNumber()));
 
-		AnswerHandler handler = new AnswerHandler(context);
-		RequestSender sender = new RequestSender(handler);
-		sender.execute(rQueue.getRequests());
-		if (waitForTask)
-			waitForTask(sender);
-		rQueue.clear();
+			AnswerHandler handler = new AnswerHandler(context);
+			RequestSender sender = new RequestSender(handler);
+			sender.execute(rQueue.getRequests());
+			if (waitForTask)
+				waitForTask(sender);
+			rQueue.clear();
+		}
 	}
 
 	private void waitForTask(RequestSender sender) {
