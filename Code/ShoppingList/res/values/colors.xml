@@ -31,7 +31,7 @@
         <item>#EEEEEE</item> <!-- navigationdrawer -->
         <item>#DDDDDD</item> <!-- actionbar --> 
         <item>#000000</item> <!-- textcolor -->
-        <item>#a9a9a9</item> <!-- 2nd textcolor for price usw. -->
+        <item>#808080</item> <!-- 2nd textcolor for price usw. -->
         <item>#FFFFFF</item> <!-- textfield in create activities -->
         <item>#FFFFFF</item> <!-- listviews -->
         <item>#CCCCCC</item> <!-- listviews divider -->
@@ -43,7 +43,7 @@
         <item>#787A83</item> <!-- navigationdrawer -->
         <item>#3B4047</item> <!-- actionbar --> 
         <item>#EEEEEE</item> <!-- textcolor -->
-        <item>#a9a9a9</item> <!-- 2nd textcolor for price usw. -->
+        <item>#A9A9A9</item> <!-- 2nd textcolor for price usw. -->
         <item>#3B4047</item> <!-- textfield in create activities -->
         <item>#3B4047</item> <!-- listviews -->
         <item>#171A1B</item> <!-- listviews divider -->
@@ -55,7 +55,7 @@
         <item>#6F1900</item> <!-- navigationdrawer -->
         <item>#6F1900</item> <!-- actionbar --> 
         <item>#EEEEEE</item> <!-- textcolor -->
-        <item>#a9a9a9</item> <!-- 2nd textcolor for price usw. -->
+        <item>#A9A9A9</item> <!-- 2nd textcolor for price usw. -->
         <item>#CC462B</item> <!-- textfield in create activities -->
         <item>#CC462B</item> <!-- listviews -->
         <item>#441600</item> <!-- listviews divider -->
@@ -67,7 +67,7 @@
         <item>#FF7A91</item> <!-- navigationdrawer -->
         <item>#FF7A91</item> <!-- actionbar --> 
         <item>#000000</item> <!-- textcolor -->
-        <item>#a9a9a9</item> <!-- 2nd textcolor for price usw. -->
+        <item>#A9A9A9</item> <!-- 2nd textcolor for price usw. -->
         <item>#FF7A91</item> <!-- textfield in create activities -->
         <item>#FF7A91</item> <!-- listviews -->
         <item>#FF0B63</item> <!-- listviews divider -->
