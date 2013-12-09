@@ -50,14 +50,13 @@ public class AnswerHandler {
 		for (Request r: requests) {
 			if(r.wasSuccessful()) {
 				setConsequences(r);
-				return;
+				continue;
 			}
 			if(r.isHandled()) {
 				setHandledConsequences(r);
-				return;
+				continue;
 			} else {
 				syncManager.addRequest(r);
-				return;
 			}
 		}
 	}
