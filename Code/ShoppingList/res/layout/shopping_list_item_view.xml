@@ -31,7 +31,7 @@
     	android:textColor="@color/gray"
 	    android:onClick="onClick"
 	    android:paddingTop="10dp"
-	    android:paddingRight="120dp"
+	    android:paddingRight="110dp"
 	    android:textSize="16sp"
 	    android:gravity="right" >
 	</TextView>

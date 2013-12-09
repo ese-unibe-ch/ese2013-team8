@@ -191,6 +191,12 @@
         <item>kilogram</item>
         <item>liter</item>
     </string-array>
+    <string-array name="item_units_short">
+        <item>pc</item>
+        <item>g</item>
+        <item>kg</item>
+        <item>L</item>
+    </string-array>
 
     <string name="title_activity_invite_friend">Invite Friend</string>
     <string name="hello_world">Hello world!</string>
