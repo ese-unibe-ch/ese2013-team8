@@ -7,6 +7,7 @@ import java.util.Locale;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,8 +81,13 @@ private Context context;
 		else
 			holder.quantity.setText("");
 		
+		// get user currency
+		TelephonyManager telephonyManager = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
+		String country = telephonyManager.getNetworkCountryIso();
+		Locale locale = new Locale("en", country); // convert country code to locale
+		Currency currency = Currency.getInstance(locale);
+		
 		// set price
-		Currency currency = Currency.getInstance(Locale.getDefault());
 		if (item.getPrice() != null) {
 			String price = item.getPrice().toString();
 			holder.price.setText(price + " " + currency);

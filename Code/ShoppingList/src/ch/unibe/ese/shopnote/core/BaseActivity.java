@@ -24,6 +24,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.telephony.TelephonyManager;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -288,7 +289,10 @@ public class BaseActivity extends Activity {
 			drawMenu.closeDrawers();
 	}
 	
-	//Popup window for recruiting new friends
+	/**
+	 * Creates a dialog which asks to invite friend
+	 * @param activity
+	 */
 	protected void friendPopup(final BaseActivity activity) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 		
@@ -315,7 +319,10 @@ public class BaseActivity extends Activity {
 		
 	}
 	
-
+	/**
+	 * creates a share popup with text R.string.inviteFriendMessage
+	 * @param activity
+	 */
 	protected void invitePopup(BaseActivity activity) {
 		Intent sendIntent = new Intent();
 		sendIntent.setAction(Intent.ACTION_SEND);
@@ -326,6 +333,10 @@ public class BaseActivity extends Activity {
 	
 	
 	//Color functions to paint the program
+	/**
+	 * Updates colors for a listview
+	 * @param lv
+	 */
 	protected void updateThemeListView(ListView lv) {
 		if(!colorUpdated)
 			getColorSettings();
@@ -334,17 +345,42 @@ public class BaseActivity extends Activity {
 		lv.setDividerHeight(2);
 	}
 	
+	/**
+	 * Updates color for a textbox
+	 * @param view
+	 */
 	protected void updateThemeTextBox(View view) {
 		if(!colorUpdated)
 			getColorSettings();
 		view.setBackgroundColor(createTextBoxColor);
 	}
 	
+	/**
+	 * Updates the save/abord buttons in the create activities
+	 * @param buttons
+	 * @param divider
+	 */
+	protected void updateSaveAbordButtons(LinearLayout buttons, LinearLayout divider) {
+		buttons.setBackgroundColor(navigationDrawerColor);
+		divider.setBackgroundColor(listViewDividerColor);
+	}
+	
+	/**
+	 * Updates Colors for a layout, the actionbar and a drawer/in create activities the abord/save buttons
+	 * @param layout
+	 * @param actionBar
+	 * @param layoutDrawer
+	 */
 	protected void updateTheme(View layout, ActionBar actionBar, View layoutDrawer) {
 		updateTheme(layout, actionBar);
 		layoutDrawer.setBackgroundColor(navigationDrawerColor);		
 	}
 	
+	/**
+	 * Updates Colors for a layout and the actionbar, the standard activity set
+	 * @param layout
+	 * @param actionBar
+	 */
 	protected void updateTheme(View layout, ActionBar actionBar) {
 		if(!colorUpdated)
 			getColorSettings();
@@ -352,6 +388,9 @@ public class BaseActivity extends Activity {
 		layout.setBackgroundColor(backgroundColor);
 	}
 	
+	/**
+	 * loads the actual color settings
+	 */
 	private void getColorSettings() {
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 		String colorString = sharedPref.getString("color_setting", "white");
