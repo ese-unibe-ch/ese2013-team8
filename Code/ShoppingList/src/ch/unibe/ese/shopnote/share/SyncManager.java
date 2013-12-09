@@ -44,7 +44,7 @@ public class SyncManager {
 		this.waitForTask = false;
 	}
 
-	public void synchronise(BaseActivity context) {
+	public synchronized void synchronise(BaseActivity context) {
 		// To be sure, that the client is registered on the server
 		rQueue.addFirst(new RegisterRequest(context.getMyPhoneNumber()));
 
