@@ -206,7 +206,6 @@ public class ManageFriendsActivity extends BaseActivity {
 		if(anim != null) {
 			anim.setRepeatCount(0);
 		}
-
 	}
 }
 

@@ -197,7 +197,10 @@ public class HomeActivity extends BaseActivity {
 
 	@Override
 	public void refresh() {
-		findViewById(R.id.action_refresh).getAnimation().setRepeatCount(0);
+		Animation anim = findViewById(R.id.action_refresh).getAnimation();
+		if(anim != null) {
+			anim.setRepeatCount(0);
+		}
 		updateAdapter();
 	}
 	
