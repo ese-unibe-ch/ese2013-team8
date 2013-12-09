@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -17,8 +18,11 @@ import android.preference.PreferenceManager;
 import android.view.ActionMode;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -164,6 +168,9 @@ public class HomeActivity extends BaseActivity {
 		switch (item.getItemId()) {
 
 			case R.id.action_refresh:
+			     Animation rotation = AnimationUtils.loadAnimation(this, R.layout.sync_animation);
+			     rotation.setRepeatCount(Animation.INFINITE);
+			     findViewById(R.id.action_refresh).startAnimation(rotation);
 				synchronize();
 				return true;
 			case R.id.action_new:
@@ -189,6 +196,7 @@ public class HomeActivity extends BaseActivity {
 
 	@Override
 	public void refresh() {
+		findViewById(R.id.action_refresh).clearAnimation();
 		updateAdapter();
 	}
 	

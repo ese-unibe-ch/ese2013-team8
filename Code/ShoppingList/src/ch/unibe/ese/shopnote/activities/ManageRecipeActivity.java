@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -138,6 +140,9 @@ public class ManageRecipeActivity extends BaseActivity {
 		// Handle presses on the action bar items
 		switch (item.getItemId()) {
 		case R.id.action_refresh:
+		    Animation rotation = AnimationUtils.loadAnimation(this, R.layout.sync_animation);
+		    rotation.setRepeatCount(Animation.INFINITE);
+		    findViewById(R.id.action_refresh).startAnimation(rotation);
 			synchronize();
 			return true;
 
@@ -152,6 +157,7 @@ public class ManageRecipeActivity extends BaseActivity {
 	}
 	
 	public void refresh() {
+		findViewById(R.id.action_refresh).clearAnimation();
 		updateRecipeList();
 	}
 }

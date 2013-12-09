@@ -405,11 +405,6 @@ public class BaseActivity extends Activity {
 	protected void synchronize() {
 		if(isOnline()) {
 			getSyncManager().synchronise(this);
-			SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
-			boolean phoneNumberApproved = settings.getBoolean("phonenumberapproved", false);
-			if (phoneNumberApproved)
-				Toast.makeText(this, this.getString(R.string.synchronizing),
-					Toast.LENGTH_SHORT).show();
 		} else {
 			Toast.makeText(this, this.getString(R.string.no_connection),
 					Toast.LENGTH_SHORT).show();

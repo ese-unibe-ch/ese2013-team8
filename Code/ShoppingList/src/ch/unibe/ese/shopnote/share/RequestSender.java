@@ -25,13 +25,10 @@ public class RequestSender extends AsyncTask<Request, Void, Boolean>{
 	private int port = 1337;
 	
 	private Socket socket;
-	private ObjectOutputStream out;
-	private ObjectInputStream in;
 	private AnswerHandler handler;
-	private Request[] answers;
 	
 	public RequestSender(AnswerHandler handler) {
-		this.host = "matter2.nine.ch";
+		this.host = "10.0.0.2";
 		this.handler = handler;
 	}
 	
@@ -55,29 +52,6 @@ public class RequestSender extends AsyncTask<Request, Void, Boolean>{
 		return isConnected;
 	}
 	
-	@Override
-	protected void onPostExecute(Boolean a) {
-		handler.updateUI();
-    }
-	
-	/**
-	 * Waits for the answer from the server and reports the result in the listener
-	 */
-	private void waitForAnswer() {
-		try {
-			this.in = new ObjectInputStream(socket.getInputStream());
-			answers = (Request[]) in.readObject();
-			socket.close();
-			handler.setRequests(answers);
-		} catch (StreamCorruptedException e) {
-			System.err.println("Failed to open stream from server");
-		} catch (IOException e) {
-			System.err.println("Failed to read answers from server");
-		} catch (ClassNotFoundException e) {
-			System.err.println("Failed to read class from server");
-		}
-	}
-
 	/**
 	 * Tries to open a socket on the android device to a specified Host
 	 */
@@ -85,7 +59,6 @@ public class RequestSender extends AsyncTask<Request, Void, Boolean>{
 		try {
 			SocketAddress sockaddr = new InetSocketAddress(host, port);
 			socket = new Socket();
-			socket.setSoTimeout(5000);
 			socket.connect(sockaddr, 5000);
 			return true;
 		} catch (UnknownHostException e) {
@@ -104,7 +77,7 @@ public class RequestSender extends AsyncTask<Request, Void, Boolean>{
 	public void send(Request... request) {
 		if(socket != null) {
 			try {
-				this.out = new ObjectOutputStream(socket.getOutputStream());
+				ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 				out.writeObject(request);
 				out.flush();
 			} catch (IOException e) {
@@ -112,5 +85,29 @@ public class RequestSender extends AsyncTask<Request, Void, Boolean>{
 			}
 		}
 	}
+	
+	/**
+	 * Waits for the answer from the server and reports the result in the listener
+	 */
+	private void waitForAnswer() {
+		try {
+			socket.setSoTimeout(5000);
+			ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+			Request [] answers = (Request[]) in.readObject();
+			socket.close();
+			handler.setRequests(answers);
+		} catch (StreamCorruptedException e) {
+			System.err.println("Failed to open stream from server");
+		} catch (IOException e) {
+			System.err.println("Failed to read answers from server");
+		} catch (ClassNotFoundException e) {
+			System.err.println("Failed to read class from server");
+		}
+	}
+	
+	@Override
+	protected void onPostExecute(Boolean a) {
+		handler.updateUI();
+    }
 
 }
