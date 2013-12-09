@@ -38,7 +38,7 @@ public class SyncManager {
 	}
 	
 	
-	public void synchroniseAndWaitForTaskToEnd(BaseActivity context) {
+	public synchronized void synchroniseAndWaitForTaskToEnd(BaseActivity context) {
 		this.waitForTask = true;
 		this.synchronise(context);
 		this.waitForTask = false;
