@@ -2,12 +2,14 @@ package ch.unibe.ese.shopnote.activities;
 
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -26,6 +28,7 @@ public class ItemListActivity extends BaseActivity {
 	private ListManager manager;
 	private List<Item> itemList;
 	private ArrayAdapter<Item> itemAdapter;
+	private Activity activity = this;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +87,20 @@ public class ItemListActivity extends BaseActivity {
 				ItemListActivity.this.startActionMode(new ShoppingListActionMode(
 						ItemListActivity.this.manager, selectedItem, ItemListActivity.this.itemAdapter, ItemListActivity.this));
 				return true;
+			}
+		});
+		
+		// Add click Listener
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Item item = itemAdapter.getItem(position);
+				Intent intent = new Intent(activity, CreateItemActivity.class);
+				intent.putExtra(BaseActivity.EXTRAS_ITEM_ID, item.getId());
+				intent.putExtra(BaseActivity.EXTRAS_ITEM_EDIT, true);
+				activity.startActivityForResult(intent, 1);
 			}
 		});
 	}
