@@ -226,9 +226,9 @@ public class HomeActivity extends BaseActivity {
 		if(newLanguage.equals(languages[0]))
 			locale = Locale.ENGLISH; 
 		else if(newLanguage.equals(languages[1])) 
-			locale = Locale.GERMANY;
+			locale = Locale.GERMAN;
 		else if(newLanguage.equals(languages[2])) 
-			locale = Locale.FRANCE;
+			locale = Locale.FRENCH;
 		
 		// detect system language if not set by user
 		else
