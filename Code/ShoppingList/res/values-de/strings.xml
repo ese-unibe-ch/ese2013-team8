@@ -90,7 +90,6 @@
     <string name="manage_friends_welcome_message"> 
         Tippe rechts oben auf das Plus-Symbol, um Freunde hinzuzufügen.
         Danach kannst du mit diesen Einkaufslisten oder Rezepte teilen.</string>
-    <string name="searchContacts">Telefonbuch abfragen</string>
     <string name="synchStarted">"Ihre Kontakte werden synchronisiert"</string>
     <string name="synchFinished">Synchronisation beendet</string>
     <string name="friendAdded">Freund hinzugefügt: </string>

@@ -91,7 +91,6 @@
     <string name="manage_friends_welcome_message"> 
         Touche le symbole-plus en haut à droite pour ajouter des amis.
         Après cela vous pourrez partager des listes de courses avec eux.</string>
-    <string name="searchContacts">Chercher un ami dans l\'annuaire</string>
     <string name="synchStarted">"Demarrage de la synchronisation, cela peux prendre quelque secondes"</string>
     <string name="synchFinished">Synchronisation terminée </string>
     <string name="friendAdded">Ami ajouté: </string>
