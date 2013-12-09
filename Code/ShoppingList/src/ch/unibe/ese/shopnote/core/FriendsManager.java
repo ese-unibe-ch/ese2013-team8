@@ -220,7 +220,7 @@ public class FriendsManager {
 		} else {
 			//for search all the phonebook directly add friend if he has the app
 			for(Friend friend: friendsInPhoneBook) {
-				if(friend.getId() == friendId && checkIfDouble(friend) == null) {
+				if(hasApp == true && friend.getId() == friendId && checkIfDouble(friend) == null) {
 					friend.setHasApp(true);
 					friend = addFriend(friend);
 					if(friend != null) {

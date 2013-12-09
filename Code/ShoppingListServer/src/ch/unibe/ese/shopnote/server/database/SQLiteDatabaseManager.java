@@ -115,7 +115,7 @@ public class SQLiteDatabaseManager {
 				request.setSuccessful();
 				odbManager.addContainer(findUser(request));
 			} else {
-				System.out.println("\t:User " + rs.getString(COLUMN_USER_PHONENUMBER) + " already existed");
+//				System.out.println("\t:User " + rs.getString(COLUMN_USER_PHONENUMBER) + " already existed");
 			}
 			request.setHandled();
 			
@@ -142,7 +142,7 @@ public class SQLiteDatabaseManager {
 				request.setHandled();
 				return rs.getInt(COLUMN_USER_ID);
 			} else {
-				System.out.println("\t:User " + phoneNumber + " does not exist in Database");
+//				System.out.println("\t:User " + phoneNumber + " does not exist in Database");
 				request.setHandled();
 			}
 		} catch (SQLException e) {

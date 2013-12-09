@@ -34,6 +34,7 @@ public class RequestHandler {
 	 * @return Answer requests
 	 */
 	public Request[] handle(Request[] requests) {
+		System.out.println("\tUser sent " + requests.length + " requests");
 		ArrayList<Request> answers = new ArrayList<Request>();
 		for (Request r : requests) {
 			Request[] answer = this.handle(r);
@@ -41,6 +42,7 @@ public class RequestHandler {
 				answers.add(a);
 			}
 		}
+		System.out.println("\tUser received " + answers.size() + " answers");
 		return answers.toArray(new Request[answers.size()]);
 	}
 
@@ -147,7 +149,6 @@ public class RequestHandler {
 		int userId = dbManager.findUser(request);
 		ArrayList<Request> requests = odbManager.getRequestsForUser(userId);
 		requests.add(request);
-		System.out.println("\tUser received " + requests.size() + " answers");
 		return requests.toArray(new Request[requests.size()]);
 	}
 
