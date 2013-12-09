@@ -24,9 +24,7 @@ public class FriendsManager {
 	private PersistenceManager persistenceManager;
 	private SyncManager syncManager;
 	private BaseActivity baseActivity;
-	
 	private ArrayList<Friend> friendsInPhoneBook;
-	private boolean noFriendAdded;
 
 	public FriendsManager(PersistenceManager persistenceManager, SyncManager syncManager, BaseActivity baseActivity) {
 		this.persistenceManager = persistenceManager;
@@ -222,13 +220,7 @@ public class FriendsManager {
 			for(Friend friend: friendsInPhoneBook) {
 				if(hasApp == true && friend.getId() == friendId && checkIfDouble(friend) == null) {
 					friend.setHasApp(true);
-					friend = addFriend(friend);
-					if(friend != null) {
-						noFriendAdded = false;
-						Looper.prepare();
-						baseActivity.showToast(baseActivity.getString(R.string.friendAdded) + " " +  friend.getName());
-						Looper.loop();
-					}
+					addFriend(friend);
 				}
 			}
 
@@ -248,7 +240,6 @@ public class FriendsManager {
 	public void checkPhoneBookForFriends(BaseActivity activity, Handler handler) {
 		friendsInPhoneBook = new ArrayList<Friend>();
 		getListWithFriendsFromPhoneBook(friendsInPhoneBook);
-		noFriendAdded = true;
         
 		for(Friend friend: friendsInPhoneBook) {
 			FriendRequest fr = new FriendRequest(friend);
@@ -256,10 +247,6 @@ public class FriendsManager {
 		}
 		syncManager.synchroniseAndWaitForTaskToEnd(activity);
 		handler.sendEmptyMessage(0);
-		
-		if(noFriendAdded)
-			Toast.makeText(baseActivity.getApplicationContext(), R.string.noUpdates, Toast.LENGTH_SHORT).show();
-		
 	}
 
 

@@ -133,9 +133,6 @@ public class ManageFriendsActivity extends BaseActivity {
 			Intent intent = new Intent(this, CreateFriendActivity.class);
 			this.startActivityForResult(intent, INTENT_FRIEND_REQUEST);
 			return true;
-		case R.id.searchContacts:
-			searchContactsInPhoneBook();
-			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}

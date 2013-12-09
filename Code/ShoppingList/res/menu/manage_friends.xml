@@ -4,10 +4,6 @@
           android:icon="@drawable/ic_action_new"
           android:title="@string/action_new"
           android:showAsAction="ifRoom"  />
-    
-        <item android:id="@+id/searchContacts"
-		  android:orderInCategory="0"
-		  android:showAsAction="never"
-		  android:title="@string/searchContacts"/>
+   
 
 </menu>
