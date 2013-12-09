@@ -3,7 +3,6 @@ package ch.unibe.ese.shopnote.activities;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -25,8 +24,8 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 import ch.unibe.ese.shopnote.R;
-import ch.unibe.ese.shopnote.adapters.ItemAutocompleteAdapter;
 import ch.unibe.ese.shopnote.adapters.ItemAdapter;
+import ch.unibe.ese.shopnote.adapters.ItemAutocompleteAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Comparators;
 import ch.unibe.ese.shopnote.core.Item;
@@ -51,7 +50,6 @@ public class ViewListActivity extends BaseActivity {
 	private ItemAutocompleteAdapter sqliteAdapter;
 	private ArrayList<Item>	itemsList;
 	private ArrayList<Item>	itemsBoughtList;
-	private Activity viewListActivity = this;
 	private ShoppingList list;
 	private ListView listView;
 	private ListView listViewBought;
@@ -177,7 +175,7 @@ public class ViewListActivity extends BaseActivity {
 
 	private ListView updateItemBoughtAdapter() {
 		ListView listViewBought = (ListView) findViewById(R.id.ItemBoughtView);
-		itemBoughtAdapter = new ItemAdapter(viewListActivity,
+		itemBoughtAdapter = new ItemAdapter(this,
 				R.layout.shopping_list_item, itemsBoughtList);
 		listViewBought.setAdapter(itemBoughtAdapter);
 		updateThemeListView(listViewBought);

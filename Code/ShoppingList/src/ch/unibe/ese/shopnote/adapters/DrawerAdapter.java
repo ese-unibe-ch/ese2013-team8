@@ -2,6 +2,7 @@ package ch.unibe.ese.shopnote.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,16 +17,17 @@ import ch.unibe.ese.shopnote.activities.ItemListActivity;
 import ch.unibe.ese.shopnote.activities.ManageFriendsActivity;
 import ch.unibe.ese.shopnote.activities.ManageRecipeActivity;
 import ch.unibe.ese.shopnote.activities.SettingsActivity;
+import ch.unibe.ese.shopnote.core.BaseActivity;
 
 /**
  *	Modified ArrayAdapter to display the drawer menu items including their icons
  */
 public class DrawerAdapter extends ArrayAdapter<String> {
 	
-	private Context context;
+	private BaseActivity context;
 	private String[] menuItems;
 
-	public DrawerAdapter(Context context, int resource, String[] menuItems) {
+	public DrawerAdapter(BaseActivity context, int resource, String[] menuItems) {
 		super(context, resource, menuItems);
 		this.context = context;
 		this.menuItems = menuItems;
@@ -34,6 +36,8 @@ public class DrawerAdapter extends ArrayAdapter<String> {
 	private class MenuItemHolder {
 		ImageView icon;
 		TextView menuItem;
+		
+
 	}
 	
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -91,14 +95,16 @@ public class DrawerAdapter extends ArrayAdapter<String> {
 			// set Settings icon
 			holder.icon.setImageResource(R.drawable.ic_action_settings);
 			// set current activity name bold
-			if (context.getClass() == SettingsActivity.class)
-				holder.menuItem.setTypeface(null, Typeface.BOLD);
+//			if (context.getClass() == SettingsActivity.class)
+//				holder.menuItem.setTypeface(null, Typeface.BOLD);
 			break;	
 		}
 	
 		// set name
 		holder.menuItem.setText(item);
 		
+		// set color
+		context.updateTextColor(holder.menuItem);
 		
 		return convertView;
 	}

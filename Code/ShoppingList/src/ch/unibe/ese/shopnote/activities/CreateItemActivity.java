@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -43,10 +44,7 @@ public class CreateItemActivity extends BaseActivity {
 		setContentView(R.layout.activity_create_item);
         
 		//set chosen color theme
-		RelativeLayout lo = (RelativeLayout) findViewById(R.id.relativeLayoutCreateItem);
-		updateThemeTextBox(lo);
-		View someView = findViewById(R.id.RelativeLayoutCreateItemComplete);
-		updateTheme(someView, getActionBar());
+		updateColor();
 
 		
 		// Show the Up button in the action bar.
@@ -55,6 +53,17 @@ public class CreateItemActivity extends BaseActivity {
 
 		setTextViews();
 		openKeyboard();
+	}
+
+	private void updateColor() {
+		RelativeLayout lo = (RelativeLayout) findViewById(R.id.relativeLayoutCreateItem);
+		updateThemeTextBox(lo);
+		View someView = findViewById(R.id.RelativeLayoutCreateItemComplete);
+		updateTheme(someView, getActionBar());
+		LinearLayout llbuttons = (LinearLayout) findViewById(R.id.buttonBar);
+		LinearLayout buttonsShadow = (LinearLayout) findViewById(R.id.buttonShadow);
+		LinearLayout buttonsDivider = (LinearLayout) findViewById(R.id.buttonDivider);
+		updateSaveAbordButtons(llbuttons, buttonsShadow, buttonsDivider);
 	}
 
 	/**

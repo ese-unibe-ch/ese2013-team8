@@ -63,6 +63,7 @@ public class BaseActivity extends Activity {
 	private int navigationDrawerColor;
 	private int createTextBoxColor;
 	private int textColor;
+	private int textColor2;
 	private int listViewColor;
 	private int listViewDividerColor;
 	public boolean colorUpdated = false;
@@ -362,9 +363,10 @@ public class BaseActivity extends Activity {
 	 * @param buttons
 	 * @param divider
 	 */
-	protected void updateSaveAbordButtons(LinearLayout buttons, LinearLayout divider) {
+	protected void updateSaveAbordButtons(LinearLayout buttons, LinearLayout shadow, LinearLayout divider) {
 		buttons.setBackgroundColor(navigationDrawerColor);
 		divider.setBackgroundColor(listViewDividerColor);
+		shadow.setBackgroundColor(listViewDividerColor);
 	}
 	
 	/**
@@ -391,6 +393,22 @@ public class BaseActivity extends Activity {
 	}
 	
 	/**
+	 * Updates text color of main attributes
+	 * @param textView
+	 */
+	public void updateTextColor(TextView textView) {
+		if(!colorUpdated)
+			getColorSettings();
+		textView.setTextColor(textColor);
+	}
+	
+	public void updateTextColorSecond(TextView textView) {
+		if(!colorUpdated)
+			getColorSettings();
+		textView.setTextColor(textColor2);
+	}
+	
+	/**
 	 * loads the actual color settings
 	 */
 	private void getColorSettings() {
@@ -400,10 +418,8 @@ public class BaseActivity extends Activity {
 		String colors[] = getResources().getStringArray(R.array.default_color_choice_white);
 
 		if(colorString.equals(colorChoosable[1]))
-			colors = getResources().getStringArray(R.array.default_color_choice_dark);
-		else if(colorString.equals(colorChoosable[2]))
 			colors = getResources().getStringArray(R.array.default_color_choice_chocolate);
-		else if(colorString.equals(colorChoosable[3]))
+		else if(colorString.equals(colorChoosable[2]))
 			colors = getResources().getStringArray(R.array.default_color_choice_barbie);
 		if(colors == null) throw new IllegalStateException();
 		
@@ -411,9 +427,10 @@ public class BaseActivity extends Activity {
 		this.navigationDrawerColor = Color.parseColor(colors[1]);
 		this.titleBarColor = Color.parseColor(colors[2]);
 		this.textColor = Color.parseColor(colors[3]);
-		this.createTextBoxColor = Color.parseColor(colors[4]);
-		this.listViewColor = Color.parseColor(colors[5]);
-		this.listViewDividerColor = Color.parseColor(colors[6]);
+		this.textColor2 = Color.parseColor(colors[4]);
+		this.createTextBoxColor = Color.parseColor(colors[5]);
+		this.listViewColor = Color.parseColor(colors[6]);
+		this.listViewDividerColor = Color.parseColor(colors[7]);
 		this.colorUpdated = true;
 	}
 	
@@ -458,4 +475,5 @@ public class BaseActivity extends Activity {
 	public boolean isSyncing() {
 		return isSyncing;
 	}
+	
 }

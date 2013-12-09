@@ -3,7 +3,6 @@ package ch.unibe.ese.shopnote.adapters;
 import java.util.List;
 
 import android.app.Activity;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import ch.unibe.ese.shopnote.R;
+import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Recipe;
 
 /**
@@ -19,9 +19,9 @@ import ch.unibe.ese.shopnote.core.Recipe;
 public class RecipeAdapter extends ArrayAdapter<Recipe> {
 	
 	private List<Recipe> recipes;
-	private Context context;
+	private BaseActivity context;
 
-	public RecipeAdapter(Context context, int resource, List<Recipe> recipes) {
+	public RecipeAdapter(BaseActivity context, int resource, List<Recipe> recipes) {
 		super(context, resource, recipes);
 		this.context = context;
 		this.recipes = recipes;
@@ -51,6 +51,7 @@ public class RecipeAdapter extends ArrayAdapter<Recipe> {
 		
 		// set name
 		holder.name.setText(recipe.toString());
+		context.updateTextColor(holder.name);
 		
 		// set shared icon
 		if (recipe.isShared()) {

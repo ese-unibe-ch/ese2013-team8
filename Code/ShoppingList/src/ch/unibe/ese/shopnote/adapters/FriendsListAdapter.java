@@ -3,14 +3,13 @@ package ch.unibe.ese.shopnote.adapters;
 import java.util.List;
 
 import android.app.Activity;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 import ch.unibe.ese.shopnote.R;
+import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Friend;
 
 /**
@@ -18,9 +17,9 @@ import ch.unibe.ese.shopnote.core.Friend;
  */
 public class FriendsListAdapter extends ArrayAdapter<Friend> {
 
-	private Context context;
+	private BaseActivity context;
 	
-	public FriendsListAdapter(Context context, int resource, List<Friend> friendsList) {
+	public FriendsListAdapter(BaseActivity context, int resource, List<Friend> friendsList) {
 		super(context, resource, friendsList);
 		this.context = context;
 	}
@@ -59,6 +58,10 @@ public class FriendsListAdapter extends ArrayAdapter<Friend> {
 			phoneNumber = "0" + phoneNumber;
 		}
 		holder.phonenumber.setText(phoneNumber);
+		
+		//updateTextColor
+		context.updateTextColor(holder.name);
+		context.updateTextColorSecond(holder.phonenumber);
 		
 		return convertView;
 	}

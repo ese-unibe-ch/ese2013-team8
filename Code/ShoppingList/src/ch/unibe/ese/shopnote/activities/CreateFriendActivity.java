@@ -37,13 +37,7 @@ public class CreateFriendActivity extends BaseActivity {
 			setContentView(R.layout.activity_create_friend);
 			
 			//set chosen color theme
-			RelativeLayout lo = (RelativeLayout) findViewById(R.id.relativeLayoutCreateFriend);
-			updateThemeTextBox(lo);
-			View someView = findViewById(R.id.RelativeLayoutCreateFriendTotal);
-			updateTheme(someView, getActionBar());
-			LinearLayout llbuttons = (LinearLayout) findViewById(R.id.buttonBar);
-			LinearLayout buttonsDivider = (LinearLayout) findViewById(R.id.buttonShadow);
-			updateSaveAbordButtons(llbuttons, buttonsDivider);
+			updateColor();
 			
 			getActionBar().hide();
 
@@ -52,6 +46,17 @@ public class CreateFriendActivity extends BaseActivity {
 			Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
             startActivityForResult(intent, PICK_CONTACT);
 		}
+	}
+
+	private void updateColor() {
+		RelativeLayout lo = (RelativeLayout) findViewById(R.id.relativeLayoutCreateFriend);
+		updateThemeTextBox(lo);
+		View someView = findViewById(R.id.RelativeLayoutCreateFriendTotal);
+		updateTheme(someView, getActionBar());
+		LinearLayout llbuttons = (LinearLayout) findViewById(R.id.buttonBar);
+		LinearLayout buttonsShadow = (LinearLayout) findViewById(R.id.buttonShadow);
+		LinearLayout buttonsDivider = (LinearLayout) findViewById(R.id.buttonDivider);
+		updateSaveAbordButtons(llbuttons, buttonsShadow, buttonsDivider);
 	}
 
 	/**

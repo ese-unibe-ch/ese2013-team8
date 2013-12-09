@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import ch.unibe.ese.shopnote.R;
+import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.ShoppingList;
 
 /**
@@ -22,9 +22,9 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingList> {
 	private List<ShoppingList> shoppingLists;
 	private ArrayList<Integer> boughtItemCount = new ArrayList<Integer>();
 	private ArrayList<Integer> totalItemCount = new ArrayList<Integer>();
-	private Context context;
+	private BaseActivity context;
 
-	public ShoppingListAdapter(Context context, int resource, List<ShoppingList> shoppingLists) {
+	public ShoppingListAdapter(BaseActivity context, int resource, List<ShoppingList> shoppingLists) {
 		super(context, resource, shoppingLists);
 		this.context = context;
 		this.shoppingLists = shoppingLists;
@@ -56,6 +56,7 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingList> {
 		
 		// set name
 		holder.name.setText(list.toString());
+		context.updateTextColor(holder.name);
 		
 		// set shared icon
 		if (list.isShared()) {
@@ -71,6 +72,7 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingList> {
 			holder.count.setText(
 					boughtItemCount.get(position) + " / " + 
 					totalItemCount.get(position));
+			context.updateTextColorSecond(holder.count);
 		}
 		else
 			holder.count.setVisibility(View.GONE);

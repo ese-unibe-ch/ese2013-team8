@@ -171,7 +171,6 @@
      <!-- color Menu -->
     <string-array name="default_color_choice_names" >
         <item>Weiss</item>
-        <item>Dunkel</item>
         <item>Schokolade</item>
         <item>Barbie</item>
     </string-array>

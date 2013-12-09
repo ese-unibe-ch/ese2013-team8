@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,6 +48,8 @@ public class CreateListActivity extends BaseActivity {
 		updateThemeTextBox(lo);
 		View someView = findViewById(R.id.RelativeLayoutCreateListComplete);
 		updateTheme(someView, getActionBar());
+		LinearLayout llbuttons = (LinearLayout) findViewById(R.id.buttonBar);
+		updateColor(llbuttons);
 
 		// hide the action bar on this activity
 		getActionBar().hide();
@@ -64,6 +67,12 @@ public class CreateListActivity extends BaseActivity {
 		}
 		
 		openKeyboard();
+	}
+
+	private void updateColor(LinearLayout llbuttons) {
+		LinearLayout buttonsShadow = (LinearLayout) findViewById(R.id.buttonShadow);
+		LinearLayout buttonsDivider = (LinearLayout) findViewById(R.id.buttonDivider);
+		updateSaveAbordButtons(llbuttons, buttonsShadow, buttonsDivider);
 	}
 
 	@Override

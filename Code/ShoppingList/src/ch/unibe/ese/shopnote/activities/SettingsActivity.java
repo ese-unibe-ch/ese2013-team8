@@ -114,20 +114,19 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 		String colors[] = getResources().getStringArray(R.array.default_color_choice_white);
 
 		if(colorString.equals(colorChoosable[1]))
-			colors = getResources().getStringArray(R.array.default_color_choice_dark);
-		else if(colorString.equals(colorChoosable[2]))
 			colors = getResources().getStringArray(R.array.default_color_choice_chocolate);
-		else if(colorString.equals(colorChoosable[3]))
+		else if(colorString.equals(colorChoosable[2]))
 			colors = getResources().getStringArray(R.array.default_color_choice_barbie);
 		if(colors == null) throw new IllegalStateException();
 		
 		int backgroundColor = Color.parseColor(colors[0]);
 		int titleBarColor = Color.parseColor(colors[2]);
 		int textColor = Color.parseColor(colors[3]);
-		int listViewDividerColor = Color.parseColor(colors[6]);
+		int listViewDividerColor = Color.parseColor(colors[7]);
 		
 		getListView().setBackgroundColor(backgroundColor);
 		getListView().setDivider(new ColorDrawable(listViewDividerColor));
+		
 		
 		getActionBar().setBackgroundDrawable(new ColorDrawable(titleBarColor));
 	}

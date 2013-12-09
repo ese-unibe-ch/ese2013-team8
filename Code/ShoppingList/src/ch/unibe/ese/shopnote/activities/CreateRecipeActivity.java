@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,10 +28,7 @@ public class CreateRecipeActivity extends BaseActivity {
 		setContentView(R.layout.activity_create_recipe);
         
 		//set chosen color theme
-		RelativeLayout lo = (RelativeLayout) findViewById(R.id.relativeLayoutRecipe);
-		updateThemeTextBox(lo);
-		View someView = findViewById(R.id.RelativeLayoutCreateRecipeComplete);
-		updateTheme(someView, getActionBar());
+		updateColor();
 		
 		getActionBar().hide();
 		
@@ -45,6 +43,17 @@ public class CreateRecipeActivity extends BaseActivity {
 		} 
 		
 		openKeyboard();
+	}
+
+	private void updateColor() {
+		RelativeLayout lo = (RelativeLayout) findViewById(R.id.relativeLayoutRecipe);
+		updateThemeTextBox(lo);
+		View someView = findViewById(R.id.RelativeLayoutCreateRecipeComplete);
+		updateTheme(someView, getActionBar());
+		LinearLayout llbuttons = (LinearLayout) findViewById(R.id.buttonBar);
+		LinearLayout buttonsShadow = (LinearLayout) findViewById(R.id.buttonShadow);
+		LinearLayout buttonsDivider = (LinearLayout) findViewById(R.id.buttonDivider);
+		updateSaveAbordButtons(llbuttons, buttonsShadow, buttonsDivider);
 	}
 	
 	/**

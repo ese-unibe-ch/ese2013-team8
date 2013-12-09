@@ -1,10 +1,10 @@
 package ch.unibe.ese.shopnote.drawer;
 
-import android.app.Activity;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.ListView;
 import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.adapters.DrawerAdapter;
+import ch.unibe.ese.shopnote.core.BaseActivity;
 
 /**
  * Creates a slide bar for an Activity with all main navigation points
@@ -13,7 +13,7 @@ public class NavigationDrawer {
 	
 	private ListView menuListView;
 	
-	public DrawerLayout constructNavigationDrawer(DrawerLayout drawLayout, Activity activity) {
+	public DrawerLayout constructNavigationDrawer(DrawerLayout drawLayout, BaseActivity activity) {
 	
 		// Create drawer and get strings
 		drawLayout = (DrawerLayout) activity.findViewById(R.id.drawer_layout);

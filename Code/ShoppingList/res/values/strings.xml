@@ -178,7 +178,6 @@
     <!-- color Menu -->
     <string-array name="default_color_choice_names">
         <item>white</item>
-        <item>dark</item>
         <item>chocolate</item>
         <item>barbie</item>
     </string-array>

@@ -17,6 +17,7 @@ import android.widget.TextView;
 import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.activities.ItemListActivity;
 import ch.unibe.ese.shopnote.activities.ViewRecipeActivity;
+import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Item;
 
 /**
@@ -24,9 +25,9 @@ import ch.unibe.ese.shopnote.core.Item;
  */
 public class ItemAdapter extends ArrayAdapter<Item> {
 
-private Context context;
+private BaseActivity context;
 	
-	public ItemAdapter(Context context, int resource, List<Item> itemList) {
+	public ItemAdapter(BaseActivity context, int resource, List<Item> itemList) {
 		super(context, resource, itemList);
 		this.context = context;
 	}
@@ -64,6 +65,7 @@ private Context context;
 		
 		// set name
 		holder.name.setText(item.getName());
+		context.updateTextColor(holder.name);
 		
 		// set quantity
 		if (item.getQuantity() != null) {
@@ -76,6 +78,7 @@ private Context context;
 
 			StringBuilder sb = new StringBuilder(quantity).append(" ").append(localizedUnit);
 			holder.quantity.setText(sb.toString());
+			context.updateTextColorSecond(holder.quantity);
 		}
 		else
 			holder.quantity.setText("");
@@ -92,9 +95,11 @@ private Context context;
 			if (price.length() > 6)
 				price = price.substring(0, 5);
 			holder.price.setText(price + " " + currency);
+			context.updateTextColorSecond(holder.price);
 		}
 		else
 			holder.price.setText("");
+		
 		return convertView;
 	}
 }
