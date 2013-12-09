@@ -58,6 +58,7 @@ public class BaseActivity extends Activity {
 	private static boolean isSyncing = false;
 	
 	//color variables
+	private String color = "white";
 	private int titleBarColor;
 	private int backgroundColor;
 	private int navigationDrawerColor;
@@ -364,9 +365,11 @@ public class BaseActivity extends Activity {
 	 * @param divider
 	 */
 	protected void updateSaveAbordButtons(LinearLayout buttons, LinearLayout shadow, LinearLayout divider) {
-		buttons.setBackgroundColor(navigationDrawerColor);
-		divider.setBackgroundColor(listViewDividerColor);
-		shadow.setBackgroundColor(listViewDividerColor);
+		if(!color.equals("white")) {
+			buttons.setBackgroundColor(navigationDrawerColor);
+			divider.setBackgroundColor(listViewDividerColor);
+			shadow.setBackgroundColor(listViewDividerColor);
+		}
 	}
 	
 	/**
@@ -417,10 +420,14 @@ public class BaseActivity extends Activity {
 		String colorChoosable[] = getResources().getStringArray(R.array.default_color_choice_names);
 		String colors[] = getResources().getStringArray(R.array.default_color_choice_white);
 
-		if(colorString.equals(colorChoosable[1]))
+		if(colorString.equals(colorChoosable[1])) {
 			colors = getResources().getStringArray(R.array.default_color_choice_chocolate);
-		else if(colorString.equals(colorChoosable[2]))
+			color = "chocolate";
+		}
+		else if(colorString.equals(colorChoosable[2])) {
 			colors = getResources().getStringArray(R.array.default_color_choice_barbie);
+			color = "barbie";
+		}
 		if(colors == null) throw new IllegalStateException();
 		
 		this.backgroundColor = Color.parseColor(colors[0]);
