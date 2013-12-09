@@ -43,7 +43,7 @@ public class SyncManager {
 	}
 
 	public synchronized void synchronise(BaseActivity context) {
-		if (!context.isSyncing()) {
+		if (context.isOnline()) {
 			context.isSyncing(true);
 			// To be sure, that the client is registered on the server
 			rQueue.addFirst(new RegisterRequest(context.getMyPhoneNumber()));

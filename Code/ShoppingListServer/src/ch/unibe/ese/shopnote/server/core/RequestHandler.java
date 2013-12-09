@@ -62,7 +62,6 @@ public class RequestHandler {
 		// Responsible: SQLiteDatabaseManager for creating a userId
 		//		NeodtaisDatabaseManager for creating a new user container
 		case Request.REGISTER_REQUEST:
-			System.out.println("\tRegister request");
 			this.dbManager.addUser(request);
 			return returnRequests(request);
 		

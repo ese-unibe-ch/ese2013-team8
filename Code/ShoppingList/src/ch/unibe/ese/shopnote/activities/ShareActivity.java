@@ -207,6 +207,11 @@ public class ShareActivity extends BaseActivity {
 		super.onResume();
 		updateFriendsList();
 	}
+	
+	public void onBackPressed() {
+		super.onBackPressed();
+		syncManager.synchronise(this);
+	}
 
 	/**
 	 * Updates the listView, which shows all friends
