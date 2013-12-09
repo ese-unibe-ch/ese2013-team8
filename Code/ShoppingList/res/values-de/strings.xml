@@ -82,8 +82,7 @@
     <!-- ShareListActivity -->
     <string name="share_list_title">Teile</string>
     <string name="share_list_hint">Freund hinzufügen</string>
-    <string name="unshare">teilen beenden</string>
-    
+    <string name="unshare">Teilen beenden</string>   
 
     <!-- ManageFriendsActivity -->
     <string name="friend_has_the_app_icon">Appstatus</string>   
@@ -96,9 +95,7 @@
     <string name="noUpdates">Keine neuen Freunde hinzugefügt</string>
     <string name="checkIfFriendHasApp">Prüfe ob ihr Freund ShopNote hat</string>
 	<string name="inviteFriendMessage">Hallo, ich empfehle dir die ShopNote App für Android</string>
-    
-    
-        
+          
     <!-- ArchiveActivity -->
     <string name="archive_welcome_message"> 
         Im Archiv werden alle Einkaufslisten angezeigt, die du zuvor über
@@ -136,7 +133,7 @@
     <string name="error_friend">Fehler, Freund nicht gefunden</string>
     <string name="error_friend_already">Fehler, Freund existiert bereits</string>
     <string name="error_enter">Fehler, bitte korrekte Daten eingeben</string>
-    <string name="error_duplicate_item">Artikel kann nicht hinzugefügt werden. Die Liste enthält bereits denselben Artikel mit einer anderen Masseinheit</string>
+    <string name="error_duplicate_item">Artikel kann nicht hinzugefügt werden. Die Liste enthält bereits denselben Artikel mit einer anderen Masseinheit.</string>
     
     <!--  Synchronisation and Connection -->
     <string name="no_connection">Keine Verbindung zum Internet</string>
@@ -158,8 +155,7 @@
     <string name="english">Englisch</string>
     <string name="german">Deutsch</string>
     <string name="language">Sprache</string>
-    <string name="language_dialog">Sprache der App ändern</string>
-    
+    <string name="language_dialog">Sprache der App ändern</string>  
     
     <string name="theme_settings">Design</string>
     <string name="color_setting">Theme</string>
@@ -169,9 +165,8 @@
     <string name="title_activity_verify_numer">Nummer Verifizierung</string>
     <string name="friend_has_not_app">Ihr Freund hat die App nicht</string>
     <string name="friend_is_no_shopnote_user">Kein ShopNote Benutzer</string>
-    <string name="friend_has_not_app_text">Ihr Freund benutzt diese App im moment noch nicht, möchten Sie ihn dazu einladen?</string>
-    <string name="send">Einladen</string>
-    
+    <string name="friend_has_not_app_text">Ihr Freund benutzt diese App im Moment noch nicht, möchten Sie ihn dazu einladen?</string>
+    <string name="send">Einladen</string>    
     
      <!-- color Menu -->
     <string-array name="default_color_choice_names" >

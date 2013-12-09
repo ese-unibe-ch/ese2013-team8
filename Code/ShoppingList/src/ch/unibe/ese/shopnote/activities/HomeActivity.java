@@ -168,7 +168,7 @@ public class HomeActivity extends BaseActivity {
 		switch (item.getItemId()) {
 
 			case R.id.action_refresh:
-			     Animation rotation = AnimationUtils.loadAnimation(this, R.layout.sync_animation);
+			     Animation rotation = AnimationUtils.loadAnimation(this, R.drawable.sync_animation);
 			     rotation.setRepeatCount(Animation.INFINITE);
 			     findViewById(R.id.action_refresh).startAnimation(rotation);
 				synchronize();

@@ -142,7 +142,7 @@ public class ManageFriendsActivity extends BaseActivity {
 			return true;
 		case R.id.action_refresh:
 			Animation rotation = AnimationUtils.loadAnimation(this,
-					R.layout.sync_animation);
+					R.drawable.sync_animation);
 			rotation.setRepeatCount(Animation.INFINITE);
 			findViewById(R.id.action_refresh).startAnimation(rotation);
 			if (!isFriendsSyncing) {
