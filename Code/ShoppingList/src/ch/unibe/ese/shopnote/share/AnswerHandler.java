@@ -3,6 +3,7 @@ package ch.unibe.ese.shopnote.share;
 import java.util.List;
 
 import android.content.Context;
+import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Friend;
 import ch.unibe.ese.shopnote.core.FriendsManager;
@@ -322,7 +323,10 @@ public class AnswerHandler {
 	 * If the activity is already destroyed it simply does nothing (except a little memory leak)
 	 * This is the only method which is called on the UI thread after the communication with the server
 	 */
-	public void updateUI() {
+	public void updateUI(boolean successful) {
+		if(!successful) {
+			context.showToast(context.getString(R.string.error_connection));
+		}
 		context.isSyncing(false);
 		context.refresh();
 	}

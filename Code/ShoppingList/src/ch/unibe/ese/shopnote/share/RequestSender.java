@@ -106,8 +106,8 @@ public class RequestSender extends AsyncTask<Request, Void, Boolean>{
 	}
 	
 	@Override
-	protected void onPostExecute(Boolean a) {
-		handler.updateUI();
+	protected void onPostExecute(Boolean successful) {
+		handler.updateUI(successful);
     }
 
 }
