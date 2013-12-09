@@ -12,7 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.activities.ItemListActivity;
@@ -32,7 +32,7 @@ private Context context;
 	}
 
 	private class ItemHolder {
-		CheckBox checkBox;
+		ImageView checkBox;
 		TextView name;
 		TextView quantity;
 		TextView price;
@@ -46,7 +46,7 @@ private Context context;
 		if(convertView == null) {
 			convertView = mInflater.inflate(R.layout.shopping_list_item_view, null);
 			holder = new ItemHolder();
-			holder.checkBox = (CheckBox) convertView.findViewById(R.id.item_checkBox);
+			holder.checkBox = (ImageView) convertView.findViewById(R.id.item_checkBox);
 			holder.name = (TextView) convertView.findViewById(R.id.item_name);
 			holder.quantity = (TextView) convertView.findViewById(R.id.item_quantity);
 			holder.price = (TextView) convertView.findViewById(R.id.item_price);
@@ -58,9 +58,8 @@ private Context context;
 		// tick checkbox
 		if ((context.getClass() == ItemListActivity.class) || (context.getClass() == ViewRecipeActivity.class))
 			holder.checkBox.setVisibility(View.GONE);
-		else {
-			holder.checkBox.setChecked(item.isBought());
-			holder.checkBox.setEnabled(false);
+		else if (item.isBought()) {
+			holder.checkBox.setImageResource(R.drawable.checkbox_checked);
 		}
 		
 		// set name

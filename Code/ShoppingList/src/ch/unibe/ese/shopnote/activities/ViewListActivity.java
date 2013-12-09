@@ -71,9 +71,10 @@ public class ViewListActivity extends BaseActivity {
 		manager = getListManager();
 		syncmanager = getSyncManager();
 
-		// Create drawer menu
+		// create drawer menu
 		createDrawerMenu();
-		createDrawerToggle();
+		createDrawerToggle(); // to change the title
+		drawerToggle.setDrawerIndicatorEnabled(false);
 
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
@@ -329,12 +330,11 @@ public class ViewListActivity extends BaseActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		long listIndex = list.getId();
 		
-        // Pass the event to ActionBarDrawerToggle, if it returns
-        // true, then it has handled the app icon touch event
-        if (drawerToggle.onOptionsItemSelected(item))
-        	return true;
-        
-		switch (item.getItemId()) {    
+		switch (item.getItemId()) {  
+			case android.R.id.home:
+				finish();
+				return true;
+			
 			// Handle presses on the action bar items
 			case R.id.action_share:
 				Intent intentShare = new Intent(this, ShareActivity.class);
@@ -411,5 +411,4 @@ public class ViewListActivity extends BaseActivity {
 		list.setChangesCount(0);
 		manager.saveShoppingList(list);
 	}
-
 }

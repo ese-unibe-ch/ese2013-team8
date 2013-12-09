@@ -3,16 +3,17 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:gravity="center_vertical"
-    android:orientation="horizontal" >
-    
-    <CheckBox
-	    android:id="@+id/item_checkBox"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content" 
+    android:orientation="horizontal" >   
+	
+    <ImageView 
+        android:id="@+id/item_checkBox"
+        android:layout_width="20dp"
+	    android:layout_height="20dp"
+	    android:layout_marginLeft="5dp"
+	    android:layout_marginRight="-5dp"
 	    android:layout_centerVertical="true"
-	    android:layout_marginRight="-15dp"
-	    android:focusable="false" >
-	</CheckBox>
+        android:src="@drawable/checkbox_unchecked" >
+    </ImageView>
 
 	<TextView
 	    android:id="@+id/item_name"
