@@ -89,6 +89,8 @@ private Context context;
 		// set price
 		if (item.getPrice() != null) {
 			String price = item.getPrice().toString();
+			if (price.length() > 6)
+				price = price.substring(0, 5);
 			holder.price.setText(price + " " + currency);
 		}
 		else
