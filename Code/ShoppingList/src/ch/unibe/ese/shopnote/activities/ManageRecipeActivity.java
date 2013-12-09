@@ -157,7 +157,7 @@ public class ManageRecipeActivity extends BaseActivity {
 	}
 	
 	public void refresh() {
-		findViewById(R.id.action_refresh).clearAnimation();
+		findViewById(R.id.action_refresh).getAnimation().setRepeatCount(0);
 		updateRecipeList();
 	}
 }

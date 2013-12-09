@@ -202,7 +202,7 @@ public class ManageFriendsActivity extends BaseActivity {
 	public void refresh() {
 		isFriendsSyncing = false;
 		updateFriendsList();
-		findViewById(R.id.action_refresh).clearAnimation();
+		findViewById(R.id.action_refresh).getAnimation().setRepeatCount(0);
 	}
 }
 
