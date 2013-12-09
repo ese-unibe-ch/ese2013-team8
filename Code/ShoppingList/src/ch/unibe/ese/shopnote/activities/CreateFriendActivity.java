@@ -9,6 +9,7 @@ import android.provider.ContactsContract;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import ch.unibe.ese.shopnote.R;
@@ -40,6 +41,9 @@ public class CreateFriendActivity extends BaseActivity {
 			updateThemeTextBox(lo);
 			View someView = findViewById(R.id.RelativeLayoutCreateFriendTotal);
 			updateTheme(someView, getActionBar());
+			LinearLayout llbuttons = (LinearLayout) findViewById(R.id.buttonBar);
+			LinearLayout buttonsDivider = (LinearLayout) findViewById(R.id.buttonShadow);
+			updateSaveAbordButtons(llbuttons, buttonsDivider);
 			
 			getActionBar().hide();
 
