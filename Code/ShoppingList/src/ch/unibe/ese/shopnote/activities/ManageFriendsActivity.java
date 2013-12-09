@@ -5,7 +5,6 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Looper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -56,9 +55,6 @@ public class ManageFriendsActivity extends BaseActivity {
 		// verify phone number
 		getMyPhoneNumber();
 		
-		//Update all friends
-		searchContactsInPhoneBook();
-		
 		// Create drawer menu
 		createDrawerMenu();
 		createDrawerToggle();
@@ -66,6 +62,7 @@ public class ManageFriendsActivity extends BaseActivity {
 		updateFriendsList();
 		
 		setTitle(this.getString(R.string.title_activity_manage_friends));
+		
 	}
 	
 	/**
@@ -112,6 +109,7 @@ public class ManageFriendsActivity extends BaseActivity {
 			FriendRequest fr = new FriendRequest(f);
 			syncManager.addRequest(fr);
 		}
+		
 		syncManager.synchronise(this);
 		updateFriendsList();
 	}
@@ -151,13 +149,9 @@ public class ManageFriendsActivity extends BaseActivity {
 	 */
 	public void searchContactsInPhoneBook() {
 		final SynchHandler handler = new SynchHandler(this);
-		Toast.makeText(getApplicationContext(), R.string.synchStarted , Toast.LENGTH_SHORT).show();
 		new Thread(new Runnable() {
 			public void run() {
-				Looper.prepare();
-				friendsManager.checkPhoneBookForFriends(ManageFriendsActivity.this, handler);
-				Toast.makeText(getApplicationContext(),R.string.synchFinished, Toast.LENGTH_SHORT).show();
-				Looper.loop();	
+				friendsManager.checkPhoneBookForFriends(ManageFriendsActivity.this, handler);	
 			}
 		}).start();
 	}
