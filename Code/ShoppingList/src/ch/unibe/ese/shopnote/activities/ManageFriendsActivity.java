@@ -147,8 +147,8 @@ public class ManageFriendsActivity extends BaseActivity {
 			findViewById(R.id.action_refresh).startAnimation(rotation);
 			if (!isFriendsSyncing) {
 				searchContactsInPhoneBook();
-				return true;
 			}
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
