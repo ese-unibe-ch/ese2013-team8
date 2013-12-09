@@ -132,6 +132,7 @@
             android:layout_below="@+id/textViewTitle"
             android:layout_marginLeft="75dp"
             android:layout_marginTop="14dp"
+            android:maxLength="20"
             android:ems="10"
             android:completionThreshold="1"
             android:inputType="textCapSentences" >
@@ -182,6 +183,7 @@
             android:layout_below="@+id/editTextShop"
             android:layout_marginLeft="75dp"
             android:layout_marginTop="14dp"
+            android:maxLength="6"
             android:ems="10"
             android:hint="@string/create_optional_hint"
             android:inputType="numberDecimal" />
@@ -210,6 +212,7 @@
 	            android:id="@+id/editTextQuantity"
 	            android:layout_width="100dp"
 	            android:layout_height="wrap_content"
+	            android:maxLength="4"
 	            android:ems="10"
 	            android:hint="@string/create_optional_hint"
 	            android:inputType="numberDecimal" 

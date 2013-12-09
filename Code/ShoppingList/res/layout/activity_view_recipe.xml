@@ -36,6 +36,7 @@
 			android:completionThreshold="1"
 			android:hint="@string/view_recipe_hint"
 			android:imeOptions="actionDone"
+			android:maxLength="20"
             android:ems="10" >
         <requestFocus />
         </AutoCompleteTextView>

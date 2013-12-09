@@ -189,5 +189,11 @@
         <item>Kilogrammes</item>
         <item>Litres</item>
     </string-array>
+    <string-array name="item_units_short">
+        <item>pc</item>
+        <item>g</item>
+        <item>kg</item>
+        <item>L</item>
+    </string-array>
+    
 </resources>
-

@@ -1,6 +1,8 @@
 package ch.unibe.ese.shopnote.adapters;
 
+import java.util.Currency;
 import java.util.List;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.content.Context;
@@ -65,10 +67,12 @@ private Context context;
 		
 		// set quantity
 		if (item.getQuantity() != null) {
+			
 			String quantity = item.getQuantity().toString();
+			
 			int ordinal = item.getUnit().ordinal();
 			Resources res = convertView.getResources();
-			String localizedUnit = res.getStringArray(R.array.item_units)[ordinal];
+			String localizedUnit = res.getStringArray(R.array.item_units_short)[ordinal];
 
 			StringBuilder sb = new StringBuilder(quantity).append(" ").append(localizedUnit);
 			holder.quantity.setText(sb.toString());
@@ -77,10 +81,10 @@ private Context context;
 			holder.quantity.setText("");
 		
 		// set price
+		Currency currency = Currency.getInstance(Locale.getDefault());
 		if (item.getPrice() != null) {
-			// TODO: get user currency
 			String price = item.getPrice().toString();
-			holder.price.setText(price + " CHF");
+			holder.price.setText(price + " " + currency);
 		}
 		else
 			holder.price.setText("");
