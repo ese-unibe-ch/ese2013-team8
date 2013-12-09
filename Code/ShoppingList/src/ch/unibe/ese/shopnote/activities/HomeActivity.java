@@ -81,6 +81,7 @@ public class HomeActivity extends BaseActivity {
 		RelativeLayout rl = (RelativeLayout) findViewById(R.id.RelativeLayoutHome);
 		RelativeLayout rlDrawer = (RelativeLayout) findViewById(R.id.drawer_Linearlayout);
 		updateTheme(rl, getActionBar(), rlDrawer);
+		
 	}
 	
 	private void updateAdapter() {
