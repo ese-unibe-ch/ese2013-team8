@@ -147,7 +147,7 @@ public class ViewRecipeActivity extends BaseActivity {
 	                long id) {
 	        	Item item = (Item) autocompleteAdapter.getItem(position);
 	        	if(!itemsOfRecipe.contains(item))
-	        		itemsOfRecipe.add(item);
+	        		recipe.addItem(item);
 	        	updateRecipeList();
 	        	
 	        	EditText addItem = (EditText) findViewById(R.id.editTextName);
