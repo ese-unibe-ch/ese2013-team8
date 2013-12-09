@@ -3,6 +3,7 @@ package ch.unibe.ese.shopnote.activities;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -44,6 +45,7 @@ public class ViewRecipeActivity extends BaseActivity {
 	private ArrayAdapter<Item> itemAdapter;
 	private ArrayAdapter<Item> autocompleteAdapter;
 	private long recipeIndex;
+	private Activity activity = this;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -126,6 +128,20 @@ public class ViewRecipeActivity extends BaseActivity {
 						ViewRecipeActivity.this.itemAdapter,
 						ViewRecipeActivity.this));
 				return true;
+			}
+		});
+		
+		// Add click Listener
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Item item = itemAdapter.getItem(position);
+				Intent intent = new Intent(activity, CreateItemActivity.class);
+				intent.putExtra(BaseActivity.EXTRAS_ITEM_ID, item.getId());
+				intent.putExtra(BaseActivity.EXTRAS_ITEM_EDIT, true);
+				activity.startActivityForResult(intent, 1);
 			}
 		});
 		

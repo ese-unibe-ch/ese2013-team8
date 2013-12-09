@@ -7,10 +7,7 @@ import java.util.List;
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.os.Handler;
-import android.os.Looper;
 import android.provider.ContactsContract;
-import android.widget.Toast;
-import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.share.SyncManager;
 import ch.unibe.ese.shopnote.share.requests.FriendRequest;
 
