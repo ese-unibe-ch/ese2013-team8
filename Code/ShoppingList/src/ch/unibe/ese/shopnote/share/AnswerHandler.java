@@ -51,14 +51,21 @@ public class AnswerHandler {
 				setConsequences(r);
 			}
 			if(r.isHandled()) {
-				// This will be used for error reporting
-				// i.e. Reporting to the user something went wrong (Handled but not successful)
+				setHandledConsequences(r);
 			} else {
 				syncManager.addRequest(r);
 			}
 		}
 	}
 	
+	private void setHandledConsequences(Request request) {
+		switch (request.getType()) {
+		case Request.FRIEND_REQUEST:
+			long friendId = ((FriendRequest)request).getFriendId();
+			friendsManager.setFriendHasApp(friendId, false);
+		}
+	}
+
 	/**
 	 * Set consequences for answers on requests
 	 * @param request
@@ -73,7 +80,7 @@ public class AnswerHandler {
 		// Sent a FriendRequest to the server and got the answer if my friend is registered with the app
 		case Request.FRIEND_REQUEST:
 			long friendId = ((FriendRequest)request).getFriendId();
-			friendsManager.setFriendHasApp(friendId);
+			friendsManager.setFriendHasApp(friendId, true);
 			return;
 			
 		// ShareListRequest => List has been successfully shared with my friend
@@ -316,6 +323,7 @@ public class AnswerHandler {
 	 * This is the only method which is called on the UI thread after the communication with the server
 	 */
 	public void updateUI() {
+		context.isSyncing(false);
 		context.refresh();
 	}
 }

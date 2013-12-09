@@ -54,6 +54,7 @@ public class BaseActivity extends Activity {
 	protected ActionBarDrawerToggle drawerToggle;
 	private boolean drawerToggleCreated;
 	private String title;
+	private boolean isSyncing = false;
 	
 	//color variables
 	private int titleBarColor;
@@ -413,5 +414,13 @@ public class BaseActivity extends Activity {
 			Toast.makeText(this, this.getString(R.string.no_connection),
 					Toast.LENGTH_SHORT).show();
 		}
+	}
+	
+	public boolean isSyncing() {
+		return this.isSyncing;
+	}
+	
+	public void isSyncing(boolean b) {
+		this.isSyncing = b;
 	}
 }

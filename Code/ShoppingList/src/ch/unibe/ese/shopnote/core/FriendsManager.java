@@ -210,18 +210,18 @@ public class FriendsManager {
 	 * Mark a friend as app-owner (used by the Syncmanager) or adds it to the libary if called from checkPhoneBookForFriends
 	 * @param friendId
 	 */
-	public void setFriendHasApp(long friendId) {
+	public void setFriendHasApp(long friendId, boolean hasApp) {
 		if(friendId >= 0) {
 			Friend friend = getFriend(friendId);
 			if(friend != null) {
-				friend.setHasApp();
+				friend.setHasApp(hasApp);
 				persistenceManager.save(friend);
 			}
 		} else {
 			//for search all the phonebook directly add friend if he has the app
 			for(Friend friend: friendsInPhoneBook) {
 				if(friend.getId() == friendId && checkIfDouble(friend) == null) {
-					friend.setHasApp();
+					friend.setHasApp(true);
 					friend = addFriend(friend);
 					if(friend != null) {
 						noFriendAdded = false;

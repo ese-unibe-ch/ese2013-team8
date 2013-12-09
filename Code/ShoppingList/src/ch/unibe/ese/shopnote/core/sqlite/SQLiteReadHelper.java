@@ -262,7 +262,7 @@ public class SQLiteReadHelper {
 		Friend friend = new Friend(cursor.getString(1), cursor.getString(2));
 		friend.setId(cursor.getLong(0));
 		if(cursor.getInt(3) == 1)
-			friend.setHasApp();
+			friend.setHasApp(true);
 		else
 			friend.setHasNotApp();
 		return friend;
@@ -392,7 +392,7 @@ public class SQLiteReadHelper {
 			Friend friend = new Friend(cursor.getString(1), cursor.getString(2));
 			friend.setId(id);
 			if(cursor.getInt(3) == 1)
-				friend.setHasApp();
+				friend.setHasApp(true);
 			else
 				friend.setHasNotApp();
 

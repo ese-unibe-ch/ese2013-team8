@@ -41,6 +41,10 @@ public class RequestSender extends AsyncTask<Request, Void, Boolean>{
 	 */
 	@Override
 	protected Boolean doInBackground(Request... requests) {
+		return sendAndReceive(requests);
+	}
+
+	private synchronized boolean sendAndReceive(Request... requests) {
 		boolean isConnected = this.initSocket();
 		if(isConnected) {
 			this.send(requests);

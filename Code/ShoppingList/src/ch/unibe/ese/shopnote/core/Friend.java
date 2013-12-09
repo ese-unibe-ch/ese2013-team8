@@ -43,8 +43,8 @@ public class Friend extends Entity {
 		invariant();
 	}
 	
-	public void setHasApp() {
-		this.hasTheApp = true;
+	public void setHasApp(boolean hasApp) {
+		this.hasTheApp = hasApp;
 	}
 	
 	public void setHasNotApp()  {

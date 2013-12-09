@@ -38,4 +38,8 @@ public class RequestQueue {
 		}
 	}
 	
+	public void addFirst(Request request) {
+		requests.addFirst(request);
+	}
+	
 }
