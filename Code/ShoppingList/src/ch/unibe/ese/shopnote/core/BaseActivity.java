@@ -59,7 +59,7 @@ public class BaseActivity extends Activity {
 	
 	//color variables
 	private String color = "white";
-	private int titleBarColor;
+	private int actionBarColor;
 	private int backgroundColor;
 	private int navigationDrawerColor;
 	private int createTextBoxColor;
@@ -67,6 +67,7 @@ public class BaseActivity extends Activity {
 	private int textColor2;
 	private int listViewColor;
 	private int listViewDividerColor;
+	private int buttonDividerColor;
 	public boolean colorUpdated = false;
 
 	
@@ -365,11 +366,10 @@ public class BaseActivity extends Activity {
 	 * @param divider
 	 */
 	protected void updateSaveAbordButtons(LinearLayout buttons, LinearLayout shadow, LinearLayout divider) {
-		if(!color.equals("white")) {
-			buttons.setBackgroundColor(navigationDrawerColor);
-			divider.setBackgroundColor(listViewDividerColor);
+		buttons.setBackgroundColor(actionBarColor);
+		divider.setBackgroundColor(buttonDividerColor);
+		if(!color.equals("white"))
 			shadow.setBackgroundColor(listViewDividerColor);
-		}
 	}
 	
 	/**
@@ -391,7 +391,7 @@ public class BaseActivity extends Activity {
 	protected void updateTheme(View layout, ActionBar actionBar) {
 		if(!colorUpdated)
 			getColorSettings();
-		actionBar.setBackgroundDrawable(new ColorDrawable(titleBarColor));
+		actionBar.setBackgroundDrawable(new ColorDrawable(actionBarColor));
 		layout.setBackgroundColor(backgroundColor);
 	}
 	
@@ -432,12 +432,13 @@ public class BaseActivity extends Activity {
 		
 		this.backgroundColor = Color.parseColor(colors[0]);
 		this.navigationDrawerColor = Color.parseColor(colors[1]);
-		this.titleBarColor = Color.parseColor(colors[2]);
+		this.actionBarColor = Color.parseColor(colors[2]);
 		this.textColor = Color.parseColor(colors[3]);
 		this.textColor2 = Color.parseColor(colors[4]);
 		this.createTextBoxColor = Color.parseColor(colors[5]);
 		this.listViewColor = Color.parseColor(colors[6]);
 		this.listViewDividerColor = Color.parseColor(colors[7]);
+		this.buttonDividerColor = Color.parseColor(colors[8]);
 		this.colorUpdated = true;
 	}
 	

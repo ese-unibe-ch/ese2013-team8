@@ -25,49 +25,53 @@
  <color name="holobutton">#80CEEA</color>
  
     
-  <!-- ArrayFormat for theme-styles: first background, then navigationdrawer, titlebar, textColor, textfield in creates -->
+  <!-- ArrayFormat for theme-styles: first background, then navigationdrawer, actionbar, textColor, textfield in creates -->
   <string-array name="default_color_choice_white" translatable="false">
         <item>#EEEEEE</item> <!-- background -->
         <item>#EEEEEE</item> <!-- navigationdrawer -->
-        <item>#DDDDDD</item> <!-- titlebar --> 
+        <item>#DDDDDD</item> <!-- actionbar --> 
         <item>#000000</item> <!-- textcolor -->
         <item>#a9a9a9</item> <!-- 2nd textcolor for price usw. -->
         <item>#FFFFFF</item> <!-- textfield in create activities -->
         <item>#FFFFFF</item> <!-- listviews -->
         <item>#CCCCCC</item> <!-- listviews divider -->
+        <item>#AEAEAE</item> <!-- button divider -->
     </string-array>
         
   <string-array name="default_color_choice_dark" translatable="false">
         <item>#171A1B</item> <!-- background -->
         <item>#787A83</item> <!-- navigationdrawer -->
-        <item>#3B4047</item> <!-- titlebar --> 
+        <item>#3B4047</item> <!-- actionbar --> 
         <item>#EEEEEE</item> <!-- textcolor -->
         <item>#a9a9a9</item> <!-- 2nd textcolor for price usw. -->
         <item>#3B4047</item> <!-- textfield in create activities -->
         <item>#3B4047</item> <!-- listviews -->
         <item>#171A1B</item> <!-- listviews divider -->
+        <item>#171A1B</item> <!-- button divider -->
     </string-array>
     
   <string-array name="default_color_choice_chocolate" translatable="false">
         <item>#441600</item> <!-- background -->
         <item>#6F1900</item> <!-- navigationdrawer -->
-        <item>#6F1900</item> <!-- titlebar --> 
+        <item>#6F1900</item> <!-- actionbar --> 
         <item>#EEEEEE</item> <!-- textcolor -->
         <item>#a9a9a9</item> <!-- 2nd textcolor for price usw. -->
         <item>#CC462B</item> <!-- textfield in create activities -->
         <item>#CC462B</item> <!-- listviews -->
         <item>#441600</item> <!-- listviews divider -->
+        <item>#441600</item> <!-- button divider -->
     </string-array>
     
     <string-array name="default_color_choice_barbie" translatable="false">
         <item>#FF0B63</item> <!-- background -->
         <item>#FF7A91</item> <!-- navigationdrawer -->
-        <item>#FF7A91</item> <!-- titlebar --> 
+        <item>#FF7A91</item> <!-- actionbar --> 
         <item>#000000</item> <!-- textcolor -->
         <item>#a9a9a9</item> <!-- 2nd textcolor for price usw. -->
         <item>#FF7A91</item> <!-- textfield in create activities -->
         <item>#FF7A91</item> <!-- listviews -->
         <item>#FF0B63</item> <!-- listviews divider -->
+        <item>#FF0B63</item> <!-- button divider -->
     </string-array>
   
 </resources>
