@@ -21,14 +21,13 @@ import ch.unibe.ese.shopnote.share.requests.Request;
 public class RequestSender extends AsyncTask<Request, Void, Boolean>{
 	
 	// Server data
-	private String host;
+	private String host = "matter2.nine.ch";
 	private int port = 1337;
 	
 	private Socket socket;
 	private AnswerHandler handler;
 	
 	public RequestSender(AnswerHandler handler) {
-		this.host = "10.0.0.2";
 		this.handler = handler;
 	}
 	
@@ -43,10 +42,13 @@ public class RequestSender extends AsyncTask<Request, Void, Boolean>{
 
 	private synchronized boolean sendAndReceive(Request... requests) {
 		boolean isConnected = this.initSocket();
+		boolean hasSent = false;
+		boolean hasReceived = false;
 		if(isConnected) {
-			this.send(requests);
-			this.waitForAnswer();
-		} else {
+			hasSent = this.send(requests);
+			hasReceived = this.waitForAnswer();
+		}
+		if (!isConnected || !hasReceived || !hasSent) {
 			handler.setRequests(requests);
 		}
 		return isConnected;
@@ -74,28 +76,31 @@ public class RequestSender extends AsyncTask<Request, Void, Boolean>{
 	 * @param request
 	 */
 	
-	public void send(Request... request) {
+	public boolean send(Request... request) {
 		if(socket != null) {
 			try {
 				ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 				out.writeObject(request);
 				out.flush();
+				return true;
 			} catch (IOException e) {
 				System.err.println("Couldn't write to socket in RequestSender");
 			}
 		}
+		return false;
 	}
 	
 	/**
 	 * Waits for the answer from the server and reports the result in the listener
 	 */
-	private void waitForAnswer() {
+	private boolean waitForAnswer() {
 		try {
 			socket.setSoTimeout(5000);
 			ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
 			Request [] answers = (Request[]) in.readObject();
 			socket.close();
 			handler.setRequests(answers);
+			return true;
 		} catch (StreamCorruptedException e) {
 			System.err.println("Failed to open stream from server");
 		} catch (IOException e) {
@@ -103,6 +108,7 @@ public class RequestSender extends AsyncTask<Request, Void, Boolean>{
 		} catch (ClassNotFoundException e) {
 			System.err.println("Failed to read class from server");
 		}
+		return false;
 	}
 	
 	@Override
