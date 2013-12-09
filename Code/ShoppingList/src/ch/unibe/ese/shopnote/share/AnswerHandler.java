@@ -50,11 +50,14 @@ public class AnswerHandler {
 		for (Request r: requests) {
 			if(r.wasSuccessful()) {
 				setConsequences(r);
+				return;
 			}
 			if(r.isHandled()) {
 				setHandledConsequences(r);
+				return;
 			} else {
 				syncManager.addRequest(r);
+				return;
 			}
 		}
 	}
@@ -162,9 +165,6 @@ public class AnswerHandler {
 					friendsManager.addFriend(new Friend(number, "User"));
 					friendsManager.addFriendToRecipe(recipe, friendsManager.getFriendWithPhoneNr(number));
 				}
-//				if(friendsManager.getSharedFriends(recipe).isEmpty()) {
-//					recipe.setShared(false);
-//				}
 			} else {
 				ShoppingList list3 = listManager.getShoppingList(gsfRequest.getLocalListId());
 				// Drop all friends of a list and add them again if they are still in the list
@@ -175,9 +175,6 @@ public class AnswerHandler {
 					friendsManager.addFriend(new Friend(number, "User"));
 					friendsManager.addFriendToList(list3,friendsManager.getFriendWithPhoneNr(number));
 				}
-//				if(friendsManager.getSharedFriends(list3).isEmpty()) {
-//					list3.setShared(false);
-//				}
 			}
 			return;
 
@@ -236,12 +233,6 @@ public class AnswerHandler {
 			return;
 		}
 		switch (request.getSubType()) {
-		
-		// One of your sharing partners has changed the name of the list
-//		case ListChangeRequest.RENAME_LIST_REQUEST:
-//			list.setName(((RenameListRequest)request).getNewName());
-//			listManager.saveShoppingList(list);
-//			return;
 			
 		// One of your sharing partners has added/changed an item in the list
 		case ListChangeRequest.ITEM_REQUEST:
@@ -327,7 +318,6 @@ public class AnswerHandler {
 		if(!successful) {
 			context.showToast(context.getString(R.string.error_connection));
 		}
-		context.isSyncing(false);
 		context.refresh();
 	}
 }
