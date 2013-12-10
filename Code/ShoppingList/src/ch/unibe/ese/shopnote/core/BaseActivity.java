@@ -474,6 +474,7 @@ public class BaseActivity extends Activity {
 		} else {
 			Toast.makeText(this, this.getString(R.string.no_connection),
 					Toast.LENGTH_SHORT).show();
+			refresh();
 		}
 	}
 	

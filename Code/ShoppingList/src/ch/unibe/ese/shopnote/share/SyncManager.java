@@ -4,6 +4,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import android.content.pm.PackageManager.NameNotFoundException;
+
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.share.requests.RegisterRequest;
 import ch.unibe.ese.shopnote.share.requests.Request;
@@ -46,7 +48,16 @@ public class SyncManager {
 		if (context.isOnline()) {
 			context.isSyncing(true);
 			// To be sure, that the client is registered on the server
-			rQueue.addFirst(new RegisterRequest(context.getMyPhoneNumber()));
+			long installed;
+			try {
+				installed = context
+					    .getPackageManager()
+					    .getPackageInfo("ch.unibe.ese.shopnote", 0)
+					    .firstInstallTime;
+				rQueue.addFirst(new RegisterRequest(context.getMyPhoneNumber(),installed));
+			} catch (NameNotFoundException e) {
+				e.printStackTrace(System.err);
+			}
 
 			AnswerHandler handler = new AnswerHandler(context);
 			RequestSender sender = new RequestSender(handler);
