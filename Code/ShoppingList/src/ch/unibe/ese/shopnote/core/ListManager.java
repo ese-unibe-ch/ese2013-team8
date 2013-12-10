@@ -114,7 +114,12 @@ public class ListManager {
 		for (Item item2 : items) {
 			if (!item2.isBought() && item2.getName().equals(newItem.getName())) {
 				// sum price
-				item2.setPrice(newItem.getPrice().add(item2.getPrice()));
+				if (newItem.getPrice() != null) {
+					if (item2.getPrice() == null)
+						item2.setPrice(newItem.getPrice());
+					else 
+						item2.setPrice(item2.getPrice().add(newItem.getPrice()));
+				}
 				if (newItem.getUnit() == null && item2.getUnit() == null) {
 					// Both have no unit --> item has now 2 pieces.
 					item2.setQuantity(BigDecimal.valueOf(2), ItemUnit.PIECE);
