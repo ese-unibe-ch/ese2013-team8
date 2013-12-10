@@ -48,6 +48,7 @@ public class FriendsManager {
 		if(baseActivity != null && !friend.hasTheApp())
 			checkIfFriendHasApp(friend);
 		
+		friend = getFriendFromDB(friend.getId());
 		if(friend.hasTheApp()) {
 			friendsList.add(friend);
 			return friend;

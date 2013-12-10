@@ -141,12 +141,17 @@ public class ManageFriendsActivity extends BaseActivity {
 			this.startActivityForResult(intent, INTENT_FRIEND_REQUEST);
 			return true;
 		case R.id.action_refresh:
-			Animation rotation = AnimationUtils.loadAnimation(this,
-					R.drawable.sync_animation);
-			rotation.setRepeatCount(Animation.INFINITE);
-			findViewById(R.id.action_refresh).startAnimation(rotation);
-			if (!isFriendsSyncing) {
-				searchContactsInPhoneBook();
+			if(isOnline()) {
+				Animation rotation = AnimationUtils.loadAnimation(this,
+						R.drawable.sync_animation);
+				rotation.setRepeatCount(Animation.INFINITE);
+				findViewById(R.id.action_refresh).startAnimation(rotation);
+				if (!isFriendsSyncing)
+					searchContactsInPhoneBook();
+			} else {
+				Toast.makeText(this, this.getString(R.string.no_connection),
+						Toast.LENGTH_SHORT).show();
+				refresh();
 			}
 			return true;
 		default:
@@ -164,8 +169,9 @@ public class ManageFriendsActivity extends BaseActivity {
 			public void run() {
 				friendsManager.checkPhoneBookForFriends(ManageFriendsActivity.this, handler);	
 			}
-		}).start();
+		}).start(); 
 	}
+
 	
 	@Override
 	protected void onPause() {
@@ -177,22 +183,27 @@ public class ManageFriendsActivity extends BaseActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if(resultCode == RESULT_OK && requestCode == INTENT_FRIEND_REQUEST){
-			
-			final String name = data.getExtras().getString(EXTRAS_FRIEND_NAME);
-			final String number = data.getExtras().getString(EXTRAS_FRIEND_PHONENR);
-			Toast.makeText(this, R.string.checkIfFriendHasApp, Toast.LENGTH_SHORT).show();
-			final SynchHandler handler = new SynchHandler(this);
-			
-			new Thread(new Runnable() {
-				public void run() {	
-					Friend friend = friendsManager.addFriend(new Friend(number, name));
-					if(friend != null && friend.hasTheApp()) {
-						handler.sendEmptyMessage(0);
-					} else {
-						handler.sendEmptyMessage(1);
+			if(isOnline()) {
+				final String name = data.getExtras().getString(EXTRAS_FRIEND_NAME);
+				final String number = data.getExtras().getString(EXTRAS_FRIEND_PHONENR);
+				Toast.makeText(this, R.string.checkIfFriendHasApp, Toast.LENGTH_SHORT).show();
+				final SynchHandler handler = new SynchHandler(this);
+				
+				new Thread(new Runnable() {
+					public void run() {	
+						Friend friend = friendsManager.addFriend(new Friend(number, name));
+						if(friend != null && friend.hasTheApp()) {
+							handler.sendEmptyMessage(0);
+						} else {
+							handler.sendEmptyMessage(1);
+						}
 					}
-				}
-			}).start();
+				}).start();
+			} else {
+				Toast.makeText(this, this.getString(R.string.no_connection),
+						Toast.LENGTH_SHORT).show();
+				refresh();
+			}
 		}	
 	}
 
