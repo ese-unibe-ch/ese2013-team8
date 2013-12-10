@@ -99,6 +99,7 @@
     <string name="friendHasNotApp">Cet ami ne possède pas l\'application!</string>
     <string name="checkIfFriendHasApp">Verifie si cet ami possède l\'application, un instant...</string>
 	<string name="inviteFriendMessage">Bonjour, je te recommande le ShopNote application pour Android. </string>
+	<string name="inviteFriendSubject">Un app genialé!</string>
     
     
         

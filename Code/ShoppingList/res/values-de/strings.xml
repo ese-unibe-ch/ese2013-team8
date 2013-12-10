@@ -96,6 +96,7 @@
     <string name="noUpdates">Keine neuen Freunde hinzugefügt</string>
     <string name="checkIfFriendHasApp">Prüfe ob ihr Freund ShopNote hat</string>
 	<string name="inviteFriendMessage">Hallo, ich empfehle dir die ShopNote App für Android</string>
+	<string name="inviteFriendSubject">Geniale app die du haben musst!</string>
           
     <!-- ArchiveActivity -->
     <string name="archive_welcome_message"> 

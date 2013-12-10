@@ -28,6 +28,7 @@ public class SQLiteDatabaseManager {
 	public static final String TABLE_USERS = "users";
 	public static final String COLUMN_USER_ID = "userId";
 	public static final String COLUMN_USER_PHONENUMBER = "phoneNumber";
+	public static final String COLUMN_USER_LASTINSTALLED = "lastinstalled";
 	
 	// Links local (not unique) list ids to unique server list ids using (userId, locallistid) as primary key
 	public static final String TABLE_LOCALTOSERVER_LIST_ID = "localtoserverlistid";
@@ -42,7 +43,8 @@ public class SQLiteDatabaseManager {
 	// Create statements
 	public static final String CREATE_TABLE_USERS = "create table if not exists " + TABLE_USERS + "(" + 
 			COLUMN_USER_ID + " integer primary key autoincrement, " +
-			COLUMN_USER_PHONENUMBER + " varchar(20)" +
+			COLUMN_USER_PHONENUMBER + " varchar(20), " +
+			COLUMN_USER_LASTINSTALLED + " long " +
 			");";
 	public static final String CREATE_TABLE_LOCALTOSERVER_LIST_ID = "create table if not exists " + TABLE_LOCALTOSERVER_LIST_ID + "(" +
 			COLUMN_USER_ID + " integer, " +
@@ -100,7 +102,7 @@ public class SQLiteDatabaseManager {
 	 * Add a user to the database if he isn't already in
 	 * @param phoneNumber
 	 */
-	public void addUser(Request request) {
+	public void addUser(RegisterRequest request) {
 		String phoneNumber = request.getPhoneNumber();
 		Statement stmt;
 		try {
@@ -115,7 +117,14 @@ public class SQLiteDatabaseManager {
 				request.setSuccessful();
 				odbManager.addContainer(findUser(request));
 			} else {
-//				System.out.println("\t:User " + rs.getString(COLUMN_USER_PHONENUMBER) + " already existed");
+				long lastInstalled = rs.getLong(COLUMN_USER_LASTINSTALLED);
+				if (lastInstalled < request.getInstallDate()) {
+					String changeDate = "update " + TABLE_USERS + " set " + COLUMN_USER_LASTINSTALLED + " = \"" + request.getInstallDate() + "\"" +
+							" where " + COLUMN_USER_PHONENUMBER + "=\"" + phoneNumber + ";";
+					stmt.executeUpdate(changeDate);
+					int userId = findUser(request);
+					deleteLocalListIds(userId);
+				}
 			}
 			request.setHandled();
 			
@@ -124,6 +133,17 @@ public class SQLiteDatabaseManager {
 		}
 	}
 	
+	private void deleteLocalListIds(int userId) {
+		try {
+			String deleteIds = "delete from " + TABLE_LOCALTOSERVER_LIST_ID + " where " + COLUMN_USER_ID + "=\"" + userId + "\";";
+			Statement stmt = this.c.createStatement();
+			stmt.executeUpdate(deleteIds);
+		} catch (SQLException e) {
+			e.printStackTrace(System.out);
+		}
+		
+	}
+
 	/**
 	 * returns UserId if it exists in database
 	 * @param request
@@ -180,7 +200,7 @@ public class SQLiteDatabaseManager {
 	 */
 	public void shareList(ShareListRequest request) {
 		int userId = findUser(request);
-		int friendId = findUser(new RegisterRequest(request.getFriendNumber()));
+		int friendId = findUser(new RegisterRequest(request.getFriendNumber(),0));
 		// Cannot share a list with yourself
 		if(friendId == userId)
 			return;
@@ -252,7 +272,7 @@ public class SQLiteDatabaseManager {
 	 */
 	public void unShareList(UnShareListRequest request) {
 		int userId = findUser(request);
-		int friendId = findUser(new RegisterRequest(request.getFriendNumber()));
+		int friendId = findUser(new RegisterRequest(request.getFriendNumber(),0));
 		long serverListId = getServerListId(userId, request.getListId(), request.isRecipe());
 		// Cannot unshare a list which is shared between inexistent users
 		if(userId <= -1 || friendId <= -1) {

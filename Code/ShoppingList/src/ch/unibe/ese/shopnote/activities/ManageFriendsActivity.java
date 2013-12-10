@@ -190,12 +190,10 @@ public class ManageFriendsActivity extends BaseActivity {
 						handler.sendEmptyMessage(0);
 					} else {
 						handler.sendEmptyMessage(1);
-						handler.sendEmptyMessage(0);
 					}
 				}
 			}).start();
 		}	
-		updateFriendsList();
 	}
 
 	@Override

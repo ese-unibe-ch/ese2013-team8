@@ -6,6 +6,7 @@ import ch.unibe.ese.shopnote.server.database.NeodatisDatabaseManager;
 import ch.unibe.ese.shopnote.server.database.SQLiteDatabaseManager;
 import ch.unibe.ese.shopnote.share.requests.EmptyRequest;
 import ch.unibe.ese.shopnote.share.requests.GetSharedFriendsRequest;
+import ch.unibe.ese.shopnote.share.requests.RegisterRequest;
 import ch.unibe.ese.shopnote.share.requests.Request;
 import ch.unibe.ese.shopnote.share.requests.ShareListRequest;
 import ch.unibe.ese.shopnote.share.requests.UnShareListRequest;
@@ -62,7 +63,7 @@ public class RequestHandler {
 		// Responsible: SQLiteDatabaseManager for creating a userId
 		//		NeodtaisDatabaseManager for creating a new user container
 		case Request.REGISTER_REQUEST:
-			this.dbManager.addUser(request);
+			this.dbManager.addUser((RegisterRequest)request);
 			return returnRequests(request);
 		
 		// User asks if friend has the app

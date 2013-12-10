@@ -42,18 +42,17 @@ public class FriendsManager {
 		Friend compare = checkIfDouble(friend);
 		if (compare != null) return compare;
 		
-		// Add the friend
-		friendsList.add(friend);
-		// Save friend to database
+		// Save friend to database to get id
 		persistenceManager.save(friend);
 		
 		if(baseActivity != null && !friend.hasTheApp())
 			checkIfFriendHasApp(friend);
 		
-		if(friend.hasTheApp())
+		if(friend.hasTheApp()) {
+			friendsList.add(friend);
 			return friend;
+		}
 		
-		friendsList.remove(friend);
 		persistenceManager.removeFriend(friend);
 		return null;
 	}
@@ -132,6 +131,14 @@ public class FriendsManager {
 		return null;
 	}
 	
+	public Friend getFriendFromDB(long id) {
+		List<Friend> friends = persistenceManager.getFriends();
+		for(Friend friend: friends)
+			if(friend.getId() == id)
+				return friend;
+		return null;
+	}
+	
 	/**
 	 * Gets the friend with the specific phoneNr
 	 * @param phoneNr - format matters!
@@ -207,7 +214,7 @@ public class FriendsManager {
 	 */
 	public void setFriendHasApp(long friendId, boolean hasApp) {
 		if(friendId >= 0) {
-			Friend friend = getFriend(friendId);
+			Friend friend = getFriendFromDB(friendId);
 			if(friend != null) {
 				friend.setHasApp(hasApp);
 				persistenceManager.save(friend);

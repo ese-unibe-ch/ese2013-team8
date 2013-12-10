@@ -331,7 +331,8 @@ public class BaseActivity extends Activity {
 	protected void invitePopup(BaseActivity activity) {
 		Intent sendIntent = new Intent();
 		sendIntent.setAction(Intent.ACTION_SEND);
-		sendIntent.putExtra(Intent.EXTRA_TEXT, R.string.inviteFriendMessage);
+		sendIntent.putExtra(Intent.EXTRA_SUBJECT, activity.getString(R.string.inviteFriendSubject));
+		sendIntent.putExtra(Intent.EXTRA_TEXT, activity.getString(R.string.inviteFriendMessage));
 		sendIntent.setType("text/plain");
 		startActivity(sendIntent);
 	}
@@ -473,6 +474,7 @@ public class BaseActivity extends Activity {
 		} else {
 			Toast.makeText(this, this.getString(R.string.no_connection),
 					Toast.LENGTH_SHORT).show();
+			refresh();
 		}
 	}
 	
