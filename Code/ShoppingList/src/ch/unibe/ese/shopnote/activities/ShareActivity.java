@@ -323,7 +323,8 @@ public class ShareActivity extends BaseActivity {
 		
 			final String name = data.getExtras().getString(EXTRAS_FRIEND_NAME);
 			final String number = data.getExtras().getString(EXTRAS_FRIEND_PHONENR);
-			Toast.makeText(this, R.string.checkIfFriendHasApp, Toast.LENGTH_SHORT).show();
+			if(friendsManager.checkIfDouble(new Friend(number, name)) == null)
+				Toast.makeText(this, R.string.checkIfFriendHasApp, Toast.LENGTH_SHORT).show();
 			final SynchHandler handler = new SynchHandler(this);
 		
 			new Thread(new Runnable() {

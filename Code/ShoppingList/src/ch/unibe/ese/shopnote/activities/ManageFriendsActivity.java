@@ -62,9 +62,8 @@ public class ManageFriendsActivity extends BaseActivity {
 		createDrawerToggle();
 		
 		//Update all friends
-		if (!isFriendsSyncing) {
+		if (!isFriendsSyncing) 
 			searchContactsInPhoneBook();
-		}
 		
 		updateFriendsList();
 		
