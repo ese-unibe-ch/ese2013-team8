@@ -86,7 +86,8 @@ public class ViewListActivity extends BaseActivity {
 
 		// Autocompletion
 		AutoCompleteTextView itemName = (AutoCompleteTextView) findViewById(R.id.editTextName);
-		sqliteAdapter = new ItemAutocompleteAdapter(this, android.R.layout.simple_list_item_1, manager);
+		String recipe = this.getString(R.string.view_recipe_name);
+		sqliteAdapter = new ItemAutocompleteAdapter(this, android.R.layout.simple_list_item_1, manager, recipe, false);
 		itemName.setAdapter(sqliteAdapter);
 		updateThemeTextBox(itemName);	
 		

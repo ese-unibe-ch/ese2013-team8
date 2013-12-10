@@ -1,6 +1,5 @@
 package ch.unibe.ese.shopnote.core;
 
-
 public class ItemRecipeAdapter {
 			private String name;
 			private Long id;
@@ -14,8 +13,12 @@ public class ItemRecipeAdapter {
 				entryTyp = Type.ITEM;
 			}
 			
-			public ItemRecipeAdapter(Recipe recipe) {
-				name = recipe.getName() + " - Recipe";
+			public ItemRecipeAdapter(Recipe recipe, String text) {
+				if (text.equals(""))
+					name = recipe.getName();
+				else
+					name = recipe.toString() + " (" + text + ")";
+
 				id = recipe.getId();
 				entryTyp = Type.RECIPE;		
 			}
@@ -31,6 +34,4 @@ public class ItemRecipeAdapter {
 			public Long getId() {
 				return id;
 			}
-	
-	
 }

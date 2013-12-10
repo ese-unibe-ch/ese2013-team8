@@ -79,6 +79,7 @@
     <string name="view_recipe_title">Recette pour</string>
     <string name="view_recipe_items">Ingredients</string>
     <string name="view_recipe_notes">Notes</string>
+    <string name="view_recipe_name">Recette</string>
 
     <!-- ShareListActivity -->
     <string name="share_list_title">Partager</string>
