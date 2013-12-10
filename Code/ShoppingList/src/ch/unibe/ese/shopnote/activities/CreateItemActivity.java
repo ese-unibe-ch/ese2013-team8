@@ -7,6 +7,7 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -216,7 +217,10 @@ public class CreateItemActivity extends BaseActivity {
 		try {
 			// save the item
 			if (list != null) {
-				manager.addItemToList(item, list);
+				if (editItem)
+					manager.updateItemInList(item, list);
+				else
+					manager.addItemToList(item, list);
 			} else if (recipe != null) {
 				recipe.addItem(item);
 				manager.saveRecipe(recipe);
