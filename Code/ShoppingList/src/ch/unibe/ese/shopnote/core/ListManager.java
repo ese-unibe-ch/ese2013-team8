@@ -96,7 +96,7 @@ public class ListManager {
 			throw new IllegalArgumentException("null is not allowed");
 
 		List<Item> items = persistenceManager.getItems(list);
-		if (!items.contains(items))
+		if (!items.contains(item))
 			return;
 		
 		persistenceManager.save(item, list);
@@ -113,6 +113,8 @@ public class ListManager {
 	private Item mergeItem(Item newItem, List<Item> items) throws ItemException{
 		for (Item item2 : items) {
 			if (!item2.isBought() && item2.getName().equals(newItem.getName())) {
+				// sum price
+				item2.setPrice(newItem.getPrice().add(item2.getPrice()));
 				if (newItem.getUnit() == null && item2.getUnit() == null) {
 					// Both have no unit --> item has now 2 pieces.
 					item2.setQuantity(BigDecimal.valueOf(2), ItemUnit.PIECE);
