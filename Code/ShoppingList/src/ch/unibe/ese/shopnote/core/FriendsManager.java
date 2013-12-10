@@ -22,6 +22,7 @@ public class FriendsManager {
 	private SyncManager syncManager;
 	private BaseActivity baseActivity;
 	private ArrayList<Friend> friendsInPhoneBook;
+	public boolean synchronizing = false;
 
 	public FriendsManager(PersistenceManager persistenceManager, SyncManager syncManager, BaseActivity baseActivity) {
 		this.persistenceManager = persistenceManager;
@@ -298,5 +299,13 @@ public class FriendsManager {
                   }
             }			
         }
+	}
+	
+	public boolean isSynchronizing() {
+		return this.synchronizing;
+	}
+	
+	public void setSynchronizing(boolean synchState) {
+		this.synchronizing = synchState;
 	}
 }

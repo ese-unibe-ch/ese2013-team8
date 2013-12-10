@@ -32,8 +32,6 @@ public class ManageFriendsActivity extends BaseActivity {
 	private FriendsManager friendsManager;
 	private SyncManager syncManager;
 	private ArrayAdapter<Friend> friendsAdapter;
-	
-	private static boolean isFriendsSyncing = false;
 
 	@Override
 	/**
@@ -62,7 +60,7 @@ public class ManageFriendsActivity extends BaseActivity {
 		createDrawerToggle();
 		
 		//Update all friends
-		if (!isFriendsSyncing) 
+		if (friendsManager.isSynchronizing()) 
 			searchContactsInPhoneBook();
 		
 		updateFriendsList();
@@ -145,7 +143,7 @@ public class ManageFriendsActivity extends BaseActivity {
 						R.drawable.sync_animation);
 				rotation.setRepeatCount(Animation.INFINITE);
 				findViewById(R.id.action_refresh).startAnimation(rotation);
-				if (!isFriendsSyncing)
+				if (friendsManager.isSynchronizing())
 					searchContactsInPhoneBook();
 			} else {
 				Toast.makeText(this, this.getString(R.string.no_connection),
@@ -162,7 +160,7 @@ public class ManageFriendsActivity extends BaseActivity {
 	 * searches for contacts in the phonebook who do have the app
 	 */
 	public void searchContactsInPhoneBook() {
-		isFriendsSyncing = true;
+		friendsManager.setSynchronizing(true); 
 		final SynchHandler handler = new SynchHandler(this);
 		new Thread(new Runnable() {
 			public void run() {
@@ -208,7 +206,7 @@ public class ManageFriendsActivity extends BaseActivity {
 
 	@Override
 	public void refresh() {
-		isFriendsSyncing = false;
+		friendsManager.setSynchronizing(false);
 		updateFriendsList();
 		Animation anim = findViewById(R.id.action_refresh).getAnimation();
 		if(anim != null) {
