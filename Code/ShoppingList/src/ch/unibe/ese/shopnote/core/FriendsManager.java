@@ -222,16 +222,28 @@ public class FriendsManager {
 			}
 		} else {
 			//for search all the phonebook directly add friend if he has the app
-			for(Friend friend: friendsInPhoneBook) {
-				if(hasApp == true && friend.getId() == friendId && checkIfDouble(friend) == null) {
-					friend.setHasApp(true);
-					addFriend(friend);
-				}
+			Friend friend = getFriendInTemporaryList(friendId);			
+			if(friend != null && hasApp && checkIfDouble(friend) == null) {
+				friend.setHasApp(true);
+				addFriend(friend);
+	
 			}
 
 		}
 	}
 	
+	/**
+	 * Helper function to synch whole phone book
+	 * @param friendId
+	 * @return Friend with id
+	 */
+	private Friend getFriendInTemporaryList(long friendId) {
+		for(Friend friend: friendsInPhoneBook) 
+			if(friend.getId() == friendId) return friend;
+		return null;
+	}
+
+
 	public String toString() {
 		StringBuilder result = new StringBuilder();
 		for (Friend friend : friendsList)
