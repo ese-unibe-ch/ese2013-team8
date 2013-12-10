@@ -46,6 +46,7 @@ public class TokenGenerator {
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
 		Editor edit = settings.edit();
 		edit.putBoolean("phonenumberapproved", true);
+		edit.putLong("timeOfApprovement", System.currentTimeMillis());
 		edit.apply();
 	}
 	

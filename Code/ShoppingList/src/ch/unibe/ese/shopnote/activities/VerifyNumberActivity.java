@@ -106,7 +106,7 @@ public class VerifyNumberActivity extends BaseActivity {
         this.unregisterReceiver(this.receiver);
     }
     
-    public void setSuccessful(boolean wasSuccessful) {
+    public synchronized void setSuccessful(boolean wasSuccessful) {
     	if(!finished) {
         	if(wasSuccessful) {
         		Toast.makeText(this, getString(R.string.verify_number_successful), Toast.LENGTH_SHORT).show();

@@ -22,12 +22,5 @@
 	        android:entryValues="@array/default_color_choice_names"
 	        android:defaultValue= "white" />        
 	
-	</PreferenceCategory> 
-<!--     
-	<CheckBoxPreference 
-	    android:title="phonenumberapproved" 
-	    android:defaultValue="false"
-	    android:visibility="gone">
-     </CheckBoxPreference>
--->	      
+	</PreferenceCategory>       
 </PreferenceScreen>

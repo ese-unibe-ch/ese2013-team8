@@ -117,14 +117,14 @@ public class SQLiteDatabaseManager {
 				request.setSuccessful();
 				odbManager.addContainer(findUser(request));
 			} else {
-				long lastInstalled = rs.getLong(COLUMN_USER_LASTINSTALLED);
-				if (lastInstalled < request.getInstallDate()) {
-					String changeDate = "update " + TABLE_USERS + " set " + COLUMN_USER_LASTINSTALLED + " = \"" + request.getInstallDate() + "\"" +
-							" where " + COLUMN_USER_PHONENUMBER + "=\"" + phoneNumber + ";";
-					stmt.executeUpdate(changeDate);
-					int userId = findUser(request);
-					deleteLocalListIds(userId);
-				}
+//				long lastInstalled = rs.getLong(COLUMN_USER_LASTINSTALLED);
+//				if (lastInstalled < request.getInstallDate()) {
+//					String changeDate = "update " + TABLE_USERS + " set " + COLUMN_USER_LASTINSTALLED + " = \"" + request.getInstallDate() + "\"" +
+//							" where " + COLUMN_USER_PHONENUMBER + "=\"" + phoneNumber + "\";";
+//					stmt.executeUpdate(changeDate);
+//					int userId = findUser(request);
+//					deleteLocalListIds(userId);
+//				}
 			}
 			request.setHandled();
 			

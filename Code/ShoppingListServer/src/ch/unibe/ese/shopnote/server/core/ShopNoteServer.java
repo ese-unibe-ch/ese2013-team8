@@ -19,7 +19,7 @@ public class ShopNoteServer {
 	 * Configuration
 	 */
 	public static boolean WIPE_DATABSE_ON_STARTUP = false;
-	public static boolean REDIRECT_OUTPUT_TO_FILE = true;
+	public static boolean REDIRECT_OUTPUT_TO_FILE = false;
 	private static int PORT = 1337;
 	/**
 	 * \Configuration 
