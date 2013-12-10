@@ -25,11 +25,17 @@ import ch.unibe.ese.shopnote.core.Item;
  */
 public class ItemAdapter extends ArrayAdapter<Item> {
 
-private BaseActivity context;
+	private BaseActivity context;
+	private TelephonyManager telephonyManager;
+	private String country;
+	private String currency = "";
 	
 	public ItemAdapter(BaseActivity context, int resource, List<Item> itemList) {
 		super(context, resource, itemList);
 		this.context = context;
+		// get user currency
+		telephonyManager = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
+		country = telephonyManager.getNetworkCountryIso();
 	}
 
 	private class ItemHolder {
@@ -84,10 +90,10 @@ private BaseActivity context;
 			holder.quantity.setText("");
 		
 		// get user currency
-		TelephonyManager telephonyManager = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
-		String country = telephonyManager.getNetworkCountryIso();
-		Locale locale = new Locale("en", country); // convert country code to locale
-		Currency currency = Currency.getInstance(locale);
+		if (!country.equals(null) && !country.equals("")) {
+			Locale locale = new Locale("en", country); // convert country code to locale
+			currency = Currency.getInstance(locale).toString();
+		}			
 		
 		// set price
 		if (item.getPrice() != null) {
