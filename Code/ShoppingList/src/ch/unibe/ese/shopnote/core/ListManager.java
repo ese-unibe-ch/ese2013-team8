@@ -1,11 +1,8 @@
 package ch.unibe.ese.shopnote.core;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * The ListManager is responsible for access to all {@link ShoppingList
@@ -16,12 +13,10 @@ public class ListManager {
 	private static final BigDecimal THOUSAND = new BigDecimal("1000");
 	private final List<ShoppingList> shoppingLists;
 	private final PersistenceManager persistenceManager;
-	private final Map<ShoppingList, List<Item>> listToItems;
 	private List<Recipe> recipeList;
 
 	public ListManager(PersistenceManager persistenceManager) {
 		this.persistenceManager = persistenceManager;
-		this.listToItems = new HashMap<ShoppingList, List<Item>>();
 		this.shoppingLists = persistenceManager.getLists();
 		this.recipeList = persistenceManager.readRecipes();
 	}
@@ -81,18 +76,12 @@ public class ListManager {
 	public boolean addItemToList(Item item, ShoppingList list) throws ItemException {
 		if (item == null || list == null)
 			throw new IllegalArgumentException("null is not allowed");
-		List<Item> items = listToItems.get(list);
-		if (items == null) {
-			items = new ArrayList<Item>();
-			listToItems.put(list, items);
-		}
 		
+		List<Item> items = persistenceManager.getItems(list);
 		item = mergeItem(item, items);
 		
 		persistenceManager.save(item, list);
-		if (!items.contains(item))
-			return items.add(item);
-		return false;
+		return !items.contains(item);
 	}
 	
 	/**
@@ -105,17 +94,12 @@ public class ListManager {
 	public void updateItemInList(Item item, ShoppingList list) {
 		if (item == null || item.getId() == null || list == null)
 			throw new IllegalArgumentException("null is not allowed");
-		List<Item> items = listToItems.get(list);
-		if (items == null) {
-			items = new ArrayList<Item>();
-			listToItems.put(list, items);
-		}
+
+		List<Item> items = persistenceManager.getItems(list);
 		if (!items.contains(items))
 			return;
 		
 		persistenceManager.save(item, list);
-		items.remove(item);
-		items.add(item);
 	}
 	
 	/**
@@ -171,12 +155,6 @@ public class ListManager {
 	public void removeItemFromList(Item item, ShoppingList list) {
 		if (item == null || list == null)
 			throw new IllegalArgumentException("null is not allowed");
-		List<Item> items = listToItems.get(list);
-		if (items == null) {
-			items = new ArrayList<Item>();
-			listToItems.put(list, items);
-		}
-		items.remove(item);
 		persistenceManager.remove(item, list);
 	}
 
@@ -188,11 +166,7 @@ public class ListManager {
 	 * @return not null, unmodifiable.
 	 */
 	public List<Item> getItemsFor(ShoppingList list) {
-		List<Item> items = listToItems.get(list);
-		if (items == null) {
-			items = persistenceManager.getItems(list);
-			listToItems.put(list, items);
-		}
+		List<Item>	items = persistenceManager.getItems(list);
 		Collections.sort(items, Comparators.ITEM_COMPARATOR);
 		return Collections.unmodifiableList(items);
 	}

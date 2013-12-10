@@ -138,7 +138,10 @@ public class SQLitePersistenceManager implements PersistenceManager {
 	@Override
 	public void save(Item item, ShoppingList list) {
 		// Add the item to the Items Table
-		updateHelper.addItemIfNotExistent(item);
+		if (item.getId() == null)
+			updateHelper.addItemIfNotExistent(item);
+		else 
+			updateItemName(item);
 		// Add the item to the ItemtoList Table
 		ContentValues values = updateHelper.toValue(item, list);
 		if (readHelper.isInList(item, list)) {
@@ -150,9 +153,21 @@ public class SQLitePersistenceManager implements PersistenceManager {
 		} else {
 			database.insert(SQLiteHelper.TABLE_ITEMTOLIST, null, values);
 		}
-
 	}
-
+	
+	/**
+	 * Updated den Namen des Items.<p>
+	 * Ist das Item noch nicht persistiert, geschieht nichts.
+	 * @param item
+	 */
+	private void updateItemName(Item item) {
+		if (item.getId() != null){
+			ContentValues values = new ContentValues();
+			values.put(SQLiteHelper.COLUMN_ITEM_NAME, item.getName());
+			database.update(SQLiteHelper.TABLE_ITEMS, values, SQLiteHelper.COLUMN_ITEM_ID + " = ?", new String[]{"" + item.getId()});
+		}
+	}
+	
 	@Override
 	public void remove(Item item, ShoppingList list) {
 		Long listId = list.getId();
@@ -363,7 +378,10 @@ public class SQLitePersistenceManager implements PersistenceManager {
 
 		for (Item item : recipe.getItemList()) {
 			// Add the item to the Items Table
-			updateHelper.addItemIfNotExistent(item);
+			if (item.getId() == null)
+				updateHelper.addItemIfNotExistent(item);
+			else
+				updateItemName(item);
 			values = updateHelper.toValue(recipe, item);
 			database.insert(SQLiteHelper.TABLE_ITEMTORECIPE, null, values);
 		}
