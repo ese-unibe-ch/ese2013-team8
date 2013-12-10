@@ -64,7 +64,12 @@ public class FriendsManager {
 		syncManager.synchroniseAndWaitForTaskToEnd(baseActivity);
 	}
 
-	private Friend checkIfDouble(Friend friend) {
+	/**
+	 * Checks if friend has already the app 
+	 * @param friend 
+	 * @return friend if he already has the app, else null
+	 */
+	public Friend checkIfDouble(Friend friend) {
 		for(Friend compare: friendsList) 
 			if(compare.getPhoneNr().equals(friend.getPhoneNr())) return compare;
 		return null;
@@ -238,8 +243,9 @@ public class FriendsManager {
 	 * @return Friend with id
 	 */
 	private Friend getFriendInTemporaryList(long friendId) {
-		for(Friend friend: friendsInPhoneBook) 
-			if(friend.getId() == friendId) return friend;
+		if(friendsInPhoneBook != null)
+			for(Friend friend: friendsInPhoneBook) 
+				if(friend.getId() == friendId) return friend;
 		return null;
 	}
 

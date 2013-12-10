@@ -5,8 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import ch.unibe.ese.shopnote.core.sqlite.SQLitePersistenceManager;
-import android.support.v4.content.FileProvider;
+import android.content.ClipData.Item;
 import android.test.ProviderTestCase2;
 
 public class SQLitePersistenceManagerTest extends
