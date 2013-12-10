@@ -94,6 +94,7 @@
     <string name="noUpdates">None new friends added</string>
     <string name="checkIfFriendHasApp">Checks if the friend has the app, one moment please</string>
     <string name="inviteFriendMessage">Hey, I recommand you the ShopNote App for Android</string>
+    <string name="inviteFriendSubject">Genius app you need to have!</string>
 
     <!-- ArchiveActivity -->
     <string name="archive_welcome_message">        The archive shows all shopping lists, which you archived before
