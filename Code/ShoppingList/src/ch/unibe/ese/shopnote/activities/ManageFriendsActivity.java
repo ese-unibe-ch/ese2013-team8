@@ -59,14 +59,13 @@ public class ManageFriendsActivity extends BaseActivity {
 		createDrawerMenu();
 		createDrawerToggle();
 		
-		//Update all friends
-		if (friendsManager.isSynchronizing()) 
-			searchContactsInPhoneBook();
-		
 		updateFriendsList();
 		
 		setTitle(this.getString(R.string.title_activity_manage_friends));
 		
+		//Update all friends - 
+//		if (!friendsManager.isSynchronizing() && isOnline()) 
+//			searchContactsInPhoneBook();
 	}
 	
 	/**
@@ -143,7 +142,7 @@ public class ManageFriendsActivity extends BaseActivity {
 						R.drawable.sync_animation);
 				rotation.setRepeatCount(Animation.INFINITE);
 				findViewById(R.id.action_refresh).startAnimation(rotation);
-				if (friendsManager.isSynchronizing())
+				if (!friendsManager.isSynchronizing())
 					searchContactsInPhoneBook();
 			} else {
 				Toast.makeText(this, this.getString(R.string.no_connection),
@@ -206,12 +205,12 @@ public class ManageFriendsActivity extends BaseActivity {
 
 	@Override
 	public void refresh() {
-		friendsManager.setSynchronizing(false);
 		updateFriendsList();
 		Animation anim = findViewById(R.id.action_refresh).getAnimation();
 		if(anim != null) {
 			anim.setRepeatCount(0);
 		}
+		friendsManager.setSynchronizing(false);
 	}
 }
 

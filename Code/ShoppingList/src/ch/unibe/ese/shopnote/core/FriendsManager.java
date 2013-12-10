@@ -232,7 +232,6 @@ public class FriendsManager {
 			if(friend != null && hasApp && checkIfDouble(friend) == null) {
 				friend.setHasApp(true);
 				addFriend(friend);
-	
 			}
 
 		}
@@ -263,6 +262,7 @@ public class FriendsManager {
 	 */
 	public void checkPhoneBookForFriends(BaseActivity activity, Handler handler) {
 		friendsInPhoneBook = new ArrayList<Friend>();
+		friendsInPhoneBook.clear();
 		getListWithFriendsFromPhoneBook(friendsInPhoneBook);
         
 		for(Friend friend: friendsInPhoneBook) {
