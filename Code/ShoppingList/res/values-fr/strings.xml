@@ -18,7 +18,7 @@
     <string name="title_activity_create_list">Créer une liste</string>
     <string name="title_activity_create_item">Créer un article</string>
     <string name="title_activity_view_list">Vue Liste</string>
-    <string name="title_activity_share_list">Liste Partagée</string>
+    <string name="title_activity_share_list">Partager la liste</string>
     <string name="title_activity_manage_friends">Amis</string>
     <string name="title_activity_create_friend">Ajouter un ami</string>
     <string name="title_activity_item_list">Liste d\'Aricles</string>
@@ -31,17 +31,17 @@
     
     <!-- HomeActivity -->
     <string name="home_welcome_title">Bonjour!</string>
-    <string name="home_welcome_message">Touchez le symbole-plus en haut à droite pour ajouter une nouvelle liste de courses.</string>
+    <string name="home_welcome_message">Touchez le symbole plus en haut à droite pour ajouter une nouvelle liste de courses.</string>
     
     <!-- ItemListActivity -->
     <string name="item_list_welcome_message"> 
-        Toucher le symbole-plus en haut à droite pour ajouter un nouvel article.
+        Touchez le symbole plus en haut à droite pour ajouter un nouvel article.
         Après cela vous verrez tous vos articles ici.</string>
         
     <!-- ManageRecipeActivity -->
     <string name="manage_recipe_welcome_message">
-        Recettes vous permet d\'ajouter plusieures articles a une liste de courses en tappant \"/nomdelarecette\" .
-        \n\nTouchez le symbole-plus en haut à droite pour créer une nouvelle recette.</string>
+        Recettes vous permet d\'ajouter plusieurs articles a une liste de courses en tappant \"/nomdelarecette\" .
+        \n\nTouchez le symbole plus en haut à droite pour créer une nouvelle recette.</string>
 
     <!-- CreateListActivity -->
     <string name="create_list_title">Ajouter une nouvelle liste</string>
@@ -90,29 +90,29 @@
     <!-- ManageFriendsActivity -->
     <string name="friend_has_the_app_icon">Appstatus</string>
     <string name="manage_friends_welcome_message"> 
-        Touche le symbole-plus en haut à droite pour ajouter des amis.
+        Touchez le symbole plus en haut à droite pour ajouter des amis.
         Après cela vous pourrez partager des listes de courses avec eux.</string>
     <string name="synchStarted">"Demarrage de la synchronisation, cela peux prendre quelque secondes"</string>
     <string name="synchFinished">Synchronisation terminée </string>
     <string name="friendAdded">Ami ajouté: </string>
     <string name="noUpdates">Pas de nouvel ami ajouté</string>
     <string name="friendHasNotApp">Cet ami ne possède pas l\'application!</string>
-    <string name="checkIfFriendHasApp">Verifie si cet ami possède l\'application, un instant...</string>
-	<string name="inviteFriendMessage">Bonjour, je te recommande le ShopNote application pour Android. </string>
-	<string name="inviteFriendSubject">Un app genialé!</string>
+    <string name="checkIfFriendHasApp">Vérifie si cet ami possède l\'application, un instant...</string>
+	<string name="inviteFriendMessage">Bonjour, je te recommande l\' application ShopNote pour Android. </string>
+	<string name="inviteFriendSubject">Un appli genialé!</string>
     
     
         
     <!-- ArchiveActivity -->
     <string name="archive_welcome_message"> 
-        Les archives montrent toutes les listes que vous avez archivé
+        Les archives vous montrent toutes les listes que vous avez archivées
         en utilisant le menu "overflow" dans la liste.</string>
     
     <!-- VerifyNumberActivity -->
-    <string name="verify_number_info">Pour pouvoir utiliser la synchronisation vous devez verifier votre numéro de téléphone. 
+    <string name="verify_number_info">Pour pouvoir utiliser la synchronisation vous devez vérifier votre numéro de téléphone. 
         \nShopNote va vous envoyer (une seule fois) un sms. 
-        (Possible charges (prix du sms))
-        \n\nDépendement de votre opérateur cela peut prendre jusqu à 20 secondes.</string>
+        (Possible charges: prix du sms)
+        \n\nDépendamment de votre opérateur cela peut prendre jusqu\'à 20 secondes.</string>
     <string name="verify_number_hint">Votre numéro de téléphone</string>
     <string name="verify_number_send">Vérification</string>
     <string name="verify_number_empty">Entrez votre numéro de téléphone</string>
@@ -136,12 +136,12 @@
 
     <!-- Error messages -->
     <string name="error_name">Entrez un nom</string>
-    <string name="error_missing">Pas encore implémenté</string>
+    <string name="error_missing">Pas encore disponible</string>
     <string name="error_friend">Erreur, ami non touvé</string>
     <string name="error_friend_already">Erreur, ami déjà ajouté</string>
     <string name="error_enter">Erreur, données incorrectes</string>
 	<!-- TODO translate -->
-    <string name="error_duplicate_item">Can\'t add item because list already contains the same item with another unit</string>
+    <string name="error_duplicate_item">Ne peut pas ajouter l\'article car la liste contient déjà cet article avec une autre unité</string>
 
     <!-- Synchronisation and Connection -->
     <string name="no_connection">Pas de connection internet</string>
@@ -170,9 +170,9 @@
     <string name="standard">Standard</string>
 
     <string name="title_activity_verify_numer">VerifierNuméroDActivité</string>
-    <string name="friend_has_not_app">Votre ami ne possède pas l\'application</string>
-    <string name="friend_is_no_shopnote_user">N\'utilise pas ShopNote</string>
-    <string name="friend_has_not_app_text">Notre ami ne possède pas l\'application, voulez-vous l\'inviter?</string>
+    <string name="friend_has_not_app">Cet ami ne possède pas  l\'application</string>
+    <string name="friend_is_no_shopnote_user">Cet ami n\'utilise pas l\'application ShopNote</string>
+    <string name="friend_has_not_app_text">Cet ami ne possède pas l\'application, voulez-vous l\'inviter?</string>
     <string name="send">envoyer</string>
     
      <!-- color Menu -->
