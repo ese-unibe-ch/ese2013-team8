@@ -67,9 +67,6 @@ public class ShareActivity extends BaseActivity {
 		listManager = getListManager();
 		friendsManager = getFriendsManager();
 		syncManager = getSyncManager();
-		
-		// verify phone number
-		getMyPhoneNumber();
 
 		// create drawer menu
 		createDrawerMenu();

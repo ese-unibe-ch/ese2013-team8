@@ -62,10 +62,6 @@ public class ManageFriendsActivity extends BaseActivity {
 		updateFriendsList();
 		
 		setTitle(this.getString(R.string.title_activity_manage_friends));
-		
-		//Update all friends - 
-//		if (!friendsManager.isSynchronizing() && isOnline()) 
-//			searchContactsInPhoneBook();
 	}
 	
 	/**
@@ -108,13 +104,9 @@ public class ManageFriendsActivity extends BaseActivity {
 	
 	protected void onResume() {
 		super.onResume();
-		for(Friend f: friendsManager.getFriendsList()) {
-			FriendRequest fr = new FriendRequest(f);
-			syncManager.addRequest(fr);
-		}
-		
-		syncManager.synchronise(this);
-		updateFriendsList();
+		//Update all friends - 
+//		if (!friendsManager.isSynchronizing() && isOnline()) 
+//			searchContactsInPhoneBook();
 	}
 	
 	
