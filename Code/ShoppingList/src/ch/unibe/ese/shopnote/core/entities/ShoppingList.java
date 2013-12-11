@@ -8,8 +8,7 @@ import java.util.Date;
  * It knows nothing about the item it contains. This knowledge is stored in the Listmanager.
  *
  */
-public class ShoppingList extends Entity{
-	private String name;
+public class ShoppingList extends ItemList<ShoppingListItem> {
 	private Date dueDate;
 	private String shop;
 	private boolean archived;
@@ -23,21 +22,7 @@ public class ShoppingList extends Entity{
 	 *            not <code>null</code>
 	 */
 	public ShoppingList(String name) {
-		this.name = name;
-		invariant();
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * @param name
-	 *            not <code>null</code>
-	 */
-	public void setName(String name) {
-		this.name = name;
-		invariant();
+		super(name);
 	}
 
 	public Date getDueDate() {
@@ -86,14 +71,5 @@ public class ShoppingList extends Entity{
 
 	public void setServerListId(long serverListId) {
 		this.serverListId = serverListId;
-	}
-
-	private void invariant() {
-		if (this.name == null || this.name.trim().length() == 0)
-			throw new IllegalArgumentException("name musn't be empty!");
-	}
-
-	public String toString() {
-		return this.name;
 	}
 }
