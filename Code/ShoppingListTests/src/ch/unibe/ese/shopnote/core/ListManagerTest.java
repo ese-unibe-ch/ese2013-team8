@@ -3,7 +3,8 @@ package ch.unibe.ese.shopnote.core;
 import java.math.BigDecimal;
 import java.util.List;
 
-import android.content.ClipData.Item;
+import ch.unibe.ese.shopnote.core.sqlite.SQLitePersistenceManager;
+
 import android.test.AndroidTestCase;
 
 public class ListManagerTest extends AndroidTestCase {
