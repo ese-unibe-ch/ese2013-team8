@@ -19,8 +19,8 @@ import android.widget.Toast;
 import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.adapters.FriendsListAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
-import ch.unibe.ese.shopnote.core.Friend;
 import ch.unibe.ese.shopnote.core.FriendsManager;
+import ch.unibe.ese.shopnote.core.entities.Friend;
 import ch.unibe.ese.shopnote.share.SyncManager;
 import ch.unibe.ese.shopnote.share.requests.FriendRequest;
 

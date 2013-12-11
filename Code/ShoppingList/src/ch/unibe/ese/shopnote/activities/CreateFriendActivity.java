@@ -14,8 +14,8 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.core.BaseActivity;
-import ch.unibe.ese.shopnote.core.Friend;
 import ch.unibe.ese.shopnote.core.FriendsManager;
+import ch.unibe.ese.shopnote.core.entities.Friend;
 
 /**
  * 	Creates a frame to create new friends or edit them if the intent has an extra

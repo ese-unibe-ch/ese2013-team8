@@ -10,7 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.core.BaseActivity;
-import ch.unibe.ese.shopnote.core.Friend;
+import ch.unibe.ese.shopnote.core.entities.Friend;
 
 /**
  * Provides the layout for the friendslist

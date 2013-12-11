@@ -1,6 +1,6 @@
 package ch.unibe.ese.shopnote.share.requests.listchange;
 
-import ch.unibe.ese.shopnote.core.Item;
+import ch.unibe.ese.shopnote.core.entities.ShoppingListItem;
 
 /**
  * Request for changes happening on Items<br>
@@ -11,18 +11,18 @@ public class ItemRequest extends ListChangeRequest {
 
 	private static final long serialVersionUID = 7044889552973885929L;
 	
-	private Item item;
+	private ShoppingListItem item;
 	private boolean isDeleted;
 	private boolean isBought;
 
-	public ItemRequest(String phoneNumber, long localListId, Item item) {
+	public ItemRequest(String phoneNumber, long localListId, ShoppingListItem item) {
 		super(phoneNumber, localListId);
 		this.item = item;
 		this.isDeleted = false;
 		this.isBought = false;
 	}
 	
-	public Item getItem() {
+	public ShoppingListItem getItem() {
 		return item;
 	}
 	

@@ -9,10 +9,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.core.BaseActivity;
-import ch.unibe.ese.shopnote.core.Friend;
 import ch.unibe.ese.shopnote.core.FriendsManager;
-import ch.unibe.ese.shopnote.core.Recipe;
-import ch.unibe.ese.shopnote.core.ShoppingList;
+import ch.unibe.ese.shopnote.core.entities.Friend;
+import ch.unibe.ese.shopnote.core.entities.Recipe;
+import ch.unibe.ese.shopnote.core.entities.ShoppingList;
 import ch.unibe.ese.shopnote.share.requests.UnShareListRequest;
 
 /**

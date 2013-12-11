@@ -27,7 +27,7 @@ import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.adapters.ShopAutocompleteAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.ListManager;
-import ch.unibe.ese.shopnote.core.ShoppingList;
+import ch.unibe.ese.shopnote.core.entities.ShoppingList;
 
 /**
  * 	Creates a frame to create new shopping lists or edit them if the intent has an extra

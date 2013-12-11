@@ -4,10 +4,11 @@ import java.util.List;
 
 import android.content.Context;
 import android.widget.ArrayAdapter;
-import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ItemRecipeAdapter;
 import ch.unibe.ese.shopnote.core.ListManager;
-import ch.unibe.ese.shopnote.core.Recipe;
+import ch.unibe.ese.shopnote.core.entities.Item;
+import ch.unibe.ese.shopnote.core.entities.ShoppingListItem;
+import ch.unibe.ese.shopnote.core.entities.Recipe;
 
 /**
  * Adapter for autocompletion when you want to add an Item
@@ -29,7 +30,7 @@ public class ItemAutocompleteAdapter extends ArrayAdapter<ItemRecipeAdapter> {
         }      
         
         private void initializeArray() {
-                List<Item> itemList = manager.getAllItems();
+                List<ShoppingListItem> itemList = manager.getAllItems();
                 for(Item item: itemList)
                         this.add(new ItemRecipeAdapter(item));
                 

@@ -26,10 +26,11 @@ import android.widget.Toast;
 import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.adapters.ItemAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
-import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ListManager;
-import ch.unibe.ese.shopnote.core.Recipe;
 import ch.unibe.ese.shopnote.core.Utility;
+import ch.unibe.ese.shopnote.core.entities.Item;
+import ch.unibe.ese.shopnote.core.entities.ShoppingListItem;
+import ch.unibe.ese.shopnote.core.entities.Recipe;
 import ch.unibe.ese.shopnote.share.SyncManager;
 import ch.unibe.ese.shopnote.share.requests.listchange.ItemRequest;
 import ch.unibe.ese.shopnote.share.requests.listchange.RecipeDescriptionRequest;
@@ -41,9 +42,9 @@ public class ViewRecipeActivity extends BaseActivity {
 	private ListManager listManager;
 	private SyncManager syncManager;
 	private Recipe recipe;
-	private List<Item> itemsOfRecipe;
-	private ArrayAdapter<Item> itemAdapter;
-	private ArrayAdapter<Item> autocompleteAdapter;
+	private List<ShoppingListItem> itemsOfRecipe;
+	private ArrayAdapter<ShoppingListItem> itemAdapter;
+	private ArrayAdapter<ShoppingListItem> autocompleteAdapter;
 	private long recipeIndex;
 	private Activity activity = this;
 
@@ -80,7 +81,7 @@ public class ViewRecipeActivity extends BaseActivity {
 			setTitle(this.getString(R.string.view_recipe_title) + " " + recipe.toString());
 		} 
 		else
-			itemsOfRecipe = new ArrayList<Item>();
+			itemsOfRecipe = new ArrayList<ShoppingListItem>();
 		
 		//create or update recipe list
 		refresh();
@@ -122,7 +123,7 @@ public class ViewRecipeActivity extends BaseActivity {
 
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
-				Item selectedItem = itemAdapter.getItem(position);
+				ShoppingListItem selectedItem = itemAdapter.getItem(position);
 				ViewRecipeActivity.this.startActionMode(new RecipeListActionMode(
 						ViewRecipeActivity.this.listManager, recipe, selectedItem,
 						ViewRecipeActivity.this.itemAdapter,
@@ -152,7 +153,7 @@ public class ViewRecipeActivity extends BaseActivity {
 	
 	private AutoCompleteTextView createAutocomplete() {
 		AutoCompleteTextView addItems = (AutoCompleteTextView) findViewById(R.id.editTextName);
-		autocompleteAdapter = new ArrayAdapter<Item>(this,
+		autocompleteAdapter = new ArrayAdapter<ShoppingListItem>(this,
 				android.R.layout.simple_list_item_1, listManager.getAllItems());
 		addItems.setAdapter(autocompleteAdapter);
 		updateThemeTextBox(addItems);
@@ -162,7 +163,7 @@ public class ViewRecipeActivity extends BaseActivity {
 	        @Override
 	        public void onItemClick(AdapterView<?> parent, View arg1, int position,
 	                long id) {
-	        	Item item = (Item) autocompleteAdapter.getItem(position);
+	        	ShoppingListItem item = (ShoppingListItem) autocompleteAdapter.getItem(position);
 	        	if(!itemsOfRecipe.contains(item))
 	        		recipe.addItem(item);
 	        	updateRecipeList();
@@ -205,9 +206,9 @@ public class ViewRecipeActivity extends BaseActivity {
 			return;				
 		} 
 		else {
-			Item item = listManager.getItem(name);
+			ShoppingListItem item = listManager.getItem(name);
 			if (item == null) {
-				item = new Item(name);
+				item = new ShoppingListItem(name);
 				listManager.save(item);
 			}
 			recipe.addItem(item);
@@ -325,7 +326,7 @@ public class ViewRecipeActivity extends BaseActivity {
 		this.updateRecipeList();
 	}
 	
-	private void addItemRequestIfShared(Item item) {
+	private void addItemRequestIfShared(ShoppingListItem item) {
 		if (recipe.isShared()){
 			ItemRequest irequest = new ItemRequest(getMyPhoneNumber(), recipe.getId(), item.copy());
 			irequest.isRecipe(true);

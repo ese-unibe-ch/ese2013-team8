@@ -20,13 +20,13 @@ import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.adapters.ItemAutocompleteAdapter;
 import ch.unibe.ese.shopnote.adapters.ShopAutocompleteAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
-import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ItemException;
 import ch.unibe.ese.shopnote.core.ItemUnit;
 import ch.unibe.ese.shopnote.core.ListManager;
-import ch.unibe.ese.shopnote.core.Recipe;
-import ch.unibe.ese.shopnote.core.Shop;
-import ch.unibe.ese.shopnote.core.ShoppingList;
+import ch.unibe.ese.shopnote.core.entities.ShoppingListItem;
+import ch.unibe.ese.shopnote.core.entities.Recipe;
+import ch.unibe.ese.shopnote.core.entities.Shop;
+import ch.unibe.ese.shopnote.core.entities.ShoppingList;
 
 /**
  * 	Creates a frame to create new items or edit them if the intent has an extra
@@ -36,7 +36,7 @@ public class CreateItemActivity extends BaseActivity {
 	private ListManager manager;
 	private ShoppingList list;
 	private Recipe recipe;
-	private Item item;
+	private ShoppingListItem item;
 	private boolean editItem;
 
 	@Override
@@ -108,14 +108,14 @@ public class CreateItemActivity extends BaseActivity {
 			if (extras.getBoolean(EXTRAS_ITEM_EDIT)) {
 				long itemId = extras.getLong(EXTRAS_ITEM_ID);
 				editItem = true;
-				List<Item> items;
+				List<ShoppingListItem> items;
 				if(list != null)
 					items = manager.getItemsFor(list);
 				else if (recipe != null)
 					items = recipe.getItemList();
 				else 
 					items = manager.getAllItems();
-				for (Item it :items) {
+				for (ShoppingListItem it :items) {
 					if (it.getId() == itemId) {
 						item = it;
 						break;
@@ -201,7 +201,7 @@ public class CreateItemActivity extends BaseActivity {
 		ItemUnit unit = (unitPosition < 0 || quant == null) ? null : ItemUnit.values()[unitPosition];
 
 		if (item == null)
-			item = new Item(name);
+			item = new ShoppingListItem(name);
 		else
 			item.setName(name);
 		

@@ -7,11 +7,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import ch.unibe.ese.shopnote.core.Friend;
-import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.PersistenceManager;
-import ch.unibe.ese.shopnote.core.Recipe;
-import ch.unibe.ese.shopnote.core.ShoppingList;
+import ch.unibe.ese.shopnote.core.entities.Item;
+import ch.unibe.ese.shopnote.core.entities.Friend;
+import ch.unibe.ese.shopnote.core.entities.ShoppingListItem;
+import ch.unibe.ese.shopnote.core.entities.Recipe;
+import ch.unibe.ese.shopnote.core.entities.ShoppingList;
 
 /**
  * This class provides function to save all lists / items / shops / recipes to a SQLite
@@ -45,14 +46,14 @@ public class SQLitePersistenceManager implements PersistenceManager {
 	}
 
 	@Override
-	public Item getItem(String itemName) {
+	public ShoppingListItem getItem(String itemName) {
 		if (itemName == null || itemName.isEmpty())
 			return null;
 		return readHelper.getItem(SQLiteHelper.COLUMN_ITEM_NAME + " = ?", itemName);
 	}
 	
 	@Override
-	public Item getItem(long itemId) {
+	public ShoppingListItem getItem(long itemId) {
 		return readHelper.getItem(SQLiteHelper.COLUMN_ITEM_ID  + " = ?", "" + itemId);
 	}
 	
@@ -109,11 +110,11 @@ public class SQLitePersistenceManager implements PersistenceManager {
 	 */
 
 	@Override
-	public List<Item> getItems(ShoppingList list) {
-		List<Item> itemList = new ArrayList<Item>();
+	public List<ShoppingListItem> getItems(ShoppingList list) {
+		List<ShoppingListItem> itemList = new ArrayList<ShoppingListItem>();
 		Cursor cursor = readHelper.getItemCursor(list);
 		while (!cursor.isAfterLast()) {
-			Item item = readHelper.cursorToShoppingListItem(cursor);
+			ShoppingListItem item = readHelper.cursorToShoppingListItem(cursor);
 			itemList.add(item);
 			cursor.moveToNext();
 		}
@@ -121,11 +122,11 @@ public class SQLitePersistenceManager implements PersistenceManager {
 		return itemList;
 	}
 
-	public List<Item> getAllItems() {
-		ArrayList<Item> itemList = new ArrayList<Item>();
+	public List<ShoppingListItem> getAllItems() {
+		ArrayList<ShoppingListItem> itemList = new ArrayList<ShoppingListItem>();
 		Cursor cursor = readHelper.getItemTableCursor();
 		while (!cursor.isAfterLast()) {
-			Item item = readHelper.cursorToItemLite(cursor);
+			ShoppingListItem item = readHelper.cursorToItemLite(cursor);
 			if (item != null)
 				itemList.add(item);
 			cursor.moveToNext();
@@ -136,7 +137,7 @@ public class SQLitePersistenceManager implements PersistenceManager {
 	}
 
 	@Override
-	public void save(Item item, ShoppingList list) {
+	public void save(ShoppingListItem item, ShoppingList list) {
 		// Add the item to the Items Table
 		if (item.getId() == null)
 			updateHelper.addItemIfNotExistent(item);
@@ -350,7 +351,7 @@ public class SQLitePersistenceManager implements PersistenceManager {
 	private void addItemsToRecipes(List<Recipe> listOfRecipes) {
 		Cursor cursor = readHelper.getItemToRecipeCursor();
 		while (!cursor.isAfterLast()) {
-			Item item = readHelper.cursorToRecipeItem(cursor);
+			ShoppingListItem item = readHelper.cursorToRecipeItem(cursor);
 
 			if (item != null)
 				for (Recipe recipe : listOfRecipes) {

@@ -31,6 +31,8 @@ import android.widget.Toast;
 import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.activities.VerifyNumberActivity;
 import ch.unibe.ese.shopnote.adapters.ShoppingListAdapter;
+import ch.unibe.ese.shopnote.core.entities.ShoppingListItem;
+import ch.unibe.ese.shopnote.core.entities.ShoppingList;
 import ch.unibe.ese.shopnote.core.sqlite.SQLitePersistenceManager;
 import ch.unibe.ese.shopnote.drawer.NavigationDrawer;
 import ch.unibe.ese.shopnote.share.SyncManager;
@@ -224,13 +226,13 @@ public class BaseActivity extends Activity {
 	 */
 	public void calculateItemCount(List<ShoppingList> lists, ShoppingListAdapter adapter) {
 		for (ShoppingList list: lists) {
-			List<Item> items = getListManager().getItemsFor(list);
+			List<ShoppingListItem> items = getListManager().getItemsFor(list);
 			
 			int boughtItems = 0;
 			int totalItems = 0;
 			
 			if (items != null) {
-				for (Item item: items) {
+				for (ShoppingListItem item: items) {
 					if (item.isBought())
 						boughtItems++;			
 				}

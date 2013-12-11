@@ -2,6 +2,12 @@ package ch.unibe.ese.shopnote.core;
 
 import java.util.List;
 
+import ch.unibe.ese.shopnote.core.entities.Item;
+import ch.unibe.ese.shopnote.core.entities.Friend;
+import ch.unibe.ese.shopnote.core.entities.ShoppingListItem;
+import ch.unibe.ese.shopnote.core.entities.Recipe;
+import ch.unibe.ese.shopnote.core.entities.ShoppingList;
+
 /**
  * The PersistenceManager is responsible to read and save ShoppingLists.
  * <p>
@@ -21,14 +27,14 @@ public interface PersistenceManager {
 	 * @param itemName
 	 * @return null if the item does not exist.
 	 */
-	Item getItem(String itemName);
+	ShoppingListItem getItem(String itemName);
 
 	/**
 	 * Searches for the item with the given id.
 	 * @param itemId
 	 * @return null if the item does not exist.
 	 */
-	Item getItem(long itemId);
+	ShoppingListItem getItem(long itemId);
 
 	/**
 	 * Reads ShoppingLists from their persistent state.
@@ -54,7 +60,7 @@ public interface PersistenceManager {
 	 * @param item
 	 * @param list
 	 */
-	void save(Item item, ShoppingList list);
+	void save(ShoppingListItem item, ShoppingList list);
 
 	/**
 	 * Removes an already existing item from a list
@@ -68,7 +74,7 @@ public interface PersistenceManager {
 	 * @param list
 	 * @return
 	 */
-	List<Item> getItems(ShoppingList list);
+	List<ShoppingListItem> getItems(ShoppingList list);
 
 	/**
 	 * Reads friends from their persistent state.
@@ -93,7 +99,7 @@ public interface PersistenceManager {
 	 * Get all items which are saved in the db
 	 * @return List<Item> of all Items in db
 	 */
-	List<Item> getAllItems();
+	List<ShoppingListItem> getAllItems();
 	
 	/**
 	 * Saves item to the db where all items are saved.

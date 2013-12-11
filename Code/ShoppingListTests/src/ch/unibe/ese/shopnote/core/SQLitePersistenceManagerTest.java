@@ -5,6 +5,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import ch.unibe.ese.shopnote.core.entities.Item;
+import ch.unibe.ese.shopnote.core.entities.Friend;
+import ch.unibe.ese.shopnote.core.entities.ShoppingListItem;
+import ch.unibe.ese.shopnote.core.entities.ShoppingList;
 import ch.unibe.ese.shopnote.core.sqlite.SQLitePersistenceManager;
 
 import android.support.v4.content.FileProvider;
@@ -71,14 +75,14 @@ public class SQLitePersistenceManagerTest extends
 		manager.save(list1);
 
 		assertTrue(manager.getItems(list1).isEmpty());
-		Item item1 = new Item("item1");
+		ShoppingListItem item1 = new ShoppingListItem("item1");
 		manager.save(item1, list1);
 		assertEquals(1, manager.getItems(list1).size());
 		assertEquals(item1, manager.getItems(list1).get(0));
 	}
 	
 	public void testAddItemWithPrice(){
-		Item item = new Item("item1");
+		ShoppingListItem item = new ShoppingListItem("item1");
 		item.setPrice(new BigDecimal("1.00"));
 		ShoppingList list = new ShoppingList("list");
 		manager.save(list);
@@ -94,7 +98,7 @@ public class SQLitePersistenceManagerTest extends
 		manager.save(list1);
 
 		assertTrue(manager.getItems(list1).isEmpty());
-		Item item1 = new Item("item1");
+		ShoppingListItem item1 = new ShoppingListItem("item1");
 		manager.save(item1, list1);
 
 		manager.remove(item1, list1);
@@ -103,8 +107,8 @@ public class SQLitePersistenceManagerTest extends
 
 	public void testGetAllItems() {
 		assertTrue(manager.getAllItems().isEmpty());
-		Item item1 = new Item("item1");
-		Item item2 = new Item("item2");
+		Item item1 = new ShoppingListItem("item1");
+		Item item2 = new ShoppingListItem("item2");
 		manager.save(item1);
 		manager.save(item2);
 		assertEquals(2, manager.getAllItems().size());
@@ -114,7 +118,7 @@ public class SQLitePersistenceManagerTest extends
 
 	public void testAddItem() {
 		assertTrue(manager.getAllItems().isEmpty());
-		Item item1 = new Item("item1");
+		Item item1 = new ShoppingListItem("item1");
 		manager.save(item1);
 		assertEquals(1, manager.getAllItems().size());
 		assertEquals(item1, manager.getAllItems().get(0));
@@ -122,7 +126,7 @@ public class SQLitePersistenceManagerTest extends
 
 	public void testRemoveItem() {
 		assertTrue(manager.getAllItems().isEmpty());
-		Item item1 = new Item("item1");
+		Item item1 = new ShoppingListItem("item1");
 		manager.save(item1);
 		assertEquals(1, manager.getAllItems().size());
 

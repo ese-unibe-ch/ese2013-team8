@@ -1,4 +1,4 @@
-package ch.unibe.ese.shopnote.core;
+package ch.unibe.ese.shopnote.core.entities;
 
 /**
  * Base class for everything that gets stored in the SQLite database.

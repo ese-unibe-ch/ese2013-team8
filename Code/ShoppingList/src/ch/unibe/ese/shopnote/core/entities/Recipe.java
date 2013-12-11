@@ -1,8 +1,10 @@
-package ch.unibe.ese.shopnote.core;
+package ch.unibe.ese.shopnote.core.entities;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import ch.unibe.ese.shopnote.core.Comparators;
 
 /**
  * Class which is used to combine different Items to a recipe
@@ -10,7 +12,7 @@ import java.util.List;
  */
 public class Recipe extends Entity {
 	private String name;
-	private List<Item> itemList;
+	private List<ShoppingListItem> itemList;
 	private String notes;
 	private boolean showNotes;
 	private boolean shared;
@@ -24,7 +26,7 @@ public class Recipe extends Entity {
 			name = "/" + name;
 		this.name = name;
 		
-		itemList = new ArrayList<Item>();
+		itemList = new ArrayList<ShoppingListItem>();
 	}
 
 	public String toString() {
@@ -40,7 +42,7 @@ public class Recipe extends Entity {
 		invariant();
 	}
 
-	public List<Item> getItemList() {
+	public List<ShoppingListItem> getItemList() {
 		Collections.sort(itemList, Comparators.ITEM_COMPARATOR);
 		return Collections.unmodifiableList(itemList);
 	}
@@ -77,7 +79,7 @@ public class Recipe extends Entity {
 		this.changesCount = changesCount;
 	}
 	
-	public void addItem(Item item) {
+	public void addItem(ShoppingListItem item) {
 		if (!itemList.contains(item))
 			itemList.add(item);
 	}

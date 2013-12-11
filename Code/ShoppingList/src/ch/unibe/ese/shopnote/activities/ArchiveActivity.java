@@ -18,7 +18,7 @@ import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.adapters.ShoppingListAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.ListManager;
-import ch.unibe.ese.shopnote.core.ShoppingList;
+import ch.unibe.ese.shopnote.core.entities.ShoppingList;
 
 /**
  *	Displays the archived shopping lists

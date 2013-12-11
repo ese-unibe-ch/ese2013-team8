@@ -1,5 +1,8 @@
 package ch.unibe.ese.shopnote.core;
 
+import ch.unibe.ese.shopnote.core.entities.Item;
+import ch.unibe.ese.shopnote.core.entities.Recipe;
+
 public class ItemRecipeAdapter {
 			private String name;
 			private Long id;

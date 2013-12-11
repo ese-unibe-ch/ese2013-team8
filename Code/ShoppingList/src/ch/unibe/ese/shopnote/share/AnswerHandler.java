@@ -5,13 +5,13 @@ import java.util.List;
 import android.content.Context;
 import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.core.BaseActivity;
-import ch.unibe.ese.shopnote.core.Friend;
 import ch.unibe.ese.shopnote.core.FriendsManager;
-import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ItemException;
 import ch.unibe.ese.shopnote.core.ListManager;
-import ch.unibe.ese.shopnote.core.Recipe;
-import ch.unibe.ese.shopnote.core.ShoppingList;
+import ch.unibe.ese.shopnote.core.entities.Friend;
+import ch.unibe.ese.shopnote.core.entities.ShoppingListItem;
+import ch.unibe.ese.shopnote.core.entities.Recipe;
+import ch.unibe.ese.shopnote.core.entities.ShoppingList;
 import ch.unibe.ese.shopnote.share.requests.CreateSharedListRequest;
 import ch.unibe.ese.shopnote.share.requests.FriendRequest;
 import ch.unibe.ese.shopnote.share.requests.GetSharedFriendsRequest;
@@ -92,7 +92,7 @@ public class AnswerHandler {
 			if(slRequest.isRecipe()) {
 				Recipe recipe = listManager.getRecipeAt(slRequest.getListId());
 				recipe.setShared(true);
-				for (Item i : recipe.getItemList()) {
+				for (ShoppingListItem i : recipe.getItemList()) {
 					ItemRequest iRequest = new ItemRequest(context.getMyPhoneNumber(), recipe.getId(), i);
 					iRequest.isRecipe(true);
 					syncManager.addRequest(iRequest);
@@ -101,7 +101,7 @@ public class AnswerHandler {
 			} else {
 				ShoppingList list = listManager.getShoppingList(slRequest.getListId());
 				list.setShared(true);
-				for (Item i : listManager.getItemsFor(list)) {
+				for (ShoppingListItem i : listManager.getItemsFor(list)) {
 					ItemRequest iRequest = new ItemRequest(context.getMyPhoneNumber(), list.getId(), i);
 					iRequest.setBought(i.isBought());
 					syncManager.addRequest(iRequest);
@@ -235,8 +235,8 @@ public class AnswerHandler {
 			
 		// One of your sharing partners has added/changed an item in the list
 		case ListChangeRequest.ITEM_REQUEST:
-			Item receivedItem = ((ItemRequest)request).getItem().copy();
-			List<Item> itemlist;
+			ShoppingListItem receivedItem = ((ItemRequest)request).getItem().copy();
+			List<ShoppingListItem> itemlist;
 			
 			if(request.isRecipe()) {
 				itemlist = recipe.getItemList();
@@ -244,8 +244,8 @@ public class AnswerHandler {
 				itemlist = listManager.getItemsFor(list);
 			}
 			
-			Item localItem = receivedItem;
-			for(Item i: itemlist) {
+			ShoppingListItem localItem = receivedItem;
+			for(ShoppingListItem i: itemlist) {
 				if(i.getName().equals(receivedItem.getName())) {
 					localItem = i;
 				}

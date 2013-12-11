@@ -1,26 +1,39 @@
-package ch.unibe.ese.shopnote.core;
+package ch.unibe.ese.shopnote.core.entities;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 
-/**
- * Items can be stored in shopping lists
- * 
- */
-public class Item extends Entity implements Serializable {
+import ch.unibe.ese.shopnote.core.ItemUnit;
 
-	private static final long serialVersionUID = -6167160984174824511L;
+public abstract class Item extends Entity {
 
-	private String name;
-	private BigDecimal price;
-	private Shop shop;
-	private BigDecimal quantity;
-	private ItemUnit unit;
-	private boolean bought;
-
-	public Item(String name) {
-		if (name != null)
-			this.name = name.trim();
+	protected String name;
+	protected BigDecimal price;
+	protected Shop shop;
+	protected BigDecimal quantity;
+	protected ItemUnit unit;
+	
+	/**
+	 * Creates a new Item with the values from <code>item</code>.
+	 * 
+	 * @param item not null
+	 */
+	protected Item(Item item){
+		this.name = item.name;
+		this.price = item.price;
+		this.shop = item.shop;
+		this.quantity = item.quantity;
+		this.unit = item.unit;
+		
+		invariant();
+	}
+	
+	/**
+	 * Creates a new Item with the given name.
+	 * @param name not <code>null</code> or {@link String#isEmpty() empty}
+	 */
+	protected Item(String name) {
+		this.name = name.trim();
+		
 		invariant();
 	}
 
@@ -49,14 +62,6 @@ public class Item extends Entity implements Serializable {
 		this.shop = shop;
 	}
 
-	public boolean isBought() {
-		return bought;
-	}
-
-	public void setBought(boolean bought) {
-		this.bought = bought;
-	}
-
 	public BigDecimal getQuantity() {
 		return quantity;
 	}
@@ -79,7 +84,7 @@ public class Item extends Entity implements Serializable {
 		return unit;
 	}
 
-	private void invariant() {
+	protected void invariant() {
 		if (this.name == null || this.name.trim().length() == 0)
 			throw new IllegalArgumentException("name musn't be empty!");
 		if (quantity == null ^ unit == null)
@@ -89,14 +94,5 @@ public class Item extends Entity implements Serializable {
 
 	public String toString() {
 		return this.name;
-	}
-
-	public Item copy() {
-		Item copy = new Item(this.name);
-		copy.setBought(this.isBought());
-		copy.setPrice(this.price);
-		copy.setShop(this.shop);
-		copy.setQuantity(this.quantity, this.unit);
-		return copy;
 	}
 }

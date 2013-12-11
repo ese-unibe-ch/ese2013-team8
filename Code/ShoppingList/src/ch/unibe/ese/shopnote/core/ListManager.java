@@ -4,6 +4,11 @@ import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
+import ch.unibe.ese.shopnote.core.entities.Item;
+import ch.unibe.ese.shopnote.core.entities.ShoppingListItem;
+import ch.unibe.ese.shopnote.core.entities.Recipe;
+import ch.unibe.ese.shopnote.core.entities.ShoppingList;
+
 /**
  * The ListManager is responsible for access to all {@link ShoppingList
  * shoppinglists}.
@@ -73,11 +78,11 @@ public class ListManager {
 	 *         changed at all)
 	 * @throws ItemException thrown if another item with the same name, but different unit is in the list.
 	 */
-	public boolean addItemToList(Item item, ShoppingList list) throws ItemException {
+	public boolean addItemToList(ShoppingListItem item, ShoppingList list) throws ItemException {
 		if (item == null || list == null)
 			throw new IllegalArgumentException("null is not allowed");
 		
-		List<Item> items = persistenceManager.getItems(list);
+		List<ShoppingListItem> items = persistenceManager.getItems(list);
 		item = mergeItem(item, items);
 		
 		persistenceManager.save(item, list);
@@ -91,11 +96,11 @@ public class ListManager {
 	 * @param item not null
 	 * @param list not null
 	 */
-	public void updateItemInList(Item item, ShoppingList list) {
+	public void updateItemInList(ShoppingListItem item, ShoppingList list) {
 		if (item == null || item.getId() == null || list == null)
 			throw new IllegalArgumentException("null is not allowed");
 
-		List<Item> items = persistenceManager.getItems(list);
+		List<ShoppingListItem> items = persistenceManager.getItems(list);
 		if (!items.contains(item))
 			return;
 		
@@ -110,8 +115,8 @@ public class ListManager {
 	 * @return the item to persist.
 	 * @throws ItemException thrown if another item with the same name, but different unit is in the list.
 	 */
-	private Item mergeItem(Item newItem, List<Item> items) throws ItemException{
-		for (Item item2 : items) {
+	private ShoppingListItem mergeItem(ShoppingListItem newItem, List<ShoppingListItem> items) throws ItemException{
+		for (ShoppingListItem item2 : items) {
 			if (!item2.isBought() && item2.getName().equals(newItem.getName())) {
 				// sum price
 				if (newItem.getPrice() != null) {
@@ -172,8 +177,8 @@ public class ListManager {
 	 *            not null.
 	 * @return not null, unmodifiable.
 	 */
-	public List<Item> getItemsFor(ShoppingList list) {
-		List<Item>	items = persistenceManager.getItems(list);
+	public List<ShoppingListItem> getItemsFor(ShoppingList list) {
+		List<ShoppingListItem>	items = persistenceManager.getItems(list);
 		Collections.sort(items, Comparators.ITEM_COMPARATOR);
 		return Collections.unmodifiableList(items);
 	}
@@ -183,8 +188,8 @@ public class ListManager {
 	 * 
 	 * @return ArrayList<Item>
 	 */
-	public List<Item> getAllItems() {
-		List<Item> items = persistenceManager.getAllItems();
+	public List<ShoppingListItem> getAllItems() {
+		List<ShoppingListItem> items = persistenceManager.getAllItems();
 		Collections.sort(items, Comparators.ITEM_COMPARATOR);
 		return items;
 	}
@@ -204,7 +209,7 @@ public class ListManager {
 	 * @param id
 	 * @return item with id
 	 */
-	public Item getItem(Long id) {
+	public ShoppingListItem getItem(Long id) {
 		if (id == null)
 			return null;
 		return persistenceManager.getItem(id);
@@ -215,7 +220,7 @@ public class ListManager {
 	 * @param name
 	 * @return null if no item with the name exists.
 	 */
-	public Item getItem(String name) {
+	public ShoppingListItem getItem(String name) {
 		return persistenceManager.getItem(name);
 	}
 

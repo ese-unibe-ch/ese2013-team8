@@ -8,6 +8,9 @@ import android.content.ContentResolver;
 import android.database.Cursor;
 import android.os.Handler;
 import android.provider.ContactsContract;
+import ch.unibe.ese.shopnote.core.entities.Friend;
+import ch.unibe.ese.shopnote.core.entities.Recipe;
+import ch.unibe.ese.shopnote.core.entities.ShoppingList;
 import ch.unibe.ese.shopnote.share.SyncManager;
 import ch.unibe.ese.shopnote.share.requests.FriendRequest;
 

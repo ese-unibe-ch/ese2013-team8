@@ -1,4 +1,4 @@
-package ch.unibe.ese.shopnote.core;
+package ch.unibe.ese.shopnote.core.entities;
 
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;

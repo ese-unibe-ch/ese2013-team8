@@ -18,19 +18,19 @@ import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.activities.ItemListActivity;
 import ch.unibe.ese.shopnote.activities.ViewRecipeActivity;
 import ch.unibe.ese.shopnote.core.BaseActivity;
-import ch.unibe.ese.shopnote.core.Item;
+import ch.unibe.ese.shopnote.core.entities.ShoppingListItem;
 
 /**
  *	Modified ArrayAdapter to display the items including the name, quantity and price (if defined)
  */
-public class ItemAdapter extends ArrayAdapter<Item> {
+public class ItemAdapter extends ArrayAdapter<ShoppingListItem> {
 
 	private BaseActivity context;
 	private TelephonyManager telephonyManager;
 	private String country;
 	private String currency = "";
 	
-	public ItemAdapter(BaseActivity context, int resource, List<Item> itemList) {
+	public ItemAdapter(BaseActivity context, int resource, List<ShoppingListItem> itemList) {
 		super(context, resource, itemList);
 		this.context = context;
 		// get user currency
@@ -47,7 +47,7 @@ public class ItemAdapter extends ArrayAdapter<Item> {
 	
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ItemHolder holder;
-		Item item = getItem(position);
+		ShoppingListItem item = getItem(position);
 		
 		LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 		if(convertView == null) {

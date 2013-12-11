@@ -1,5 +1,6 @@
 package ch.unibe.ese.shopnote.core;
 
+import ch.unibe.ese.shopnote.core.entities.Friend;
 import ch.unibe.ese.shopnote.core.sqlite.SQLitePersistenceManager;
 import ch.unibe.ese.shopnote.share.SyncManager;
 import android.test.AndroidTestCase;

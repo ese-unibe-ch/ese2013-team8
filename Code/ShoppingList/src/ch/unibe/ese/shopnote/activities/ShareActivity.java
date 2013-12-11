@@ -21,12 +21,13 @@ import android.widget.Toast;
 import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.adapters.FriendsListAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
-import ch.unibe.ese.shopnote.core.Friend;
 import ch.unibe.ese.shopnote.core.FriendsManager;
-import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ListManager;
-import ch.unibe.ese.shopnote.core.Recipe;
-import ch.unibe.ese.shopnote.core.ShoppingList;
+import ch.unibe.ese.shopnote.core.entities.Item;
+import ch.unibe.ese.shopnote.core.entities.Friend;
+import ch.unibe.ese.shopnote.core.entities.ShoppingListItem;
+import ch.unibe.ese.shopnote.core.entities.Recipe;
+import ch.unibe.ese.shopnote.core.entities.ShoppingList;
 import ch.unibe.ese.shopnote.share.SyncManager;
 import ch.unibe.ese.shopnote.share.requests.GetSharedFriendsRequest;
 import ch.unibe.ese.shopnote.share.requests.ShareListRequest;
@@ -283,7 +284,7 @@ public class ShareActivity extends BaseActivity {
 	}
 
 	private String listToString() {
-		List<Item> items = listManager.getItemsFor(list);
+		List<ShoppingListItem> items = listManager.getItemsFor(list);
 		StringBuilder sb = new StringBuilder();
 		sb.append(list).append("\n");
 		for (Item item : items) {
@@ -294,7 +295,7 @@ public class ShareActivity extends BaseActivity {
 	}
 	
 	private String recipeToString() {
-		List<Item> items = recipe.getItemList();
+		List<ShoppingListItem> items = recipe.getItemList();
 		StringBuilder sb = new StringBuilder();
 		sb.append(this.getString(R.string.view_recipe_title) + " ").append(recipe).append(":").append("\n");
 		for (Item item : items) {

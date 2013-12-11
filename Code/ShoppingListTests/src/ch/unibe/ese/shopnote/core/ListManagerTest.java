@@ -3,6 +3,9 @@ package ch.unibe.ese.shopnote.core;
 import java.math.BigDecimal;
 import java.util.List;
 
+import ch.unibe.ese.shopnote.core.entities.Item;
+import ch.unibe.ese.shopnote.core.entities.ShoppingListItem;
+import ch.unibe.ese.shopnote.core.entities.ShoppingList;
 import ch.unibe.ese.shopnote.core.sqlite.SQLitePersistenceManager;
 
 import android.test.AndroidTestCase;
@@ -80,7 +83,7 @@ public class ListManagerTest extends AndroidTestCase {
 		final BigDecimal price = new BigDecimal("100.00");
 		final BigDecimal quantity = new BigDecimal("500");
 		final ItemUnit unit = ItemUnit.GRAM;
-		Item item1 = new Item(name);
+		ShoppingListItem item1 = new ShoppingListItem(name);
 		item1.setPrice(price);
 		item1.setQuantity(quantity, unit);
 		manager.save(item1);
@@ -102,8 +105,8 @@ public class ListManagerTest extends AndroidTestCase {
 		assertEquals(list1, manager.getShoppingLists().get(0));
 
 		assertTrue(manager.getItemsFor(list1).isEmpty());
-		Item item1 = new Item("item1");
-		Item item2 = new Item("item2");
+		ShoppingListItem item1 = new ShoppingListItem("item1");
+		ShoppingListItem item2 = new ShoppingListItem("item2");
 		manager.addItemToList(item1, list1);
 		manager.addItemToList(item2, list1);
 
@@ -118,7 +121,7 @@ public class ListManagerTest extends AndroidTestCase {
 		assertEquals(list1, manager.getShoppingLists().get(0));
 
 		assertTrue(manager.getItemsFor(list1).isEmpty());
-		Item item1 = new Item("item1");
+		ShoppingListItem item1 = new ShoppingListItem("item1");
 		assertTrue(manager.addItemToList(item1, list1));
 		assertFalse(manager.addItemToList(item1, list1));
 
@@ -132,18 +135,18 @@ public class ListManagerTest extends AndroidTestCase {
 		assertEquals(list, manager.getShoppingLists().get(0));
 
 		assertTrue(manager.getItemsFor(list).isEmpty());
-		Item item1 = new Item("item");
+		ShoppingListItem item1 = new ShoppingListItem("item");
 		final BigDecimal quantity1 = new BigDecimal("1.23");
 		final BigDecimal quantity2 = new BigDecimal("3.21");
 		final ItemUnit unit = ItemUnit.KILO_GRAM;
 		item1.setQuantity(quantity1, unit);
 		assertTrue(manager.addItemToList(item1, list));
 
-		Item item2 = new Item("item");
+		ShoppingListItem item2 = new ShoppingListItem("item");
 		item2.setQuantity(quantity2, unit);
 		manager.addItemToList(item2, list);
 
-		List<Item> items = manager.getItemsFor(list);
+		List<ShoppingListItem> items = manager.getItemsFor(list);
 		assertEquals(1, items.size());
 		Item testItem = items.get(0);
 		assertEquals(new BigDecimal("4.44"), testItem.getQuantity());
@@ -156,7 +159,7 @@ public class ListManagerTest extends AndroidTestCase {
 		assertEquals(list, manager.getShoppingLists().get(0));
 
 		assertTrue(manager.getItemsFor(list).isEmpty());
-		Item item1 = new Item("item");
+		ShoppingListItem item1 = new ShoppingListItem("item");
 		final BigDecimal quantity1 = new BigDecimal("1.23");
 		final BigDecimal quantity2 = new BigDecimal("321");
 		final ItemUnit unit1 = ItemUnit.KILO_GRAM;
@@ -164,11 +167,11 @@ public class ListManagerTest extends AndroidTestCase {
 		item1.setQuantity(quantity1, unit1);
 		assertTrue(manager.addItemToList(item1, list));
 
-		Item item2 = new Item("item");
+		ShoppingListItem item2 = new ShoppingListItem("item");
 		item2.setQuantity(quantity2, unit2);
 		manager.addItemToList(item2, list);
 
-		List<Item> items = manager.getItemsFor(list);
+		List<ShoppingListItem> items = manager.getItemsFor(list);
 		assertEquals(1, items.size());
 		Item testItem = items.get(0);
 		assertEquals(new BigDecimal("1.551"), testItem.getQuantity());
@@ -181,7 +184,7 @@ public class ListManagerTest extends AndroidTestCase {
 		assertEquals(list1, manager.getShoppingLists().get(0));
 
 		assertTrue(manager.getItemsFor(list1).isEmpty());
-		Item item1 = new Item("item1");
+		ShoppingListItem item1 = new ShoppingListItem("item1");
 		manager.addItemToList(item1, list1);
 		assertEquals(1, manager.getItemsFor(list1).size());
 		assertEquals(item1, manager.getItemsFor(list1).get(0));
@@ -196,7 +199,7 @@ public class ListManagerTest extends AndroidTestCase {
 
 	public void testAddItem() {
 		assertTrue(manager.getAllItems().isEmpty());
-		Item item1 = new Item("item1");
+		Item item1 = new ShoppingListItem("item1");
 		manager.save(item1);
 
 		assertEquals(1, manager.getAllItems().size());
@@ -206,8 +209,8 @@ public class ListManagerTest extends AndroidTestCase {
 
 	public void testAddItems() {
 		assertTrue(manager.getAllItems().isEmpty());
-		Item item1 = new Item("item1");
-		Item item2 = new Item("item2");
+		Item item1 = new ShoppingListItem("item1");
+		Item item2 = new ShoppingListItem("item2");
 		manager.save(item1);
 		manager.save(item2);
 		assertEquals(2, manager.getAllItems().size());
@@ -217,7 +220,7 @@ public class ListManagerTest extends AndroidTestCase {
 
 	public void testRemoveItem() {
 		assertTrue(manager.getAllItems().isEmpty());
-		Item item1 = new Item("item1");
+		Item item1 = new ShoppingListItem("item1");
 		manager.save(item1);
 		assertEquals(1, manager.getAllItems().size());
 		assertEquals(item1, manager.getAllItems().get(0));

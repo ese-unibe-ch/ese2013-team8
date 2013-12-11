@@ -28,13 +28,13 @@ import ch.unibe.ese.shopnote.adapters.ItemAdapter;
 import ch.unibe.ese.shopnote.adapters.ItemAutocompleteAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
 import ch.unibe.ese.shopnote.core.Comparators;
-import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ItemException;
 import ch.unibe.ese.shopnote.core.ItemRecipeAdapter;
 import ch.unibe.ese.shopnote.core.ListManager;
-import ch.unibe.ese.shopnote.core.Recipe;
-import ch.unibe.ese.shopnote.core.ShoppingList;
 import ch.unibe.ese.shopnote.core.Utility;
+import ch.unibe.ese.shopnote.core.entities.ShoppingListItem;
+import ch.unibe.ese.shopnote.core.entities.Recipe;
+import ch.unibe.ese.shopnote.core.entities.ShoppingList;
 import ch.unibe.ese.shopnote.share.SyncManager;
 import ch.unibe.ese.shopnote.share.requests.listchange.ItemRequest;
 
@@ -45,11 +45,11 @@ public class ViewListActivity extends BaseActivity {
 
 	private ListManager manager;
 	private SyncManager syncmanager;
-	private ArrayAdapter<Item> itemAdapter;
-	private ArrayAdapter<Item> itemBoughtAdapter;
+	private ArrayAdapter<ShoppingListItem> itemAdapter;
+	private ArrayAdapter<ShoppingListItem> itemBoughtAdapter;
 	private ItemAutocompleteAdapter sqliteAdapter;
-	private ArrayList<Item>	itemsList;
-	private ArrayList<Item>	itemsBoughtList;
+	private ArrayList<ShoppingListItem>	itemsList;
+	private ArrayList<ShoppingListItem>	itemsBoughtList;
 	private ShoppingList list;
 	private ListView listView;
 	private ListView listViewBought;
@@ -99,12 +99,12 @@ public class ViewListActivity extends BaseActivity {
 	        	try {
 		        	ItemRecipeAdapter entry = (ItemRecipeAdapter) sqliteAdapter.getItem(position);
 		        	if (entry.isItem()) {
-		        		Item item = manager.getItem(entry.getId());
+		        		ShoppingListItem item = manager.getItem(entry.getId());
 		        		manager.addItemToList(item, list);
 		        		addItemRequestIfShared(item, false);
 		        	} else {
 		        		Recipe recipe = manager.getRecipeAt(entry.getId());
-		        		for (Item item : recipe.getItemList()) {
+		        		for (ShoppingListItem item : recipe.getItemList()) {
 							manager.addItemToList(item, list);
 							addItemRequestIfShared(item, false);
 							itemAdapter.add(item);
@@ -140,7 +140,7 @@ public class ViewListActivity extends BaseActivity {
 	 */
 	public void updateAdapters() {
 		// Get list items
-		List<Item> items = manager.getItemsFor(list);
+		List<ShoppingListItem> items = manager.getItemsFor(list);
 		separateBoughtItems(items);
 
 		listView = updateItemAdapter();
@@ -153,11 +153,11 @@ public class ViewListActivity extends BaseActivity {
 		Utility.setListViewHeightBasedOnChildren(listViewBought);
 	}
 
-	private void separateBoughtItems(List<Item> items) {
-		itemsBoughtList = new ArrayList<Item>();
-		itemsList = new ArrayList<Item>();
+	private void separateBoughtItems(List<ShoppingListItem> items) {
+		itemsBoughtList = new ArrayList<ShoppingListItem>();
+		itemsList = new ArrayList<ShoppingListItem>();
 
-		for (Item item : items) {
+		for (ShoppingListItem item : items) {
 			if (item.isBought())
 				itemsBoughtList.add(item);
 			else
@@ -191,7 +191,7 @@ public class ViewListActivity extends BaseActivity {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
-				Item selectedItem = itemAdapter.getItem(arg2);
+				ShoppingListItem selectedItem = itemAdapter.getItem(arg2);
 				ViewListActivity.this
 						.startActionMode(new ShoppingListActionMode(
 								ViewListActivity.this.manager, selectedItem,
@@ -209,7 +209,7 @@ public class ViewListActivity extends BaseActivity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// bought items
-				Item item = itemAdapter.getItem(position);
+				ShoppingListItem item = itemAdapter.getItem(position);
 				item.setBought(true);
 				manager.updateItemInList(item, list);
 				addItemRequestIfShared(item, true);
@@ -227,7 +227,7 @@ public class ViewListActivity extends BaseActivity {
 					@Override
 					public boolean onItemLongClick(AdapterView<?> parent,
 							View view, int position, long id) {
-						Item selectedItem = itemBoughtAdapter.getItem(position);
+						ShoppingListItem selectedItem = itemBoughtAdapter.getItem(position);
 						ViewListActivity.this
 								.startActionMode(new ShoppingListActionMode(
 										ViewListActivity.this.manager,
@@ -246,7 +246,7 @@ public class ViewListActivity extends BaseActivity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// bought items
-				Item item = itemBoughtAdapter.getItem(position);
+				ShoppingListItem item = itemBoughtAdapter.getItem(position);
 				item.setBought(false);
 				manager.updateItemInList(item, list);
 				addItemRequestIfShared(item, false);
@@ -287,7 +287,7 @@ public class ViewListActivity extends BaseActivity {
 	
 				for (Recipe recipe : recipeList) {
 					if (recipe.getName().toLowerCase().equals(recipeName)) {
-						for (Item item : recipe.getItemList()) {
+						for (ShoppingListItem item : recipe.getItemList()) {
 							item.setBought(false);
 							manager.addItemToList(item, list);
 							addItemRequestIfShared(item, false);
@@ -297,9 +297,9 @@ public class ViewListActivity extends BaseActivity {
 				}
 	
 			} else {
-				Item item = manager.getItem(name);
+				ShoppingListItem item = manager.getItem(name);
 				if (item == null)
-					item = new Item(name);
+					item = new ShoppingListItem(name);
 				boolean added = manager.addItemToList(item, list);
 				addItemRequestIfShared(item, false);
 	
@@ -394,7 +394,7 @@ public class ViewListActivity extends BaseActivity {
 		}
 	}
 	
-	private void addItemRequestIfShared(Item item, boolean isBought) {
+	private void addItemRequestIfShared(ShoppingListItem item, boolean isBought) {
 		if (list.isShared()){
 			ItemRequest irequest = new ItemRequest(getMyPhoneNumber(), list.getId(), item.copy());
 			irequest.setBought(isBought);

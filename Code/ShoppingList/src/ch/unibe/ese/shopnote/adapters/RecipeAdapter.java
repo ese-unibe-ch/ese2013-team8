@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.core.BaseActivity;
-import ch.unibe.ese.shopnote.core.Recipe;
+import ch.unibe.ese.shopnote.core.entities.Recipe;
 
 /**
  *	Modified ArrayAdapter to display the shopping lists including the (bought) item count

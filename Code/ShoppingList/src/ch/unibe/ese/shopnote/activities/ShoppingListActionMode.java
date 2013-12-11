@@ -11,9 +11,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.core.BaseActivity;
-import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ListManager;
-import ch.unibe.ese.shopnote.core.ShoppingList;
+import ch.unibe.ese.shopnote.core.entities.ShoppingListItem;
+import ch.unibe.ese.shopnote.core.entities.ShoppingList;
 import ch.unibe.ese.shopnote.share.requests.listchange.ItemRequest;
 
 public class ShoppingListActionMode implements Callback {
@@ -22,8 +22,8 @@ public class ShoppingListActionMode implements Callback {
 	private ShoppingList selectedList;
 	private ArrayAdapter<ShoppingList> shoppingListAdapter;
 	private Activity activity;
-	private Item selectedItem;
-	private ArrayAdapter<Item> itemAdapter;
+	private ShoppingListItem selectedItem;
+	private ArrayAdapter<ShoppingListItem> itemAdapter;
 	private boolean isList;
 
 	/**
@@ -54,8 +54,8 @@ public class ShoppingListActionMode implements Callback {
 	 * @param itemAdapter
 	 * @param activity
 	 */
-	public ShoppingListActionMode(ListManager manager, Item selectedItem,
-			ShoppingList selectedList, ArrayAdapter<Item> itemAdapter,
+	public ShoppingListActionMode(ListManager manager, ShoppingListItem selectedItem,
+			ShoppingList selectedList, ArrayAdapter<ShoppingListItem> itemAdapter,
 			Activity activity) {
 		this.manager = manager;
 		this.selectedItem = selectedItem;
@@ -73,8 +73,8 @@ public class ShoppingListActionMode implements Callback {
 	 * @param itemAdapter
 	 * @param activity
 	 */
-	public ShoppingListActionMode(ListManager manager, Item selectedItem,
-			ArrayAdapter<Item> itemAdapter, Activity activity) {
+	public ShoppingListActionMode(ListManager manager, ShoppingListItem selectedItem,
+			ArrayAdapter<ShoppingListItem> itemAdapter, Activity activity) {
 		this.manager = manager;
 		this.selectedItem = selectedItem;
 		this.selectedList = null;

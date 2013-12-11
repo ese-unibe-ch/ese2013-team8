@@ -17,8 +17,9 @@ import android.widget.RelativeLayout;
 import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.adapters.ItemAdapter;
 import ch.unibe.ese.shopnote.core.BaseActivity;
-import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ListManager;
+import ch.unibe.ese.shopnote.core.entities.Item;
+import ch.unibe.ese.shopnote.core.entities.ShoppingListItem;
 
 /**
  * 	Displays all Items in the database
@@ -26,8 +27,8 @@ import ch.unibe.ese.shopnote.core.ListManager;
 public class ItemListActivity extends BaseActivity {
 	
 	private ListManager manager;
-	private List<Item> itemList;
-	private ArrayAdapter<Item> itemAdapter;
+	private List<ShoppingListItem> itemList;
+	private ArrayAdapter<ShoppingListItem> itemAdapter;
 	private Activity activity = this;
 
 	@Override
@@ -83,7 +84,7 @@ public class ItemListActivity extends BaseActivity {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
-				Item selectedItem = itemAdapter.getItem(arg2);
+				ShoppingListItem selectedItem = itemAdapter.getItem(arg2);
 				ItemListActivity.this.startActionMode(new ShoppingListActionMode(
 						ItemListActivity.this.manager, selectedItem, ItemListActivity.this.itemAdapter, ItemListActivity.this));
 				return true;

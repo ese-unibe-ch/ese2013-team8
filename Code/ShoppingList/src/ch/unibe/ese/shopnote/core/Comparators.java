@@ -2,6 +2,11 @@ package ch.unibe.ese.shopnote.core;
 
 import java.util.Comparator;
 
+import ch.unibe.ese.shopnote.core.entities.Friend;
+import ch.unibe.ese.shopnote.core.entities.ShoppingListItem;
+import ch.unibe.ese.shopnote.core.entities.Recipe;
+import ch.unibe.ese.shopnote.core.entities.ShoppingList;
+
 /**
  * Bietet {@link Comparator} an.
  */
@@ -24,14 +29,14 @@ public class Comparators {
 		}
 	};
 	/**
-	 * Comparator für {@link Item}.
+	 * Comparator für {@link ShoppingListItem}.
 	 * <p>
-	 * Sortiert anhand {@link Item#getName() Name} aufsteigend.
+	 * Sortiert anhand {@link ShoppingListItem#getName() Name} aufsteigend.
 	 */
-	public static final Comparator<Item> ITEM_COMPARATOR = new Comparator<Item>() {
+	public static final Comparator<ShoppingListItem> ITEM_COMPARATOR = new Comparator<ShoppingListItem>() {
 
 		@Override
-		public int compare(Item lhs, Item rhs) {
+		public int compare(ShoppingListItem lhs, ShoppingListItem rhs) {
 			return lhs.getName().compareToIgnoreCase(rhs.getName());
 		}
 	};

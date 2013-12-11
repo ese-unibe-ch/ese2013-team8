@@ -6,11 +6,12 @@ import java.util.Date;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import ch.unibe.ese.shopnote.core.Friend;
-import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ItemUnit;
-import ch.unibe.ese.shopnote.core.Recipe;
-import ch.unibe.ese.shopnote.core.ShoppingList;
+import ch.unibe.ese.shopnote.core.entities.Item;
+import ch.unibe.ese.shopnote.core.entities.Friend;
+import ch.unibe.ese.shopnote.core.entities.ShoppingListItem;
+import ch.unibe.ese.shopnote.core.entities.Recipe;
+import ch.unibe.ese.shopnote.core.entities.ShoppingList;
 
 /**
  * This Class provides useful functions for reading the database
@@ -206,8 +207,8 @@ public class SQLiteReadHelper {
 	 * @param cursor
 	 * @return item of the index (of the cursor)
 	 */
-	public Item cursorToShoppingListItem(Cursor cursor) {
-		Item item = new Item(cursor.getString(1));
+	public ShoppingListItem cursorToShoppingListItem(Cursor cursor) {
+		ShoppingListItem item = new ShoppingListItem(cursor.getString(1));
 		item.setId(cursor.getInt(0));
 		item.setBought(cursor.getInt(2) == 1);
 		item.setPrice(toPrice(cursor.getString(3)));
@@ -224,8 +225,8 @@ public class SQLiteReadHelper {
 	 * @param cursor
 	 * @return item of the index (of the cursor)
 	 */
-	public Item cursorToRecipeItem(Cursor cursor) {
-		Item item = new Item(cursor.getString(1));
+	public ShoppingListItem cursorToRecipeItem(Cursor cursor) {
+		ShoppingListItem item = new ShoppingListItem(cursor.getString(1));
 		item.setId(cursor.getInt(0));
 		item.setPrice(toPrice(cursor.getString(3)));
 		String quantity = cursor.getString(4);
@@ -241,8 +242,8 @@ public class SQLiteReadHelper {
 	 * @param cursor
 	 * @return item of the index (of the cursor)
 	 */
-	public Item cursorToItemLite(Cursor cursor) {
-		Item item = new Item(cursor.getString(1));
+	public ShoppingListItem cursorToItemLite(Cursor cursor) {
+		ShoppingListItem item = new ShoppingListItem(cursor.getString(1));
 		item.setId(cursor.getInt(0));
 		item.setPrice(toPrice(cursor.getString(2)));
 		String quantity = cursor.getString(3);
@@ -345,7 +346,7 @@ public class SQLiteReadHelper {
 	 * @param param the parameter to fill in the whereClaus, not null.
 	 * @return the item that fits the param. Can be null.
 	 */
-	public Item getItem(String whereClause, String param){
+	public ShoppingListItem getItem(String whereClause, String param){
 		if (whereClause == null || param == null)
 			throw new IllegalArgumentException(String.format(
 					"null is not allowed. whereClause: %s; param: %s", whereClause));

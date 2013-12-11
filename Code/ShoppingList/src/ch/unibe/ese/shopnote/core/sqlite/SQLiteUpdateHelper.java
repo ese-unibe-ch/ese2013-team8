@@ -2,10 +2,11 @@ package ch.unibe.ese.shopnote.core.sqlite;
 
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
-import ch.unibe.ese.shopnote.core.Friend;
-import ch.unibe.ese.shopnote.core.Item;
-import ch.unibe.ese.shopnote.core.Recipe;
-import ch.unibe.ese.shopnote.core.ShoppingList;
+import ch.unibe.ese.shopnote.core.entities.Item;
+import ch.unibe.ese.shopnote.core.entities.Friend;
+import ch.unibe.ese.shopnote.core.entities.ShoppingListItem;
+import ch.unibe.ese.shopnote.core.entities.Recipe;
+import ch.unibe.ese.shopnote.core.entities.ShoppingList;
 
 /**
  * This class provides useful functions for updating the database
@@ -62,7 +63,7 @@ public class SQLiteUpdateHelper {
 	 * @param list
 	 * @return ContentValues of the input
 	 */
-	public ContentValues toValue(Item item, ShoppingList list) {
+	public ContentValues toValue(ShoppingListItem item, ShoppingList list) {
 		ContentValues values = new ContentValues();
 		values.put(SQLiteHelper.COLUMN_ITEM_ID, item.getId());
 		values.put(SQLiteHelper.COLUMN_LIST_ID, list.getId());

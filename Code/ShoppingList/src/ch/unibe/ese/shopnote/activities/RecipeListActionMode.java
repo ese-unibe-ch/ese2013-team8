@@ -9,9 +9,9 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import ch.unibe.ese.shopnote.R;
 import ch.unibe.ese.shopnote.core.BaseActivity;
-import ch.unibe.ese.shopnote.core.Item;
 import ch.unibe.ese.shopnote.core.ListManager;
-import ch.unibe.ese.shopnote.core.Recipe;
+import ch.unibe.ese.shopnote.core.entities.ShoppingListItem;
+import ch.unibe.ese.shopnote.core.entities.Recipe;
 
 /**
  * 	Creates the Action Bar for Recipes to edit or remove them
@@ -22,8 +22,8 @@ public class RecipeListActionMode implements Callback {
 	private BaseActivity activity;
 	private Recipe selectedRecipe;
 	private ArrayAdapter<Recipe> recipeAdapter;
-	private ArrayAdapter<Item> itemAdapter;
-	private Item selectedItem;
+	private ArrayAdapter<ShoppingListItem> itemAdapter;
+	private ShoppingListItem selectedItem;
 
 	
 	public RecipeListActionMode(ListManager manager, Recipe selectedRecipe, ArrayAdapter<Recipe> recipeAdapter, BaseActivity homeActivity) {
@@ -35,7 +35,7 @@ public class RecipeListActionMode implements Callback {
 		this.selectedItem = null;
 	}
 	
-	public RecipeListActionMode(ListManager manager, Recipe selectedRecipe, Item selectedItem, ArrayAdapter<Item> itemAdapter, BaseActivity homeActivity) {
+	public RecipeListActionMode(ListManager manager, Recipe selectedRecipe, ShoppingListItem selectedItem, ArrayAdapter<ShoppingListItem> itemAdapter, BaseActivity homeActivity) {
 		this.manager = manager;
 		this.selectedRecipe = selectedRecipe;
 		this.activity = homeActivity;

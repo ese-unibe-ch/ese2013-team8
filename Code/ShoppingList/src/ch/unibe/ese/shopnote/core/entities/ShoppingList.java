@@ -1,6 +1,7 @@
-package ch.unibe.ese.shopnote.core;
+package ch.unibe.ese.shopnote.core.entities;
 
 import java.util.Date;
+
 
 /**
  * This class represents the ShoppingList with it's attributes <br>

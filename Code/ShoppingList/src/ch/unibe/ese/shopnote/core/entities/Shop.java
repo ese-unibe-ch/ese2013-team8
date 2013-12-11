@@ -1,4 +1,4 @@
-package ch.unibe.ese.shopnote.core;
+package ch.unibe.ese.shopnote.core.entities;
 
 /**
  * This class represents a shop
