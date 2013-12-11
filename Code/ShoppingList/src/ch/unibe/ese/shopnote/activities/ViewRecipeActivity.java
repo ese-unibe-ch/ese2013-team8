@@ -139,6 +139,7 @@ public class ViewRecipeActivity extends BaseActivity {
 					int position, long id) {
 				Item item = itemAdapter.getItem(position);
 				Intent intent = new Intent(activity, CreateItemActivity.class);
+				intent.putExtra(BaseActivity.EXTRAS_RECIPE_ID, recipe.getId());
 				intent.putExtra(BaseActivity.EXTRAS_ITEM_ID, item.getId());
 				intent.putExtra(BaseActivity.EXTRAS_ITEM_EDIT, true);
 				activity.startActivityForResult(intent, 1);
